@@ -195,8 +195,8 @@ public class MenuBar extends JMenuBar {
 		ButtonGroup group = new ButtonGroup();
 		ActionListener modesMenuActionListener = new ModesMenuActionListener();
 		List keys = new LinkedList(c.getModes());
-		for (ListIterator i = keys.listIterator(); i.hasNext();) {
-			String key = (String) i.next();
+		for (Object key1 : keys) {
+			String key = (String) key1;
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(
 					c.getResourceString("mode_" + key));
 			item.setActionCommand(key);
@@ -370,18 +370,18 @@ public class MenuBar extends JMenuBar {
 	private void addOptionSet(Action action, String[] textIDs, JMenu menu,
 			String selectedTextID) {
 		ButtonGroup group = new ButtonGroup();
-		for (int optionIdx = 0; optionIdx < textIDs.length; optionIdx++) {
+		for (String textID : textIDs) {
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
-			item.setText(c.getResourceString(textIDs[optionIdx]));
-			item.setActionCommand(textIDs[optionIdx]);
+			item.setText(c.getResourceString(textID));
+			item.setActionCommand(textID);
 			group.add(item);
 			menu.add(item);
 			if (selectedTextID != null) {
-				item.setSelected(selectedTextID.equals(textIDs[optionIdx]));
+				item.setSelected(selectedTextID.equals(textID));
 			}
 			// keystroke present?
 			String keystroke = c.getFrame().getAdjustableProperty(
-					"keystroke_" + textIDs[optionIdx]);
+					"keystroke_" + textID);
 			if (keystroke != null)
 				item.setAccelerator(KeyStroke.getKeyStroke(keystroke));
 		}
@@ -397,8 +397,8 @@ public class MenuBar extends JMenuBar {
 	 */
 	private void copyMenuItems(JMenu source, JMenu dest) {
 		Component[] items = source.getMenuComponents();
-		for (int i = 0; i < items.length; i++) {
-			dest.add(items[i]);
+		for (Component item : items) {
+			dest.add(item);
 		}
 	}
 
@@ -416,7 +416,7 @@ public class MenuBar extends JMenuBar {
 	private class LastOpenedActionListener implements ActionListener {
 		private String mKey;
 
-		public LastOpenedActionListener(String pKey) {
+		LastOpenedActionListener(String pKey) {
 			mKey = pKey;
 		}
 
@@ -443,8 +443,6 @@ public class MenuBar extends JMenuBar {
 		}
 	}
 
-	/**
-     */
 	public StructuredMenuHolder getMenuHolder() {
 		return menuHolder;
 	}

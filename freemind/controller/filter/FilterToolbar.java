@@ -66,15 +66,8 @@ class FilterToolbar extends FreeMindToolBar {
 	private String pathToFilterFile;
 	private FilterChangeListener filterChangeListener;
 
-	private class FilterChangeListener extends AbstractAction implements
-			ItemListener, PropertyChangeListener {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-		 * )
-		 */
+	private class FilterChangeListener extends AbstractAction implements ItemListener, PropertyChangeListener {
+
 		FilterChangeListener() {
 		}
 
@@ -85,13 +78,6 @@ class FilterToolbar extends FreeMindToolBar {
 			DefaultFilter.selectVisibleNode(c.getView());
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent
-		 * )
-		 */
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED)
 				filterChanged();
@@ -125,13 +111,6 @@ class FilterToolbar extends FreeMindToolBar {
 					.getResourceString("filter_edit_description"));
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
-		 * )
-		 */
 		private FilterComposerDialog getFilterDialog() {
 			if (filterDialog == null) {
 				filterDialog = new FilterComposerDialog(c, FilterToolbar.this);
@@ -151,9 +130,7 @@ class FilterToolbar extends FreeMindToolBar {
 	}
 
 	private class UnfoldAncestorsAction extends AbstractAction {
-		/**
-         *
-         */
+
 		UnfoldAncestorsAction() {
 			super("", freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
 					"images/unfold.png")));
@@ -259,7 +236,7 @@ class FilterToolbar extends FreeMindToolBar {
 	/**
      *
      */
-	public void resetFilter() {
+	private void resetFilter() {
 		activeFilter = null;
 
 	}
@@ -268,7 +245,7 @@ class FilterToolbar extends FreeMindToolBar {
 		return (Condition) activeFilterConditionComboBox.getSelectedItem();
 	}
 
-	void setMapFilter() {
+	private void setMapFilter() {
 		if (activeFilter == null)
 			activeFilter = new DefaultFilter(getSelectedCondition(),
 					showAncestors.getModel().isSelected(), showDescendants
@@ -279,14 +256,10 @@ class FilterToolbar extends FreeMindToolBar {
 		}
 	}
 
-	/**
-     */
 	FilterComposerDialog getFilterDialog() {
 		return filterDialog;
 	}
 
-	/**
-     */
 	void mapChanged(MindMap newMap) {
 		if (!isVisible())
 			return;
@@ -314,6 +287,7 @@ class FilterToolbar extends FreeMindToolBar {
 		try {
 			mFilterController.saveConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

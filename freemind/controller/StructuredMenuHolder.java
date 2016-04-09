@@ -343,7 +343,7 @@ public class StructuredMenuHolder {
 		}
 	}
 
-	private void updateMenus(MenuAdder menuAdder, Map thisMap, MenuAdderCreator factory) {
+	public void updateMenus(MenuAdder menuAdder, Map thisMap, MenuAdderCreator factory) {
 		Vector myVector = (Vector) thisMap.get(ORDER_NAME);
 		for (Object aMyVector : myVector) {
 			String category = (String) aMyVector;

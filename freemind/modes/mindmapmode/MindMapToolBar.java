@@ -122,25 +122,18 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			}
 		};
 		fonts.addItemListener(fontsListener);
-		sizeListener = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				// System.err.println("ce:"+e);
-				if (e.getStateChange() != ItemEvent.SELECTED) {
-					return;
-				}
-				// change the font size
-				// TODO: this is super-dirty, why doesn't the toolbar know the
-				// model?
-				if (fontSize_IgnoreChangeEvent) {
-					// fc, 27.8.2004: I don't understand, why the ignore type is
-					// resetted here.
-					// let's see: fontSize_IgnoreChangeEvent = false;
-					return;
-				}
-				// call action:
-				c.fontSize.actionPerformed((String) e.getItem());
-			}
-		};
+		sizeListener = e -> {
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                return;
+            }
+            // change the font size
+            // TODO: this is super-dirty, why doesn't the toolbar know the model?
+            if (fontSize_IgnoreChangeEvent) {
+                return;
+            }
+            // call action:
+            c.fontSize.actionPerformed((String) e.getItem());
+        };
 		size.addItemListener(sizeListener);
 		userDefinedZoom = controller.getText("user_defined_zoom");
 
@@ -149,37 +142,30 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		zoom.addItem(userDefinedZoom);
 		// Focus fix.
 		zoom.setFocusable(false);
-		zoom.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				// todo: dialog with user zoom value, if user zoom is chosen.
-				// change proposed by dimitri:
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					setZoomByItem(e.getItem());
-				}
-			}
-		});
+		zoom.addItemListener(e -> {
+            // todo: dialog with user zoom value, if user zoom is chosen.
+            // change proposed by dimitri:
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                setZoomByItem(e.getItem());
+            }
+        });
 		
 		colorCombo = new JColorCombo();
 		colorCombo.setFocusable(false);
-		colorCombo.addItemListener(new ItemListener(){
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(color_IgnoreChangeEvent){
-					return;
-				}
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					color_IgnoreChangeEvent = true;
-					setFontColorByItem((ColorPair) e.getItem());
-					color_IgnoreChangeEvent = false;
-				}
-			}
-
-		});
+		colorCombo.addItemListener(e -> {
+            if(color_IgnoreChangeEvent){
+                return;
+            }
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                color_IgnoreChangeEvent = true;
+                setFontColorByItem((ColorPair) e.getItem());
+                color_IgnoreChangeEvent = false;
+            }
+        });
 	}
 
 	private void setZoomByItem(Object item) {
-		if (((String) item).equals(userDefinedZoom))
+		if ((item.equals(userDefinedZoom)))
 			return;
 		String dirty = (String) item;
 		String cleaned = dirty.substring(0, dirty.length() - 1);
@@ -190,8 +176,8 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	}
 
 	private void setFontColorByItem(ColorPair pItem) {
-		for (Iterator it = c.getSelecteds().iterator(); it.hasNext();) {
-			MindMapNode node = (MindMapNode) it.next();
+		for (Object o : c.getSelecteds()) {
+			MindMapNode node = (MindMapNode) o;
 			c.setNodeColor(node, pItem.color);
 		}
 	}
@@ -210,8 +196,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		fonts.setMaximumRowCount(30);
 		add(fonts);
 
-//		size.setEditor(new BasicComboBoxEditor());
-//		size.setEditable(true);
 		addIcon("images/format-font-size-more.png");
 		add(size);
 		JLabel label = addIcon("images/format-text-color.png");
@@ -236,17 +220,10 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		JLabel label = new JLabel(ImageFactory.getInstance().createIcon(iconPath));
 		label.setText(" ");
 		add(label);
-//		add(new JToolBar.Separator());
 		return label;
 	}
 
-	// Daniel Polansky: both the following methods trigger item listeners above.
-	// Those listeners obtain two events: first DESELECTED and then
-	// SELECTED. Both events are to be ignored - we don't want to update
-	// a node with its own font. The item listeners should react only
-	// to a user change, not to our change.
-
-	public void selectFontSize(String fontSize) // (DiPo)
+	void selectFontSize(String fontSize) // (DiPo)
 	{
 		fontSize_IgnoreChangeEvent = true;
 		size.setSelectedItem(fontSize);
@@ -257,7 +234,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		return iconToolBarScrollPane;
 	}
 
-	public void selectFontName(String fontName) // (DiPo)
+	void selectFontName(String fontName) // (DiPo)
 	{
 		if (fontFamily_IgnoreChangeEvent) {
 			return;
@@ -274,9 +251,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		size.setEnabled(enabled);
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.controller.ZoomListener#setZoom(float)
-	 */
 	public void setZoom(float f) {
 		logger.fine("setZoomComboBox is called with " + f + ".");
 		String toBeFound = getItemForZoom(f);
@@ -303,7 +277,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		getController().deregisterZoomListener(this);
 	}
 
-	public void selectColor(Color pColor) {
+	void selectColor(Color pColor) {
 		if(pColor == null){
 			pColor = MapView.standardNodeTextColor;
 		}
@@ -317,8 +291,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			}
 		}
 		// new color. add it to the combo box:
-		ColorPair pair = new ColorPair(pColor, "user" + userDefinedCounter,
-				Resources.getInstance().format(
+		ColorPair pair = new ColorPair(pColor, "user" + userDefinedCounter, Resources.getInstance().format(
 						"mindmapmode_toolbar_font_color_user_defined",
 						new Object[] { userDefinedCounter }));
 		userDefinedCounter++;

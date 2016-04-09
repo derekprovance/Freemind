@@ -357,7 +357,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		Resources.createInstance(this);
 	}
 
-	private void init(FeedBack feedback) {
+	public void init(FeedBack feedback) {
 		/* This is only for apple but does not harm for the others. */
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		patternsFile = new File(getFreemindDirectory(),
@@ -707,6 +707,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			frame.checkForAnotherInstance(args);
 			frame.initServer();
 			final FeedBack feedBack;
+
 			// change here, if you don't like the splash
 			if (true) {
 				splash = new FreeMindSplashModern(frame);
