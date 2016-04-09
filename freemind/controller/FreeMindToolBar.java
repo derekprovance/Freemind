@@ -37,49 +37,33 @@ import freemind.main.Tools;
 public class FreeMindToolBar extends JToolBar {
 	private static Insets nullInsets = new Insets(0, 0, 0, 0);
 
-	/**
-	 * 
-	 */
 	public FreeMindToolBar() {
 		this("", JToolBar.HORIZONTAL);
 	}
 
-	/**
-	 */
 	public FreeMindToolBar(int arg0) {
 		this("", arg0);
 	}
 
-	/**
-	 */
 	public FreeMindToolBar(String arg0) {
 		this(arg0, JToolBar.HORIZONTAL);
 	}
 
-	/**
-	 */
-	public FreeMindToolBar(String arg0, int arg1) {
+	private FreeMindToolBar(String arg0, int arg1) {
 		super(arg0, arg1);
 		this.setMargin(nullInsets);
 		setFloatable(false);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.JToolBar#add(javax.swing.Action)
-	 */
 	public JButton add(Action arg0) {
 		final Object actionName = arg0.getValue(Action.NAME);
-		arg0.putValue(Action.SHORT_DESCRIPTION,
-				Tools.removeMnemonic(actionName.toString()));
+		arg0.putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(actionName.toString()));
 		JButton returnValue = super.add(arg0);
 		returnValue.setName(actionName.toString());
 		returnValue.setText("");
 		returnValue.setMargin(nullInsets);
 		returnValue.setFocusable(false);
 
-		// fc, 20.6.2004: try to make the toolbar looking good under Mac OS X.
 		if (Tools.isMacOsX()) {
 			returnValue.setBorderPainted(false);
 		}

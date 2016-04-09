@@ -1,25 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2007  Joerg Mueller, Daniel Polansky, Dimitri Polivaev, Christian Foltin and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * Created on 10.01.2007
- */
-/*$Id: ScriptEditorPanel.java,v 1.1.2.18 2008/07/05 20:40:10 christianfoltin Exp $*/
 package plugins.script;
 
 import java.awt.BorderLayout;
@@ -83,10 +61,10 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 	private Logger logger;
 	private JLabel mStatus;
 	private AbstractAction mRunAction;
-	private SignAction mSignAction;
+    private StopAction mStopAction;
+    private SignAction mSignAction;
 	private Thread mScriptThread;
-	private StopAction mStopAction;
-	private Vector<AbstractAction> mMenuActions = new Vector<AbstractAction>();
+	private Vector<AbstractAction> mMenuActions = new Vector<>();
 
 	private final class ResultFieldStream extends OutputStream {
 		public void write(int pByte) throws IOException {

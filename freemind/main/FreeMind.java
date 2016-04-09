@@ -357,7 +357,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		Resources.createInstance(this);
 	}
 
-	void init(FeedBack feedback) {
+	private void init(FeedBack feedback) {
 		/* This is only for apple but does not harm for the others. */
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		patternsFile = new File(getFreemindDirectory(),
@@ -387,37 +387,19 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				}
 			}
 		});
-		// fc, disabled with purpose (see java look and feel styleguides).
-		// http://java.sun.com/products/jlf/ed2/book/index.html
-		// // add a listener for the controller, look and feel:
-		// Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-		//
-		// public void propertyChanged(String propertyName, String newValue,
-		// String oldValue) {
-		// if (propertyName.equals(RESOURCE_LOOKANDFEEL)) {
-		// updateLookAndFeel();
-		// }
-		// }
-		// });
-		
-		controller.optionAntialiasAction
-				.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
+
+		controller.optionAntialiasAction.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
 
 		setupSpellChecking();
 		setupProxy();
 		feedback.increase("FreeMind.progress.propageteLookAndFeel", null);
-		SwingUtilities.updateComponentTreeUI(this); // Propagate LookAndFeel to
+		SwingUtilities.updateComponentTreeUI(this);
 
 		feedback.increase("FreeMind.progress.buildScreen", null);
 		setScreenBounds();
 
-		// JComponents
-
 		feedback.increase("FreeMind.progress.createInitialMode", null);
 		controller.createNewMode(getProperty("initial_mode"));
-//		EventQueue eventQueue = Toolkit.getDefaultToolkit()
-//				.getSystemEventQueue();
-//		eventQueue.push(new MyEventQueue());
 	}// Constructor
 
 	/**

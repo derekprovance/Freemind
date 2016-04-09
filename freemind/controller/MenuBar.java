@@ -46,7 +46,7 @@ import freemind.view.MapModule;
 
 /**
  * This is the menu bar for FreeMind. Actions are defined in MenuListener.
- * Moreover, the StructuredMenuHolder of all menus are hold here.
+ * Moreover, the StructuredMenuHolder of all menus are held here.
  * */
 public class MenuBar extends JMenuBar {
 
@@ -81,19 +81,13 @@ public class MenuBar extends JMenuBar {
 		}
 	}
 
-	/**
-	 * This is the only public method. It restores all menus.
-	 * 
-	 * @param newModeController
-	 */
 	public void updateMenus(ModeController newModeController) {
 		this.removeAll();
 
 		menuHolder = new StructuredMenuHolder();
 
 		// filemenu
-		JMenu filemenu = menuHolder.addMenu(new JMenu(c.getResourceString("file")),
-				FILE_MENU + ".");
+		JMenu filemenu = menuHolder.addMenu(new JMenu(c.getResourceString("file")), FILE_MENU + ".");
 
 		menuHolder.addCategory(FILE_MENU + "open");
 		menuHolder.addCategory(FILE_MENU + "close");

@@ -75,7 +75,7 @@ class FilterToolbar extends FreeMindToolBar {
 		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
 		 * )
 		 */
-		public FilterChangeListener() {
+		FilterChangeListener() {
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
