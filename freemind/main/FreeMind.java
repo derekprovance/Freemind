@@ -100,175 +100,88 @@ import freemind.view.mindmapview.MapView;
 public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 	public static final String J_SPLIT_PANE_SPLIT_TYPE = "JSplitPane.SPLIT_TYPE";
-
 	public static final String VERTICAL_SPLIT_BELOW = "vertical_split_below";
-	
 	public static final String HORIZONTAL_SPLIT_RIGHT = "horizontal_split_right";
-	
 	public static final String LOG_FILE_NAME = "log";
-
 	private static final String PORT_FILE = "portFile";
-
 	private static final String FREE_MIND_PROGRESS_LOAD_MAPS = "FreeMind.progress.loadMaps";
-
 	private static final String FREE_MIND_PROGRESS_LOAD_MAPS_NAME = "FreeMind.progress.loadNamedMaps";
-
 	private static final String SPLIT_PANE_POSITION = "split_pane_position";
-
 	private static final String SPLIT_PANE_LAST_POSITION = "split_pane_last_position";
-
 	public static final String RESOURCE_LOOKANDFEEL = "lookandfeel";
-
 	public static final String RESOURCES_SELECTION_METHOD = "selection_method";
-
 	public static final String RESOURCES_NODE_STYLE = "standardnodestyle";
-
 	public static final String RESOURCES_ROOT_NODE_STYLE = "standardrootnodestyle";
-
 	public static final String RESOURCES_NODE_TEXT_COLOR = "standardnodetextcolor";
-
 	public static final String RESOURCES_SELECTED_NODE_COLOR = "standardselectednodecolor";
-
 	public static final String RESOURCES_SELECTED_NODE_RECTANGLE_COLOR = "standardselectednoderectanglecolor";
-
 	public static final String RESOURCE_DRAW_RECTANGLE_FOR_SELECTION = "standarddrawrectangleforselection";
-
 	public static final String RESOURCES_EDGE_COLOR = "standardedgecolor";
-
 	public static final String RESOURCES_EDGE_STYLE = "standardedgestyle";
-
 	public static final String RESOURCES_CLOUD_COLOR = "standardcloudcolor";
-
 	public static final String RESOURCES_LINK_COLOR = "standardlinkcolor";
-
 	public static final String RESOURCES_BACKGROUND_COLOR = "standardbackgroundcolor";
-
 	public static final String RESOURCE_PRINT_ON_WHITE_BACKGROUND = "printonwhitebackground";
-
 	public static final String RESOURCES_WHEEL_VELOCITY = "wheel_velocity";
-
 	public static final String RESOURCES_USE_TABBED_PANE = "use_tabbed_pane";
-
 	public static final String RESOURCES_SHOW_NOTE_PANE = "use_split_pane";
-	
 	public static final String RESOURCES_SHOW_ATTRIBUTE_PANE = "show_attribute_pane";
-
 	public static final String RESOURCES_DELETE_NODES_WITHOUT_QUESTION = "delete_nodes_without_question";
-
 	public static final String RESOURCES_RELOAD_FILES_WITHOUT_QUESTION = "reload_files_without_question";
-
 	private Logger logger = null;
-
 	protected static final VersionInformation VERSION = new VersionInformation("1.1.0 Beta 2");
-
 	public static final String XML_VERSION = "1.1.0";
-
 	public static final String RESOURCES_REMIND_USE_RICH_TEXT_IN_NEW_LONG_NODES = "remind_use_rich_text_in_new_long_nodes";
-
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_ASKING = "resources_execute_scripts_without_asking";
-
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_FILE_RESTRICTION = "resources_execute_scripts_without_file_restriction";
-
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_NETWORK_RESTRICTION = "resources_execute_scripts_without_network_restriction";
-
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_EXEC_RESTRICTION = "resources_execute_scripts_without_exec_restriction";
-
 	public static final String RESOURCES_SCRIPT_USER_KEY_NAME_FOR_SIGNING = "resources_script_user_key_name_for_signing";
-
 	public static final String RESOURCES_CONVERT_TO_CURRENT_VERSION = "resources_convert_to_current_version";
-
 	public static final String RESOURCES_CUT_NODES_WITHOUT_QUESTION = "resources_cut_nodes_without_question";
-
 	public static final String RESOURCES_DON_T_SHOW_NOTE_ICONS = "resources_don_t_show_note_icons";
-
 	public static final String RESOURCES_USE_COLLABORATION_SERVER_WITH_DIFFERENT_VERSION = "resources_use_collaboration_server_with_different_version";
-	
 	public static final String RESOURCES_REMOVE_NOTES_WITHOUT_QUESTION = "resources_remove_notes_without_question";
-
 	public static final String RESOURCES_SAVE_FOLDING_STATE = "resources_save_folding_state";
-
 	public static final String RESOURCES_SIGNED_SCRIPT_ARE_TRUSTED = "resources_signed_script_are_trusted";
-
 	public static final String RESOURCES_USE_DEFAULT_FONT_FOR_NOTES_TOO = "resources_use_default_font_for_notes_too";
-
 	public static final String RESOURCES_USE_MARGIN_TOP_ZERO_FOR_NOTES = "resources_use_margin_top_zero_for_notes";
-
 	public static final String RESOURCES_DON_T_SHOW_CLONE_ICONS = "resources_don_t_show_clone_icons";
-
 	public static final String RESOURCES_DON_T_OPEN_PORT = "resources_don_t_open_port";
-
 	public static final String KEYSTROKE_MOVE_MAP_LEFT = "keystroke_MoveMapLeft";
-
 	public static final String KEYSTROKE_MOVE_MAP_RIGHT = "keystroke_MoveMapRight";
-
 	public static final String KEYSTROKE_PREVIOUS_MAP = "keystroke_previousMap";
-
 	public static final String KEYSTROKE_NEXT_MAP = "keystroke_nextMap";
-
 	public static final String RESOURCES_SEARCH_IN_NOTES_TOO = "resources_search_in_notes_too";
-
 	public static final String RESOURCES_DON_T_SHOW_NOTE_TOOLTIPS = "resources_don_t_show_note_tooltips";
-
 	public static final String RESOURCES_SEARCH_FOR_NODE_TEXT_WITHOUT_QUESTION = "resources_search_for_node_text_without_question";
-	
 	public static final String RESOURCES_COMPLETE_CLONING = "complete_cloning";
-
 	public static final String RESOURCES_CLONE_TYPE_COMPLETE_CLONE = "COMPLETE_CLONE";
-
 	public static final String TOOLTIP_DISPLAY_TIME = "tooltip_display_time";
-
 	public static final String PROXY_PORT = "proxy.port";
-
 	public static final String PROXY_HOST = "proxy.host";
-
 	public static final String PROXY_PASSWORD = "proxy.password";
-
 	public static final String PROXY_USER = "proxy.user";
-
 	public static final String PROXY_IS_AUTHENTICATED = "proxy.is_authenticated";
-
 	public static final String PROXY_USE_SETTINGS = "proxy.use_settings";
-
 	public static final String RESOURCES_DISPLAY_FOLDING_BUTTONS = "resources_display_folding_buttons";
-
 	private static final int TIME_TO_DISPLAY_MESSAGES = 10000;
-
 	public static final String ICON_BAR_COLUMN_AMOUNT = "icon_bar_column_amount";
-
 	public static final String RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION = "resources_optional_split_divider_position";
-
 	public static final String RESOUCES_PASTE_HTML_STRUCTURE = "paste_html_structure";
-
 	public static final String PROXY_EXCEPTION = "proxy.exception";
-
 	public static final String SCALING_FACTOR_PROPERTY = "scaling_factor_property";
-
 	public static final String RESOURCES_CALENDAR_FONT_SIZE = "calendar_font_size";
-
-	// public static final String defaultPropsURL = "freemind.properties";
-	// public static Properties defaultProps;
 	public static Properties props;
-
 	private static Properties defProps;
-
 	private MenuBar menuBar;
-
 	private JLabel status;
-	
 	private Timer mStatusMessageDisplayTimer;
-
 	private Map filetypes; // Hopefully obsolete. Used to store applications
-
-	// used to open different file types
-
 	private File autoPropertiesFile;
-
 	private File patternsFile;
-
-	Controller controller;// the one and only controller
-
+	private Controller controller;// the one and only controller
 	private FreeMindCommon mFreeMindCommon;
-
 	private static FileHandler mFileHandler;
 	private static boolean mFileHandlerError = false;
 
@@ -276,30 +189,19 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	 * The main map's scroll pane.
 	 */
 	private JScrollPane mScrollPane = null;
-
 	private JSplitPane mSplitPane;
-
 	private JComponent mContentComponent = null;
-
 	private JTabbedPane mTabbedPane = null;
-
 	private ImageIcon mWindowIcon;
-
 	private boolean mStartupDone = false;
-
 	private List mStartupDoneListeners = new Vector();
-
 	private EditServer mEditServer = null;
-
 	private Vector mLoggerList = new Vector();
-
 
 	private static LogFileLogHandler sLogFileHandler;
 
-	public FreeMind(Properties pDefaultPreferences,
-			Properties pUserPreferences, File pAutoPropertiesFile) {
+	public FreeMind(Properties pDefaultPreferences, Properties pUserPreferences, File pAutoPropertiesFile) {
 		super("FreeMind");
-		// Focus searcher
 		System.setSecurityManager(new FreeMindSecurityManager());
 		defProps = pDefaultPreferences;
 		props = pUserPreferences;
@@ -337,18 +239,16 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			// print all java/sun properties
 			Properties properties = System.getProperties();
 			List list = new ArrayList();
-			for (Iterator it = properties.keySet().iterator(); it.hasNext();) {
-				Object key = (Object) it.next();
-				list.add(key);
-			}
+            for (Object key : properties.keySet()) {
+                list.add(key);
+            }
 			Collections.sort(list);
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				String key = (String) it.next();
-				if (key.startsWith("java") || key.startsWith("sun")) {
-					b.append("Environment key " + key + " = "
-							+ properties.getProperty(key) + "\n");
-				}
-			}
+            for (Object aList : list) {
+                String key = (String) aList;
+                if (key.startsWith("java") || key.startsWith("sun")) {
+                    b.append("Environment key ").append(key).append(" = ").append(properties.getProperty(key)).append("\n");
+                }
+            }
 			logger.info(b.toString());
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
@@ -708,37 +608,11 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			frame.initServer();
 			final FeedBack feedBack;
 
-			// change here, if you don't like the splash
-			if (true) {
-				splash = new FreeMindSplashModern(frame);
-				splash.setVisible(true);
-				feedBack = splash.getFeedBack();
-				frame.mWindowIcon = splash.getWindowIcon();
-			} else {
-				feedBack = new FeedBack() {
-					int value = 0;
-	
-					public int getActualValue() {
-						return value;
-					}
-	
-					public void increase(String messageId,
-							Object[] pMessageParameters) {
-						progress(getActualValue() + 1, messageId,
-								pMessageParameters);
-					}
-	
-					public void progress(int act, String messageId,
-							Object[] pMessageParameters) {
-						frame.logger.info("Beginnig task:" + messageId);
-					}
-	
-					public void setMaximumValue(int max) {
-					}
-				};
-				frame.mWindowIcon = freemind.view.ImageFactory.getInstance().createIcon(
-						frame.getResource("images/FreeMindWindowIcon.png"));
-			}
+            splash = new FreeMindSplashModern(frame);
+            splash.setVisible(true);
+            feedBack = splash.getFeedBack();
+            frame.mWindowIcon = splash.getWindowIcon();
+
 			feedBack.setMaximumValue(10 + frame.getMaximumNumberOfMapsToLoad(args));
 			frame.init(feedBack);
 	
@@ -763,9 +637,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				}
 			});
 			frame.setVisible(true);
-			if (splash != null) {
-				splash.setVisible(false);
-			}
+
 			frame.fireStartupDone();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -778,28 +650,19 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 	private void setupSpellChecking() {
 		boolean checkSpelling =
-//			Resources.getInstance().getBoolProperty(FreeMindCommon.CHECK_SPELLING);
 			Tools.safeEquals("true", props.getProperty(FreeMindCommon.CHECK_SPELLING));
 		if (checkSpelling) {
 			try {
-				// TODO filter languages in dictionaries.properties like this:
-//				String[] languages = "en,de,es,fr,it,nl,pl,ru,ar".split(",");
-//				for (int i = 0; i < languages.length; i++) {
-//					System.out.println(new File("dictionary_" + languages[i] + ".ortho").exists());
-//				}
 				String decodedPath = Tools.getFreeMindBasePath();
 				URL url = null;
 				if (new File (decodedPath).exists()) {
 					url = new URL("file", null, decodedPath);
 				}
 				SpellChecker.registerDictionaries(url, Locale.getDefault().getLanguage());
-			} catch (MalformedURLException e) {
+			} catch (MalformedURLException | UnsupportedEncodingException e) {
 				freemind.main.Resources.getInstance().logException(e);
-			} catch (UnsupportedEncodingException e) {
-				freemind.main.Resources.getInstance().logException(e);
-				
 			}
-		}
+        }
 	}
 
 	private void setupProxy() {
@@ -840,8 +703,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		if (portFile == null) {
 			return;
 		}
-		// {{{ Try connecting to another running FreeMind instance
-		if (portFile != null && new File(portFile).exists()) {
+
+		if (new File(portFile).exists()) {
 			try {
 				BufferedReader in = new BufferedReader(new FileReader(portFile));
 				String check = in.readLine();
@@ -867,6 +730,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				try {
 					socket.getInputStream().read();
 				} catch (Exception e) {
+                    e.printStackTrace();
 				}
 
 				in.close();
@@ -874,9 +738,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 				System.exit(0);
 			} catch (Exception e) {
-				// ok, this one seems to confuse newbies
-				// endlessly, so log it as NOTICE, not
-				// ERROR
 				logger.info("An error occurred"
 						+ " while connecting to the FreeMind server instance."
 						+ " This probably means that"
@@ -902,10 +763,10 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 	private void fireStartupDone() {
 		mStartupDone = true;
-		for (Iterator it = mStartupDoneListeners.iterator(); it.hasNext();) {
-			StartupDoneListener listener = (StartupDoneListener) it.next();
-			listener.startupDone();
-		}
+        for (Object mStartupDoneListener : mStartupDoneListeners) {
+            StartupDoneListener listener = (StartupDoneListener) mStartupDoneListener;
+            listener.startupDone();
+        }
 	}
 
 	private void setScreenBounds() {
@@ -916,16 +777,11 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		// Create the scroll pane
 		mScrollPane = new MapView.ScrollPane();
 		if (Resources.getInstance().getBoolProperty("no_scrollbar")) {
-			mScrollPane
-					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			mScrollPane
-					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			mScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+			mScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		} else {
-			mScrollPane
-					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			mScrollPane
-					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+			mScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			mScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
 		status = new JLabel("!");
 		status.setPreferredSize(status.getPreferredSize());
@@ -933,8 +789,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		mStatusMessageDisplayTimer = new Timer(TIME_TO_DISPLAY_MESSAGES, this);
 		mContentComponent = mScrollPane;
 
-		boolean shouldUseTabbedPane = Resources.getInstance().getBoolProperty(
-				RESOURCES_USE_TABBED_PANE);
+		boolean shouldUseTabbedPane = Resources.getInstance().getBoolProperty(RESOURCES_USE_TABBED_PANE);
 
 		if (shouldUseTabbedPane) {
 			// tabbed panes eat control up. This is corrected here.
@@ -958,22 +813,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				controller.quit
-						.actionPerformed(new ActionEvent(this, 0, "quit"));
+				controller.quit.actionPerformed(new ActionEvent(this, 0, "quit"));
 			}
-
-			/*
-			 * fc, 14.3.2008: Completely removed, as it damaged the focus if for
-			 * example the note window was active.
-			 */
-			// public void windowActivated(WindowEvent e) {
-			// // This doesn't work the first time, it's called too early to
-			// // get Focus
-			// logger.info("windowActivated");
-			// if ((getView() != null) && (getView().getSelected() != null)) {
-			// getView().getSelected().requestFocus();
-			// }
-			// }
 		});
 
 		if (Tools.safeEquals(getProperty("toolbarVisible"), "false")) {
@@ -1010,10 +851,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		win_y = Math.max(screenInsets.top, win_y);
 		win_y = Math.min(screenWidth + screenInsets.top - win_height, win_y);
 		setBounds(win_x, win_y, win_width, win_height);
-		// set the default state (normal/maximized) (PN)
-		// (note: this must be done later when partucular
-		// initalizations of the windows are ready,
-		// perhaps after setVisible is it enough... :-?
 		int win_state = Integer.parseInt(FreeMind.props.getProperty(
 				"appwindow_state", "0"));
 		win_state = ((win_state & ICONIFIED) != 0) ? NORMAL : win_state;
@@ -1022,16 +859,15 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 	private ModeController createModeController(final String[] args) {
 		ModeController ctrl = controller.getModeController();
+
 		// try to load mac module:
 		try {
 			Class macClass = Class.forName("accessories.plugins.MacChanges");
-			// lazy programming. the mac class has exactly one
-			// constructor
-			// with a modeController.
-			macClass.getConstructors()[0].newInstance(new Object[] { this });
+			macClass.getConstructors()[0].newInstance(this);
 		} catch (Exception e1) {
-			// freemind.main.Resources.getInstance().logExecption(e1);
+            logger.info("No Mac Modules Found");
 		}
+
 		return ctrl;
 	}
 
@@ -1040,60 +876,58 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		return Math.max( args.length + management.getLastOpenList().size(), 1 );
 	}
 
-	private void loadMaps(final String[] args, ModeController pModeController,
-			FeedBack pFeedBack) {
+	private void loadMaps(final String[] args, ModeController pModeController, FeedBack pFeedBack) {
 		boolean fileLoaded = false;
 		if (Tools.isPreferenceTrue(getProperty(FreeMindCommon.LOAD_LAST_MAPS_AND_LAYOUT))) {
 			int index = 0;
 			MapModule mapToFocus = null;
 			LastStateStorageManagement management = getLastStateStorageManagement();
-			for (Iterator it = management.getLastOpenList().iterator(); it
-					.hasNext();) {
-				MindmapLastStateStorage store = (MindmapLastStateStorage) it
-						.next();
-				String restorable = store.getRestorableName();
-				pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
-						new Object[] { restorable.replaceAll(".*/", "") });
-				try {
-					if (controller.getLastOpenedList().open(restorable)) {
-						if (index == management.getLastFocussedTab()) {
-							mapToFocus = controller.getMapModule();
-						}
-					}
-					fileLoaded = true;
-				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
-				}
-				index++;
-			}
+            for (Object o : management.getLastOpenList()) {
+                MindmapLastStateStorage store = (MindmapLastStateStorage) o;
+                String restorable = store.getRestorableName();
+                pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
+                        new Object[]{restorable.replaceAll(".*/", "")});
+                try {
+                    if (controller.getLastOpenedList().open(restorable)) {
+                        if (index == management.getLastFocussedTab()) {
+                            mapToFocus = controller.getMapModule();
+                        }
+                    }
+                    fileLoaded = true;
+                } catch (Exception e) {
+                    Resources.getInstance().logException(e);
+                }
+                index++;
+            }
 			if (mapToFocus != null) {
 				controller.getMapModuleManager().changeToMapModule(
 						mapToFocus.getDisplayName());
 			}
 		}
-		for (int i = 0; i < args.length; i++) {
-			String fileArgument = args[i];
-			pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
-					new Object[] { fileArgument.replaceAll(".*/", "") });
-			if (fileArgument.toLowerCase().endsWith(
-					freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION)) {
 
-				if (!Tools.isAbsolutePath(fileArgument)) {
-					fileArgument = System.getProperty("user.dir")
-							+ System.getProperty("file.separator")
-							+ fileArgument;
-				}
-				try {
-					pModeController.load(new File(fileArgument));
-					fileLoaded = true;
-					// logger.info("Attempting to load: " +
-					// args[i]);
-				} catch (Exception ex) {
-					System.err.println("File " + fileArgument
-							+ " not found error");
-				}
-			}
-		}
+        for (String arg : args) {
+            String fileArgument = arg;
+            pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
+                    new Object[]{fileArgument.replaceAll(".*/", "")});
+            if (fileArgument.toLowerCase().endsWith(
+                    FreeMindCommon.FREEMIND_FILE_EXTENSION)) {
+
+                if (!Tools.isAbsolutePath(fileArgument)) {
+                    fileArgument = System.getProperty("user.dir")
+                            + System.getProperty("file.separator")
+                            + fileArgument;
+                }
+                try {
+                    pModeController.load(new File(fileArgument));
+                    fileLoaded = true;
+                    // logger.info("Attempting to load: " +
+                    // args[i]);
+                } catch (Exception ex) {
+                    System.err.println("File " + fileArgument
+                            + " not found error");
+                }
+            }
+        }
 		if (!fileLoaded) {
 			fileLoaded = processLoadEventFromStartupPhase();
 		}
@@ -1117,37 +951,15 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		}
 		if (!fileLoaded
 				&& Tools.isPreferenceTrue(getProperty(FreeMindCommon.LOAD_NEW_MAP))) {
-			/*
-			 * nothing loaded so far. Perhaps, we should display a new map...
-			 * According to Summary: On first start FreeMind should show new map
-			 * to newbies
-			 * https://sourceforge.net/tracker/?func=detail&atid=107118
-			 * &aid=1752516&group_id=7118
-			 */
 			pModeController.newMap();
 			pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS, null);
 		}
 	}
 
 	private LastStateStorageManagement getLastStateStorageManagement() {
-		String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-		LastStateStorageManagement management = new LastStateStorageManagement(
-				lastStateMapXml);
-		return management;
+		return new LastStateStorageManagement(getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE));
 	}
 
-	/**
-	 * Iterates over the load events from the startup phase
-	 * <p>
-	 * More than one file can be opened during startup. The filenames are stored
-	 * in numbered properties, i.e.
-	 * <ul>
-	 * loadEventDuringStartup0=/Users/alex/Desktop/test1.mm
-	 * loadEventDuringStartup1=/Users/alex/Desktop/test2.mm
-	 * </ul>
-	 * 
-	 * @return true if at least one file has been loaded
-	 */
 	private boolean processLoadEventFromStartupPhase() {
 		boolean atLeastOneFileHasBeenLoaded = false;
 		int count = 0;
@@ -1173,8 +985,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			}
 			controller.getModeController().load(
 					Tools.fileToUrl(new File(filename)));
-			// remove temporary property because we do not want to store in a
-			// file and survive restart
 			getProperties().remove(propertyKey);
 			return true;
 		} catch (Exception e) {
@@ -1184,11 +994,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.main.FreeMindMain#getJFrame()
-	 */
 	public JFrame getJFrame() {
 		return this;
 	}
@@ -1213,13 +1018,16 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		removeContentComponent();
 		int splitType = JSplitPane.VERTICAL_SPLIT;
 		String splitProperty = getProperty(J_SPLIT_PANE_SPLIT_TYPE);
+
 		if(Tools.safeEquals(splitProperty, HORIZONTAL_SPLIT_RIGHT)) {
 			splitType = JSplitPane.HORIZONTAL_SPLIT;
 		} else if(Tools.safeEquals(splitProperty, VERTICAL_SPLIT_BELOW)) {
 			// default
+            //TODO - This is an awful way to do this and needs to be refactored
 		} else {
 			logger.warning("Split type not known: " + splitProperty);
 		}
+
 		mSplitPane = new JSplitPane(splitType, mScrollPane, pMindMapComponent);
 		mSplitPane.setContinuousLayout(true);
 		mSplitPane.setOneTouchExpandable(false);

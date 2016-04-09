@@ -84,15 +84,12 @@ public class FreeMindStarter {
 		// starter.getUserPreferencesFile(defaultPreferences));
 		try {
 			Class mainClass = Class.forName("freemind.main.FreeMind");
-			Method mainMethod = mainClass.getMethod("main", new Class[] {
-					String[].class, Properties.class, Properties.class,
-					File.class });
+			Method mainMethod = mainClass.getMethod("main", String[].class, Properties.class, Properties.class, File.class);
 			mainMethod.invoke(null,
-							new Object[] {
-									args,
-									defaultPreferences,
-									userPreferences,
-									starter.getUserPreferencesFile(defaultPreferences) });
+					args,
+					defaultPreferences,
+					userPreferences,
+					starter.getUserPreferencesFile(defaultPreferences));
 
 		} catch (Exception e) {
 			e.printStackTrace();

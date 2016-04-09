@@ -112,9 +112,6 @@ import freemind.view.mindmapview.MapView;
  */
 public class Controller implements MapModuleChangeObserver {
 
-	/**
-	 * 
-	 */
 	private static final String PAGE_FORMAT_PROPERTY = "page_format";
 	private HashSet mMapTitleChangeListenerSet = new HashSet();
 	private HashSet mZoomListenerSet = new HashSet();

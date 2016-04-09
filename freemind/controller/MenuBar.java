@@ -272,28 +272,6 @@ public class MenuBar extends JMenuBar {
 		JMenuItem quit = menuHolder.addAction(c.quit, FILE_MENU + "quit/quit");
 		quit.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
 				.getAdjustableProperty("keystroke_quit")));
-		updateLastOpenedList();
-	}
-
-	private void updateLastOpenedList() {
-		menuHolder.addMenu(new JMenu(c.getResourceString("most_recent_files")),
-				FILE_MENU + "last/.");
-		boolean firstElement = true;
-		LastOpenedList lst = c.getLastOpenedList();
-		for (ListIterator it = lst.listIterator(); it.hasNext();) {
-			String key = (String) it.next();
-			JMenuItem item = new JMenuItem(key);
-			if (firstElement) {
-				firstElement = false;
-				item.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-						.getAdjustableProperty(
-								"keystroke_open_first_in_history")));
-			}
-			item.addActionListener(new LastOpenedActionListener(key));
-
-			menuHolder.addMenuItem(item,
-					FILE_MENU + "last/" + (key.replace('/', '_')));
-		}
 	}
 
 	private void updateEditMenu() {

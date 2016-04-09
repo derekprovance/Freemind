@@ -168,9 +168,7 @@ class FilterToolbar extends FreeMindToolBar {
 		setFocusable(false);
 		setRollover(true);
 		filterChangeListener = new FilterChangeListener();
-		add(new JLabel(Resources.getInstance().getResourceString(
-				"filter_toolbar")
-				+ " "));
+		add(new JLabel(Resources.getInstance().getResourceString("filter_toolbar") + " "));
 
 		activeFilter = null;
 		activeFilterConditionComboBox = new JComboBox() {
@@ -220,6 +218,7 @@ class FilterToolbar extends FreeMindToolBar {
 			mFilterController.loadConditions(mFilterController.getFilterConditionModel(), pathToFilterFile);
 
 		} catch (Exception e) {
+            e.printStackTrace();
 		}
 		addStandardConditions();
 		activeFilterConditionComboBox.setSelectedIndex(0);
@@ -274,7 +273,6 @@ class FilterToolbar extends FreeMindToolBar {
 				showDescendants.setSelected(filter.areDescendantsShown());
 			}
 		} else {
-			filter = null;
 			activeFilterConditionComboBox.setSelectedIndex(0);
 		}
 	}
