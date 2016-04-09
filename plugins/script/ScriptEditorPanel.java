@@ -68,54 +68,24 @@ import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 
-/**
- * @author foltin TODO:
- *         <ul>
- *         <li></li>
- *         <li>new script/delete script buttons</li>
- *         <li>rename script button</li>
- *         <li>undo feature?</li>
- *         <li>show line/column numbers in status bar</li>
- *         </ul>
- */
 public class ScriptEditorPanel extends JDialog implements MenuListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3221975191441136520L;
-
 	private static final String WINDOW_PREFERENCE_STORAGE_PROPERTY = "plugins.script.ScriptEditorPanel/window_positions";
-
 	private final FreeMindMain mFrame;
-
 	private final ScriptModel mScriptModel;
-
 	private JList<String> mScriptList;
-
 	private JTextArea mScriptTextField;
-
 	private DefaultListModel<String> mListModel;
-
 	private Integer mLastSelected = null;
-
 	private JTextArea mScriptResultField;
-
 	private JSplitPane mCentralUpperPanel;
-
 	private JSplitPane mCentralPanel;
-
 	private Logger logger;
-
 	private JLabel mStatus;
-
 	private AbstractAction mRunAction;
-
 	private SignAction mSignAction;
-
 	private Thread mScriptThread;
-
 	private StopAction mStopAction;
-
 	private Vector<AbstractAction> mMenuActions = new Vector<AbstractAction>();
 
 	private final class ResultFieldStream extends OutputStream {
@@ -124,11 +94,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		}
 
 		public void write(final byte[] pB) throws IOException {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					mScriptResultField.append(new String(pB));
-				}
-			});
+			EventQueue.invokeLater(() -> mScriptResultField.append(new String(pB)));
 		}
 	}
 
@@ -142,24 +108,15 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			storeCurrent();
 			if (isSomethingSelected()) {
 				mScriptResultField.setText("");
-				mScriptThread = new Thread(new Runnable() {
-					public void run() {
-						mScriptModel.executeScript(
-								mScriptList.getSelectedIndex(),
-								getPrintStream(), getErrorHandler());
-					}
-				});
+				mScriptThread = new Thread(() -> {
+                    mScriptModel.executeScript(
+                            mScriptList.getSelectedIndex(),
+                            getPrintStream(), getErrorHandler());
+                });
 				mScriptThread.start();
 			}
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing
-		 * .JMenuItem, javax.swing.Action)
-		 */
 		@Override
 		public boolean isEnabled(JMenuItem pItem, Action pAction) {
 			return isSomethingSelected()
@@ -179,13 +136,6 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			}
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * freemind.controller.MenuItemEnabledListener#isEnabled(javax.swing
-		 * .JMenuItem, javax.swing.Action)
-		 */
 		@Override
 		public boolean isEnabled(JMenuItem pItem, Action pAction) {
 			return isSomethingSelected() && mScriptThread != null
@@ -203,8 +153,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			if (!mScriptList.isSelectionEmpty()) {
 				int selectedIndex = mScriptList.getSelectedIndex();
 				ScriptHolder script = mScriptModel.getScript(selectedIndex);
-				String signedScript = new SignedScriptHandler().signScript(
-						script.mScript, Resources.getInstance(), mFrame);
+				String signedScript = new SignedScriptHandler().signScript(script.mScript, Resources.getInstance(), mFrame);
 				script.setScript(signedScript);
 				mScriptModel.setScript(selectedIndex, script);
 				mScriptTextField.setText(signedScript);
@@ -249,16 +198,8 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 
 	public static class ScriptHolder {
 		String mScript;
-
 		String mScriptName;
 
-		/**
-		 * @param pScriptName
-		 *            script name (starting with "script"
-		 *            (ScriptingEngine.SCRIPT_PREFIX))
-		 * @param pScript
-		 *            script content
-		 */
 		public ScriptHolder(String pScriptName, String pScript) {
 			super();
 			mScript = pScript;
@@ -269,7 +210,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			return mScript;
 		}
 
-		public String getScriptName() {
+		String getScriptName() {
 			return mScriptName;
 		}
 
@@ -311,22 +252,18 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 
 		boolean isDirty();
 
-		/**
-		 * 
-		 * @return the index of the new script.
-		 */
 		int addNewScript();
 	}
 
 	public ScriptEditorPanel(ScriptModel pScriptModel, FreeMindMain pFrame,
 			boolean pHasNewScriptFunctionality) {
-		super(pFrame.getJFrame(), true /* modal */);
+		super(pFrame.getJFrame(), true);
 		logger = pFrame.getLogger(this.getClass().getName());
 		mScriptModel = pScriptModel;
 		mFrame = pFrame;
+
 		// build the panel:
-		this.setTitle(pFrame
-				.getResourceString("plugins/ScriptEditor/window.title"));
+		this.setTitle(pFrame.getResourceString("plugins/ScriptEditor/window.title"));
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent event) {
@@ -342,25 +279,19 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		Container contentPane = this.getContentPane();
 
 		contentPane.setLayout(new BorderLayout());
-		mListModel = new DefaultListModel<String>();
-		mScriptList = new JList<String>(mListModel);
+		mListModel = new DefaultListModel<>();
+		mScriptList = new JList<>(mListModel);
 		mScriptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mScriptList.addListSelectionListener(new ListSelectionListener() {
-
-			public void valueChanged(ListSelectionEvent pEvent) {
-				if (pEvent.getValueIsAdjusting())
-					return;
-				// System.out.println("List selection:" + pEvent);
-				select(mScriptList.getSelectedIndex());
-			}
-		});
-		// add(mScriptList, BorderLayout.WEST);
+		mScriptList.addListSelectionListener(pEvent -> {
+            if (pEvent.getValueIsAdjusting())
+                return;
+            select(mScriptList.getSelectedIndex());
+        });
 		mScriptTextField = new JTextArea();
 		mScriptTextField.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		mScriptTextField.setEnabled(false);
 		mScriptTextField.setTabSize(2);
-		mCentralUpperPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				mScriptList, new JScrollPane(mScriptTextField));
+		mCentralUpperPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mScriptList, new JScrollPane(mScriptTextField));
 		mCentralUpperPanel.setContinuousLayout(true);
 		mScriptResultField = new JTextArea();
 		mScriptResultField.setEditable(false);
@@ -372,27 +303,25 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		contentPane.add(mCentralPanel, BorderLayout.CENTER);
 		mStatus = new JLabel();
 		contentPane.add(mStatus, BorderLayout.SOUTH);
-		mScriptTextField.addCaretListener(new CaretListener() {
+		mScriptTextField.addCaretListener(arg0 -> {
+            int caretPosition = mScriptTextField.getCaretPosition();
+            try {
+                int lineOfOffset = mScriptTextField
+                        .getLineOfOffset(caretPosition);
+                mStatus.setText("Line: "
+                        + (lineOfOffset + 1)
+                        + ", Column: "
+                        + (caretPosition
+                                - mScriptTextField
+                                        .getLineStartOffset(lineOfOffset) + 1));
+            } catch (BadLocationException e) {
+                Resources.getInstance().logException(e);
+            }
 
-			public void caretUpdate(CaretEvent arg0) {
-				int caretPosition = mScriptTextField.getCaretPosition();
-				try {
-					int lineOfOffset = mScriptTextField
-							.getLineOfOffset(caretPosition);
-					mStatus.setText("Line: "
-							+ (lineOfOffset + 1)
-							+ ", Column: "
-							+ (caretPosition
-									- mScriptTextField
-											.getLineStartOffset(lineOfOffset) + 1));
-				} catch (BadLocationException e) {
-					freemind.main.Resources.getInstance().logException(e);
-				}
-
-			}
-		});
+        });
 		updateFields();
 		mScriptTextField.repaint();
+
 		// menu:
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu();
@@ -405,26 +334,22 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 					new NewScriptAction(
 							pFrame.getResourceString("plugins/ScriptEditor.new_script")));
 		}
-		mRunAction = new RunAction(
-				pFrame.getResourceString("plugins/ScriptEditor.run"));
+		mRunAction = new RunAction(pFrame.getResourceString("plugins/ScriptEditor.run"));
 		mRunAction.setEnabled(false);
 		addAction(menu, mRunAction);
-		mStopAction = new StopAction(
-				pFrame.getResourceString("plugins/ScriptEditor.stop"));
+		mStopAction = new StopAction(pFrame.getResourceString("plugins/ScriptEditor.stop"));
 		mStopAction.setEnabled(false);
 		addAction(menu, mStopAction);
-		mSignAction = new SignAction(
-				pFrame.getResourceString("plugins/ScriptEditor.sign"));
+		mSignAction = new SignAction(pFrame.getResourceString("plugins/ScriptEditor.sign"));
 		mSignAction.setEnabled(false);
 		addAction(menu, mSignAction);
-		AbstractAction cancelAction = new CancelAction(
-				pFrame.getResourceString("plugins/ScriptEditor.cancel"));
+		AbstractAction cancelAction = new CancelAction(pFrame.getResourceString("plugins/ScriptEditor.cancel"));
 		addAction(menu, cancelAction);
-		AbstractAction exitAction = new ExitAction(
-				pFrame.getResourceString("plugins/ScriptEditor.exit"));
+		AbstractAction exitAction = new ExitAction(pFrame.getResourceString("plugins/ScriptEditor.exit"));
 		addAction(menu, exitAction);
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
+
 		// Retrieve window size and column positions.
 		ScriptEditorWindowConfigurationStorage storage = mScriptModel
 				.decorateDialog(this, WINDOW_PREFERENCE_STORAGE_PROPERTY);
@@ -432,7 +357,6 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			mCentralUpperPanel.setDividerLocation(storage.getLeftRatio());
 			mCentralPanel.setDividerLocation(storage.getTopRatio());
 		} else {
-			// bug fix: for new users, this is set to some reasonable values.
 			mCentralUpperPanel.setDividerLocation(100);
 			mCentralPanel.setDividerLocation(240);
 		}
@@ -463,9 +387,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 			return;
 		}
 		storeCurrent();
-		// set new script
 		mScriptTextField.setText(mScriptModel.getScript(pIndex).getScript());
-		// set last one:
 		mLastSelected = new Integer(pIndex);
 		if (pIndex >= 0 && mScriptList.getSelectedIndex() != pIndex) {
 			mScriptList.setSelectedIndex(pIndex);
@@ -475,17 +397,11 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 	private void storeCurrent() {
 		if (mLastSelected != null) {
 			// store old value:
-			int oldIndex = mLastSelected.intValue();
-			mScriptModel.setScript(oldIndex, mScriptModel.getScript(oldIndex)
-					.setScript(mScriptTextField.getText()));
+			int oldIndex = mLastSelected;
+			mScriptModel.setScript(oldIndex, mScriptModel.getScript(oldIndex).setScript(mScriptTextField.getText()));
 		}
 	}
 
-	/**
-	 * @param pIsCanceled
-	 *            TODO
-	 * 
-	 */
 	private void disposeDialog(boolean pIsCanceled) {
 		// the script should be stopped.
 		interruptScript();
@@ -495,21 +411,19 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		}
 		if (pIsCanceled && mScriptModel.isDirty()) {
 			// ask if really cancel:
-			int action = JOptionPane.showConfirmDialog(this,
-					mFrame.getResourceString("ScriptEditorPanel.changed_save"),
-					"FreeMind", JOptionPane.YES_NO_CANCEL_OPTION);
+			int action = JOptionPane.showConfirmDialog(this, mFrame.getResourceString("ScriptEditorPanel.changed_save"), "FreeMind", JOptionPane.YES_NO_CANCEL_OPTION);
 			if (action == JOptionPane.CANCEL_OPTION)
 				return;
 			if (action == JOptionPane.YES_OPTION) {
 				pIsCanceled = false;
 			}
 		}
+
 		// store window positions:
 		ScriptEditorWindowConfigurationStorage storage = new ScriptEditorWindowConfigurationStorage();
 		storage.setLeftRatio(mCentralUpperPanel.getDividerLocation());
 		storage.setTopRatio(mCentralPanel.getDividerLocation());
-		mScriptModel.storeDialogPositions(this, storage,
-				WINDOW_PREFERENCE_STORAGE_PROPERTY);
+		mScriptModel.storeDialogPositions(this, storage, WINDOW_PREFERENCE_STORAGE_PROPERTY);
 		this.setVisible(false);
 		this.dispose();
 		mScriptModel.endDialog(pIsCanceled);
@@ -532,7 +446,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
                             .getElement(pLineNumber - 1);
                     if (element4 != null) {
                         mScriptTextField.select(
-                                ((int) element4.getStartOffset()),
+                                element4.getStartOffset(),
                                 element4.getEndOffset());
                     }
                 }
@@ -540,7 +454,7 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
         };
 	}
 
-	protected void interruptScript() {
+	private void interruptScript() {
 		if (mScriptThread != null) {
 			mScriptThread.interrupt();
 			try {
@@ -552,12 +466,6 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.swing.event.MenuListener#menuSelected(javax.swing.event.MenuEvent)
-	 */
 	@Override
 	public void menuSelected(MenuEvent pE) {
 		mMenuActions.stream().filter(action -> action instanceof MenuItemEnabledListener).forEach(action -> {
@@ -566,31 +474,17 @@ public class ScriptEditorPanel extends JDialog implements MenuListener {
 		});
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.swing.event.MenuListener#menuDeselected(javax.swing.event.MenuEvent
-	 * )
-	 */
 	@Override
 	public void menuDeselected(MenuEvent pE) {
 		// TODO Auto-generated method stub
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.swing.event.MenuListener#menuCanceled(javax.swing.event.MenuEvent)
-	 */
 	@Override
 	public void menuCanceled(MenuEvent pE) {
 		// TODO Auto-generated method stub
 	}
 
-	protected boolean isSomethingSelected() {
+	private boolean isSomethingSelected() {
 		return !mScriptList.isSelectionEmpty();
 	}
-
 }
