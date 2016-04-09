@@ -50,6 +50,11 @@ public class MenuBar extends JMenuBar {
 	Controller c;
 	private ActionListener mapsMenuActionListener = new MapsMenuActionListener();
 
+    private JMenu filemenu;
+    private JMenu editmenu;
+    private JMenu formatmenu;
+    private JMenu mapsmenu;
+
 	public MenuBar(Controller controller) {
 		this.c = controller;
 		if (logger == null) {
@@ -60,103 +65,119 @@ public class MenuBar extends JMenuBar {
 	public void updateMenus(ModeController newModeController) {
 		this.removeAll();
 
-		menuHolder = new StructuredMenuHolder();
+        menuHolder = new StructuredMenuHolder();
 
-		// filemenu
-		JMenu filemenu = menuHolder.addMenu(new JMenu(c.getResourceString("file")), FILE_MENU + ".");
+        addFileMenuCategories();
+        addEditMenuCategories();
+        addViewMenuCategories();
+        addInsertMenuCategories();
+        addFormatMenuCategories();
+        addNavigateMenuCategories();
+        addExtrasMenuCategories();
+        addMapMenu();
+        addModesMenu();
+        addMapsPopupMenu();
 
-		menuHolder.addCategory(FILE_MENU + "open");
-		menuHolder.addCategory(FILE_MENU + "close");
-		menuHolder.addSeparator(FILE_MENU);
-		menuHolder.addCategory(FILE_MENU + "export");
-		menuHolder.addSeparator(FILE_MENU);
-		menuHolder.addCategory(FILE_MENU + "import");
-		menuHolder.addSeparator(FILE_MENU);
-		menuHolder.addCategory(FILE_MENU + "print");
-		menuHolder.addSeparator(FILE_MENU);
-		menuHolder.addCategory(FILE_MENU + "last");
-		menuHolder.addSeparator(FILE_MENU);
-		menuHolder.addCategory(FILE_MENU + "quit");
+        updateFileMenu();
+        updateViewMenu();
+        updateEditMenu();
+        updateModeMenu();
 
-		// editmenu
-		JMenu editmenu = menuHolder.addMenu(new JMenu(c.getResourceString("edit")),
-				EDIT_MENU + ".");
-		menuHolder.addCategory(EDIT_MENU + "undo");
-		menuHolder.addSeparator(EDIT_MENU);
-		menuHolder.addCategory(EDIT_MENU + "select");
-		menuHolder.addSeparator(EDIT_MENU);
-		menuHolder.addCategory(EDIT_MENU + "paste");
-		menuHolder.addSeparator(EDIT_MENU);
-		menuHolder.addCategory(EDIT_MENU + "edit");
-		menuHolder.addSeparator(EDIT_MENU);
-		menuHolder.addCategory(EDIT_MENU + "find");
+        updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
+        updateMapsMenu(menuHolder, POPUP_MENU);
+        addAdditionalPopupActions();
+        newModeController.updateMenus(menuHolder);
 
-		// view menu
-		menuHolder.addMenu(new JMenu(c.getResourceString("menu_view")),
-				VIEW_MENU + ".");
+        menuHolder.updateMenus(this, MENU_BAR_PREFIX);
+        menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
+    }
 
-		// insert menu
-		menuHolder.addMenu(new JMenu(c.getResourceString("menu_insert")),
-				INSERT_MENU + ".");
-		menuHolder.addCategory(INSERT_MENU + "nodes");
-		menuHolder.addSeparator(INSERT_MENU);
-		menuHolder.addCategory(INSERT_MENU + "icons");
-		menuHolder.addSeparator(INSERT_MENU);
+    private void addFileMenuCategories() {
+        filemenu = menuHolder.addMenu(new JMenu(c.getResourceString("file")), FILE_MENU + ".");
 
-		// format menu
-		JMenu formatmenu = menuHolder.addMenu(
-				new JMenu(c.getResourceString("menu_format")), FORMAT_MENU
-						+ ".");
+        menuHolder.addCategory(FILE_MENU + "open");
+        menuHolder.addCategory(FILE_MENU + "close");
+        menuHolder.addSeparator(FILE_MENU);
+        menuHolder.addCategory(FILE_MENU + "export");
+        menuHolder.addSeparator(FILE_MENU);
+        menuHolder.addCategory(FILE_MENU + "import");
+        menuHolder.addSeparator(FILE_MENU);
+        menuHolder.addCategory(FILE_MENU + "print");
+        menuHolder.addSeparator(FILE_MENU);
+        menuHolder.addCategory(FILE_MENU + "last");
+        menuHolder.addSeparator(FILE_MENU);
+        menuHolder.addCategory(FILE_MENU + "quit");
+    }
 
-		// navigate menu
-		menuHolder.addMenu(new JMenu(c.getResourceString("menu_navigate")),
-				NAVIGATE_MENU + ".");
+    private void addEditMenuCategories() {
+        editmenu = menuHolder.addMenu(new JMenu(c.getResourceString("edit")), EDIT_MENU + ".");
 
-		// extras menu
-		menuHolder.addMenu(new JMenu(c.getResourceString("menu_extras")),
-				EXTRAS_MENU + ".");
-		menuHolder.addCategory(EXTRAS_MENU + "first");
+        menuHolder.addCategory(EDIT_MENU + "undo");
+        menuHolder.addSeparator(EDIT_MENU);
+        menuHolder.addCategory(EDIT_MENU + "select");
+        menuHolder.addSeparator(EDIT_MENU);
+        menuHolder.addCategory(EDIT_MENU + "paste");
+        menuHolder.addSeparator(EDIT_MENU);
+        menuHolder.addCategory(EDIT_MENU + "edit");
+        menuHolder.addSeparator(EDIT_MENU);
+        menuHolder.addCategory(EDIT_MENU + "find");
+    }
 
-		// Mapsmenu
-		JMenu mapsmenu = menuHolder.addMenu(
-				new JMenu(c.getResourceString("mindmaps")), MINDMAP_MENU + ".");
-		// mapsmenu.setMnemonic(KeyEvent.VK_M);
-		menuHolder.addCategory(MINDMAP_MENU + "navigate");
-		menuHolder.addSeparator(MINDMAP_MENU);
-		menuHolder.addCategory(MENU_MINDMAP_CATEGORY);
-		menuHolder.addSeparator(MINDMAP_MENU);
-		// Modesmenu
-		menuHolder.addCategory(MODES_MENU);
+    private void addInsertMenuCategories() {
+        menuHolder.addMenu(new JMenu(c.getResourceString("menu_insert")), INSERT_MENU + ".");
 
-		// maps popup menu
-		mapsPopupMenu = new FreeMindPopupMenu();
-		mapsPopupMenu.setName(c.getResourceString("mindmaps"));
-		menuHolder.addCategory(POPUP_MENU + "navigate");
+        menuHolder.addCategory(INSERT_MENU + "nodes");
+        menuHolder.addSeparator(INSERT_MENU);
+        menuHolder.addCategory(INSERT_MENU + "icons");
+        menuHolder.addSeparator(INSERT_MENU);
+    }
 
-		menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU
-				+ ".");
-		menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
-		menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");
-		menuHolder.addAction(c.faq, HELP_MENU + "doc/faq");
-		menuHolder.addAction(c.keyDocumentation, HELP_MENU
-				+ "doc/keyDocumentation");
-		menuHolder.addSeparator(HELP_MENU);
-		menuHolder.addCategory(HELP_MENU + "bugs");
-		menuHolder.addSeparator(HELP_MENU);
-		menuHolder.addAction(c.license, HELP_MENU + "about/license");
-		menuHolder.addAction(c.about, HELP_MENU + "about/about");
+    private void addViewMenuCategories() {
+        menuHolder.addMenu(new JMenu(c.getResourceString("menu_view")), VIEW_MENU + ".");
+    }
 
-		updateFileMenu();
-		updateViewMenu();
-		updateEditMenu();
-		updateModeMenu();
-		updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
-		updateMapsMenu(menuHolder, POPUP_MENU);
-		addAdditionalPopupActions();
-		newModeController.updateMenus(menuHolder);
-		menuHolder.updateMenus(this, MENU_BAR_PREFIX);
-		menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
-	}
+    private void addFormatMenuCategories() {
+        formatmenu = menuHolder.addMenu(new JMenu(c.getResourceString("menu_format")), FORMAT_MENU + ".");
+    }
+
+    private void addNavigateMenuCategories() {
+        menuHolder.addMenu(new JMenu(c.getResourceString("menu_navigate")), NAVIGATE_MENU + ".");
+    }
+
+    private void addExtrasMenuCategories() {
+        menuHolder.addMenu(new JMenu(c.getResourceString("menu_extras")), EXTRAS_MENU + ".");
+        menuHolder.addCategory(EXTRAS_MENU + "first");
+    }
+
+    private void addMapMenu() {
+        mapsmenu = menuHolder.addMenu(new JMenu(c.getResourceString("mindmaps")), MINDMAP_MENU + ".");
+
+        menuHolder.addCategory(MINDMAP_MENU + "navigate");
+        menuHolder.addSeparator(MINDMAP_MENU);
+        menuHolder.addCategory(MENU_MINDMAP_CATEGORY);
+        menuHolder.addSeparator(MINDMAP_MENU);
+    }
+
+    private void addModesMenu() {
+        menuHolder.addCategory(MODES_MENU);
+    }
+
+    private void addMapsPopupMenu() {
+        mapsPopupMenu = new FreeMindPopupMenu();
+        mapsPopupMenu.setName(c.getResourceString("mindmaps"));
+        menuHolder.addCategory(POPUP_MENU + "navigate");
+
+        menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU + ".");
+        menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
+        menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");
+        menuHolder.addAction(c.faq, HELP_MENU + "doc/faq");
+        menuHolder.addAction(c.keyDocumentation, HELP_MENU + "doc/keyDocumentation");
+        menuHolder.addSeparator(HELP_MENU);
+        menuHolder.addCategory(HELP_MENU + "bugs");
+        menuHolder.addSeparator(HELP_MENU);
+        menuHolder.addAction(c.license, HELP_MENU + "about/license");
+        menuHolder.addAction(c.about, HELP_MENU + "about/about");
+    }
 
 	private void updateModeMenu() {
 		ButtonGroup group = new ButtonGroup();

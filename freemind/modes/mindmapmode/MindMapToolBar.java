@@ -105,11 +105,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 					return;
 				}
 				// TODO: this is super-dirty, why doesn't the toolbar know the
-				// model?
 				if (fontFamily_IgnoreChangeEvent) {
-					// fc, 27.8.2004: I don't understand, why the ignore type is
-					// resetted here.
-					// let's see: fontFamily_IgnoreChangeEvent = false;
 					return;
 				}
 				fontFamily_IgnoreChangeEvent = true;
@@ -134,6 +130,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		zoom = new FreeMindComboBox(controller.getController().getZooms());
 		zoom.setSelectedItem("100%");
 		zoom.addItem(userDefinedZoom);
+		// Focus fix.
 		zoom.setFocusable(false);
 		zoom.addItemListener(e -> {
             // todo: dialog with user zoom value, if user zoom is chosen.
@@ -174,8 +171,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			c.setNodeColor(node, pItem.color);
 		}
 	}
-	
-
 	
 	protected Controller getController() {
 		return c.getController();

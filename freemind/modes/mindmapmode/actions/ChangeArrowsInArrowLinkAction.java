@@ -6,11 +6,10 @@ import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.modes.mindmapmode.MindMapController;
 
 public class ChangeArrowsInArrowLinkAction extends MindmapAction {
-	MindMapArrowLinkModel arrowLink;
+	private MindMapArrowLinkModel arrowLink;
 
-	boolean hasStartArrow;
-
-	boolean hasEndArrow;
+	private boolean hasStartArrow;
+	private boolean hasEndArrow;
 
 	private final MindMapController controller;
 

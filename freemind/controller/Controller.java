@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: Controller.java,v 1.40.14.21.2.64 2010/02/22 21:18:53 christianfoltin Exp $*/
-
 package freemind.controller;
 
 import java.awt.BorderLayout;
@@ -64,7 +44,6 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -75,7 +54,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
@@ -489,7 +467,7 @@ public class Controller implements MapModuleChangeObserver {
 		dialog.addWindowListener(new Closer());
 		dialog.addComponentListener(new DisposeOnClose());
 
-		dialog.show(); // blocks until user brings dialog down...
+		dialog.show();
 
 		return ok.getColor();
 	}
@@ -534,88 +512,98 @@ public class Controller implements MapModuleChangeObserver {
 	public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
 	}
 
-	public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode,
-			MapModule newMapModule, Mode newMode) {
+	public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
 		ModeController oldModeController;
 		this.mMode = newMode;
 		if (oldMapModule != null) {
-			// shut down screens of old view + frame
 			oldModeController = oldMapModule.getModeController();
 			oldModeController.setVisible(false);
 			oldModeController.shutdownController();
 		} else {
-			if (oldMode != null) {
-				oldModeController = oldMode.getDefaultModeController();
-			} else {
-				return;
-			}
-		}
-		if (oldModeController.getModeToolBar() != null) {
-			toolbar.remove(oldModeController.getModeToolBar());
-			toolbar.activate(true);
-			// northToolbarPanel.remove(oldModeController.getModeToolBar());
-			// northToolbarPanel.add(toolbar, BorderLayout.NORTH);
-		}
-		/* other toolbars are to be removed too. */
-		if (oldModeController.getLeftToolBar() != null) {
-			getFrame().getContentPane().remove(
-					oldModeController.getLeftToolBar());
-		}
+            if (oldMode != null) {
+                oldModeController = oldMode.getDefaultModeController();
+            } else {
+                return;
+            }
+        }
+
+        if (oldModeController.getModeToolBar() != null) {
+            toolbar.remove(oldModeController.getModeToolBar());
+            toolbar.activate(true);
+        }
+        if (oldModeController.getLeftToolBar() != null) {
+            getFrame().getContentPane().remove(oldModeController.getLeftToolBar());
+        }
+        toolbar.activate(true);
 	}
 
-	public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode,
-			MapModule newMapModule, Mode newMode) {
+	public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
 		ModeController newModeController;
 		if (newMapModule != null) {
-			getFrame().setView(newMapModule.getView());
-			setAllActions(true);
-			if ((getView().getSelected() == null)) {
-				// moveToRoot();
-				getView().selectAsTheOnlyOneSelected(getView().getRoot());
-			}
-			lastOpened.mapOpened(newMapModule);
-			changeZoomValueProperty(newMapModule.getView().getZoom());
-			// ((MainToolBar) getToolbar()).setZoomComboBox(zoomValue);
-			// old
-			// obtainFocusForSelected();
-			newModeController = newMapModule.getModeController();
-			newModeController.startupController();
-			newModeController.setVisible(true);
-			// old
-			// obtainFocusForSelected();
+            newModeController = setViewToExistingMap(newMapModule);
 		} else {
-			newModeController = newMode.getDefaultModeController();
-			getFrame().setView(null);
-			setAllActions(false);
+			newModeController = setViewToNoMap(newMode);
 		}
+
 		setTitle();
-		JToolBar newToolBar = newModeController.getModeToolBar();
-		if (newToolBar != null) {
-			toolbar.activate(false);
-			toolbar.add(newToolBar, 0);
-			// northToolbarPanel.remove(toolbar);
-			// northToolbarPanel.add(newToolBar, BorderLayout.NORTH);
-			newToolBar.repaint();
-		}
-		/* new left toolbar. */
-		Component newLeftToolBar = newModeController.getLeftToolBar();
-		if (newLeftToolBar != null) {
-			getFrame().getContentPane().add(newLeftToolBar, BorderLayout.WEST);
-			if (leftToolbarVisible) {
-				newLeftToolBar.setVisible(true);
-				newLeftToolBar.repaint();
-			} else {
-				newLeftToolBar.setVisible(false);
-			}
-		}
+        generateTopToolbar(newModeController);
+        generateLeftToolbar(newModeController);
+
 		toolbar.validate();
 		toolbar.repaint();
 		MenuBar menuBar = getFrame().getFreeMindMenuBar();
 		menuBar.updateMenus(newModeController);
 		menuBar.revalidate();
 		menuBar.repaint();
+
 		obtainFocusForSelected();
 	}
+
+    private ModeController setViewToNoMap(Mode newMode) {
+        ModeController newModeController = newMode.getDefaultModeController();
+        getFrame().setView(null);
+        setAllActions(false);
+
+        return newModeController;
+    }
+
+    private ModeController setViewToExistingMap(MapModule newMapModule) {
+        getFrame().setView(newMapModule.getView());
+        setAllActions(true);
+        if ((getView().getSelected() == null)) {
+            getView().selectAsTheOnlyOneSelected(getView().getRoot());
+        }
+        lastOpened.mapOpened(newMapModule);
+        changeZoomValueProperty(newMapModule.getView().getZoom());
+
+        ModeController newModeController = newMapModule.getModeController();
+        newModeController.startupController();
+        newModeController.setVisible(true);
+
+        return newModeController;
+    }
+
+    private void generateTopToolbar(ModeController newModeController) {
+        JToolBar newToolBar = newModeController.getModeToolBar();
+        if (newToolBar != null) {
+            toolbar.activate(false);
+            toolbar.add(newToolBar, 0);
+            newToolBar.repaint();
+        }
+    }
+
+    private void generateLeftToolbar(ModeController newModeController) {
+        Component newLeftToolBar = newModeController.getLeftToolBar();
+        if (newLeftToolBar != null) {
+            getFrame().getContentPane().add(newLeftToolBar, BorderLayout.WEST);
+            if (leftToolbarVisible) {
+                newLeftToolBar.setVisible(true);
+                newLeftToolBar.repaint();
+            } else {
+                newLeftToolBar.setVisible(false);
+            }
+        }
+    }
 
 	protected void changeZoomValueProperty(final float zoomValue) {
         for (Object aMZoomListenerSet : mZoomListenerSet) {
@@ -791,7 +779,6 @@ public class Controller implements MapModuleChangeObserver {
 	public void setZoom(float zoom) {
 		getView().setZoom(zoom);
 		changeZoomValueProperty(zoom);
-		// ((MainToolBar) toolbar).setZoomComboBox(zoom);
 		// show text in status bar:
 		Object[] messageArguments = { String.valueOf(zoom * 100f) };
 		String stringResult = Resources.getInstance().format(
@@ -1117,19 +1104,12 @@ public class Controller implements MapModuleChangeObserver {
 			GridBagConstraints c = new GridBagConstraints();
 
 			eventSource.setValue(0);
-			okButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					eventSource.setValue(1);
-					dialog.dispose();
-				}
-			});
-			fitToPage.addItemListener(new ItemListener() {
-				public void itemStateChanged(ItemEvent e) {
-					userZoom.setEditable(e.getStateChange() == ItemEvent.DESELECTED);
-				}
-			});
+			okButton.addActionListener(e1 -> {
+                eventSource.setValue(1);
+                dialog.dispose();
+            });
+			fitToPage.addItemListener(e1 -> userZoom.setEditable(e1.getStateChange() == ItemEvent.DESELECTED));
 
-			// c.weightx = 0.5;
 			c.gridx = 0;
 			c.gridy = 0;
 			c.gridwidth = 2;
@@ -1791,12 +1771,10 @@ public class Controller implements MapModuleChangeObserver {
 				mTabbedPane.setSelectedIndex(mTabbedPane.getTabCount() - 1);
 			}
 
-			public void beforeMapModuleChange(MapModule pOldMapModule,
-					Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
+			public void beforeMapModuleChange(MapModule pOldMapModule, Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
 			}
 
-			public boolean isMapModuleChangeAllowed(MapModule pOldMapModule,
-					Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
+			public boolean isMapModuleChangeAllowed(MapModule pOldMapModule, Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
 				return true;
 			}
 

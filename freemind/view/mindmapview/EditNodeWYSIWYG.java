@@ -26,8 +26,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -76,23 +74,11 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 			Tools.setLabelAndMnemonic(cancelButton, base.getText("cancel"));
 			Tools.setLabelAndMnemonic(splitButton, base.getText("split"));
 
-			okButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					submit();
-				}
-			});
+			okButton.addActionListener(e -> submit());
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cancel();
-				}
-			});
+			cancelButton.addActionListener(e -> cancel());
 
-			splitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					split();
-				}
-			});
+			splitButton.addActionListener(e -> split());
 
 			Tools.addKeyActionToDialog(this, new SubmitAction(), "alt ENTER",
 					"submit");
@@ -104,16 +90,14 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 			buttonPane.add(splitButton);
 			buttonPane.setMaximumSize(new Dimension(1000, 20));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			htmlEditorPanel.setOpenHyperlinkHandler(new ActionListener() {
-				public void actionPerformed(ActionEvent pE) {
-					try {
-						getBase().getController().getFrame()
-								.openDocument(new URL(pE.getActionCommand()));
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-					}
-				}
-			});
+			htmlEditorPanel.setOpenHyperlinkHandler(pE -> {
+                try {
+                    getBase().getController().getFrame()
+                            .openDocument(new URL(pE.getActionCommand()));
+                } catch (Exception e) {
+                    Resources.getInstance().logException(e);
+                }
+            });
 
 			if (checkSpelling) {
 				SpellChecker.register(htmlEditorPanel.getEditorPane());
@@ -124,30 +108,6 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 			if (htmlEditorPanel == null) {
 				SHTMLPanel.setResources(new SimplyHtmlResources());
 				htmlEditorPanel = SHTMLPanel.createSHTMLPanel();
-//				htmlEditorPanel.getEditorPane().addMouseListener(new MouseAdapter () {
-//					public void mousePressed(MouseEvent e) {
-//						conditionallyShowPopup(e);
-//					}
-//
-//					public void mouseReleased(MouseEvent e) {
-//						conditionallyShowPopup(e);
-//					}
-//
-//					private void conditionallyShowPopup(MouseEvent e) {
-//						if (e.isPopupTrigger()) {
-//							System.out.println("fooooooooooooooooooooo");
-//							JPopupMenu popupMenu =
-//									((SHTMLEditorPane) e.getSource()).getPopup();
-//							if (checkSpelling && popupMenu != null) {
-////								popupMenu.add(SpellChecker.createCheckerMenu(), 0);
-////								popupMenu.add(SpellChecker.createLanguagesMenu(), 1);
-////								popupMenu.addSeparator();
-////								popupMenu.show(e.getComponent(), e.getX(), e.getY());
-//							}
-////							e.consume();
-//						}
-//					}
-//				});
 			}
 			return htmlEditorPanel;
 		}
@@ -239,20 +199,11 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 			Font font = node.getTextFont();
 			if (Resources.getInstance().getBoolProperty(
 					"experimental_font_sizing_for_long_node_editors")) {
-				/*
-				 * This is a proposal of Dan, but it doesn't work as expected.
-				 * 
-				 * http://sourceforge.net/tracker/?func=detail&aid=2800933&group_id
-				 * =7118&atid=107118
-				 */
-				font = Tools.updateFontSize(font, this.getView().getZoom(),
-						font.getSize());
+				font = Tools.updateFontSize(font, this.getView().getZoom(), font.getSize());
 			}
 			final Color nodeTextBackground = node.getTextBackground();
 			rule += "font-family: " + font.getFamily() + ";";
 			rule += "font-size: " + font.getSize() + "pt;";
-			// Daniel said:, but no effect:
-			// rule += "font-size: "+node.getFont().getSize()+"pt;";
 			if (node.getModel().isItalic()) {
 				rule += "font-style: italic; ";
 			}
@@ -274,10 +225,9 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 			try {
 				document.setBase(node.getMap().getModel().getURL());
 			} catch (MalformedURLException e) {
+				e.printStackTrace();
 			}
 
-			// { -- Set size (can be refactored to share code with long node
-			// editor)
 			int preferredHeight = (int) (node.getMainView().getHeight() * 1.2);
 			preferredHeight = Math.max(preferredHeight, Integer.parseInt(frame
 					.getProperty("el__min_default_window_height")));
@@ -301,15 +251,14 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 				content = HtmlTools.plainToHTML(content);
 			}
 			htmlEditorPanel.setCurrentDocumentContent(content);
-			if (firstEvent instanceof KeyEvent) {
+			if (firstEvent != null) {
 				final KeyEvent firstKeyEvent = (KeyEvent) firstEvent;
 				final JTextComponent currentPane = htmlEditorPanel
 						.getEditorPane();
 				if (currentPane == htmlEditorPanel.getMostRecentFocusOwner()) {
 					redispatchKeyEvents(currentPane, firstKeyEvent);
 				}
-			} // 1st key event defined
-			else {
+			} else {
 				editorPane.setCaretPosition(htmlEditorPanel.getDocument()
 						.getLength());
 			}
