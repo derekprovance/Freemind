@@ -44,10 +44,6 @@ import freemind.main.FreeMind;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 
-/**
- * This is the menu bar for FreeMind. Actions are defined in MenuListener.
- * Moreover, the StructuredMenuHolder of all menus are held here.
- * */
 public class MenuBar extends JMenuBar {
 
 	private static java.util.logging.Logger logger;
@@ -156,13 +152,6 @@ public class MenuBar extends JMenuBar {
 		mapsPopupMenu = new FreeMindPopupMenu();
 		mapsPopupMenu.setName(c.getResourceString("mindmaps"));
 		menuHolder.addCategory(POPUP_MENU + "navigate");
-		// menuHolder.addSeparator(POPUP_MENU);
-
-		// formerly, the modes menu was an own menu, but to need less place for
-		// the menus,
-		// we integrated it into the maps menu.
-		// JMenu modesmenu = menuHolder.addMenu(new
-		// JMenu(c.getResourceString("modes")), MODES_MENU+".");
 
 		menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU
 				+ ".");
@@ -184,7 +173,6 @@ public class MenuBar extends JMenuBar {
 		updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
 		updateMapsMenu(menuHolder, POPUP_MENU);
 		addAdditionalPopupActions();
-		// the modes:
 		newModeController.updateMenus(menuHolder);
 		menuHolder.updateMenus(this, MENU_BAR_PREFIX);
 		menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
@@ -222,9 +210,6 @@ public class MenuBar extends JMenuBar {
 		JMenuItem newPopupItem;
 
 		if (c.getFrame().isApplet()) {
-			// We have enabled hiding of menubar only in applets. It it because
-			// when we hide menubar in application, the key accelerators from
-			// menubar do not work.
 			newPopupItem = menuHolder.addAction(c.toggleMenubar, POPUP_MENU
 					+ "toggleMenubar");
 			newPopupItem.setForeground(new Color(100, 80, 80));
@@ -246,8 +231,8 @@ public class MenuBar extends JMenuBar {
 			return;
 		}
 		ButtonGroup group = new ButtonGroup();
-		for (Iterator iterator = mapModuleVector.iterator(); iterator.hasNext();) {
-			MapModule mapModule = (MapModule) iterator.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule mapModule = (MapModule) aMapModuleVector;
 			String displayName = mapModule.getDisplayName();
 			JRadioButtonMenuItem newItem = new JRadioButtonMenuItem(displayName);
 			newItem.setSelected(false);
@@ -364,7 +349,6 @@ public class MenuBar extends JMenuBar {
 
 		menuHolder.addSeparator(VIEW_MENU);
 		menuHolder.addCategory(VIEW_MENU + "note_window");
-//		menuHolder.addSeparator(VIEW_MENU);
 	}
 
 	private void addOptionSet(Action action, String[] textIDs, JMenu menu,
@@ -391,10 +375,6 @@ public class MenuBar extends JMenuBar {
 		return mapsPopupMenu;
 	}
 
-	/**
-	 * This method simpy copy's all elements of the source Menu to the end of
-	 * the second menu.
-	 */
 	private void copyMenuItems(JMenu source, JMenu dest) {
 		Component[] items = source.getMenuComponents();
 		for (Component item : items) {
@@ -404,12 +384,8 @@ public class MenuBar extends JMenuBar {
 
 	private class MapsMenuActionListener implements ActionListener {
 		public void actionPerformed(final ActionEvent e) {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					c.getMapModuleManager().changeToMapModule(
-							e.getActionCommand());
-				}
-			});
+			SwingUtilities.invokeLater(() -> c.getMapModuleManager().changeToMapModule(
+                    e.getActionCommand()));
 		}
 	}
 
@@ -435,11 +411,7 @@ public class MenuBar extends JMenuBar {
 
 	private class ModesMenuActionListener implements ActionListener {
 		public void actionPerformed(final ActionEvent e) {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					c.createNewMode(e.getActionCommand());
-				}
-			});
+			SwingUtilities.invokeLater(() -> c.createNewMode(e.getActionCommand()));
 		}
 	}
 
@@ -447,12 +419,6 @@ public class MenuBar extends JMenuBar {
 		return menuHolder;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.JMenuBar#processKeyBinding(javax.swing.KeyStroke,
-	 * java.awt.event.KeyEvent, int, boolean)
-	 */
 	public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition,
 			boolean pressed) {
 		return super.processKeyBinding(ks, e, condition, pressed);

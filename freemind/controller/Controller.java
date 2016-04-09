@@ -695,7 +695,7 @@ public class Controller implements MapModuleChangeObserver {
 		final Component leftToolBar = getModeController().getLeftToolBar();
 		if (leftToolBar != null) {
 			leftToolBar.setVisible(leftToolbarVisible);
-			((JComponent) leftToolBar.getParent()).revalidate();
+			leftToolBar.getParent().revalidate();
 		}
 	}
 
@@ -747,29 +747,6 @@ public class Controller implements MapModuleChangeObserver {
 		getMapModuleManager().close(force, null);
 	}
 
-	// (PN) %%%
-	// public void select( NodeView node) {
-	// getView().select(node,false);
-	// getView().setSiblingMaxLevel(node.getModel().getNodeLevel()); // this
-	// level is default
-	// }
-	//
-	// void selectBranch( NodeView node, boolean extend ) {
-	// getView().selectBranch(node,extend);
-	// }
-	//
-	// boolean isSelected( NodeView node ) {
-	// return getView().isSelected(node);
-	// }
-	//
-	// void centerNode() {
-	// getView().centerNode(getView().getSelected());
-	// }
-	//
-	// private MindMapNode getSelected() {
-	// return getView().getSelected().getModel();
-	// }
-
 	public void informationMessage(Object message) {
 		JOptionPane
 				.showMessageDialog(getFrame().getContentPane(),
@@ -806,29 +783,15 @@ public class Controller implements MapModuleChangeObserver {
 	public void obtainFocusForSelected() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.clearGlobalFocusOwner();
-		// logger.finest("obtainFocusForSelected");
 		if (getView() != null) { // is null if the last map was closed.
 			logger.fine("Requesting Focus for " + getView() + " in model "
 					+ getView().getModel());
 			getView().requestFocusInWindow();
 		} else {
-			// fc, 6.1.2004: bug fix, that open and quit are not working if no
-			// map is present.
-			// to avoid this, the menu bar gets the focus, and everything seems
-			// to be all right!!
-			// but I cannot avoid thinking of this change to be a bad hack ....
 			logger.info("No view present. No focus!");
 			getFrame().getFreeMindMenuBar().requestFocus();
 		}
 	}
-
-	//
-	// Map Navigation
-	//
-
-	//
-	// other
-	//
 
 	public void setZoom(float zoom) {
 		getView().setZoom(zoom);
@@ -840,22 +803,6 @@ public class Controller implements MapModuleChangeObserver {
 				"user_defined_zoom_status_bar", messageArguments);
 		getFrame().out(stringResult);
 	}
-
-	// ////////////
-	// Private methods. Internal implementation
-	// //////////
-
-	//
-	// Node editing
-	//
-	// (PN)
-	// private void getFocus() {
-	// getView().getSelected().requestFocus();
-	// }
-
-	//
-	// Multiple Views management
-	//
 
 	/**
 	 * Set the Frame title with mode and file if exist
@@ -881,25 +828,20 @@ public class Controller implements MapModuleChangeObserver {
 			if (file != null) {
 				title += " " + file.getAbsolutePath();
 			}
-			for (Iterator iterator = mMapTitleContributorSet.iterator(); iterator
-					.hasNext();) {
-				MapModuleManager.MapTitleContributor contributor = (MapModuleManager.MapTitleContributor) iterator
-						.next();
-				title = contributor.getMapTitle(title, mapModule, model);
-			}
+            for (Object aMMapTitleContributorSet : mMapTitleContributorSet) {
+                MapModuleManager.MapTitleContributor contributor = (MapModuleManager.MapTitleContributor) aMMapTitleContributorSet;
+                title = contributor.getMapTitle(title, mapModule, model);
+            }
 
 		}
 		getFrame().setTitle(title);
-		for (Iterator iterator = mMapTitleChangeListenerSet.iterator(); iterator
-				.hasNext();) {
-			MapModuleManager.MapTitleChangeListener listener = (MapModuleManager.MapTitleChangeListener) iterator
-					.next();
-			listener.setMapTitle(rawTitle, mapModule, model);
-		}
+        for (Object aMMapTitleChangeListenerSet : mMapTitleChangeListenerSet) {
+            MapModuleManager.MapTitleChangeListener listener = (MapModuleManager.MapTitleChangeListener) aMMapTitleChangeListenerSet;
+            listener.setMapTitle(rawTitle, mapModule, model);
+        }
 	}
 
-	public void registerMapTitleChangeListener(
-			MapModuleManager.MapTitleChangeListener pMapTitleChangeListener) {
+	public void registerMapTitleChangeListener(MapModuleManager.MapTitleChangeListener pMapTitleChangeListener) {
 		mMapTitleChangeListenerSet.add(pMapTitleChangeListener);
 	}
 
@@ -988,28 +930,23 @@ public class Controller implements MapModuleChangeObserver {
 				lastStateMapXml);
 		management.setLastFocussedTab(-1);
 		management.clearTabIndices();
-		for (Iterator it = restorables.iterator(); it.hasNext();) {
-			String restorable = (String) it.next();
-			MindmapLastStateStorage storage = management.getStorage(restorable);
-			if (storage != null) {
-				storage.setTabIndex(index);
-			}
-			if (Tools.safeEquals(restorable, currentMapRestorable)) {
-				management.setLastFocussedTab(index);
-			}
-			index++;
-		}
+        for (Object restorable1 : restorables) {
+            String restorable = (String) restorable1;
+            MindmapLastStateStorage storage = management.getStorage(restorable);
+            if (storage != null) {
+                storage.setTabIndex(index);
+            }
+            if (Tools.safeEquals(restorable, currentMapRestorable)) {
+                management.setLastFocussedTab(index);
+            }
+            index++;
+        }
 		setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE,
 				management.getXml());
 
 		String lastOpenedString = lastOpened.save();
 		setProperty("lastOpened", lastOpenedString);
-		getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED,
-				currentMapRestorable != null ? currentMapRestorable : "");
-		// getFrame().setProperty("menubarVisible",menubarVisible ? "true" :
-		// "false");
-		// ^ Not allowed in application because of problems with not working key
-		// shortcuts
+		getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED, currentMapRestorable != null ? currentMapRestorable : "");
 		setProperty("toolbarVisible", toolbarVisible ? "true" : "false");
 		setProperty("leftToolbarVisible", leftToolbarVisible ? "true" : "false");
 		if (!getFrame().isApplet()) {
@@ -1024,9 +961,7 @@ public class Controller implements MapModuleChangeObserver {
 			}
 			setProperty("appwindow_state", String.valueOf(winState));
 		}
-		// Stop edit server!
 		getFrame().saveProperties(true);
-		// save to properties
 		System.exit(0);
 	}
 
