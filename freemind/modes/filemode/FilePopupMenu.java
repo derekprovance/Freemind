@@ -11,8 +11,7 @@ class FilePopupMenu extends JPopupMenu {
 
 	protected void add(Action action, String keystroke) {
 		JMenuItem item = add(action);
-		item.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty(keystroke)));
+		item.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty(keystroke)));
 	}
 
 	FilePopupMenu(FileController c) {
@@ -23,6 +22,5 @@ class FilePopupMenu extends JPopupMenu {
 		this.addSeparator();
 		this.add(c.find, "keystroke_find");
 		this.add(c.findNext, "keystroke_find_next");
-
 	}
 }

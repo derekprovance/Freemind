@@ -490,7 +490,8 @@
 			<xs:extension base="node_action">
 				<xs:sequence>
 					<xs:element name="text" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
-				</xs:sequence>			</xs:extension>
+				</xs:sequence>
+			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 

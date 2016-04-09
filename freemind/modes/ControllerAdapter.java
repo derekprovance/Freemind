@@ -1201,8 +1201,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		ControllerAdapter mc;
 
 		public OpenAction(ControllerAdapter modeController) {
-			super(getText("open"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/fileopen.png")));
+			super(getText("open"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/fileopen.png")));
 			mc = modeController;
 		}
 

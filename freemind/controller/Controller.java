@@ -614,15 +614,14 @@ public class Controller implements MapModuleChangeObserver {
 		menuBar.updateMenus(newModeController);
 		menuBar.revalidate();
 		menuBar.repaint();
-		// new
 		obtainFocusForSelected();
 	}
 
 	protected void changeZoomValueProperty(final float zoomValue) {
-		for (Iterator it = mZoomListenerSet.iterator(); it.hasNext();) {
-			ZoomListener listener = (ZoomListener) it.next();
-			listener.setZoom(zoomValue);
-		}
+        for (Object aMZoomListenerSet : mZoomListenerSet) {
+            ZoomListener listener = (ZoomListener) aMZoomListenerSet;
+            listener.setZoom(zoomValue);
+        }
 	}
 
 	public void numberOfOpenMapInformation(int number, int pIndex) {
@@ -630,8 +629,7 @@ public class Controller implements MapModuleChangeObserver {
 		navigationNextMap.setEnabled(number > 0);
 		logger.info("number " + number + ", pIndex " + pIndex);
 		navigationMoveMapLeftAction.setEnabled(number > 1 && pIndex > 0);
-		navigationMoveMapRightAction.setEnabled(number > 1
-				&& pIndex < number - 1);
+		navigationMoveMapRightAction.setEnabled(number > 1 && pIndex < number - 1);
 	}
 
 	/**
@@ -1036,9 +1034,7 @@ public class Controller implements MapModuleChangeObserver {
 		boolean isDlg;
 
 		PrintAction(Controller controller, boolean isDlg) {
-			super(isDlg ? controller.getResourceString("print_dialog")
-					: controller.getResourceString("print"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/fileprint.png")));
+			super(isDlg ? controller.getResourceString("print_dialog") : controller.getResourceString("print"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/fileprint.png")));
 			this.controller = controller;
 			setEnabled(false);
 			this.isDlg = isDlg;

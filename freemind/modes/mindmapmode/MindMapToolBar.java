@@ -49,10 +49,6 @@ import freemind.view.mindmapview.MapView;
 
 public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 
-	/**
-	 * A combo box that doesn't fill the complete screen.
-	 * See http://stackoverflow.com/questions/13345640/does-anyone-know-how-to-layout-a-jtoolbar-that-doest-move-or-re-size-any-compon
-	 */
 	private final class FreeMindComboBox extends JComboBox {
 		private FreeMindComboBox(Vector pItems) {
 			super(pItems);
@@ -126,12 +122,10 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            // change the font size
             // TODO: this is super-dirty, why doesn't the toolbar know the model?
             if (fontSize_IgnoreChangeEvent) {
                 return;
             }
-            // call action:
             c.fontSize.actionPerformed((String) e.getItem());
         };
 		size.addItemListener(sizeListener);
@@ -140,7 +134,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		zoom = new FreeMindComboBox(controller.getController().getZooms());
 		zoom.setSelectedItem("100%");
 		zoom.addItem(userDefinedZoom);
-		// Focus fix.
 		zoom.setFocusable(false);
 		zoom.addItemListener(e -> {
             // todo: dialog with user zoom value, if user zoom is chosen.

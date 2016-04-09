@@ -215,7 +215,6 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 		final Registration registration = (Registration) getPluginBaseClass();
 		final MindMapController modeController = getMindMapController();
 		String direction = getResourceString("direction");
-		// logger.info("Direction: " + direction);
 		if ("back".equals(direction)) {
 			if (sCurrentPosition > 1) {
 				--sCurrentPosition;
@@ -286,8 +285,8 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 	private void printVector() {
 		StringBuffer sb = new StringBuffer("\n");
 		int i = 0;
-		for (Iterator iter = sNodeVector.iterator(); iter.hasNext();) {
-			NodeHolder holder = (NodeHolder) iter.next();
+		for (Object aSNodeVector : sNodeVector) {
+			NodeHolder holder = (NodeHolder) aSNodeVector;
 			sb.append(((sCurrentPosition - 1 == i) ? "==>" : "   ")
 					+ "Node pos " + i + " is "
 					+ holder.getNode(getMindMapController().getController()));

@@ -10,8 +10,8 @@
     	name="%accessories/plugins/NodeHistoryBack.properties_name" 
     	key_stroke="%keystroke_accessories/plugins/NodeHistoryBack.keystroke.alt_BACK" 
     	base="freemind.extensions.NodeHookAdapter" 
-    	icon_path="accessories/plugins/icons/back.png" 
-    	label="accessories/plugins/NodeHistoryBack.properties" 
+    	icon_path="accessories/plugins/icons/back.png"
+    	label="accessories/plugins/NodeHistoryBack.properties"
     	class_name="accessories.plugins.NodeHistory" 
     	instanciation="Other">
         <plugin_mode class_name="freemind.modes.mindmapmode"/>
@@ -24,8 +24,8 @@
     	name="%accessories/plugins/NodeHistoryForward.properties_name" 
     	key_stroke="%keystroke_accessories/plugins/NodeHistoryForward.keystroke.alt_FORWARD" 
     	base="freemind.extensions.NodeHookAdapter" 
-    	icon_path="accessories/plugins/icons/forward.png" 
-    	label="accessories/plugins/NodeHistoryForward.properties" 
+    	icon_path="accessories/plugins/icons/forward.png"
+    	label="accessories/plugins/NodeHistoryForward.properties"
     	class_name="accessories.plugins.NodeHistory" 
     	instanciation="Other">
         <plugin_mode class_name="freemind.modes.mindmapmode"/>
