@@ -249,9 +249,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			// print all java/sun properties
 			Properties properties = System.getProperties();
 			List list = new ArrayList();
-			for (Object key : properties.keySet()) {
-				list.add(key);
-			}
+			list.addAll(properties.keySet());
 			Collections.sort(list);
 			for (Object aList : list) {
 				String key = (String) aList;

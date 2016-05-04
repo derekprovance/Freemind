@@ -211,11 +211,11 @@ public class EditServer extends Thread {
 			SwingUtilities.invokeLater(() -> {
                 try {
                     Vector urls = Tools.urlStringToUrls(script);
-                    for (Iterator it = urls.iterator(); it.hasNext();) {
-                        URL urli = (URL) it.next();
-                        mFrame.getController().getModeController()
-                                .load(urli);
-                    }
+					for (Object url : urls) {
+						URL urli = (URL) url;
+						mFrame.getController().getModeController()
+								.load(urli);
+					}
                 } catch (MalformedURLException e) {
                     Resources.getInstance().logException(e);
                 } catch (Exception e) {
