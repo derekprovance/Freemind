@@ -287,15 +287,12 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 				bean.addPropertyChangeListener(this);
 			}
 		}
-		mClearSetters.addPropertyChangeListener(new PropertyChangeListener() {
-
-			public void propertyChange(PropertyChangeEvent pEvt) {
-				for (Object o : mPropertyChangePropagation.keySet()) {
-					ThreeCheckBoxProperty booleanProp = (ThreeCheckBoxProperty) o;
-					booleanProp.setValue(mClearSetters.getValue());
-				}
-			}
-		});
+		mClearSetters.addPropertyChangeListener(pEvt -> {
+            for (Object o : mPropertyChangePropagation.keySet()) {
+                ThreeCheckBoxProperty booleanProp = (ThreeCheckBoxProperty) o;
+                booleanProp.setValue(mClearSetters.getValue());
+            }
+        });
 	}
 
 	private String[] sizes = new String[] { "2", "4", "6", "8", "10", "12",

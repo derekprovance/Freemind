@@ -126,10 +126,7 @@ public abstract class FreeMindTask extends Thread {
 			}
 			if (System.currentTimeMillis() - startTime > TIME_TO_DISPLAY_PROGRESS_BAR_IN_MILLIS) {
 				// mProgressMonitor.setModal(true);
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						mProgressMonitor.setVisible(true);
-					}});
+				EventQueue.invokeLater(() -> mProgressMonitor.setVisible(true));
 			}
 			if (mProgressMonitor.isVisible()) {
 				ProgressDescription progressDescription = mProgressDescription;
@@ -148,13 +145,11 @@ public abstract class FreeMindTask extends Thread {
 			}
 		}
 		setFinished(true);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				mGlass.setVisible(false);
-				mFrame.setGlassPane(mOldGlassPane);
-				mProgressMonitor.dismiss();
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            mGlass.setVisible(false);
+            mFrame.setGlassPane(mOldGlassPane);
+            mProgressMonitor.dismiss();
+        });
 	}
 
 	/**

@@ -457,14 +457,11 @@ public class OptionPanel implements TextTranslator {
 						"it", "ja", "ko", "lt", "nl", "nn", "nb", "pl",
 						"pt_BR", "pt_PT", "ro", "ru", "sk", "se", "sl", "sr",
 						"tr", "uk_UA", "vi", "zh_TW", "zh_CN" },
-				new TextTranslator() {
-
-					public String getText(String pKey) {
-						// decorator, that removes "TranslateMe" comments.
-						return Tools.removeTranslateComment(OptionPanel.this
-								.getText(pKey));
-					}
-				})); // automatic
+                pKey -> {
+                    // decorator, that removes "TranslateMe" comments.
+                    return Tools.removeTranslateComment(OptionPanel.this
+                            .getText(pKey));
+                })); // automatic
 
 		controls.add(new BooleanProperty(FreeMindCommon.CHECK_SPELLING
 				+ TOOLTIP_EXT, FreeMindCommon.CHECK_SPELLING)); // true

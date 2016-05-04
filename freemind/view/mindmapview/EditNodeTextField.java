@@ -230,14 +230,12 @@ public class EditNodeTextField extends EditNodeBase {
 		if (checkSpelling) {
 			SpellChecker.register(textfield, false, true, true, true);
 		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				textfield.requestFocus();
-				// Add listener now, as there are focus changes before.
-				textfield.addFocusListener(textFieldListener);
-				mFocusListener.addComponentListener(textFieldListener);
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            textfield.requestFocus();
+            // Add listener now, as there are focus changes before.
+            textfield.addFocusListener(textFieldListener);
+            mFocusListener.addComponentListener(textFieldListener);
+        });
 	}
 
 	// listener class

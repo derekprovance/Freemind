@@ -243,14 +243,12 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 			 * formerly in ControllerAdapter. To guarantee, that point-to-select
 			 * does not change selection if any meta key is pressed.
 			 */
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					if (e.getModifiers() == 0 && !c.isBlocked()
-							&& c.getView().getSelecteds().size() <= 1) {
-						c.extendSelection(e);
-					}
-				}
-			});
+			SwingUtilities.invokeLater(() -> {
+                if (e.getModifiers() == 0 && !c.isBlocked()
+                        && c.getView().getSelecteds().size() <= 1) {
+                    c.extendSelection(e);
+                }
+            });
 		}
 	}
 

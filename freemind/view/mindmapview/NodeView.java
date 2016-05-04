@@ -121,19 +121,15 @@ public class NodeView extends JComponent implements TreeModelListener {
 					.getLogger(this.getClass().getName());
 		}
 		if(sListener == null){
-			sListener = new FreemindPropertyListener() {
-				
-				public void propertyChanged(String pPropertyName,
-						String pNewValue, String pOldValue) {
-					if (Tools.safeEquals(pPropertyName,
-							FreeMind.TOOLTIP_DISPLAY_TIME)) {
-						// control tooltip times:
-						ToolTipManager.sharedInstance().setDismissDelay(
-								Resources.getInstance().getIntProperty(
-										FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
-					}
-				}
-			};
+			sListener = (pPropertyName, pNewValue, pOldValue) -> {
+                if (Tools.safeEquals(pPropertyName,
+                        FreeMind.TOOLTIP_DISPLAY_TIME)) {
+                    // control tooltip times:
+                    ToolTipManager.sharedInstance().setDismissDelay(
+                            Resources.getInstance().getIntProperty(
+                                    FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
+                }
+            };
 			Controller.addPropertyChangeListenerAndPropagate(sListener);
 		}
 
@@ -154,12 +150,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			mFoldingListener = new NodeFoldingComponent(this);
 			add(mFoldingListener, getComponentCount()-1);
 
-			mFoldingListener.addActionListener(new ActionListener() {
-				
-				public void actionPerformed(ActionEvent pE) {
-					getViewFeedback().setFolded(getModel(), !getModel().isFolded());
-				}
-			});
+			mFoldingListener.addActionListener(pE -> getViewFeedback().setFolded(getModel(), !getModel().isFolded()));
 		}
 	}
 

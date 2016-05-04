@@ -1576,12 +1576,10 @@ public class Tools {
 			// wait until AWT thread starts
 			// final Exception e = new IllegalArgumentException("HERE");
 			if (!EventQueue.isDispatchThread()) {
-				EventQueue.invokeAndWait(new Runnable() {
-					public void run() {
-						// logger.info("Waited for event queue.");
-						// e.printStackTrace();
-					}
-				});
+				EventQueue.invokeAndWait(() -> {
+                    // logger.info("Waited for event queue.");
+                    // e.printStackTrace();
+                });
 			} else {
 				logger.warning("Can't wait for event queue, if I'm inside this queue!");
 			}
@@ -1845,17 +1843,12 @@ public class Tools {
 
 	
 	public static void addFocusPrintTimer() {
-		Timer timer = new Timer(1000, new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				logger.info("Component: "
-						+ KeyboardFocusManager.getCurrentKeyboardFocusManager()
-								.getFocusOwner()
-						+ ", Window: "
-						+ KeyboardFocusManager.getCurrentKeyboardFocusManager()
-								.getFocusedWindow());
-			}
-		});
+		Timer timer = new Timer(1000, pE -> logger.info("Component: "
+                + KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                        .getFocusOwner()
+                + ", Window: "
+                + KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                        .getFocusedWindow()));
 		timer.start();
 
 	}

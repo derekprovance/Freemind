@@ -31,13 +31,10 @@ public class SelectAllAction extends NodeGeneralAction {
      *
      */
 	public SelectAllAction(final MindMapController modeController) {
-		super(modeController, "select_all", null, new SingleNodeOperation() {
-
-			public void apply(MindMapMapModel map, MindMapNodeModel node) {
-				modeController.selectBranch(modeController.getView().getRoot(),
-						false);
-			}
-		});
+		super(modeController, "select_all", null, (map, node) -> {
+            modeController.selectBranch(modeController.getView().getRoot(),
+                    false);
+        });
 	}
 
 }

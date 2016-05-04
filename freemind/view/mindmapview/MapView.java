@@ -1038,22 +1038,19 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			pointNodePairs.add(new Pair(new Integer(point.y), node));
 		}
 		// do the sorting:
-		Collections.sort(pointNodePairs, new Comparator() {
-
-			public int compare(Object arg0, Object arg1) {
-				if (arg0 instanceof Pair) {
-					Pair pair0 = (Pair) arg0;
-					if (arg1 instanceof Pair) {
-						Pair pair1 = (Pair) arg1;
-						Integer int0 = (Integer) pair0.getFirst();
-						Integer int1 = (Integer) pair1.getFirst();
-						return int0.compareTo(int1);
-					}
-				}
-				throw new IllegalArgumentException("Wrong compare arguments "
-						+ arg0 + ", " + arg1);
-			}
-		});
+		Collections.sort(pointNodePairs, (arg0, arg1) -> {
+            if (arg0 instanceof Pair) {
+                Pair pair0 = (Pair) arg0;
+                if (arg1 instanceof Pair) {
+                    Pair pair1 = (Pair) arg1;
+                    Integer int0 = (Integer) pair0.getFirst();
+                    Integer int1 = (Integer) pair1.getFirst();
+                    return int0.compareTo(int1);
+                }
+            }
+            throw new IllegalArgumentException("Wrong compare arguments "
+                    + arg0 + ", " + arg1);
+        });
 
 		ArrayList selectedNodes = new ArrayList();
         for (Object pointNodePair : pointNodePairs) {

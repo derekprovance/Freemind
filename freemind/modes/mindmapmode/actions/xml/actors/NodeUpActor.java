@@ -61,14 +61,11 @@ public class NodeUpActor extends XmlActorAdapter {
 	}
 
 	private void _moveNodes(MindMapNode selected, List selecteds, int direction) {
-		Comparator comparator = (direction == -1) ? null : new Comparator() {
-
-			public int compare(Object o1, Object o2) {
-				int i1 = ((Integer) o1).intValue();
-				int i2 = ((Integer) o2).intValue();
-				return i2 - i1;
-			}
-		};
+		Comparator comparator = (direction == -1) ? null : (Comparator) (o1, o2) -> {
+            int i1 = ((Integer) o1).intValue();
+            int i2 = ((Integer) o2).intValue();
+            return i2 - i1;
+        };
 		if (!selected.isRoot()) {
 			MindMapNode parent = selected.getParentNode();
 			// multiple move:
@@ -143,23 +140,20 @@ public class NodeUpActor extends XmlActorAdapter {
 		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
 			nodes.add(i.next());
 		}
-		Collections.sort(nodes, new Comparator() {
-
-			public int compare(Object o1, Object o2) {
-				if (o1 instanceof MindMapNode) {
-					MindMapNode n1 = (MindMapNode) o1;
-					if (o2 instanceof MindMapNode) {
-						MindMapNode n2 = (MindMapNode) o2;
-						// left is less than right
-						int b1 = n1.isLeft() ? 0 : 1;
-						int b2 = n2.isLeft() ? 0 : 1;
-						return b1 - b2;
-					}
-				}
-				throw new IllegalArgumentException(
-						"Elements in LeftRightComparator are not comparable.");
-			}
-		});
+		Collections.sort(nodes, (o1, o2) -> {
+            if (o1 instanceof MindMapNode) {
+                MindMapNode n1 = (MindMapNode) o1;
+                if (o2 instanceof MindMapNode) {
+                    MindMapNode n2 = (MindMapNode) o2;
+                    // left is less than right
+                    int b1 = n1.isLeft() ? 0 : 1;
+                    int b2 = n2.isLeft() ? 0 : 1;
+                    return b1 - b2;
+                }
+            }
+            throw new IllegalArgumentException(
+                    "Elements in LeftRightComparator are not comparable.");
+        });
 		// logger.finest("Sorted nodes "+ nodes);
 		return nodes;
 	}

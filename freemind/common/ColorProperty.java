@@ -95,12 +95,7 @@ public class ColorProperty extends PropertyBean implements PropertyControl,
 		// Create and add a menu item
 		JMenuItem item = new JMenuItem(
 				mTranslator.getText("ColorProperty.ResetColor"));
-		item.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setValue(defaultColor);
-			}
-		});
+		item.addActionListener(e -> setValue(defaultColor));
 		menu.add(item);
 
 		// Set the component to show the popup menu

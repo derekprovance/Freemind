@@ -72,20 +72,18 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 			logger.fine("Task: " + lastTaskId + " (" + act + ") last "
 					+ (timeDifference) / 1000.0 + " seconds.\nTotal: "
 					+ mTotalTime / 1000.0 + "\n");
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					mProgressBar.setValue(act);
-					double percent = act * 1.0 / mProgressBar.getMaximum();
-					mProgressBar.setString(progressString);
-					if (mImageJLabel != null) {
-						mImageJLabel.putClientProperty("progressString",
-								progressString);
-						mImageJLabel.putClientProperty("progressPercent",
-								new Double(percent));
-						mImageJLabel.repaint();
-					}
-				}
-			});
+			SwingUtilities.invokeLater(() -> {
+                mProgressBar.setValue(act);
+                double percent = act * 1.0 / mProgressBar.getMaximum();
+                mProgressBar.setString(progressString);
+                if (mImageJLabel != null) {
+                    mImageJLabel.putClientProperty("progressString",
+                            progressString);
+                    mImageJLabel.putClientProperty("progressPercent",
+                            new Double(percent));
+                    mImageJLabel.repaint();
+                }
+            });
 			logger.fine("Beginnig task:" + messageId);
 			lastTaskId = messageId;
 			// this is not nice, as other windows are probably more important!

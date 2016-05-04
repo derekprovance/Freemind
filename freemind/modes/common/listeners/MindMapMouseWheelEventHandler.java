@@ -61,15 +61,11 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 			logger = freemind.main.Resources.getInstance().getLogger(
 					this.getClass().getName());
 		}
-		Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.equals(FreeMind.RESOURCES_WHEEL_VELOCITY)) {
-					SCROLL_SKIPS = Integer.parseInt(newValue);
-				}
-			}
-		});
+		Controller.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
+            if (propertyName.equals(FreeMind.RESOURCES_WHEEL_VELOCITY)) {
+                SCROLL_SKIPS = Integer.parseInt(newValue);
+            }
+        });
 		SCROLL_SKIPS = controller.getFrame().getIntProperty(
 				FreeMind.RESOURCES_WHEEL_VELOCITY, 8);
 		logger.info("Setting SCROLL_SKIPS to " + SCROLL_SKIPS);

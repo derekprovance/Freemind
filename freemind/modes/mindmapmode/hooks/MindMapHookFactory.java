@@ -245,12 +245,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 			final HookDescriptorPluginAction descriptor, MindMapHook hook) {
 		hook.setProperties(descriptor.getProperties());
 		hook.setName(hookName);
-		PluginBaseClassSearcher pluginBaseClassSearcher = new PluginBaseClassSearcher() {
-
-			public Object getPluginBaseObject() {
-				return getPluginBaseClass(descriptor);
-			}
-		};
+		PluginBaseClassSearcher pluginBaseClassSearcher = () -> getPluginBaseClass(descriptor);
 		hook.setPluginBaseClass(pluginBaseClassSearcher);
 	}
 

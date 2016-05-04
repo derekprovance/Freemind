@@ -132,36 +132,20 @@ public class EditNodeDialog extends EditNodeBase {
 						.getValue());
 			}
 
-			okButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					// next try to avoid bug 1159: focus jumps to file-menu after closing html-editing-window
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							submit();
-						}
-					});
-				}
-			});
+			okButton.addActionListener(e -> {
+                // next try to avoid bug 1159: focus jumps to file-menu after closing html-editing-window
+                EventQueue.invokeLater(() -> submit());
+            });
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cancel();
-				}
-			});
+			cancelButton.addActionListener(e -> cancel());
 
-			splitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					split();
-				}
-			});
+			splitButton.addActionListener(e -> split());
 
-			enterConfirms.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					textArea.requestFocus();
-					booleanHolderForConfirmState.setValue(enterConfirms
-							.isSelected());
-				}
-			});
+			enterConfirms.addActionListener(e -> {
+                textArea.requestFocus();
+                booleanHolderForConfirmState.setValue(enterConfirms
+                        .isSelected());
+            });
 
 			// On Enter act as if OK button was pressed
 

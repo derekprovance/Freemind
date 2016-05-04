@@ -167,11 +167,7 @@ public class UndoAction extends AbstractXmlAction {
 	private void startActionFrame() {
 		if (!actionFrameStarted && EventQueue.isDispatchThread()) {
 			actionFrameStarted = true;
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					actionFrameStarted = false;
-				}
-			});
+			EventQueue.invokeLater(() -> actionFrameStarted = false);
 		}
 	}
 

@@ -52,12 +52,7 @@ public class BooleanProperty extends PropertyBean implements PropertyControl {
 		super();
 		this.description = description;
 		this.label = label;
-		mCheckBox.addItemListener(new ItemListener() {
-
-			public void itemStateChanged(ItemEvent pE) {
-				firePropertyChangeEvent();
-			}
-		});
+		mCheckBox.addItemListener(pE -> firePropertyChangeEvent());
 	}
 
 	public String getDescription() {

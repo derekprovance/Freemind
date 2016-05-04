@@ -62,12 +62,7 @@ public class FreeMindProgressMonitor extends JDialog {
 		mProgressBar = new JProgressBar();
 		mCancelButton = new JButton();
 		Tools.setLabelAndMnemonic(mCancelButton, getString(("cancel")));
-		mCancelButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				mCanceled = true;
-			}
-		});
+		mCancelButton.addActionListener(pE -> mCanceled = true);
 		setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints(0, 0,
 				GridBagConstraints.REMAINDER, 1, 1.0, 1.0,
@@ -106,30 +101,18 @@ public class FreeMindProgressMonitor extends JDialog {
 	 */
 	public boolean showProgress(int pCurrent, final int pMax, String pName,
 			Object[] pParameters) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				mProgressBar.setMaximum(pMax);
-			}
-		});
+		EventQueue.invokeLater(() -> mProgressBar.setMaximum(pMax));
 		return showProgress(pCurrent, pName, pParameters);
 	}
 
 	public boolean showProgress(int pCurrent, String pName, Object[] pParameters) {
 		final String format = Resources.getInstance().format(pName, pParameters);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				mLabel.setText(format);
-			}
-		});
+		EventQueue.invokeLater(() -> mLabel.setText(format));
 		return setProgress(pCurrent);
 	}
 
 	public boolean setProgress(final int pCurrent) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				mProgressBar.setValue(pCurrent);
-			}
-		});
+		EventQueue.invokeLater(() -> mProgressBar.setValue(pCurrent));
 		return mCanceled;
 	}
 

@@ -51,12 +51,7 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
 
 		this.description = description;
 		this.label = label;
-		spinner.addChangeListener(new ChangeListener() {
-
-			public void stateChanged(ChangeEvent pE) {
-				firePropertyChangeEvent();
-			}
-		});
+		spinner.addChangeListener(pE -> firePropertyChangeEvent());
 
 	}
 

@@ -59,12 +59,7 @@ public class FontProperty extends PropertyBean implements PropertyControl {
 				.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 		mFontComboBox.setModel(new DefaultComboBoxModel(
 				mAvailableFontFamilyNames));
-		mFontComboBox.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				firePropertyChangeEvent();
-			}
-		});
+		mFontComboBox.addActionListener(pE -> firePropertyChangeEvent());
 	}
 
 	public String getDescription() {

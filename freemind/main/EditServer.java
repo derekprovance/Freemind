@@ -208,22 +208,20 @@ public class EditServer extends Thread {
 			final String script = in.readUTF();
 			logger.info(script);
 
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						Vector urls = Tools.urlStringToUrls(script);
-						for (Iterator it = urls.iterator(); it.hasNext();) {
-							URL urli = (URL) it.next();
-							mFrame.getController().getModeController()
-									.load(urli);
-						}
-					} catch (MalformedURLException e) {
-						freemind.main.Resources.getInstance().logException(e);
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-					}
-				}
-			});
+			SwingUtilities.invokeLater(() -> {
+                try {
+                    Vector urls = Tools.urlStringToUrls(script);
+                    for (Iterator it = urls.iterator(); it.hasNext();) {
+                        URL urli = (URL) it.next();
+                        mFrame.getController().getModeController()
+                                .load(urli);
+                    }
+                } catch (MalformedURLException e) {
+                    Resources.getInstance().logException(e);
+                } catch (Exception e) {
+                    Resources.getInstance().logException(e);
+                }
+            });
 			in.close();
 			client.close();
 

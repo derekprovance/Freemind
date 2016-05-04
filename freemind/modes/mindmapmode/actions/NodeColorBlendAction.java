@@ -36,12 +36,9 @@ public class NodeColorBlendAction extends NodeGeneralAction {
      *
      */
 	public NodeColorBlendAction(final MindMapController modeController) {
-		super(modeController, "blend_color", null, new SingleNodeOperation() {
-
-			public void apply(MindMapMapModel map, MindMapNodeModel node) {
-				modeController.blendNodeColor(node);
-			}
-		});
+		super(modeController, "blend_color", null, (map, node) -> {
+            modeController.blendNodeColor(node);
+        });
 	}
 
 }

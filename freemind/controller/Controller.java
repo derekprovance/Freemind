@@ -259,18 +259,16 @@ public class Controller implements MapModuleChangeObserver {
 		 * */
 		KeyboardFocusManager focusManager = KeyboardFocusManager
 				.getCurrentKeyboardFocusManager();
-		focusManager.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent e) {
-				String prop = e.getPropertyName();
-				if ("focusOwner".equals(prop)) {
-					Component comp = (Component) e.getNewValue();
-					logger.fine("Focus change for " + comp);
-					if (comp instanceof FreeMindMain) {
-						obtainFocusForSelected();
-					}
-				}
-			}
-		});
+		focusManager.addPropertyChangeListener(e -> {
+            String prop = e.getPropertyName();
+            if ("focusOwner".equals(prop)) {
+                Component comp = (Component) e.getNewValue();
+                logger.fine("Focus change for " + comp);
+                if (comp instanceof FreeMindMain) {
+                    obtainFocusForSelected();
+                }
+            }
+        });
 
 		localDocumentationLinkConverter = new DefaultLocalLinkConverter();
 
@@ -1198,17 +1196,15 @@ public class Controller implements MapModuleChangeObserver {
 				// invokeLater is necessary, as the mode changing removes
 				// all
 				// menus (inclusive this action!).
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							createNewMode(BrowseMode.MODENAME);
-							controller.getModeController().load(endUrl);
-						} catch (Exception e1) {
-							freemind.main.Resources.getInstance().logException(
-									e1);
-						}
-					}
-				});
+				SwingUtilities.invokeLater(() -> {
+                    try {
+                        createNewMode(BrowseMode.MODENAME);
+                        controller.getModeController().load(endUrl);
+                    } catch (Exception e1) {
+                        Resources.getInstance().logException(
+                                e1);
+                    }
+                });
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block
 				freemind.main.Resources.getInstance().logException(e1);
@@ -1585,33 +1581,30 @@ public class Controller implements MapModuleChangeObserver {
 			dialog.setResizable(true);
 			dialog.setUndecorated(false);
 			final OptionPanel options = new OptionPanel((FreeMind) getFrame(),
-					dialog, new OptionPanelFeedback() {
+					dialog, props -> {
+                        Vector sortedKeys = new Vector();
+                        sortedKeys.addAll(props.keySet());
+                        Collections.sort(sortedKeys);
+                        boolean propertiesChanged = false;
+                        for (Iterator i = sortedKeys.iterator(); i
+                                .hasNext();) {
+                            String key = (String) i.next();
+                            // save only changed keys:
+                            String newProperty = props.getProperty(key);
+                            propertiesChanged = propertiesChanged
+                                    || !newProperty.equals(controller
+                                            .getProperty(key));
+                            controller.setProperty(key, newProperty);
+                        }
 
-						public void writeProperties(Properties props) {
-							Vector sortedKeys = new Vector();
-							sortedKeys.addAll(props.keySet());
-							Collections.sort(sortedKeys);
-							boolean propertiesChanged = false;
-							for (Iterator i = sortedKeys.iterator(); i
-									.hasNext();) {
-								String key = (String) i.next();
-								// save only changed keys:
-								String newProperty = props.getProperty(key);
-								propertiesChanged = propertiesChanged
-										|| !newProperty.equals(controller
-												.getProperty(key));
-								controller.setProperty(key, newProperty);
-							}
-
-							if (propertiesChanged) {
-								JOptionPane
-										.showMessageDialog(
-												null,
-												getResourceString("option_changes_may_require_restart"));
-								controller.getFrame().saveProperties(false);
-							}
-						}
-					});
+                        if (propertiesChanged) {
+                            JOptionPane
+                                    .showMessageDialog(
+                                            null,
+                                            getResourceString("option_changes_may_require_restart"));
+                            controller.getFrame().saveProperties(false);
+                        }
+                    });
 			options.buildPanel();
 			options.setProperties();
 			dialog.setTitle("Freemind Properties");
@@ -1791,18 +1784,14 @@ public class Controller implements MapModuleChangeObserver {
 				}
 			}
 		});
-		registerMapTitleChangeListener(new MapModuleManager.MapTitleChangeListener() {
-
-			public void setMapTitle(String pNewMapTitle, MapModule pMapModule,
-					MindMap pModel) {
-				for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
-					if (mTabbedPaneMapModules.get(i) == pMapModule) {
-						mTabbedPane.setTitleAt(i,
-								pNewMapTitle + ((pModel.isSaved()) ? "" : "*"));
-					}
-				}
-			}
-		});
+		registerMapTitleChangeListener((pNewMapTitle, pMapModule, pModel) -> {
+            for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
+                if (mTabbedPaneMapModules.get(i) == pMapModule) {
+                    mTabbedPane.setTitleAt(i,
+                            pNewMapTitle + ((pModel.isSaved()) ? "" : "*"));
+                }
+            }
+        });
 
 	}
 

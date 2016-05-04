@@ -31,19 +31,15 @@ public class UsePlainTextAction extends NodeGeneralAction {
 
 	public UsePlainTextAction(final MindMapController modeController) {
 		super(modeController, "use_plain_text", null,
-				new SingleNodeOperation() {
-
-					public void apply(MindMapMapModel map,
-							MindMapNodeModel selected) {
-						// modeController.getController().setProperty(
-						// "use_rich_text_in_new_long_nodes", "false");
-						String nodeText = selected.getText();
-						if (HtmlTools.isHtmlNode(nodeText)) {
-							modeController.setNodeText(selected,
-									HtmlTools.htmlToPlain(nodeText));
-						}
-					}
-				});
+				(map, selected) -> {
+                    // modeController.getController().setProperty(
+                    // "use_rich_text_in_new_long_nodes", "false");
+                    String nodeText = selected.getText();
+                    if (HtmlTools.isHtmlNode(nodeText)) {
+                        modeController.setNodeText(selected,
+                                HtmlTools.htmlToPlain(nodeText));
+                    }
+                });
 	}
 
 	// public boolean isEnabled() {

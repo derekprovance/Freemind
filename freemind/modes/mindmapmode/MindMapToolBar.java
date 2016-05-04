@@ -98,20 +98,18 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		iconToolBar.setRollover(true);
 		iconToolBar.setLayout(new GridLayout(0, getController().getIntProperty(FreeMind.ICON_BAR_COLUMN_AMOUNT, 1))); 
 		iconToolBarScrollPane.getVerticalScrollBar().setUnitIncrement(100);
-		fontsListener = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() != ItemEvent.SELECTED) {
-					return;
-				}
-				// TODO: this is super-dirty, why doesn't the toolbar know the
-				if (fontFamily_IgnoreChangeEvent) {
-					return;
-				}
-				fontFamily_IgnoreChangeEvent = true;
-				c.fontFamily.actionPerformed((String) e.getItem());
-				fontFamily_IgnoreChangeEvent = false;
-			}
-		};
+		fontsListener = e -> {
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                return;
+            }
+            // TODO: this is super-dirty, why doesn't the toolbar know the
+            if (fontFamily_IgnoreChangeEvent) {
+                return;
+            }
+            fontFamily_IgnoreChangeEvent = true;
+            c.fontFamily.actionPerformed((String) e.getItem());
+            fontFamily_IgnoreChangeEvent = false;
+        };
 		fonts.addItemListener(fontsListener);
 		sizeListener = e -> {
             if (e.getStateChange() != ItemEvent.SELECTED) {

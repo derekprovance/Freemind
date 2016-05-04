@@ -65,12 +65,7 @@ public class NodeBackgroundColorAction extends MindmapAction {
 				final MindMapController controller) {
 			super(controller, "remove_node_background_color", (String) null);
 			this.controller = controller;
-			setSingleNodeOperation(new SingleNodeOperation() {
-
-				public void apply(MindMapMapModel map, MindMapNodeModel node) {
-					controller.setNodeBackgroundColor(node, null);
-				}
-			});
+			setSingleNodeOperation((map, node) -> controller.setNodeBackgroundColor(node, null));
 		}
 
 	}

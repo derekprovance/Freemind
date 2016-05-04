@@ -106,22 +106,20 @@ public class NodeFoldingComponent extends JButton {
 				}
 			});
 			int delay = TIMER_DELAY;
-			ActionListener taskPerformer = new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					if (mIsEntered && mColorCounter < COLOR_COUNTER_MAX) {
-						mColorCounter++;
-						repaint();
-					}
-					if (!mIsEntered && mColorCounter > 0) {
-						mColorCounter--;
-						if(mColorCounter == 0) {
-							stopTimer();
-						}
-						repaint();
-					}
-	
-				}
-			};
+			ActionListener taskPerformer = evt -> {
+                if (mIsEntered && mColorCounter < COLOR_COUNTER_MAX) {
+                    mColorCounter++;
+                    repaint();
+                }
+                if (!mIsEntered && mColorCounter > 0) {
+                    mColorCounter--;
+                    if(mColorCounter == 0) {
+                        stopTimer();
+                    }
+                    repaint();
+                }
+
+            };
 			mTimer = new Timer(delay, taskPerformer);
 		}
 	}

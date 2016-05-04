@@ -145,13 +145,9 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
 		getMapMouseMotionListener().register(
 				new CommonMouseMotionManager(this));
 		getNodeKeyListener().register(
-				new CommonNodeKeyListener(this, new EditHandler() {
-
-					public void edit(KeyEvent e, boolean addNew,
-							boolean editLong) {
-						// no edit.
-					}
-				}));
+				new CommonNodeKeyListener(this, (e, addNew, editLong) -> {
+                    // no edit.
+                }));
 
 	}
 

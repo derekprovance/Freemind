@@ -64,12 +64,7 @@ public class ComboProperty extends PropertyBean implements PropertyControl {
 	}
 
 	protected void addActionListener() {
-		mComboBox.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				firePropertyChangeEvent();
-			}
-		});
+		mComboBox.addActionListener(pE -> firePropertyChangeEvent());
 	}
 
 	public ComboProperty(String description, String label, String[] possibles,

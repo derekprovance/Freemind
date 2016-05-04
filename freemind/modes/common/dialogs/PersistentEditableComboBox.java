@@ -54,15 +54,13 @@ public class PersistentEditableComboBox extends JComboBox {
 			}
 		}
 		setSelectedIndex(0);
-		super.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				addUrl(getText(), false);
-				// notification only if a new string is entered.
-				if (sendExternalEvents && actionListener != null) {
-					actionListener.actionPerformed(arg0);
-				}
-			}
-		});
+		super.addActionListener(arg0 -> {
+            addUrl(getText(), false);
+            // notification only if a new string is entered.
+            if (sendExternalEvents && actionListener != null) {
+                actionListener.actionPerformed(arg0);
+            }
+        });
 	}
 
 	public void addActionListener(ActionListener arg0) {

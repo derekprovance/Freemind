@@ -160,14 +160,11 @@ public class LastStateStorageManagement {
 				ret.add(store);
 			}
 		}
-		Collections.sort(ret, new Comparator() {
-
-			public int compare(Object arg0, Object arg1) {
-				MindmapLastStateStorage store0 = (MindmapLastStateStorage) arg0;
-				MindmapLastStateStorage store1 = (MindmapLastStateStorage) arg1;
-				return store0.getTabIndex() - store1.getTabIndex();
-			}
-		});
+		Collections.sort(ret, (arg0, arg1) -> {
+            MindmapLastStateStorage store0 = (MindmapLastStateStorage) arg0;
+            MindmapLastStateStorage store1 = (MindmapLastStateStorage) arg1;
+            return store0.getTabIndex() - store1.getTabIndex();
+        });
 		return ret;
 	}
 

@@ -90,12 +90,7 @@ public class MindMapMapModel extends MapAdapter {
 		setRoot(root);
 		readOnly = false;
 		// automatic save: start timer after the map is completely loaded
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-				scheduleTimerForAutomaticSaving();
-			}
-		});
+		EventQueue.invokeLater(() -> scheduleTimerForAutomaticSaving());
 	}
 
 	//
@@ -562,49 +557,47 @@ public class MindMapMapModel extends MapAdapter {
 			}
 			try {
 				cancel();
-				EventQueue.invokeAndWait(new Runnable() {
-					public void run() {
-						/* Now, it is dirty, we save it. */
-						File tempFile;
-						if (tempFileStack.size() >= numberOfFiles)
-							tempFile = (File) tempFileStack.remove(0); // pop
-						else {
-							try {
-								tempFile = File.createTempFile(
-										"FM_"
-												+ ((model.toString() == null) ? "unnamed"
-														: model.toString()),
-										freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
-										pathToStore);
-								if (filesShouldBeDeletedAfterShutdown)
-									tempFile.deleteOnExit();
-							} catch (Exception e) {
-								System.err
-										.println("Error in automatic MindMapMapModel.save(): "
-												+ e.getMessage());
-								freemind.main.Resources.getInstance()
-										.logException(e);
-								return;
-							}
-						}
-						try {
-							model.saveInternal(tempFile, true /* =internal call */);
-							model.getMapFeedback()
-									.out(Resources
-											.getInstance()
-											.format("automatically_save_message",
-													new Object[] { tempFile
-															.toString() }));
-						} catch (Exception e) {
-							System.err
-									.println("Error in automatic MindMapMapModel.save(): "
-											+ e.getMessage());
-							freemind.main.Resources.getInstance().logException(
-									e);
-						}
-						tempFileStack.add(tempFile); // add at the back.
-					}
-				});
+				EventQueue.invokeAndWait(() -> {
+                    /* Now, it is dirty, we save it. */
+                    File tempFile;
+                    if (tempFileStack.size() >= numberOfFiles)
+                        tempFile = (File) tempFileStack.remove(0); // pop
+                    else {
+                        try {
+                            tempFile = File.createTempFile(
+                                    "FM_"
+                                            + ((model.toString() == null) ? "unnamed"
+                                                    : model.toString()),
+                                    freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
+                                    pathToStore);
+                            if (filesShouldBeDeletedAfterShutdown)
+                                tempFile.deleteOnExit();
+                        } catch (Exception e) {
+                            System.err
+                                    .println("Error in automatic MindMapMapModel.save(): "
+                                            + e.getMessage());
+                            Resources.getInstance()
+                                    .logException(e);
+                            return;
+                        }
+                    }
+                    try {
+                        model.saveInternal(tempFile, true /* =internal call */);
+                        model.getMapFeedback()
+                                .out(Resources
+                                        .getInstance()
+                                        .format("automatically_save_message",
+                                                new Object[] { tempFile
+                                                        .toString() }));
+                    } catch (Exception e) {
+                        System.err
+                                .println("Error in automatic MindMapMapModel.save(): "
+                                        + e.getMessage());
+                        Resources.getInstance().logException(
+                                e);
+                    }
+                    tempFileStack.add(tempFile); // add at the back.
+                });
 			} catch (InterruptedException e) {
 				freemind.main.Resources.getInstance().logException(e);
 			} catch (InvocationTargetException e) {

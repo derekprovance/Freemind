@@ -390,17 +390,13 @@ public class MindMapController extends ControllerAdapter implements
 	public Action propertyAction = null;
 
 	public Action increaseNodeFont = new NodeGeneralAction(this,
-			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNodeModel node) {
-					increaseFontSize(node, 1);
-				}
-			});
+			"increase_node_font_size", null, (map, node) -> {
+                increaseFontSize(node, 1);
+            });
 	public Action decreaseNodeFont = new NodeGeneralAction(this,
-			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNodeModel node) {
-					increaseFontSize(node, -1);
-				}
-			});
+			"decrease_node_font_size", null, (map, node) -> {
+                increaseFontSize(node, -1);
+            });
 
 	public UndoAction undo = null;
 	public RedoAction redo = null;
@@ -752,24 +748,20 @@ public class MindMapController extends ControllerAdapter implements
 
 	public MindMapNode loadTree(Tools.ReaderCreator pReaderCreator)
 			throws XMLParseException, IOException {
-		return getMap().loadTree(pReaderCreator, new AskUserBeforeUpdateCallback() {
-			
-			@Override
-			public boolean askUserForUpdate() {
-				int showResult = new OptionalDontShowMeAgainDialog(
-						getFrame().getJFrame(),
-						getSelectedView(),
-						"really_convert_to_current_version2",
-						"confirmation",
-						MindMapController.this,
-						new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-								getController(),
-								FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION),
-						OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
-						.show().getResult();
-				return (showResult == JOptionPane.OK_OPTION);
-			}
-		});
+		return getMap().loadTree(pReaderCreator, () -> {
+            int showResult = new OptionalDontShowMeAgainDialog(
+                    getFrame().getJFrame(),
+                    getSelectedView(),
+                    "really_convert_to_current_version2",
+                    "confirmation",
+                    MindMapController.this,
+                    new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
+                            getController(),
+                            FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION),
+                    OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
+                    .show().getResult();
+            return (showResult == JOptionPane.OK_OPTION);
+        });
 	}
 
 	/**
@@ -838,14 +830,7 @@ public class MindMapController extends ControllerAdapter implements
 		getNodeDropListener().register(
 				new MindMapNodeDropListener(this));
 		getNodeKeyListener().register(
-				new CommonNodeKeyListener(this, new EditHandler() {
-
-					public void edit(KeyEvent e, boolean addNew,
-							boolean editLong) {
-						MindMapController.this.edit(e, addNew, editLong);
-
-					}
-				}));
+				new CommonNodeKeyListener(this, (e, addNew, editLong1) -> MindMapController.this.edit(e, addNew, editLong1)));
 		getNodeMotionListener().register(
 				new MindMapNodeMotionListener(this));
 		getNodeMouseMotionListener().register(

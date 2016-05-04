@@ -296,13 +296,11 @@ public class FilterComposerDialog extends JDialog {
 
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						if (selectCondition()) {
-							dispose();
-						}
-					}
-				});
+				EventQueue.invokeLater(() -> {
+                    if (selectCondition()) {
+                        dispose();
+                    }
+                });
 			}
 		}
 	}

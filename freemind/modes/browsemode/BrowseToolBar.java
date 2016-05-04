@@ -45,21 +45,19 @@ public class BrowseToolBar extends JToolBar {
 		urlfield = new PersistentEditableComboBox(controller,
 				BROWSE_URL_STORAGE_KEY);
 
-		urlfield.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String urlText = urlfield.getText();
-				if ("".equals(urlText)
-						|| e.getActionCommand().equals("comboBoxEdited"))
-					return;
-				try {
-					c.load(new URL(urlText));
-				} catch (Exception e1) {
-					freemind.main.Resources.getInstance().logException(e1);
-					// FIXME: Give a good error message.
-					c.getController().errorMessage(e1);
-				}
-			}
-		});
+		urlfield.addActionListener(e -> {
+            String urlText = urlfield.getText();
+            if ("".equals(urlText)
+                    || e.getActionCommand().equals("comboBoxEdited"))
+                return;
+            try {
+                c.load(new URL(urlText));
+            } catch (Exception e1) {
+                freemind.main.Resources.getInstance().logException(e1);
+                // FIXME: Give a good error message.
+                c.getController().errorMessage(e1);
+            }
+        });
 
 		add(new JLabel("URL:"));
 		add(urlfield);

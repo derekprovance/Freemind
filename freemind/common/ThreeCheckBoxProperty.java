@@ -79,14 +79,10 @@ public class ThreeCheckBoxProperty extends PropertyBean implements
 		this.description = description;
 		this.label = label;
 		// setState(0);
-		mButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setState((getState() + 1) % 3);
-				firePropertyChangeEvent();
-			}
-
-		});
+		mButton.addActionListener(e -> {
+            setState((getState() + 1) % 3);
+            firePropertyChangeEvent();
+        });
 	}
 
 	private int getState() {

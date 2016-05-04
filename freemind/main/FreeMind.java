@@ -283,16 +283,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		controller.init();
 		feedback.increase("FreeMind.progress.settingPreferences", null);
 		// add a listener for the controller, resource bundle:
-		Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.equals(FreeMindCommon.RESOURCE_LANGUAGE)) {
-					// re-read resources:
-					mFreeMindCommon.clearLanguageResources();
-					getResources();
-				}
-			}
-		});
+		Controller.addPropertyChangeListener((propertyName, newValue, oldValue) -> {
+            if (propertyName.equals(FreeMindCommon.RESOURCE_LANGUAGE)) {
+                // re-read resources:
+                mFreeMindCommon.clearLanguageResources();
+                getResources();
+            }
+        });
 
 		controller.optionAntialiasAction.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
 
