@@ -183,11 +183,9 @@ public class MenuBar extends JMenuBar {
 		List keys = new LinkedList(c.getModes());
 		for (Object key1 : keys) {
 			String key = (String) key1;
-			JRadioButtonMenuItem item = new JRadioButtonMenuItem(
-					c.getResourceString("mode_" + key));
+			JRadioButtonMenuItem item = new JRadioButtonMenuItem(c.getResourceString("mode_" + key));
 			item.setActionCommand(key);
-			JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder
-					.addMenuItem(item, MODES_MENU + key);
+			JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder.addMenuItem(item, MODES_MENU + key);
 			group.add(newItem);
 			if (c.getMode() != null) {
 				newItem.setSelected(c.getMode().toString().equals(key));
@@ -208,17 +206,14 @@ public class MenuBar extends JMenuBar {
 		JMenuItem newPopupItem;
 
 		if (c.getFrame().isApplet()) {
-			newPopupItem = menuHolder.addAction(c.toggleMenubar, POPUP_MENU
-					+ "toggleMenubar");
+			newPopupItem = menuHolder.addAction(c.toggleMenubar, POPUP_MENU + "toggleMenubar");
 			newPopupItem.setForeground(new Color(100, 80, 80));
 		}
 
-		newPopupItem = menuHolder.addAction(c.toggleToolbar, POPUP_MENU
-				+ "toggleToolbar");
+		newPopupItem = menuHolder.addAction(c.toggleToolbar, POPUP_MENU + "toggleToolbar");
 		newPopupItem.setForeground(new Color(100, 80, 80));
 
-		newPopupItem = menuHolder.addAction(c.toggleLeftToolbar, POPUP_MENU
-				+ "toggleLeftToolbar");
+		newPopupItem = menuHolder.addAction(c.toggleLeftToolbar, POPUP_MENU + "toggleLeftToolbar");
 		newPopupItem.setForeground(new Color(100, 80, 80));
 	}
 
@@ -252,82 +247,54 @@ public class MenuBar extends JMenuBar {
 	private void updateFileMenu() {
 
 		menuHolder.addAction(c.page, FILE_MENU + "print/pageSetup");
-		JMenuItem print = menuHolder.addAction(c.print, FILE_MENU
-				+ "print/print");
-		print.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_print")));
+		JMenuItem print = menuHolder.addAction(c.print, FILE_MENU + "print/print");
+		print.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_print")));
 
-		JMenuItem printPreview = menuHolder.addAction(c.printPreview, FILE_MENU
-				+ "print/printPreview");
-		printPreview.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_print_preview")));
+		JMenuItem printPreview = menuHolder.addAction(c.printPreview, FILE_MENU + "print/printPreview");
+		printPreview.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_print_preview")));
 
-		JMenuItem close = menuHolder.addAction(c.close, FILE_MENU
-				+ "close/close");
-		close.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_close")));
+		JMenuItem close = menuHolder.addAction(c.close, FILE_MENU + "close/close");
+		close.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_close")));
 
 		JMenuItem quit = menuHolder.addAction(c.quit, FILE_MENU + "quit/quit");
-		quit.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_quit")));
+		quit.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_quit")));
 	}
 
 	private void updateEditMenu() {
-		JMenuItem moveToRoot = menuHolder.addAction(c.moveToRoot, NAVIGATE_MENU
-				+ "nodes/moveToRoot");
-		moveToRoot.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_moveToRoot")));
+		JMenuItem moveToRoot = menuHolder.addAction(c.moveToRoot, NAVIGATE_MENU + "nodes/moveToRoot");
+		moveToRoot.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_moveToRoot")));
 
-		JMenuItem previousMap = menuHolder.addAction(c.navigationPreviousMap,
-				MINDMAP_MENU + "navigate/navigationPreviousMap");
-		previousMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty(FreeMind.KEYSTROKE_PREVIOUS_MAP)));
+		JMenuItem previousMap = menuHolder.addAction(c.navigationPreviousMap, MINDMAP_MENU + "navigate/navigationPreviousMap");
+		previousMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty(FreeMind.KEYSTROKE_PREVIOUS_MAP)));
 
-		JMenuItem nextMap = menuHolder.addAction(c.navigationNextMap,
-				MINDMAP_MENU + "navigate/navigationNextMap");
-		nextMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty(FreeMind.KEYSTROKE_NEXT_MAP)));
+		JMenuItem nextMap = menuHolder.addAction(c.navigationNextMap, MINDMAP_MENU + "navigate/navigationNextMap");
+		nextMap.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty(FreeMind.KEYSTROKE_NEXT_MAP)));
 
-		JMenuItem MoveMapLeft = menuHolder.addAction(
-				c.navigationMoveMapLeftAction, MINDMAP_MENU
-						+ "navigate/navigationMoveMapLeft");
-		MoveMapLeft.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_LEFT)));
+		JMenuItem MoveMapLeft = menuHolder.addAction(c.navigationMoveMapLeftAction, MINDMAP_MENU + "navigate/navigationMoveMapLeft");
+		MoveMapLeft.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_LEFT)));
 
-		JMenuItem MoveMapRight = menuHolder.addAction(
-				c.navigationMoveMapRightAction, MINDMAP_MENU
-						+ "navigate/navigationMoveMapRight");
-		MoveMapRight.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_RIGHT)));
+		JMenuItem MoveMapRight = menuHolder.addAction(c.navigationMoveMapRightAction, MINDMAP_MENU + "navigate/navigationMoveMapRight");
+		MoveMapRight.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty(FreeMind.KEYSTROKE_MOVE_MAP_RIGHT)));
 	}
 
 	private void updateViewMenu() {
-		JMenuItem toggleToolbar = menuHolder.addAction(c.toggleToolbar,
-				VIEW_MENU + "toolbars/toggleToolbar");
-		JMenuItem toggleLeftToolbar = menuHolder.addAction(c.toggleLeftToolbar,
-				VIEW_MENU + "toolbars/toggleLeftToolbar");
+		JMenuItem toggleToolbar = menuHolder.addAction(c.toggleToolbar, VIEW_MENU + "toolbars/toggleToolbar");
+		JMenuItem toggleLeftToolbar = menuHolder.addAction(c.toggleLeftToolbar, VIEW_MENU + "toolbars/toggleLeftToolbar");
 
 		menuHolder.addSeparator(VIEW_MENU);
 
-		JMenuItem showSelectionAsRectangle = menuHolder.addAction(
-				c.showSelectionAsRectangle, VIEW_MENU
-						+ "general/selectionAsRectangle");
+		JMenuItem showSelectionAsRectangle = menuHolder.addAction(c.showSelectionAsRectangle, VIEW_MENU + "general/selectionAsRectangle");
 
-		JMenuItem zoomIn = menuHolder.addAction(c.zoomIn, VIEW_MENU
-				+ "zoom/zoomIn");
-		zoomIn.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_zoom_in")));
+		JMenuItem zoomIn = menuHolder.addAction(c.zoomIn, VIEW_MENU + "zoom/zoomIn");
+		zoomIn.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_zoom_in")));
 
-		JMenuItem zoomOut = menuHolder.addAction(c.zoomOut, VIEW_MENU
-				+ "zoom/zoomOut");
-		zoomOut.setAccelerator(KeyStroke.getKeyStroke(c.getFrame()
-				.getAdjustableProperty("keystroke_zoom_out")));
+		JMenuItem zoomOut = menuHolder.addAction(c.zoomOut, VIEW_MENU + "zoom/zoomOut");
+		zoomOut.setAccelerator(KeyStroke.getKeyStroke(c.getFrame().getAdjustableProperty("keystroke_zoom_out")));
 
 		menuHolder.addSeparator(VIEW_MENU);
 	}
 
-	private void addOptionSet(Action action, String[] textIDs, JMenu menu,
-			String selectedTextID) {
+	private void addOptionSet(Action action, String[] textIDs, JMenu menu, String selectedTextID) {
 		ButtonGroup group = new ButtonGroup();
 		for (String textID : textIDs) {
 			JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);

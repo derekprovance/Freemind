@@ -84,11 +84,10 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
                     mImageJLabel.repaint();
                 }
             });
-			logger.fine("Beginnig task:" + messageId);
+			logger.fine("Beginning task:" + messageId);
 			lastTaskId = messageId;
-			// this is not nice, as other windows are probably more important!
-//			// make it the top most window.
-//			FreeMindSplashModern.this.toFront();
+
+			FreeMindSplashModern.this.toFront();
 		}
 
 		public int getActualValue() {

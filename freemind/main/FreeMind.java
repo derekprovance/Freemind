@@ -520,8 +520,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				}
 			}
 			try {
-				mFileHandler = new FileHandler(getFreemindDirectory()
-						+ File.separator + LOG_FILE_NAME, 1400000, 5, false);
+				mFileHandler = new FileHandler(getFreemindDirectory() + File.separator + LOG_FILE_NAME, 1400000, 5, false);
 				mFileHandler.setFormatter(new StdFormatter());
 				mFileHandler.setLevel(Level.INFO);
 				parentLogger.addHandler(mFileHandler);

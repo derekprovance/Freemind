@@ -1133,21 +1133,19 @@ public class MindMapController extends ControllerAdapter implements
 			// yes, this is a link.
 			MindMapArrowLinkModel link = (MindMapArrowLinkModel) obj;
 			JPopupMenu arrowLinkPopup = new JPopupMenu();
+
 			// block the screen while showing popup.
 			arrowLinkPopup.addPopupMenuListener(this.popupListenerSingleton);
 			removeArrowLinkAction.setArrowLink(link);
 			arrowLinkPopup.add(new RemoveArrowLinkAction(this, link));
 			arrowLinkPopup.add(new ColorArrowLinkAction(this, link));
 			arrowLinkPopup.addSeparator();
+
 			/* The arrow state as radio buttons: */
-			JRadioButtonMenuItem itemnn = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "none", "images/arrow-mode-none.png", link, false, false));
-			JRadioButtonMenuItem itemnt = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "forward", "images/arrow-mode-forward.png", link, false, true));
-			JRadioButtonMenuItem itemtn = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "backward", "images/arrow-mode-backward.png", link, true, false));
-			JRadioButtonMenuItem itemtt = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "both", "images/arrow-mode-both.png", link, true, true));
+			JRadioButtonMenuItem itemnn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "none", "images/arrow-mode-none.png", link, false, false));
+			JRadioButtonMenuItem itemnt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "forward", "images/arrow-mode-forward.png", link, false, true));
+			JRadioButtonMenuItem itemtn = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "backward", "images/arrow-mode-backward.png", link, true, false));
+			JRadioButtonMenuItem itemtt = new JRadioButtonMenuItem(new ChangeArrowsInArrowLinkAction(this, "both", "images/arrow-mode-both.png", link, true, true));
 			itemnn.setText(null);
 			itemnt.setText(null);
 			itemtn.setText(null);
