@@ -20,7 +20,6 @@
 
 package freemind.modes.browsemode;
 
-import freemind.main.FreeMindMain;
 import freemind.main.XMLElement;
 import freemind.modes.CloudAdapter;
 import freemind.modes.MapFeedback;

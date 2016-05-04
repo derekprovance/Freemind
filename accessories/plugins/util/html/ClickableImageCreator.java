@@ -28,7 +28,6 @@ import java.util.Vector;
 import javax.swing.JComponent;
 
 import freemind.main.HtmlTools;
-import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;

@@ -32,7 +32,6 @@ import freemind.controller.actions.generated.instance.PluginAction;
 import freemind.controller.actions.generated.instance.PluginMenu;
 import freemind.controller.actions.generated.instance.PluginMode;
 import freemind.controller.actions.generated.instance.PluginProperty;
-import freemind.main.FreeMindMain;
 
 /**
  * This is an information class that holds all outer properties of a hook, i.e.

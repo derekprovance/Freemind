@@ -42,7 +42,6 @@ import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActionRegistry;
 import freemind.modes.mindmapmode.actions.xml.DefaultActionHandler;
-import freemind.modes.mindmapmode.actions.xml.UndoActionHandler;
 import freemind.modes.mindmapmode.actions.xml.actors.XmlActorFactory;
 import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
 

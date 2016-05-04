@@ -23,7 +23,6 @@
 package freemind.modes.mindmapmode.actions;
 
 import java.awt.event.ActionEvent;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.Action;

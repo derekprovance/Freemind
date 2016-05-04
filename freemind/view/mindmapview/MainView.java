@@ -26,17 +26,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import freemind.controller.Controller;
-import freemind.controller.MenuBar;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;

@@ -24,7 +24,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import freemind.main.Tools;

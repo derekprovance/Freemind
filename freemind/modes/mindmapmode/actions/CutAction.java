@@ -27,7 +27,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import freemind.common.OptionalDontShowMeAgainDialog;

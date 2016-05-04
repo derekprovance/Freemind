@@ -23,7 +23,6 @@ package freemind.modes.filemode;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URL;
 
 import freemind.main.FreeMindMain;
 import freemind.modes.ArrowLinkAdapter;

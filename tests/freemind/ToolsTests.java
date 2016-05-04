@@ -36,7 +36,6 @@ import freemind.main.FreeMindSecurityManager;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.modes.MapAdapter;
-import freemind.modes.XMLElementAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 
 /**

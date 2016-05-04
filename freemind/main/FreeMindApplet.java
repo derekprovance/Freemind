@@ -249,7 +249,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		updateLookAndFeel();
 
 		// try to overload some properties with given command-line (html tag)
-		// Arguments
 		Enumeration allKeys = userProps.propertyNames();
 		while (allKeys.hasMoreElements()) {
 			String key = (String) allKeys.nextElement();
@@ -284,25 +283,19 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		// end taken.
 
 		SwingUtilities.updateComponentTreeUI(this); // Propagate LookAndFeel to
-													// JComponents
 
 		// wait until AWT thread starts
 		Tools.waitForEventQueue();
 		c.createNewMode(getProperty("initial_mode"));
 		String initialMapName = getProperty("browsemode_initial_map");
 		if (initialMapName != null && initialMapName.startsWith(".")) {
-			/* new handling for relative urls. fc, 29.10.2003. */
 			try {
 				URL documentBaseUrl = new URL(getDocumentBase(), initialMapName);
 				initialMapName = documentBaseUrl.toString();
 			} catch (java.net.MalformedURLException e) {
-				getController().errorMessage(
-						"Could not open relative URL " + initialMapName
-								+ ". It is malformed.");
-				System.err.println(e);
+				getController().errorMessage("Could not open relative URL " + initialMapName + ". It is malformed.");
 				return;
 			}
-			/* end: new handling for relative urls. fc, 29.10.2003. */
 		}
 		if (initialMapName != "") {
 			try {

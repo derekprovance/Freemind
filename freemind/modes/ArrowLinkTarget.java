@@ -20,7 +20,6 @@
 
 package freemind.modes;
 
-import freemind.main.FreeMindMain;
 import freemind.main.XMLElement;
 import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.view.mindmapview.MapView;

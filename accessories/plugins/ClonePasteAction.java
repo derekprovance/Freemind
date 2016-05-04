@@ -36,7 +36,6 @@ import javax.swing.JOptionPane;
 
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.MenuItemEnabledListener;
-import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.DeleteNodeAction;

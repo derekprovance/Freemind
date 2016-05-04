@@ -28,7 +28,6 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemSelectedListener;
-import freemind.controller.actions.generated.instance.NodeStyleFormatAction;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

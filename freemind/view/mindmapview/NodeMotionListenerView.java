@@ -28,7 +28,6 @@ import java.awt.Stroke;
 
 import javax.swing.JComponent;
 
-import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.Tools;
 

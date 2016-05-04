@@ -31,7 +31,6 @@ import java.io.Writer;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 
 import freemind.controller.Controller;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;

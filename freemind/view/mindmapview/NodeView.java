@@ -35,9 +35,7 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,7 +54,6 @@ import javax.swing.tree.TreeNode;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
-import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;

@@ -68,7 +68,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 			copyNodeIdsFlavor = new DataFlavor(
 					"application/freemind-node-ids; class=java.util.List");
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 	}
 

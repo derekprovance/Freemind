@@ -50,7 +50,6 @@ import freemind.extensions.MindMapHook;
 import freemind.extensions.MindMapHook.PluginBaseClassSearcher;
 import freemind.extensions.ModeControllerHook;
 import freemind.extensions.NodeHook;
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapController;
 

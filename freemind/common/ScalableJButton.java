@@ -20,16 +20,10 @@
  */
 package freemind.common;
 
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
-
-import freemind.main.FreeMind;
-import freemind.main.Resources;
-import freemind.main.Tools;
 
 /**
  * @author foltin

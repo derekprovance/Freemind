@@ -20,15 +20,11 @@
 
 package tests.freemind;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +36,7 @@ import javax.swing.tree.TreePath;
 import freemind.controller.filter.Filter;
 import freemind.controller.filter.util.SortedListModel;
 import freemind.controller.filter.util.SortedMapListModel;
-import freemind.extensions.NodeHook;
 import freemind.main.Tools;
-import freemind.main.Tools.ReaderCreator;
 import freemind.main.XMLParseException;
 import freemind.modes.ArrowLinkAdapter;
 import freemind.modes.ArrowLinkTarget;

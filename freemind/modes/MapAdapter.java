@@ -40,7 +40,6 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import freemind.controller.filter.DefaultFilter;
@@ -50,7 +49,6 @@ import freemind.controller.filter.util.SortedMapListModel;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
-import freemind.main.Tools.ReaderCreator;
 import freemind.main.XMLParseException;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {

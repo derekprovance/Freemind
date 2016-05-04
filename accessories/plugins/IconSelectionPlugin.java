@@ -73,7 +73,7 @@ public class IconSelectionPlugin extends MindMapNodeHookAdapter {
 		selectionDialog.pack();
 		Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
 		selectionDialog.setModal(true);
-		selectionDialog.show();
+		selectionDialog.setVisible(true);
 		// process result:
 		int result = selectionDialog.getResult();
 		if (result >= 0) {

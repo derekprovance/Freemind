@@ -23,8 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import javax.swing.ImageIcon;
-
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 

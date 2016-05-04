@@ -31,7 +31,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
-import java.util.Collections;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -45,7 +44,6 @@ import freemind.common.TextTranslator;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.main.Tools;
-import freemind.main.Tools.StringReaderCreator;
 import freemind.main.XMLParseException;
 import freemind.modes.ExtendedMapFeedbackAdapter;
 import freemind.modes.MapAdapter;

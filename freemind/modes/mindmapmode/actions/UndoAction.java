@@ -30,7 +30,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;

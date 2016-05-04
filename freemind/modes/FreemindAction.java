@@ -23,7 +23,6 @@ package freemind.modes;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import freemind.controller.MenuItemEnabledListener;

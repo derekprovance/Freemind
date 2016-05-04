@@ -445,17 +445,10 @@ public class BrowseController extends ViewControllerAdapter {
 		try {
 			urlStreamReader = new InputStreamReader(url.openStream());
 		} catch (AccessControlException ex) {
-			getFrame().getController()
-					.errorMessage(
-							"Could not open URL " + url.toString()
-									+ ". Access Denied.");
-			System.err.println(ex);
+			getFrame().getController().errorMessage("Could not open URL " + url.toString() + ". Access Denied.");
 			return null;
 		} catch (Exception ex) {
-			getFrame().getController().errorMessage(
-					"Could not open URL " + url.toString() + ".");
-			System.err.println(ex);
-			// freemind.main.Resources.getInstance().logExecption(ex);
+			getFrame().getController().errorMessage("Could not open URL " + url.toString() + ".");
 			return null;
 		}
 
@@ -466,14 +459,11 @@ public class BrowseController extends ViewControllerAdapter {
 			urlStreamReader.close();
 			return root;
 		} catch (Exception ex) {
-			System.err.println(ex);
+            ex.printStackTrace();
 			return null;
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#out(java.lang.String)
-	 */
 	@Override
 	public void out(String pFormat) {
 		// TODO Auto-generated method stub

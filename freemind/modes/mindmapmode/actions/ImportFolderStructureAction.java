@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import freemind.main.FreeMindMain;

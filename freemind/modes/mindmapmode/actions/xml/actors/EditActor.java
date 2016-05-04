@@ -26,7 +26,6 @@ import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin

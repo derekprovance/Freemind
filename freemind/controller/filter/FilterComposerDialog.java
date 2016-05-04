@@ -692,9 +692,13 @@ public class FilterComposerDialog extends JDialog {
 
 	}
 
-	public void show() {
-		initInternalConditionModel();
-		super.show();
+	public void setVisible(Boolean b) {
+		if(b) {
+			initInternalConditionModel();
+			super.setVisible(true);
+		} else {
+			super.setVisible(false);
+		}
 	}
 
 	private void initInternalConditionModel() {

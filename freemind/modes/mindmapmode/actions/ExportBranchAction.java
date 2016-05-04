@@ -23,7 +23,6 @@ package freemind.modes.mindmapmode.actions;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 

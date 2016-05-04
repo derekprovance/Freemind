@@ -23,13 +23,8 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
 
-import freemind.controller.MenuItemEnabledListener;
 import freemind.modes.FreemindAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;

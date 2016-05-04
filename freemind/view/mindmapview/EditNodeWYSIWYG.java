@@ -263,7 +263,7 @@ public class EditNodeWYSIWYG extends EditNodeBase {
 						.getLength());
 			}
 			htmlEditorPanel.getMostRecentFocusOwner().requestFocus();
-			htmlEditorWindow.show();
+			htmlEditorWindow.setVisible(true);
 		} catch (Exception ex) { // Probably class not found exception
 			freemind.main.Resources.getInstance().logException(ex);
 			System.err

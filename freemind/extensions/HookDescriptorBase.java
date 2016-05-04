@@ -33,7 +33,6 @@ import java.util.Vector;
 
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.controller.actions.generated.instance.PluginClasspath;
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 

@@ -24,12 +24,9 @@ package freemind.modes.viewmodes;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHookSubstituteUnknown;
-import freemind.main.XMLElement;
-import freemind.main.XMLParseException;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.Mode;

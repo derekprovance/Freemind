@@ -27,7 +27,6 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
 import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 
 /**

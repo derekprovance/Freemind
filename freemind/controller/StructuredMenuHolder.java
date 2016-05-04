@@ -1,7 +1,6 @@
 package freemind.controller;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;

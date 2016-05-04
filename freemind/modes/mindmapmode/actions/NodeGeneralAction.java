@@ -30,7 +30,6 @@ import java.util.ListIterator;
 import java.util.logging.Logger;
 
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.main.Tools;

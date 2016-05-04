@@ -20,7 +20,6 @@
 
 package freemind.extensions;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import freemind.main.XMLElement;

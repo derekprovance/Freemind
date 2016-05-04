@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
@@ -467,7 +466,7 @@ public class Controller implements MapModuleChangeObserver {
 		dialog.addWindowListener(new Closer());
 		dialog.addComponentListener(new DisposeOnClose());
 
-		dialog.show();
+		dialog.setVisible(true);
 
 		return ok.getColor();
 	}
@@ -492,7 +491,7 @@ public class Controller implements MapModuleChangeObserver {
 	static class Closer extends WindowAdapter implements Serializable {
 		public void windowClosing(WindowEvent e) {
 			Window w = e.getWindow();
-			w.hide();
+			w.setVisible(false);
 		}
 	}
 

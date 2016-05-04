@@ -24,7 +24,6 @@ import freemind.controller.actions.generated.instance.NodeStyleFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
 import freemind.modes.ExtendedMapFeedback;
-import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 

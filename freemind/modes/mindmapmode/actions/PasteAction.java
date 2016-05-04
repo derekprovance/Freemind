@@ -26,10 +26,8 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 
 import freemind.controller.actions.generated.instance.PasteNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.actors.UndoPasteActor;
