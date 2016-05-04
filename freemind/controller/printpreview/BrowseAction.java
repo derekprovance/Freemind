@@ -34,7 +34,7 @@ class BrowseAction extends AbstractAction {
 		this.preview = preview;
 		this.pageStep = pageStep;
 		this.pageNumber = pageNumber;
-		pageIndexPainter = () -> paintPageIndex();
+		pageIndexPainter = this::paintPageIndex;
 	}
 
 	public void actionPerformed(ActionEvent e) {

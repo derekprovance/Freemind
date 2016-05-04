@@ -98,16 +98,12 @@ public class EditServer extends Thread {
 			authKey = new Random().nextInt(Integer.MAX_VALUE);
 			int port = socket.getLocalPort();
 
-			FileWriter out = new FileWriter(portFile);
-
-			try {
+			try (FileWriter out = new FileWriter(portFile)) {
 				out.write("b\n");
 				out.write(String.valueOf(port));
 				out.write("\n");
 				out.write(String.valueOf(authKey));
 				out.write("\n");
-			} finally {
-				out.close();
 			}
 
 			ok = true;
@@ -216,8 +212,6 @@ public class EditServer extends Thread {
 						mFrame.getController().getModeController()
 								.load(urli);
 					}
-                } catch (MalformedURLException e) {
-                    Resources.getInstance().logException(e);
                 } catch (Exception e) {
                     Resources.getInstance().logException(e);
                 }

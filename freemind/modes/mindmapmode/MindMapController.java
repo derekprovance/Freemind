@@ -829,7 +829,7 @@ public class MindMapController extends ControllerAdapter implements
 		getNodeDropListener().register(
 				new MindMapNodeDropListener(this));
 		getNodeKeyListener().register(
-				new CommonNodeKeyListener(this, (e, addNew, editLong1) -> MindMapController.this.edit(e, addNew, editLong1)));
+				new CommonNodeKeyListener(this, MindMapController.this::edit));
 		getNodeMotionListener().register(
 				new MindMapNodeMotionListener(this));
 		getNodeMouseMotionListener().register(

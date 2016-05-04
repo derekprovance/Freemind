@@ -90,7 +90,7 @@ public class MindMapMapModel extends MapAdapter {
 		setRoot(root);
 		readOnly = false;
 		// automatic save: start timer after the map is completely loaded
-		EventQueue.invokeLater(() -> scheduleTimerForAutomaticSaving());
+		EventQueue.invokeLater(this::scheduleTimerForAutomaticSaving);
 	}
 
 	//

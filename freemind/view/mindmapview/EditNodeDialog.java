@@ -134,7 +134,7 @@ public class EditNodeDialog extends EditNodeBase {
 
 			okButton.addActionListener(e -> {
                 // next try to avoid bug 1159: focus jumps to file-menu after closing html-editing-window
-                EventQueue.invokeLater(() -> submit());
+                EventQueue.invokeLater(this::submit);
             });
 
 			cancelButton.addActionListener(e -> cancel());

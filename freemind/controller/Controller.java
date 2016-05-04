@@ -1582,16 +1582,15 @@ public class Controller implements MapModuleChangeObserver {
                         sortedKeys.addAll(props.keySet());
                         Collections.sort(sortedKeys);
                         boolean propertiesChanged = false;
-                        for (Iterator i = sortedKeys.iterator(); i
-                                .hasNext();) {
-                            String key = (String) i.next();
-                            // save only changed keys:
-                            String newProperty = props.getProperty(key);
-                            propertiesChanged = propertiesChanged
-                                    || !newProperty.equals(controller
-                                            .getProperty(key));
-                            controller.setProperty(key, newProperty);
-                        }
+				for (Object sortedKey : sortedKeys) {
+					String key = (String) sortedKey;
+					// save only changed keys:
+					String newProperty = props.getProperty(key);
+					propertiesChanged = propertiesChanged
+							|| !newProperty.equals(controller
+							.getProperty(key));
+					controller.setProperty(key, newProperty);
+				}
 
                         if (propertiesChanged) {
                             JOptionPane
