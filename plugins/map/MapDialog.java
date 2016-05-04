@@ -401,7 +401,6 @@ public class MapDialog extends MindMapHookAdapter implements
 					pEvent.consume();
 					addSearchResultsToMap();
 					displaySearchItem(index);
-					return;
 				}
 
 			}

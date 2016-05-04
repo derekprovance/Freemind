@@ -113,10 +113,7 @@ function deactivate(node) {
 function is_list_node(n) {
   if (n==null) return false;
   if (n.className==null) return false;
-  if ( (is_exp(n)) || 
-       (is_col(n)) ||
-       (is_basic(n)) )
-   return true; else return false;
+  return !!((is_exp(n)) || (is_col(n)) || (is_basic(n)));
 }
 
 
@@ -155,7 +152,7 @@ function get_link(n) {
 function set_lastnode(n) {
 /*var d = new Date();
 var t_mil = d.getMilliseconds();*/
-// testattu nopeuksia explorerilla, ei merkittäviä eroja
+// testattu nopeuksia explorerilla, ei merkittï¿½viï¿½ eroja
   if (lastnode==n) return; 
 /*  deactivate(lastnode)
   lastnode=n;

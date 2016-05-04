@@ -98,7 +98,6 @@ public class DatabaseConnector extends DatabaseBasics {
 			freemind.main.Resources.getInstance().logException(e);
 			// TODO: Need a better message here.
 			controller.getController().errorMessage(e.getLocalizedMessage());
-			return;
 		}
 	}
 

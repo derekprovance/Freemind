@@ -57,7 +57,7 @@ public class RevisionPlugin extends PermanentMindMapNodeHookAdapter implements
 	 */
 	public void invoke(MindMapNode node) {
 		super.invoke(node);
-		if (alreadyUsed == false) {
+		if (!alreadyUsed) {
 			color = Color.YELLOW;
 			// new register:
 			getMindMapController().getActionRegistry().registerHandler(this);

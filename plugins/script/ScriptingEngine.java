@@ -110,8 +110,8 @@ public class ScriptingEngine extends MindMapHookAdapter {
 		}
 		// FIXME: Scripts
 		Object attributes = null;
-		if (attributes == null)
-			return;
+		if (attributes == null) {
+		}
 //		for (int row = 0; row < attributes.getRowCount(); ++row) {
 //			String attrKey = (String) attributes.getName(row);
 //			String script = (String) attributes.getValue(row);

@@ -123,15 +123,12 @@ public class EncryptNode extends MindMapNodeHookAdapter {
 		if (actionType.equals("encrypt")) {
 			encrypt(node);
 			getController().nodeRefresh(node);
-			return;
 		} else if (actionType.equals("toggleCryptState")) {
 			toggleCryptState(node);
 			getController().nodeRefresh(node);
-			return;
 		} else if (actionType.equals("encrypted_map")) {
 			// new map
 			newEncryptedMap();
-			return;
 		} else {
 			throw new IllegalArgumentException("Unknown action type:"
 					+ actionType);

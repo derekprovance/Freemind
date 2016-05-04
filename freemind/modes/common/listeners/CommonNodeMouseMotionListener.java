@@ -61,9 +61,9 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 			timeForDelayedSelection = new Tools.IntHolder();
 		}
 		delayedSelectionEnabled = new Tools.BooleanHolder();
-		delayedSelectionEnabled.setValue(c.getFrame()
+		delayedSelectionEnabled.setValue(!c.getFrame()
 				.getProperty("selection_method")
-				.equals("selection_method_direct") ? false : true);
+				.equals("selection_method_direct"));
 		/*
 		 * set time for delay to infinity, if selection_method equals
 		 * selection_method_by_click.

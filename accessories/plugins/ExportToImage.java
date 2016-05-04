@@ -121,7 +121,6 @@ public class ExportToImage extends ExportHook {
 			// System.err.println("error applying the xslt file "+e);
 			freemind.main.Resources.getInstance().logException(e);
 		}
-		return;
 	}
 
 }

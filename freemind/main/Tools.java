@@ -220,11 +220,7 @@ public class Tools {
 	}
 
 	public static boolean xmlToBoolean(String string) {
-		if (string == null)
-			return false;
-		if (string.equals("true"))
-			return true;
-		return false;
+		return string != null && string.equals("true");
 	}
 
 	/**

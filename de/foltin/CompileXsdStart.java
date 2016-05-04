@@ -190,12 +190,9 @@ public class CompileXsdStart extends DefaultHandler {
 			fs.close();
 		}
 		// write binding to disk
-		if (true) {
-			FileOutputStream fs = new FileOutputStream(DESTINATION_DIR
-					+ "/binding.xml");
-			fs.write(mBindingXml.toString().getBytes());
-			fs.close();
-		}
+		FileOutputStream fs = new FileOutputStream(DESTINATION_DIR + "/binding.xml");
+		fs.write(mBindingXml.toString().getBytes());
+		fs.close();
 	}
 
 	public void generate() throws ParserConfigurationException, SAXException,

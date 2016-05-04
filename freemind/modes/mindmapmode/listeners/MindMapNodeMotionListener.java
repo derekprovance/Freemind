@@ -163,7 +163,6 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 				MindMapNode node = nodeV.getModel();
 				c.moveNodePosition(node, NodeAdapter.VGAP, node.getHGap(),
 						node.getShiftY());
-				return;
 			}
 		}
 	}

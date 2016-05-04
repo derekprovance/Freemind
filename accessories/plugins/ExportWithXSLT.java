@@ -105,9 +105,8 @@ public class ExportWithXSLT extends ExportHook {
 			if ((model.getFile() == null) || model.isReadOnly()) {
 				if (mc.save()) {
 					export(model.getFile());
-					return;
-				} else
-					return;
+				} else {
+				}
 			} else
 				export(model.getFile());
 		} else {

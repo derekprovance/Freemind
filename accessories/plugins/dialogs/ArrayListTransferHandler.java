@@ -151,10 +151,7 @@ public class ArrayListTransferHandler extends TransferHandler {
 	}
 
 	public boolean canImport(JComponent c, DataFlavor[] flavors) {
-		if (hasLocalArrayListFlavor(flavors)) {
-			return true;
-		}
-		return false;
+		return hasLocalArrayListFlavor(flavors);
 	}
 
 	protected Transferable createTransferable(JComponent c) {
@@ -201,10 +198,7 @@ public class ArrayListTransferHandler extends TransferHandler {
 		}
 
 		public boolean isDataFlavorSupported(DataFlavor flavor) {
-			if (localArrayListFlavor.equals(flavor)) {
-				return true;
-			}
-			return false;
+			return localArrayListFlavor.equals(flavor);
 		}
 	}
 }

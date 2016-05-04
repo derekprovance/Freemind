@@ -736,8 +736,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 			}
 		}
 
-		private void selectShadowNode(MindMapNode node, boolean pEnableShadow,
-				MindMapNode pCloneNode) {
+		private void selectShadowNode(MindMapNode node, boolean pEnableShadow, MindMapNode pCloneNode) {
 			if (!sShowIcon) {
 				return;
 			}

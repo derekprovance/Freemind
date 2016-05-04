@@ -698,7 +698,6 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 					.get(booleanProp);
 			bean.setEnabled(ThreeCheckBoxProperty.TRUE_VALUE.equals(booleanProp
 					.getValue()));
-			return;
 		}
 	}
 

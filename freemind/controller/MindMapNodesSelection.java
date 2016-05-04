@@ -102,8 +102,6 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		}
 		if (flavor.equals(rtfFlavor)) {
 			byte[] byteArray = rtfContent.getBytes();
-			// for (int i = 0; i < byteArray.length; ++i) {
-			// System.out.println(byteArray[i]); }
 
 			return new ByteArrayInputStream(byteArray);
 		}
@@ -126,32 +124,14 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 	}
 
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		if (flavor.equals(DataFlavor.imageFlavor) && imageContent != null) {
-			return true;
-		}
-		if (flavor.equals(DataFlavor.stringFlavor) && stringContent != null) {
-			return true;
-		}
-		if (flavor.equals(mindMapNodesFlavor) && nodesContent != null) {
-			return true;
-		}
-		if (flavor.equals(rtfFlavor) && rtfContent != null) {
-			return true;
-		}
-		if (flavor.equals(dropActionFlavor) && dropActionContent != null) {
-			return true;
-		}
-		if (flavor.equals(htmlFlavor) && htmlContent != null) {
-			return true;
-		}
-		if (flavor.equals(fileListFlavor) && (fileList != null)
-				&& fileList.size() > 0) {
-			return true;
-		}
-		if (flavor.equals(copyNodeIdsFlavor) && nodeIdsContent != null) {
-			return true;
-		}
-		return false;
+		return flavor.equals(DataFlavor.imageFlavor) && imageContent != null ||
+				flavor.equals(DataFlavor.stringFlavor) && stringContent != null ||
+				flavor.equals(mindMapNodesFlavor) && nodesContent != null ||
+				flavor.equals(rtfFlavor) && rtfContent != null ||
+				flavor.equals(dropActionFlavor) && dropActionContent != null ||
+				flavor.equals(htmlFlavor) && htmlContent != null ||
+				flavor.equals(fileListFlavor) && (fileList != null) && fileList.size() > 0 ||
+				flavor.equals(copyNodeIdsFlavor) && nodeIdsContent != null;
 	}
 
 	public void lostOwnership(Clipboard clipboard, Transferable contents) {

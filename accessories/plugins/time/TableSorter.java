@@ -408,7 +408,6 @@ public class TableSorter extends AbstractTableModel {
 			// row order.
 			clearSortingState();
 			fireTableDataChanged();
-			return;
 		}
 	}
 

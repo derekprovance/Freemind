@@ -167,7 +167,6 @@ public class ExportVectorGraphic extends ExportHook {
 			freemind.main.Resources.getInstance().logException(e);
 		}
 		;
-		return;
 	}
 
 }

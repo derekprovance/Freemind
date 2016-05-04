@@ -132,7 +132,7 @@ function getFlashVersion() {
 	return flashversion;
 }
 
-function detectFlash(ver) {	return (getFlashVersion() >= ver) ? true:false; }
+function detectFlash(ver) {	return (getFlashVersion() >= ver); }
 
 // get value of query string param
 function getQueryParamValue(param) {

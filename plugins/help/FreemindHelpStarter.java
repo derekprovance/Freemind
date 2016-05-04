@@ -57,7 +57,6 @@ public class FreemindHelpStarter extends ModeControllerHookAdapter {
 			freemind.main.Resources.getInstance().logException(ee);
 			logger.warning("HelpSet " + ee.getMessage() + ee);
 			logger.warning("HelpSet " + helpHS + " not found");
-			return;
 		}
 	}
 }

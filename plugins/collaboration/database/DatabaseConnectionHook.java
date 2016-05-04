@@ -48,7 +48,6 @@ public class DatabaseConnectionHook extends DatabaseBasics implements
 		super.startupMapHook();
 		// this is the internal call. do nothing
 		logger.info("Startup of the permanent hook.");
-		return;
 	}
 
 	public void loadFrom(XMLElement pChild) {

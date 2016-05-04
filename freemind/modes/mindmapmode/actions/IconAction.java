@@ -75,7 +75,6 @@ public class IconAction extends MindmapAction implements IconInformation {
 		}
 		if ((e.getModifiers() & ~ActionEvent.SHIFT_MASK & ActionEvent.CTRL_MASK & ~ActionEvent.ALT_MASK) != 0) {
 			removeIcon(true);
-			return;
 		}
 	}
 

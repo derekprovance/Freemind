@@ -120,7 +120,6 @@ public class DatabaseStarter extends DatabaseBasics implements
 			if (mUpdateThread != null) {
 				mUpdateThread.shutdown(true);
 			}
-			return;
 		}
 	}
 

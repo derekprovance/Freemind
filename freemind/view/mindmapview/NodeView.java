@@ -1268,7 +1268,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		this.preferredChild = view;
 		final Container parent = this.getParent();
 		if (view == null) {
-			return;
 		} else if (parent instanceof NodeView) {
 			// set also preffered child of parents...
 			((NodeView) parent).setPreferredChild(this);

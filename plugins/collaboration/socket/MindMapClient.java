@@ -139,7 +139,6 @@ public class MindMapClient extends SocketBasics {
 					Resources.getInstance().format(
 							UNKNWON_HOST_EXCEPTION_MESSAGE,
 							new Object[] { e.getMessage() }));
-			return;
 		} catch (ConnectException e) {
 			freemind.main.Resources.getInstance().logException(e);
 			controller.getController().errorMessage(
@@ -147,13 +146,11 @@ public class MindMapClient extends SocketBasics {
 							CONNECT_EXCEPTION_MESSAGE,
 							new Object[] { portProperty.getValue(),
 									hostProperty.getValue(), e.getMessage() }));
-			return;
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
 			// Need a better message here.
 			controller.getController().errorMessage(
 					e.getClass().getName() + ": " + e.getLocalizedMessage());
-			return;
 		}
 	}
 

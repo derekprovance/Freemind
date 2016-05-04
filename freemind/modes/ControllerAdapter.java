@@ -577,7 +577,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 						getFrame().out(
 								Tools.expandPlaceholders(
 										getText("link_not_found"), ref));
-						return;
 					}
 				}
 			} else {
@@ -587,7 +586,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		} catch (MalformedURLException ex) {
 			freemind.main.Resources.getInstance().logException(ex);
 			getController().errorMessage(getText("url_error") + "\n" + ex);
-			return;
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
 		} finally {

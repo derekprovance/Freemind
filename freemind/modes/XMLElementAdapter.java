@@ -491,7 +491,6 @@ public class XMLElementAdapter extends XMLElement {
 			return;
 		}
 		if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
-			return;
 		}
 	}
 
@@ -554,7 +553,6 @@ public class XMLElementAdapter extends XMLElement {
 								+ linkTarget.getUniqueId()
 								+ " for the link in the map. The link target "
 								+ linkTarget + " is not restored.");
-						continue;
 					} else {
 						// double the link.
 						MindMapLink clone = (MindMapLink) link.clone();

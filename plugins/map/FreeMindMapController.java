@@ -731,9 +731,7 @@ public class FreeMindMapController extends JMapController implements
 			if (Double.doubleToLongBits(lon) != Double
 					.doubleToLongBits(other.lon))
 				return false;
-			if (zoom != other.zoom)
-				return false;
-			return true;
+			return zoom == other.zoom;
 		}
 
 	}
@@ -1198,7 +1196,6 @@ public class FreeMindMapController extends JMapController implements
 			}
 			map.setZoomContolsVisible(zoomContolsVisible);
 			mMindMapController.getFrame().setWaitingCursor(false);
-			return;
 
 		}
 

@@ -266,14 +266,12 @@ public class FilterComposerDialog extends JDialog {
 				btnAnd.setEnabled(false);
 				btnOr.setEnabled(false);
 				btnDelete.setEnabled(false);
-				return;
 			} else if (conditionList.getMinSelectionIndex() == conditionList
 					.getMaxSelectionIndex()) {
 				btnNot.setEnabled(true);
 				btnAnd.setEnabled(false);
 				btnOr.setEnabled(false);
 				btnDelete.setEnabled(true);
-				return;
 			} else {
 				btnNot.setEnabled(false);
 				btnAnd.setEnabled(true);
@@ -328,15 +326,7 @@ public class FilterComposerDialog extends JDialog {
 			if (f.isDirectory())
 				return true;
 			String extension = Tools.getExtension(f.getName());
-			if (extension != null) {
-				if (extension
-						.equals(FilterController.FREEMIND_FILTER_EXTENSION_WITHOUT_DOT)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return false;
+			return extension != null && extension.equals(FilterController.FREEMIND_FILTER_EXTENSION_WITHOUT_DOT);
 		}
 
 		public String getDescription() {
@@ -450,7 +440,6 @@ public class FilterComposerDialog extends JDialog {
 					}
 					
 					caseInsensitive.setEnabled(false);
-					return;
 				}
 			}
 		}

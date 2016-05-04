@@ -94,7 +94,6 @@ public class MindIcon implements Comparable, IconInformation {
 	public void setName(String name) {
 
 		this.name = name;
-		return;
 
 	}
 

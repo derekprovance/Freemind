@@ -110,7 +110,6 @@ public class EditNodeExternalApplication extends EditNodeBase {
 				// controller.obtainFocusForSelected(); }
 			}
 		}.start();
-		return;
 	}
 
 	protected KeyEvent getFirstEvent() {

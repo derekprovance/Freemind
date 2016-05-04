@@ -481,7 +481,7 @@ public class StylePattern {
 						setChildrenStylePattern(this);
 						anythingFound = true;
 					}
-					if (anythingFound == false)
+					if (!anythingFound)
 						System.err.println("Cannot find the children "
 								+ searchName + " to the pattern " + getName());
 				}

@@ -53,13 +53,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
 
 	// See DropTargetListener for the meaning.
 	private boolean isDragAcceptable(DropTargetDragEvent ev) {
-		if (ev.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-			return true;
-		}
-		if (ev.isDataFlavorSupported(MindMapNodesSelection.fileListFlavor)) {
-			return true;
-		}
-		return false;
+		return ev.isDataFlavorSupported(DataFlavor.stringFlavor) || ev.isDataFlavorSupported(MindMapNodesSelection.fileListFlavor);
 	}
 
 	private boolean isDropAcceptable(DropTargetDropEvent event) {

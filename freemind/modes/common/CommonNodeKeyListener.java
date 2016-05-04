@@ -162,7 +162,6 @@ public class CommonNodeKeyListener implements KeyListener {
 		if (doMove) {
 			c.getView().move(e);
 			e.consume();
-			return;
 		}
 	}
 

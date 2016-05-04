@@ -1504,15 +1504,7 @@ public class MindMapController extends ControllerAdapter implements
 			if (f.isDirectory())
 				return true;
 			String extension = Tools.getExtension(f.getName());
-			if (extension != null) {
-				if (extension
-						.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return false;
+			return extension != null && extension.equals(FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT);
 		}
 
 		public String getDescription() {

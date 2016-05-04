@@ -233,7 +233,7 @@ public class ArrowLinkView {
 																	 * points.
 																	 */);
 		double oldCoordinateX = 0, oldCoordinateY = 0;
-		while (pi.isDone() == false) {
+		while (!pi.isDone()) {
 			double[] coordinates = new double[6];
 			int type = pi.currentSegment(coordinates);
 			switch (type) {

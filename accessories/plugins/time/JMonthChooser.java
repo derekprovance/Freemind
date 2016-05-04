@@ -160,7 +160,7 @@ public class JMonthChooser extends JPanel implements ItemListener,
 		SpinnerNumberModel model = (SpinnerNumberModel) ((JSpinner) e
 				.getSource()).getModel();
 		int value = model.getNumber().intValue();
-		boolean increase = (value > oldSpinnerValue) ? true : false;
+		boolean increase = (value > oldSpinnerValue);
 		oldSpinnerValue = value;
 
 //		changeMonth(increase);
