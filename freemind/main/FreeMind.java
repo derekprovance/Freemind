@@ -128,7 +128,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	public static final String RESOURCES_DELETE_NODES_WITHOUT_QUESTION = "delete_nodes_without_question";
 	public static final String RESOURCES_RELOAD_FILES_WITHOUT_QUESTION = "reload_files_without_question";
 	private Logger logger = null;
-	protected static final VersionInformation VERSION = new VersionInformation("1.1.0 Beta 2");
+	protected static final VersionInformation VERSION = new VersionInformation("2.0.0");
 	public static final String XML_VERSION = "1.1.0";
 	public static final String RESOURCES_REMIND_USE_RICH_TEXT_IN_NEW_LONG_NODES = "remind_use_rich_text_in_new_long_nodes";
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_ASKING = "resources_execute_scripts_without_asking";
@@ -473,7 +473,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 			try {
-				// fix for https://sourceforge.net/p/freemind/discussion/22102/thread/cf032151/?limit=25#c631
 				URI uri = new URI(url.toString().replaceAll("^file:////", "file://"));
 				desktop.browse(uri);
 			} catch (Exception e) {
@@ -586,7 +585,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 			feedBack.setMaximumValue(10 + frame.getMaximumNumberOfMapsToLoad(args));
 			frame.init(feedBack);
-	
+
 			feedBack.increase("FreeMind.progress.startCreateController", null);
 			final ModeController ctrl = frame.createModeController(args);
 	
@@ -607,6 +606,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				}
 			});
 
+			splash.setVisible(false);
 			frame.setVisible(true);
 
 			com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(frame,true);

@@ -46,7 +46,7 @@ import freemind.view.ImageFactory;
 
 public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
-	private static final String FREEMIND_SPLASH = "images/Freemind_Splash_Butterfly_Modern.png";
+	private static final String FREEMIND_SPLASH = "images/Freemind_Splash_Derek.png";
 	
 	private static final int SPLASH_HEIGHT = 200;
 	private static final int SPLASH_WIDTH = 300;
@@ -128,31 +128,21 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
 		this.feedBack = new FeedBackImpl();
 
-		// http://www.kde-look.org/content/show.php?content=76812
-		// License GPLV2+
 		ImageFactory imageFactory = ImageFactory.getInstance();
-		mIcon = imageFactory.createIcon(
-				frame.getResource("images/76812-freemind_v0.4.png"));
+		mIcon = imageFactory.createIcon(frame.getResource("images/76812-freemind_v0.4.png"));
 		setIconImage(mIcon.getImage()); // Set the icon
 		setDefaultLookAndFeelDecorated(false);
 		setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.NONE); // Set no border
-		// lamentablemente since 1.5: setAlwaysOnTop(true);
+		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
-		final ImageIcon splashImage = imageFactory.createIcon(
-				frame.getResource(FREEMIND_SPLASH));
+		final ImageIcon splashImage = imageFactory.createIcon(frame.getResource(FREEMIND_SPLASH));
 		JLabel splashImageLabel = new JLabel(splashImage) {
 			private Integer mWidth = null;
-			private final Font progressFont = new Font("SansSerif", Font.PLAIN,
-					10);
+			private final Font progressFont = new Font("Helvetica", Font.BOLD, 12);
 			private Font versionTextFont = null;
 			{
-				Set availableFontFamilyNames = Tools
-						.getAvailableFontFamilyNames();
-				versionTextFont = availableFontFamilyNames
-						.contains("Century Gothic") ? new Font(
-						"Century Gothic", Font.BOLD, 14) : new Font("Arial",
-						Font.BOLD, 12);
+				Set availableFontFamilyNames = Tools.getAvailableFontFamilyNames();
+				versionTextFont = availableFontFamilyNames.contains("Century Gothic") ? new Font("Century Gothic", Font.BOLD, 14) : new Font("Arial", Font.BOLD, 12);
 			}
 
 			private int calcYRelative(int y){
@@ -170,15 +160,17 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				g2.setFont(versionTextFont);
 				// Determine width of string to center it
-				String freemindVersion = frame.getFreemindVersion().toString();
+				String freemindVersion = "v" + frame.getFreemindVersion().toString();
 				if (mWidth == null) {
-					mWidth = g2.getFontMetrics().stringWidth(
-							freemindVersion);
+					mWidth = g2.getFontMetrics().stringWidth(freemindVersion);
 				}
-				int yCoordinate = calcYRelative(58);
-				int xCoordinate = (int) (getSize().getWidth() / 2 - mWidth / 2);
-				g2.setColor(new Color(0x4d, 0x63, 0xb4));
+				double splashHeight = getSize().getHeight();
+				double splashWidth = getSize().getWidth();
+                int yCoordinate = (int) (splashHeight - (splashHeight / 6));
+				int xCoordinate = (int) (splashWidth - (splashWidth / 30) - mWidth);
+				g2.setColor(new Color(218, 252, 255));
 				g2.drawString(freemindVersion, xCoordinate, yCoordinate);
+
 				// Draw progress bar
 				String progressString = (String) getClientProperty("progressString");
 				if (progressString != null) {
@@ -186,22 +178,12 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 					int xBase = calcXRelative(7);
 					int yBase = calcYRelative(185);
 					int width = calcXRelative(281);
-					g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-							RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+					g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 					g2.setFont(progressFont);
-					// g2.setColor(new Color(0x80,0x80,0x80));
 					g2.setColor(new Color(0xff, 0xff, 0xff));
 					g2.drawString(progressString, xBase + calcXRelative(1), yBase - calcYRelative(4));
-					g2.setColor(new Color(0xc8, 0xdf, 0x8b));
-					g2.draw(new Rectangle(xBase + calcXRelative(2), yBase, width, calcYRelative(3)));
-					// g2.setColor(new Color(0xd0,0xd0,0xd0));
-					// g2.draw(new Rectangle(xBase+1, yBase+1, width, 2));
-					// g2.setColor(new Color(0xf4,0xf4,0xf4));
-					// g2.fill(new Rectangle(xBase+1, yBase+1, width-1, 2));
-					// g2.setColor(new Color(0x4d,0x63,0xb4));
 					g2.setColor(new Color(0xff, 0xff, 0xff));
-					g2.fill(new Rectangle(xBase + calcXRelative(1), yBase + calcYRelative(1),
-							(int) (width * percent), calcYRelative(2)));
+					g2.fill(new Rectangle(xBase + calcXRelative(1), yBase + calcYRelative(1), (int) (width * percent), calcYRelative(5)));
 				}
 			}
 		};
@@ -220,8 +202,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 		Dimension labelSize = splashImageLabel.getPreferredSize();
 
 		// Put image at the middle of the screen
-		setLocation(screenSize.width / 2 - (labelSize.width / 2),
-				screenSize.height / 2 - (labelSize.height / 2));
+		setLocation(screenSize.width / 2 - (labelSize.width / 2), screenSize.height / 2 - (labelSize.height / 2));
 
 	}
 
