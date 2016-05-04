@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,12 +69,46 @@ import freemind.preferences.FreemindPropertyListener;
  * JTree).
  */
 public class MapView extends JPanel implements ViewAbstraction, Printable, Autoscroll {
-	
-	/**
-	 * Currently, this listener does nothing. But it should move the map
-	 * according to the resize event, such that the current map's center stays
-	 * at the same location (seen relative).
-	 */
+
+    // Logging:
+    private static java.util.logging.Logger logger;
+
+    private MindMap model;
+    private NodeView rootView = null;
+    private Selected selected = new Selected();
+    private float zoom = 1F;
+    private boolean disableMoveCursor = true;
+    private int siblingMaxLevel;
+    private boolean isPrinting = false; // use for remove selection from print
+    private NodeView shiftSelectionOrigin = null;
+    private int maxNodeWidth = 0;
+    private Color background = null;
+    private Rectangle boundingRectangle = null;
+    private boolean fitToPage = true;
+
+    int mPaintingTime;
+    int mPaintingAmount;
+    static boolean printOnWhiteBackground;
+    static Color standardMapBackgroundColor;
+    static Color standardSelectColor;
+    static Color standardSelectRectangleColor;
+    public static Color standardNodeTextColor;
+    static boolean standardDrawRectangleForSelection;
+    private static Stroke standardSelectionStroke;
+    private static FreemindPropertyListener propertyChangeListener;
+
+    private Vector mArrowLinkViews = new Vector();
+    private Point rootContentLocation;
+    private NodeView nodeToBeVisible = null;
+
+    private int extraWidth;
+
+    private boolean selectedsValid = true;
+
+    private ViewFeedback mFeedback;
+    private static boolean antialiasEdges = false;
+    private static boolean antialiasAll = false;
+
 	private final class ResizeListener extends ComponentAdapter {
 		Dimension mSize;
 
@@ -84,11 +117,9 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 
 		public void componentResized(ComponentEvent pE) {
-			logger.fine("Component resized " + pE + " old size " + mSize
-					+ " new size " + getSize());
+			logger.fine("Component resized " + pE + " old size " + mSize + " new size " + getSize());
 
 			mSize = getSize();
-
 		}
 	}
 
@@ -98,12 +129,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 
 		protected boolean processKeyBinding(KeyStroke pKs, KeyEvent pE,
-				int pCondition, boolean pPressed) {
-			/*
-			 * the scroll pane eats control page up and down. Moreover, the page
-			 * up and down itself is not very useful, as the map hops away too
-			 * far.
-			 */
+            int pCondition, boolean pPressed) {
+
 			return !(pE.getKeyCode() == KeyEvent.VK_PAGE_DOWN || pE.getKeyCode() == KeyEvent.VK_PAGE_UP) && super.processKeyBinding(pKs, pE, pCondition, pPressed);
 		}
 
@@ -208,49 +235,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 	}
 
-	// Logging:
-	private static java.util.logging.Logger logger;
-
-	private MindMap model;
-	private NodeView rootView = null;
-	private Selected selected = new Selected();
-	private float zoom = 1F;
-	private boolean disableMoveCursor = true;
-	private int siblingMaxLevel;
-	private boolean isPrinting = false; // use for remove selection from print
-	private NodeView shiftSelectionOrigin = null;
-	private int maxNodeWidth = 0;
-	private Color background = null;
-	private Rectangle boundingRectangle = null;
-	private boolean fitToPage = true;
-
-	int mPaintingTime;
-	int mPaintingAmount;
-	static boolean printOnWhiteBackground;
-	static Color standardMapBackgroundColor;
-	static Color standardSelectColor;
-	static Color standardSelectRectangleColor;
-	public static Color standardNodeTextColor;
-	static boolean standardDrawRectangleForSelection;
-	private static Stroke standardSelectionStroke;
-	private static FreemindPropertyListener propertyChangeListener;
-
-	private Vector mArrowLinkViews = new Vector();
-	private Point rootContentLocation;
-	private NodeView nodeToBeVisible = null;
-
-	private int extraWidth;
-
-	private boolean selectedsValid = true;
-	//
-	// Constructors
-	//
-	static boolean NEED_PREF_SIZE_BUG_FIX = Controller.JAVA_VERSION
-			.compareTo("1.5.0") < 0;
-	private ViewFeedback mFeedback;
-	private static boolean antialiasEdges = false;
-	private static boolean antialiasAll = false;
-
 	public MapView(MindMap model, ViewFeedback pFeedback) {
 		super();
 		this.model = model;
@@ -258,18 +242,12 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		if (logger == null)
 			logger = Resources.getInstance().getLogger(this.getClass().getName());
 		mCenterNodeTimer = new Timer();
-		// initialize the standard colors.
-		if (standardNodeTextColor == null) {
-			standardMapBackgroundColor = getColorFromProperty(FreeMind.RESOURCES_BACKGROUND_COLOR, Color.WHITE);
-			standardNodeTextColor = getColorFromProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR, Color.WHITE);
-			standardSelectColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR, Color.BLUE.darker());
-			standardSelectRectangleColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR, Color.WHITE);
-			standardDrawRectangleForSelection = getBooleanFromProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, false);
-			printOnWhiteBackground = getBooleanFromProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND, true);
 
-			createPropertyChangeListener();
-			propertyChangeListener.propertyChanged(FreeMindCommon.RESOURCE_ANTIALIAS, mFeedback.getProperty(FreeMindCommon.RESOURCE_ANTIALIAS), null);
+		if (standardNodeTextColor == null) {
+			initializeStandardColors();
+			initializePropertyChangeListener();
 		}
+
 		this.setAutoscrolls(true);
 
 		this.setLayout(new MindMapLayout());
@@ -277,46 +255,59 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		initRoot();
 
 		setBackground(standardMapBackgroundColor);
-		addMouseListener(pFeedback.getMapMouseMotionListener());
-		addMouseMotionListener(pFeedback.getMapMouseMotionListener());
-		addMouseWheelListener(pFeedback.getMapMouseWheelListener());
 		addKeyListener(getNodeKeyListener());
 
-		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+        setMouseListeners(pFeedback);
+        setFocusTraversals();
 
-		setFocusTraversalPolicy(new FocusTraversalPolicy() {
-
-			public Component getLastComponent(Container pAContainer) {
-				return getDefaultComponent(pAContainer);
-			}
-
-			public Component getFirstComponent(Container pAContainer) {
-				return getDefaultComponent(pAContainer);
-			}
-
-			public Component getDefaultComponent(Container pAContainer) {
-				Component defaultComponent = getSelected();
-				logger.fine("Focus traversal to: " + defaultComponent);
-				return defaultComponent;
-			}
-
-			public Component getComponentBefore(Container pAContainer,
-					Component pAComponent) {
-				return getDefaultComponent(pAContainer);
-			}
-
-			public Component getComponentAfter(Container pAContainer,
-					Component pAComponent) {
-				return getDefaultComponent(pAContainer);
-			}
-		});
-		this.setFocusTraversalPolicyProvider(true);
-		disableMoveCursor = Resources.getInstance().getBoolProperty(
-				"disable_cursor_move_paper");
+		disableMoveCursor = Resources.getInstance().getBoolProperty("disable_cursor_move_paper");
 
 		addComponentListener(new ResizeListener());
+	}
+
+    private void setMouseListeners(ViewFeedback pFeedback) {
+        addMouseListener(pFeedback.getMapMouseMotionListener());
+        addMouseMotionListener(pFeedback.getMapMouseMotionListener());
+        addMouseWheelListener(pFeedback.getMapMouseWheelListener());
+    }
+
+    private void setFocusTraversals() {
+        setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+        setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+        setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+        setFocusTraversalPolicy(new FocusTraversalPolicy() {
+            public Component getLastComponent(Container pAContainer) {
+                return getDefaultComponent(pAContainer);
+            }
+
+            public Component getFirstComponent(Container pAContainer) {
+                return getDefaultComponent(pAContainer);
+            }
+
+            public Component getDefaultComponent(Container pAContainer) {
+                Component defaultComponent = getSelected();
+                logger.fine("Focus traversal to: " + defaultComponent);
+                return defaultComponent;
+            }
+
+            public Component getComponentBefore(Container pAContainer, Component pAComponent) {
+                return getDefaultComponent(pAContainer);
+            }
+
+            public Component getComponentAfter(Container pAContainer, Component pAComponent) {
+                return getDefaultComponent(pAContainer);
+            }
+        });
+        this.setFocusTraversalPolicyProvider(true);
+    }
+
+    private void initializeStandardColors() {
+		standardMapBackgroundColor = getColorFromProperty(FreeMind.RESOURCES_BACKGROUND_COLOR, Color.WHITE);
+		standardNodeTextColor = getColorFromProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR, Color.WHITE);
+		standardSelectColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR, Color.BLUE.darker());
+		standardSelectRectangleColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR, Color.WHITE);
+		standardDrawRectangleForSelection = getBooleanFromProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, false);
+		printOnWhiteBackground = getBooleanFromProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND, true);
 	}
 
 	private Boolean getBooleanFromProperty(String property, Boolean failSafe) {
@@ -344,7 +335,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		return mFeedback;
 	}
 
-	private void createPropertyChangeListener() {
+	private void initializePropertyChangeListener() {
 		propertyChangeListener = (propertyName, newValue, oldValue) -> {
             switch(propertyName) {
                 case FreeMind.RESOURCES_NODE_TEXT_COLOR:
@@ -376,6 +367,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
             }
         };
 		Controller.addPropertyChangeListener(propertyChangeListener);
+
+		propertyChangeListener.propertyChanged(FreeMindCommon.RESOURCE_ANTIALIAS, mFeedback.getProperty(FreeMindCommon.RESOURCE_ANTIALIAS), null);
 	}
 
     private void setAntiAlias(String newValue) {
@@ -1318,13 +1311,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	public void preparePrinting() {
 		if (!isPrinting) {
 			isPrinting = true;
-			/* repaint for printing: */
-			if (NEED_PREF_SIZE_BUG_FIX) {
-				getRoot().updateAll();
-				validate();
-			} else {
-				repaintSelecteds();
-			}
+            repaintSelecteds();
 			if (printOnWhiteBackground) {
 				background = getBackground();
 				setBackground(Color.WHITE);
@@ -1355,29 +1342,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			if (printOnWhiteBackground) {
 				setBackground(background);
 			}
-			/* repaint for end printing: */
-			if (NEED_PREF_SIZE_BUG_FIX) {
-				getRoot().updateAll();
-				validate();
-			} else {
-				repaintSelecteds();
-			}
+
+            repaintSelecteds();
 		} else {
 			logger.warning("Called endPrinting although isPrinting is false.");
 		}
 	}
 
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
-		// TODO:
-		// ask user for :
-		// - center in page (in page format ?)
-		// - print zoom or maximize (in page format ?)
-		// - print selection only
-		// remember those parameters from one session to another
-		// (as orientation & margin from pf)
-
-		// User parameters
-
 		double userZoomFactor = 1;
 		try {
 			userZoomFactor = Double.parseDouble(mFeedback
@@ -1440,16 +1412,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		}
 		return Printable.PAGE_EXISTS;
 	}
-
-	// public void print(Graphics g) {
-	// try{
-	// preparePrinting();
-	// super.print(g);
-	// }
-	// finally{
-	// endPrinting();
-	// }
-	// }
 
 	/**
 	 * For nodes, they can ask, whether or not the width must be bigger to

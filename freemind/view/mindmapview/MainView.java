@@ -97,14 +97,10 @@ public abstract class MainView extends JLabel {
 		Dimension prefSize = super.getPreferredSize();
 		final float zoom = getNodeView().getMap().getZoom();
 		if (zoom != 1F) {
-			// TODO: Why 0.99? fc, 23.4.2011
 			prefSize.width = (int) (0.99 + prefSize.width * zoom);
 			prefSize.height = (int) (0.99 + prefSize.height * zoom);
 		}
 
-		if (isCurrentlyPrinting() && MapView.NEED_PREF_SIZE_BUG_FIX) {
-			prefSize.width += getNodeView().getMap().getZoomed(10);
-		}
 		prefSize.width = Math.max(
 				getNodeView().getMap().getZoomed(MIN_HOR_NODE_SIZE),
 				prefSize.width);
@@ -113,9 +109,7 @@ public abstract class MainView extends JLabel {
 		}
 		prefSize.width += getNodeView().getMap().getZoomed(12);
 		prefSize.height += getNodeView().getMap().getZoomed(4);
-		// /*@@@@@@@@@@@@@@*/
-		// prefSize.width = 150;
-		// prefSize.height = 20;
+
 		return prefSize;
 	}
 
