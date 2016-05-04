@@ -350,8 +350,7 @@ public class CompileXsdStart extends DefaultHandler {
 			mKeyOrder.add(KEY_CLASS_EXTENSION);
 			getClassMap().put(KEY_CLASS_EXTENSION,
 					" extends " + mExtendsClassName);
-			mBindingXml.append("    <structure map-as=\"" + base
-					+ "_type\"/>\n");
+			mBindingXml.append("    <structure map-as=\"").append(base).append("_type\"/>\n");
 			// inform parents:
 			XsdHandler xsdHandlerHierarchy = this;
 			do {
@@ -466,9 +465,7 @@ public class CompileXsdStart extends DefaultHandler {
 			String memberName = name.substring(0, 1).toLowerCase()
 					+ name.substring(1);
 			if (mIsSingle) {
-				mBindingXml
-						.append("      <structure usage=\"optional\" map-as=\""
-								+ FREEMIND_PACKAGE + "." + name + "\"/>\n");
+				mBindingXml.append("      <structure usage=\"optional\" map-as=\"" + FREEMIND_PACKAGE + ".").append(name).append("\"/>\n");
 				return;
 			}
 			// do multiple choices.
@@ -481,9 +478,7 @@ public class CompileXsdStart extends DefaultHandler {
 					"  public void set" + name + "(" + name + " value){\n"
 							+ "    this." + memberName + " = value;\n"
 							+ "  }\n\n");
-			mBindingXml.append("    <structure field=\"" + memberName
-					+ "\" usage=\"" + "optional" + "\" map-as=\""
-					+ FREEMIND_PACKAGE + "." + name + "\"/>\n");
+			mBindingXml.append("    <structure field=\"").append(memberName).append("\" usage=\"").append("optional").append("\" map-as=\"").append(FREEMIND_PACKAGE).append(".").append(name).append("\"/>\n");
 		}
 
 	}
@@ -559,13 +554,9 @@ public class CompileXsdStart extends DefaultHandler {
 					optReq = "required";
 				}
 				if (isRef) {
-					mBindingXml.append("      <structure field=\"" + memberName
-							+ "\" usage=\"" + optReq + "\" map-as=\""
-							+ FREEMIND_PACKAGE + "." + type + "\"/>\n");
+					mBindingXml.append("      <structure field=\"").append(memberName).append("\" usage=\"").append(optReq).append("\" map-as=\"").append(FREEMIND_PACKAGE).append(".").append(type).append("\"/>\n");
 				} else {
-					mBindingXml.append("      <value name=\"" + rawName
-							+ "\" field=\"" + memberName + "\" usage=\""
-							+ optReq + "\"/>\n");
+					mBindingXml.append("      <value name=\"").append(rawName).append("\" field=\"").append(memberName).append("\" usage=\"").append(optReq).append("\"/>\n");
 					// whitespace='preserve' doesn't work
 				}
 			} else {
@@ -595,10 +586,7 @@ public class CompileXsdStart extends DefaultHandler {
 						+ "    protected ArrayList " + memberName
 						+ "List = new ArrayList();\n\n");
 				addArrayListImport();
-				mBindingXml.append("    <collection field=\"" + memberName
-						+ "List\">\n" + "      <structure map-as=\""
-						+ FREEMIND_PACKAGE + "." + name + "\"/>\n"
-						+ "    </collection>\n");
+				mBindingXml.append("    <collection field=\"").append(memberName).append("List\">\n").append("      <structure map-as=\"").append(FREEMIND_PACKAGE).append(".").append(name).append("\"/>\n").append("    </collection>\n");
 			}
 		}
 
@@ -626,9 +614,7 @@ public class CompileXsdStart extends DefaultHandler {
 			if (getClassName() == null) {
 				mRawName = startClass(arg1);
 				// make binding:
-				mBindingXml.append("  <mapping class='" + FREEMIND_PACKAGE
-						+ "." + mClassName + "' type-name='" + mRawName
-						+ "_type' abstract='true'>\n");
+				mBindingXml.append("  <mapping class='" + FREEMIND_PACKAGE + ".").append(mClassName).append("' type-name='").append(mRawName).append("_type' abstract='true'>\n");
 				mIsClassDefinedHere = true;
 			}
 		}
@@ -675,11 +661,7 @@ public class CompileXsdStart extends DefaultHandler {
 					mBindingXml
 							.append("     <value field='content' style='text'/>\n");
 				}
-				mBindingXml.append("  </mapping>\n" + "  <mapping name=\""
-						+ mRawName + "\"" + extendString + " class=\""
-						+ FREEMIND_PACKAGE + "." + mClassName
-						+ "\"><structure map-as=\"" + mRawName
-						+ "_type\"/></mapping>\n" + "\n");
+				mBindingXml.append("  </mapping>\n" + "  <mapping name=\"").append(mRawName).append("\"").append(extendString).append(" class=\"").append(FREEMIND_PACKAGE).append(".").append(mClassName).append("\"><structure map-as=\"").append(mRawName).append("_type\"/></mapping>\n").append("\n");
 			}
 			super.endElement(arg0, arg1, arg2);
 		}
@@ -719,12 +701,7 @@ public class CompileXsdStart extends DefaultHandler {
 			appendToClassMap(KEY_CLASS_SETTERS, "  public void set" + name
 					+ "(" + type + " value){\n" + "    this." + memberName
 					+ " = value;\n" + "  }\n");
-			mBindingXml.append("    <value name='" + rawName + "' field='"
-					+ memberName + "' " + "usage='"
-					+ (("required".equals(usage)) ? "required" : "optional")
-					+ "' "
-					+ (("0".equals(minOccurs)) ? "" : "style='attribute'")
-					+ "/>\n");
+			mBindingXml.append("    <value name='").append(rawName).append("' field='").append(memberName).append("' ").append("usage='").append(("required".equals(usage)) ? "required" : "optional").append("' ").append(("0".equals(minOccurs)) ? "" : "style='attribute'").append("/>\n");
 			// whitespace='preserve' doesn't work
 		}
 

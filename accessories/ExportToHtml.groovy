@@ -1,3 +1,4 @@
+package accessories
 /*FreeMind - A Program for creating and viewing Mindmaps
  *Copyright (C) 2000-2011  Joerg Mueller, Daniel Polansky, Christian Foltin and others.
  *
@@ -27,7 +28,7 @@
 
 // show map (otherwise it can't be exported)
 c.showThisMap()
-// get exporter
+/* get exporter */
 def ex = c.getHookFactory().createModeControllerHook("accessories/plugins/ExportWithXSLT_HTML3.properties")
 ex.setController(c)
 // calculate file name

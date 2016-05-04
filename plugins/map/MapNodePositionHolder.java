@@ -303,8 +303,7 @@ public class MapNodePositionHolder extends MapNodePositionHolderBase {
 		String link = FreeMindMapController.getLink(mTileSource, mPosition,
 				mMapCenter, mZoom);
 		// to embed the original thumb nail: getImageTag() +
-		pFileout.append("<a href=\"" + link + "\">" + "<img src=\""
-				+ sMapLocationGif + "\"/></a>");
+		pFileout.append("<a href=\"").append(link).append("\">").append("<img src=\"").append(sMapLocationGif).append("\"/></a>");
 	}
 
 	/**

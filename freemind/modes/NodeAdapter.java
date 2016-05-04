@@ -468,7 +468,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public String getFontSize() {
 		if (getFont() != null) {
-			return new Integer(getFont().getSize()).toString();
+			return Integer.toString(getFont().getSize());
 		} else {
 			return getMapFeedback().getProperty("defaultfontsize");
 		}
@@ -483,11 +483,11 @@ public abstract class NodeAdapter implements MindMapNode {
 	}
 
 	public boolean isBold() {
-		return font != null ? font.isBold() : false;
+		return font != null && font.isBold();
 	}
 
 	public boolean isItalic() {
-		return font != null ? font.isItalic() : false;
+		return font != null && font.isItalic();
 	}
 
 	public boolean isUnderlined() { // not implemented

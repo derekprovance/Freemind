@@ -91,20 +91,17 @@ public class StylePattern {
 		nodeBackgroundColor = node.getBackgroundColor();
 		nodeStyle = node.getStyle();
 
-		nodeFontBold = new Boolean(node.isBold());
-		nodeFontItalic = new Boolean(node.isItalic());
+		nodeFontBold = node.isBold();
+		nodeFontItalic = node.isItalic();
 		nodeFontSize = node.getFontSize() == null ? null : Integer.valueOf(node
 				.getFontSize());
 		nodeFontFamily = node.getFontFamilyName();
 
 		nodeIcon = null;
-		// appliesToNodeIcon = node.getIcons().size()>0;
-		// nodeIcon = (MindIcon)
-		// (node.getIcons().size()==0?null:node.getIcons().get(0));
 
 		edgeColor = node.getEdge().getColor();
 		edgeStyle = node.getEdge().getStyle();
-		edgeWidth = new Integer(node.getEdge().getWidth());
+		edgeWidth = node.getEdge().getWidth();
 
 	}
 

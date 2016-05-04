@@ -226,11 +226,10 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				Properties buildNumberPros = new Properties();
 				InputStream stream = versionUrl.openStream();
 				buildNumberPros.load(stream);
-				info.append("\nBuild: "
-						+ buildNumberPros.getProperty("build.number") + "\n");
+				info.append("\nBuild: ").append(buildNumberPros.getProperty("build.number")).append("\n");
 				stream.close();
 			} catch (Exception e) {
-				info.append("Problems reading build number file: " + e);
+				info.append("Problems reading build number file: ").append(e);
 			}
 			info.append("\njava_version = ");
 			info.append(System.getProperty("java.version"));

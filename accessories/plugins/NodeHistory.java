@@ -287,9 +287,7 @@ public class NodeHistory extends MindMapNodeHookAdapter {
 		int i = 0;
 		for (Object aSNodeVector : sNodeVector) {
 			NodeHolder holder = (NodeHolder) aSNodeVector;
-			sb.append(((sCurrentPosition - 1 == i) ? "==>" : "   ")
-					+ "Node pos " + i + " is "
-					+ holder.getNode(getMindMapController().getController()));
+			sb.append((sCurrentPosition - 1 == i) ? "==>" : "   ").append("Node pos ").append(i).append(" is ").append(holder.getNode(getMindMapController().getController()));
 			sb.append("\n");
 			i++;
 		}

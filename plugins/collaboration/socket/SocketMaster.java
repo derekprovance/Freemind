@@ -45,13 +45,13 @@ public abstract class SocketMaster extends SocketBasics {
 		String mLockId;
 		long mLockedAt;
 		String mLockUserName;
-		Vector<ServerCommunication> mConnections = new Vector<ServerCommunication>();
-		public String mLockMutex = new String();
+		Vector<ServerCommunication> mConnections = new Vector<>();
+		public String mLockMutex = "";
 	}
 	
-	protected HashMap<ExtendedMapFeedback, SessionData> mSessions = new HashMap<ExtendedMapFeedback, SocketMaster.SessionData>();
+	protected HashMap<ExtendedMapFeedback, SessionData> mSessions = new HashMap<>();
 	protected int mPort;
-	protected HashMap<String, ExtendedMapFeedback> mFileMap = new HashMap<String, ExtendedMapFeedback>();
+	protected HashMap<String, ExtendedMapFeedback> mFileMap = new HashMap<>();
 
 	
 	public synchronized void removeConnection(ServerCommunication client) {

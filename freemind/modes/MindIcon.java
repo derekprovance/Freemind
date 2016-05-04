@@ -99,7 +99,7 @@ public class MindIcon implements Comparable, IconInformation {
 	}
 
 	public String getDescription() {
-		String resource = new String("icon_" + getName());
+		String resource = "icon_" + getName();
 		return Resources.getInstance().getResourceString(resource, resource);
 	}
 

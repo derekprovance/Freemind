@@ -78,7 +78,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 		HashMap hash = loadNameValuePairs(child);
 		if (hash.containsKey(REMINDUSERAT)) {
 			String remindAt = (String) hash.get(REMINDUSERAT);
-			setRemindUserAt(new Long(remindAt).longValue());
+			setRemindUserAt(Long.parseLong(remindAt));
 		}
 
 	}

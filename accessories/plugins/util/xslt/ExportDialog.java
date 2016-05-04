@@ -241,7 +241,7 @@ public class ExportDialog extends JFrame {
 
 			if (kind == 0) {
 				filter = new ExampleFileFilter(
-						new String("xsl"), getResourceString("ExportDialog.13")); //$NON-NLS-1$ //$NON-NLS-2$
+						"xsl", getResourceString("ExportDialog.13")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			FreeMindFileDialog chooser = mController.getFileChooser(filter);
 			chooser.setDialogTitle(WindowTitle);

@@ -27,11 +27,7 @@ import java.awt.CardLayout;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.JPanel;
 
@@ -377,9 +373,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 				+ ".tooltip", SET_NODE_FONT_SIZE);
 		controls.add(mSetNodeFontSize);
 		Vector sizesVector = new Vector();
-		for (int i = 0; i < sizes.length; i++) {
-			sizesVector.add(sizes[i]);
-		}
+		Collections.addAll(sizesVector, sizes);
 		mNodeFontSize = new IntegerComboProperty(NODE_FONT_SIZE + ".tooltip",
 				NODE_FONT_SIZE, sizes, sizesVector);
 		controls.add(mNodeFontSize);

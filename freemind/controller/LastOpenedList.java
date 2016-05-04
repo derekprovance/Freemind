@@ -54,8 +54,8 @@ public class LastOpenedList {
 	public LastOpenedList(Controller c, String restored) {
 		this.mController = c;
 		try {
-			maxEntries = new Integer(c.getFrame().getProperty(
-					"last_opened_list_length")).intValue();
+			maxEntries = Integer.parseInt(c.getFrame().getProperty(
+					"last_opened_list_length"));
 		} catch (NumberFormatException e) {
 			freemind.main.Resources.getInstance().logException(e);
 		}
@@ -94,9 +94,9 @@ public class LastOpenedList {
 
 	/** fc, 8.8.2004: This method returns a string representation of this class. */
 	public String save() {
-		String str = new String();
+		String str = "";
 		for (ListIterator it = listIterator(); it.hasNext();) {
-			str = str.concat((String) it.next() + ";");
+			str = str.concat(it.next() + ";");
 		}
 		return str;
 	}

@@ -111,9 +111,8 @@ public abstract class ArrowLinkAdapter extends LinkAdapter implements
 				: new Point(startInclination.x, startInclination.y);
 		arrowLink.endInclination = (endInclination == null) ? null : new Point(
 				endInclination.x, endInclination.y);
-		arrowLink.startArrow = (startArrow == null) ? null : new String(
-				startArrow);
-		arrowLink.endArrow = (endArrow == null) ? null : new String(endArrow);
+		arrowLink.startArrow = (startArrow == null) ? null : startArrow;
+		arrowLink.endArrow = (endArrow == null) ? null : endArrow;
 		return arrowLink;
 	}
 

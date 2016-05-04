@@ -138,12 +138,9 @@ public class ToolsTests extends FreeMindTestBase {
 
 	public void testGetPrefix() throws Exception {
 		if (Tools.isWindows()) {
-			  assertEquals("c:\\", 
-					Tools.getPrefix(WINDOWS_PATH_C_USERS_TMP_IM_MM).toString());
+			  assertEquals("c:\\", Tools.getPrefix(WINDOWS_PATH_C_USERS_TMP_IM_MM));
 		} else {
-			assertEquals("/",
-					Tools.getPrefix(UNIX_PATH_WITH_SPEACIAL_CHAR).toString());
-			
+			assertEquals("/", Tools.getPrefix(UNIX_PATH_WITH_SPEACIAL_CHAR));
 		}
 	}
 	

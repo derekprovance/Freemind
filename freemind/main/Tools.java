@@ -71,19 +71,7 @@ import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributes;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.KeySpec;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -254,7 +242,7 @@ public class Tools {
 
 	public static String listToString(List list) {
 		ListIterator it = list.listIterator(0);
-		String str = new String();
+		String str = "";
 		while (it.hasNext()) {
 			str += it.next().toString() + ";";
 		}
@@ -276,9 +264,7 @@ public class Tools {
 		if (availableFontFamilyNames == null) {
 			String[] envFonts = getAvailableFonts();
 			availableFontFamilyNames = new HashSet();
-			for (int i = 0; i < envFonts.length; i++) {
-				availableFontFamilyNames.add(envFonts[i]);
-			}
+			Collections.addAll(availableFontFamilyNames, envFonts);
 			// Add this one explicitly, Java defaults to it if the font is not
 			availableFontFamilyNames.add("dialog");
 		}
@@ -299,9 +285,7 @@ public class Tools {
 	public static Vector getAvailableFontFamilyNamesAsVector() {
 		String[] envFonts = getAvailableFonts();
 		Vector availableFontFamilyNames = new Vector();
-		for (int i = 0; i < envFonts.length; i++) {
-			availableFontFamilyNames.add(envFonts[i]);
-		}
+		Collections.addAll(availableFontFamilyNames, envFonts);
 		return availableFontFamilyNames;
 	}
 
@@ -621,7 +605,7 @@ public class Tools {
 		}
 
 		public String toString() {
-			return new String("IntHolder(") + value + ")";
+			return "IntHolder(" + value + ")";
 		}
 		
 		public void increase() {
@@ -813,7 +797,7 @@ public class Tools {
 	/**
      */
 	public static String toBase64(byte[] byteBuffer) {
-		return new String(Base64Coding.encode64(byteBuffer));
+		return Base64Coding.encode64(byteBuffer);
 	}
 
 	/** Method to be called from XSLT */
@@ -1656,17 +1640,14 @@ public class Tools {
 		}
 		StringBuffer b = new StringBuffer();
 		if (pText1.length() > pText2.length()) {
-			b.append("First string is longer :"
-					+ pText1.substring(pText2.length()) + "\n");
+			b.append("First string is longer :").append(pText1.substring(pText2.length())).append("\n");
 		}
 		if (pText1.length() < pText2.length()) {
-			b.append("Second string is longer :"
-					+ pText2.substring(pText1.length()) + "\n");
+			b.append("Second string is longer :").append(pText2.substring(pText1.length())).append("\n");
 		}
 		for (int i = 0; i < Math.min(pText1.length(), pText2.length()); i++) {
 			if (pText1.charAt(i) != pText2.charAt(i)) {
-				b.append("Difference at " + i + ": " + pText1.charAt(i) + "!="
-						+ pText2.charAt(i) + "\n");
+				b.append("Difference at ").append(i).append(": ").append(pText1.charAt(i)).append("!=").append(pText2.charAt(i)).append("\n");
 			}
 
 		}
@@ -2026,7 +2007,7 @@ public class Tools {
 
 	public static String generateID(String proposedID, HashMap hashMap,
 			String prefix) {
-		String myProposedID = new String((proposedID != null) ? proposedID : "");
+		String myProposedID = (proposedID != null) ? proposedID : "";
 		String returnValue;
 		do {
 			if (!myProposedID.isEmpty()) {

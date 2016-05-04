@@ -101,14 +101,7 @@ public class ClickableImageCreator {
 			if(replacement.isEmpty()) {
 				continue;
 			}
-			htmlArea.append("<area shape=\"" + holder.shape + "\" href=\""
-					+ replacement + "\" alt=\""
-					+ HtmlTools.toXMLEscapedText(holder.alt) + "\" title=\""
-					+ HtmlTools.toXMLEscapedText(holder.title) + "\" coords=\""
-					+ holder.coordinates.x + "," + holder.coordinates.y + ","
-					+ (holder.coordinates.width + holder.coordinates.x) + ","
-					+ +(holder.coordinates.height + holder.coordinates.y)
-					+ "\" />");
+			htmlArea.append("<area shape=\"").append(holder.shape).append("\" href=\"").append(replacement).append("\" alt=\"").append(HtmlTools.toXMLEscapedText(holder.alt)).append("\" title=\"").append(HtmlTools.toXMLEscapedText(holder.title)).append("\" coords=\"").append(holder.coordinates.x).append(",").append(holder.coordinates.y).append(",").append(holder.coordinates.width + holder.coordinates.x).append(",").append(+(holder.coordinates.height + holder.coordinates.y)).append("\" />");
 		}
 		return htmlArea.toString();
 	}

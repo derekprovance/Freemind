@@ -2457,8 +2457,8 @@ public class FreeMindMapController extends JMapController implements
 		String result;
 		mMindMapController.getFrame().setWaitingCursor(true);
 		try {
-			logger.fine("Searching for " + b.toString());
-			URL url = new URL(b.toString());
+			logger.fine("Searching for " + b);
+			URL url = new URL(b);
 			URLConnection urlConnection = url.openConnection();
 			if (Tools.isAboveJava4()) {
 				urlConnection.setConnectTimeout(Resources.getInstance()

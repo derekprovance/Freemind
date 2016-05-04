@@ -141,20 +141,8 @@ public class HtmlTools {
 		 */
 
 		public String toString() {
-			StringBuffer buffer = new StringBuffer();
-			buffer.append("[IndexPair:");
-			buffer.append(" originalStart: ");
-			buffer.append(originalStart);
-			buffer.append(" originalEnd: ");
-			buffer.append(originalEnd);
-			buffer.append(" replacedStart: ");
-			buffer.append(replacedStart);
-			buffer.append(" replacedEnd: ");
-			buffer.append(replacedEnd);
-			buffer.append(" is a tag: ");
-			buffer.append(mIsTag);
-			buffer.append("]");
-			return buffer.toString();
+			return "[IndexPair:" + " originalStart: " + originalStart + " originalEnd: " + originalEnd +
+					" replacedStart: " + replacedStart + " replacedEnd: " + replacedEnd + " is a tag: " + mIsTag + "]";
 		}
 	}
 
@@ -207,17 +195,8 @@ public class HtmlTools {
 				// System.out.println(sb.toString() + ", " + indexPair);
 				splittedStringList.add(indexPair);
 			}
-			// System.out.println(sb.toString());
 			stringWithoutTags = sb.toString();
 		}
-
-		// // give it out:
-		// for (Iterator iter = splittedStringList.iterator(); iter.hasNext();)
-		// {
-		// IndexPair pair = (IndexPair) iter.next();
-		// System.out.println(text.substring(pair.originalStart,
-		// pair.originalEnd) + ", " + pair);
-		// }
 
 		/**
 		 * For each pair which is not a tag we find concurrences and replace

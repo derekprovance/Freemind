@@ -455,8 +455,7 @@ public class TimeManagement extends MindMapHookAdapter implements
 				gb2.gridy = 0;
 				gb2.fill = GridBagConstraints.HORIZONTAL;
 				minuteField = new JTextField(2);
-				String minuteString = new Integer(Calendar.getInstance().get(
-						Calendar.MINUTE)).toString();
+				String minuteString = Integer.toString(Calendar.getInstance().get(Calendar.MINUTE));
 				// padding with "0"
 				if (minuteString.length() < 2) {
 					minuteString = "0" + minuteString;
@@ -524,8 +523,7 @@ public class TimeManagement extends MindMapHookAdapter implements
 		// add the hook:
 		Properties properties = new Properties();
 		if (pRemindAt != 0L) {
-			properties.put(ReminderHookBase.REMINDUSERAT,
-					new Long(pRemindAt).toString());
+			properties.put(ReminderHookBase.REMINDUSERAT, Long.toString(pRemindAt));
 		}
 		getMindMapController().addHook(node,
 				Tools.getVectorWithSingleElement(node), REMINDER_HOOK_NAME,
