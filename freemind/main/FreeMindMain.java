@@ -192,7 +192,7 @@ public interface FreeMindMain {
 		}
 
 		public String toString() {
-			StringBuffer buf = new StringBuffer();
+			StringBuilder buf = new StringBuilder();
 			buf.append(mMaj);
 			buf.append('.');
 			buf.append(mMid);

@@ -85,12 +85,16 @@ public class BrowseHookFactory extends HookFactoryAdapter {
 	public NodeHook createNodeHook(String hookName) {
 		// System.out.println("create node hook:"+hookName);
 		NodeHook hook;
-		if (hookName.equals(ReminderHookBase.PLUGIN_LABEL)) {
-			hook = new BrowseReminderHook();
-		} else if (hookName.equals(MapNodePositionHolderBase.NODE_MAP_HOOK_NAME)) {
-			hook = new MapNodePositionHolderBase();
-		} else {
-			hook = new PermanentNodeHookSubstituteUnknown(hookName);
+		switch (hookName) {
+			case ReminderHookBase.PLUGIN_LABEL:
+				hook = new BrowseReminderHook();
+				break;
+			case MapNodePositionHolderBase.NODE_MAP_HOOK_NAME:
+				hook = new MapNodePositionHolderBase();
+				break;
+			default:
+				hook = new PermanentNodeHookSubstituteUnknown(hookName);
+				break;
 		}
 		// decorate hook.
 		hook.setProperties(new Properties());

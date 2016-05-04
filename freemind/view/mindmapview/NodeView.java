@@ -866,7 +866,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		if (isHtml) {
 			// Make it possible to use relative img references in HTML using tag
 			// <base>.
-			if (nodeText.indexOf("<img") >= 0 && nodeText.indexOf("<base ") < 0) {
+			if (nodeText.contains("<img") && !nodeText.contains("<base ")) {
 				try {
 					nodeText = "<html><base href=\"" + mapView.getModel().getURL()
 							+ "\">" + nodeText.substring(6);
@@ -1044,7 +1044,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			mainView.setToolTipText(null);
 		} else {
 			// html table
-			StringBuffer text = new StringBuffer("<html><table width=\""
+			StringBuilder text = new StringBuilder("<html><table width=\""
 					+ getMaxToolTipWidth() + "\">");
 			for (Object o : tooltips.keySet()) {
 				String key = (String) o;

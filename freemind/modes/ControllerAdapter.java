@@ -816,18 +816,22 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void handleLoadingException(Exception ex) {
 		String exceptionType = ex.getClass().getName();
-		if (exceptionType.equals("freemind.main.XMLParseException")) {
-			int showDetail = JOptionPane.showConfirmDialog(getView(),
-					getText("map_corrupted"), "FreeMind",
-					JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-			if (showDetail == JOptionPane.YES_OPTION) {
+		switch (exceptionType) {
+			case "freemind.main.XMLParseException":
+				int showDetail = JOptionPane.showConfirmDialog(getView(),
+						getText("map_corrupted"), "FreeMind",
+						JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+				if (showDetail == JOptionPane.YES_OPTION) {
+					getController().errorMessage(ex);
+				}
+				break;
+			case "java.io.FileNotFoundException":
+				getController().errorMessage(ex.getMessage());
+				break;
+			default:
+				Resources.getInstance().logException(ex);
 				getController().errorMessage(ex);
-			}
-		} else if (exceptionType.equals("java.io.FileNotFoundException")) {
-			getController().errorMessage(ex.getMessage());
-		} else {
-			freemind.main.Resources.getInstance().logException(ex);
-			getController().errorMessage(ex);
+				break;
 		}
 	}
 

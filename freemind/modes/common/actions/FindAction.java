@@ -318,7 +318,7 @@ public class FindAction extends FreemindAction {
 			boolean found = true;
 			boolean foundInNotes = false;
 			for (Object subterm1 : subterms) {
-				if (nodeText.indexOf((String) subterm1) < 0) {
+				if (!nodeText.contains((String) subterm1)) {
 					// Subterm not found
 					found = false;
 					break;
@@ -329,7 +329,7 @@ public class FindAction extends FreemindAction {
 				/* now, search the notes. */
 				found = true;
 				for (Object subterm : subterms) {
-					if (noteText.indexOf((String) subterm) < 0) {
+					if (!noteText.contains((String) subterm)) {
 						// Subterm not found
 						found = false;
 						break;
@@ -371,7 +371,7 @@ public class FindAction extends FreemindAction {
 
 	private Collection breakSearchTermIntoSubterms(String searchTerm) {
 		ArrayList subterms = new ArrayList();
-		StringBuffer subterm = new StringBuffer();
+		StringBuilder subterm = new StringBuilder();
 		int len = searchTerm.length();
 		char myChar;
 		char previousChar = 'a';

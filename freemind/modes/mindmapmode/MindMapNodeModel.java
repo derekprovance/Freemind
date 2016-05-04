@@ -120,7 +120,7 @@ public class MindMapNodeModel extends NodeAdapter {
 
 	private String saveRFT_escapeUnicodeAndSpecialCharacters(String text) {
 		int len = text.length();
-		StringBuffer result = new StringBuffer(len);
+		StringBuilder result = new StringBuilder(len);
 		int intValue;
 		char myChar;
 		for (int i = 0; i < len; ++i) {

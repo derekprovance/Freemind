@@ -39,7 +39,7 @@ class IgnoreCaseNodeContainsCondition extends NodeCondition {
 	}
 
 	public boolean checkNode(Controller c, MindMapNode node) {
-		return node.getText().toLowerCase().indexOf(value) > -1;
+		return node.getText().toLowerCase().contains(value);
 	}
 
 	public void save(XMLElement element) {

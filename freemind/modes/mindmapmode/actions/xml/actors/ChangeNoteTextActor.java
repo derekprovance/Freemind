@@ -62,8 +62,7 @@ public class ChangeNoteTextActor extends XmlActorAdapter {
 		EditNoteToNodeAction nodeAction = new EditNoteToNodeAction();
 		nodeAction.setNode(getNodeID(node));
 		if (text != null
-				&& (HtmlTools.htmlToPlain(text).length() != 0 || text
-						.indexOf("<img") >= 0)) {
+				&& (HtmlTools.htmlToPlain(text).length() != 0 || text.contains("<img"))) {
 			nodeAction.setText(text);
 		} else {
 			nodeAction.setText(null);

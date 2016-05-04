@@ -68,7 +68,7 @@ public class RevertActor extends XmlActorAdapter {
 	public RevertXmlAction createRevertXmlAction(File file) throws IOException {
 		String fileName = file.getAbsolutePath();
 		FileReader f = new FileReader(file);
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (int c; (c = f.read()) != -1;)
 			buffer.append((char) c);
 		f.close();

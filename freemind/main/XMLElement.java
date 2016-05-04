@@ -2887,7 +2887,7 @@ public class XMLElement {
 
 		// special collection mode:
 		if (isCollectionMode) {
-			StringBuffer waitingBuf = new StringBuffer();
+			StringBuilder waitingBuf = new StringBuilder();
 			int lastOpeningBreak = -1;
 			for (;;) {
 				ch = this.readChar();
@@ -3029,7 +3029,7 @@ public class XMLElement {
 	 */
 	protected void resolveEntity(StringBuffer buf) throws IOException {
 		char ch = '\0';
-		StringBuffer keyBuf = new StringBuffer();
+		StringBuilder keyBuf = new StringBuilder();
 		for (;;) {
 			ch = this.readChar();
 			if (ch == ';') {

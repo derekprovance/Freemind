@@ -123,7 +123,7 @@ public class Base64Coding {
 	 * Helper method for encoding an array of bytes as a Base64 String.
 	 */
 	public static String encode64(byte[] b) {
-		StringBuffer sb = new StringBuffer((b.length / 3) * 4);
+		StringBuilder sb = new StringBuilder((b.length / 3) * 4);
 
 		int i = 0;
 		int remaining = b.length;

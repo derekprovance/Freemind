@@ -444,7 +444,7 @@ public class GrabKeyDialog extends JDialog {
 						"==> Translated to " + key + "\n");
 			}
 
-			StringBuffer keyString = new StringBuffer(/* getText() */);
+			StringBuilder keyString = new StringBuilder(/* getText() */);
 
 			// if(getDocument().getLength() != 0)
 			// keyString.append(' ');

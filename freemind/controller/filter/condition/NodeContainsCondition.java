@@ -38,7 +38,7 @@ class NodeContainsCondition extends NodeCondition {
 	}
 
 	public boolean checkNode(Controller c, MindMapNode node) {
-		return node.getText().indexOf(value) > -1;
+		return node.getText().contains(value);
 	}
 
 	public void save(XMLElement element) {

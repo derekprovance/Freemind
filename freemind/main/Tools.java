@@ -327,14 +327,15 @@ public class Tools {
 
 		String osNameStart = System.getProperty("os.name").substring(0, 3);
 		String fileSeparator = System.getProperty("file.separator");
-		if (osNameStart.equals("Win")) {
-			return ((path.length() > 1) && path.substring(1, 2).equals(":"))
-					|| path.startsWith(fileSeparator);
-		} else if (osNameStart.equals("Mac")) {
-			// Koh:Panther (or Java 1.4.2) may change file path rule
-			return path.startsWith(fileSeparator);
-		} else {
-			return path.startsWith(fileSeparator);
+		switch (osNameStart) {
+			case "Win":
+				return ((path.length() > 1) && path.substring(1, 2).equals(":"))
+						|| path.startsWith(fileSeparator);
+			case "Mac":
+				// Koh:Panther (or Java 1.4.2) may change file path rule
+				return path.startsWith(fileSeparator);
+			default:
+				return path.startsWith(fileSeparator);
 		}
 	}
 
@@ -1135,7 +1136,7 @@ public class Tools {
 	}
 
 	public static String getFile(Reader pReader) {
-		StringBuffer lines = new StringBuffer();
+		StringBuilder lines = new StringBuilder();
 		BufferedReader bufferedReader = null;
 		try {
 			bufferedReader = new BufferedReader(pReader);
@@ -1623,7 +1624,7 @@ public class Tools {
 		if (pText1 == null || pText2 == null) {
 			return "One of the Strings is null " + pText1 + ", " + pText2;
 		}
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		if (pText1.length() > pText2.length()) {
 			b.append("First string is longer :").append(pText1.substring(pText2.length())).append("\n");
 		}
@@ -1759,7 +1760,7 @@ public class Tools {
 	} // }}}
 
 	public static String arrayToUrls(String[] pArgs) {
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		for (String fileName : pArgs) {
 			try {
 				b.append(fileToUrl(new File(fileName)));
@@ -1962,7 +1963,7 @@ public class Tools {
 				.replaceAll(".*\\.", "");
 		if (pAction instanceof CompoundAction) {
 			CompoundAction compound = (CompoundAction) pAction;
-			StringBuffer buf = new StringBuffer("[");
+			StringBuilder buf = new StringBuilder("[");
 			for (Object o : compound.getListChoiceList()) {
 				if (buf.length() > 1) {
 					buf.append(',');

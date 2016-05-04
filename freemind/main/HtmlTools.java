@@ -296,7 +296,7 @@ public class HtmlTools {
 		/*
 		 * Heuristic reserve for expansion : factor 1.2
 		 */
-		StringBuffer result = new StringBuffer((int) (text.length() * 1.2));
+		StringBuilder result = new StringBuilder((int) (text.length() * 1.2));
 		int intValue;
 		char myChar;
 		for (int i = 0; i < text.length(); ++i) {
@@ -331,8 +331,8 @@ public class HtmlTools {
 	 * @return the converted output.
 	 */
 	public static String unescapeHTMLUnicodeEntity(String text) {
-		StringBuffer result = new StringBuffer(text.length());
-		StringBuffer entity = new StringBuffer();
+		StringBuilder result = new StringBuilder(text.length());
+		StringBuilder entity = new StringBuilder();
 		boolean readingEntity = false;
 		char myChar;
 		char entityChar;
@@ -463,7 +463,7 @@ public class HtmlTools {
 																		// as
 																		// tab
 																		// width.
-		StringBuffer result = new StringBuffer(textTabsExpanded.length()); // Heuristic
+		StringBuilder result = new StringBuilder(textTabsExpanded.length()); // Heuristic
 		int lengthMinus1 = textTabsExpanded.length() - 1;
 		result.append("<html><body><p>");
 		for (int i = 0; i < textTabsExpanded.length(); ++i) {
@@ -507,7 +507,7 @@ public class HtmlTools {
 		text = text.replaceAll("\t", "         "); // Use eight spaces as tab
 													// width.
 		int len = text.length();
-		StringBuffer result = new StringBuffer(len);
+		StringBuilder result = new StringBuilder(len);
 		char myChar;
 		for (int i = 0; i < len; ++i) {
 			myChar = text.charAt(i);
@@ -616,8 +616,8 @@ public class HtmlTools {
 	   This method uses the method isXMLValidCharacter, which makes use
 	   of http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char. */
 	public static String removeInvalidXmlCharacters(String text) {
-		StringBuffer result = new StringBuffer(text.length());
-		StringBuffer entity = new StringBuffer();
+		StringBuilder result = new StringBuilder(text.length());
+		StringBuilder entity = new StringBuilder();
 		boolean readingEntity = false;
 		char myChar;
 		char entityChar;
@@ -695,7 +695,7 @@ public class HtmlTools {
 	 * @return
 	 */
 	public static String replaceSpacesToNonbreakableSpaces(String input) {
-		StringBuffer result = new StringBuffer(input.length());
+		StringBuilder result = new StringBuilder(input.length());
 		boolean readingSpaces = false;
 		char myChar;
 		for (int i = 0; i < input.length(); ++i) {
