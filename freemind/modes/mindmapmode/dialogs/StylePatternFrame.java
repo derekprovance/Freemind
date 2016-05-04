@@ -36,6 +36,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
 import freemind.common.BooleanProperty;
@@ -269,12 +270,13 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 		String form = "right:max(40dlu;p), 4dlu, 20dlu, 7dlu,right:max(40dlu;p), 4dlu, 80dlu, 7dlu";
 		FormLayout rightLayout = new FormLayout(form, "");
 		DefaultFormBuilder rightBuilder = new DefaultFormBuilder(rightLayout);
-		rightBuilder.setDefaultDialogBorder();
+		rightBuilder.border(Borders.DIALOG);
 		mControls = getControls();
-		for (Iterator i = mControls.iterator(); i.hasNext();) {
-			PropertyControl control = (PropertyControl) i.next();
+		for (Object mControl : mControls) {
+			PropertyControl control = (PropertyControl) mControl;
 			control.layout(rightBuilder, this);
 		}
+
 		// add the last one, too
 		rightStack.add(rightBuilder.getPanel(), "testTab");
 		add(rightStack, BorderLayout.CENTER);
@@ -282,8 +284,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
 	public void addListeners() {
 		// add listeners:
-		for (Iterator iter = mControls.iterator(); iter.hasNext();) {
-			PropertyControl control = (PropertyControl) iter.next();
+		for (Object mControl : mControls) {
+			PropertyControl control = (PropertyControl) mControl;
 			if (control instanceof PropertyBean) {
 				PropertyBean bean = (PropertyBean) control;
 				bean.addPropertyChangeListener(this);
@@ -292,10 +294,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 		mClearSetters.addPropertyChangeListener(new PropertyChangeListener() {
 
 			public void propertyChange(PropertyChangeEvent pEvt) {
-				for (Iterator iter = mPropertyChangePropagation.keySet()
-						.iterator(); iter.hasNext();) {
-					ThreeCheckBoxProperty booleanProp = (ThreeCheckBoxProperty) iter
-							.next();
+				for (Object o : mPropertyChangePropagation.keySet()) {
+					ThreeCheckBoxProperty booleanProp = (ThreeCheckBoxProperty) o;
 					booleanProp.setValue(mClearSetters.getValue());
 				}
 			}

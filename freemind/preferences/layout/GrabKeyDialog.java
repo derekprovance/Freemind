@@ -221,14 +221,6 @@ public class GrabKeyDialog extends JDialog {
 		// because Box doesn't have setBorder().
 		JPanel content = new JPanel(new GridLayout(0, 1, 0, 6)) {
 			/**
-			 * Returns if this component can be traversed by pressing the Tab
-			 * key. This returns false.
-			 */
-			public boolean isManagingFocus() {
-				return false;
-			}
-
-			/**
 			 * Makes the tab key work in Java 1.4.
 			 * 
 			 * @since jEdit 3.2pre4

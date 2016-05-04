@@ -50,6 +50,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
@@ -156,16 +157,11 @@ public class OptionPanel implements TextTranslator {
 	/**
 	 */
 	public void setProperties() {
-		for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
-			PropertyControl control = i.next();
+		for (PropertyControl control : controls) {
 			if (control instanceof PropertyBean) {
 				PropertyBean bean = (PropertyBean) control;
-				// System.out.println("grep -n -e \""+bean.getLabel()+"\" -r * |
-				// grep -e \"\\.(java|xml):\"");
 				final String label = bean.getLabel();
 				String value = fmMain.getAdjustableProperty(label);
-				// System.out.println("Setting property " + bean.getLabel()
-				// + " to " + value);
 				bean.setValue(value);
 			}
 		}
@@ -173,8 +169,7 @@ public class OptionPanel implements TextTranslator {
 
 	private Properties getOptionProperties() {
 		Properties p = new Properties();
-		for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
-			PropertyControl control = i.next();
+		for (PropertyControl control : controls) {
 			if (control instanceof PropertyBean) {
 				PropertyBean bean = (PropertyBean) control;
 				final String value = bean.getValue();
@@ -193,15 +188,12 @@ public class OptionPanel implements TextTranslator {
 		CardLayout cardLayout = new VariableSizeCardLayout();
 		JPanel rightStack = new JPanel(cardLayout);
 
-		FormLayout rightLayout = null; // add rows dynamically
+		FormLayout rightLayout;
 		DefaultFormBuilder rightBuilder = null;
 		String lastTabName = null;
 
 		controls = getControls();
-		for (Iterator<PropertyControl> i = controls.iterator(); i.hasNext();) {
-			PropertyControl control = i.next();
-			// System.out.println("layouting : " + control.getLabel());
-
+		for (PropertyControl control : controls) {
 			if (control instanceof NewTabProperty) {
 				NewTabProperty newTab = (NewTabProperty) control;
 				if (rightBuilder != null) {
@@ -210,7 +202,7 @@ public class OptionPanel implements TextTranslator {
 				}
 				rightLayout = new FormLayout(newTab.getDescription(), "");
 				rightBuilder = new DefaultFormBuilder(rightLayout);
-				rightBuilder.setDefaultDialogBorder();
+				rightBuilder.border(Borders.DIALOG);
 				lastTabName = newTab.getLabel();
 				// add a button to the left side:
 				JButton tabButton = new JButton(getText(lastTabName));
@@ -236,21 +228,12 @@ public class OptionPanel implements TextTranslator {
 				leftBuilder.getPanel(), rightScrollPane);
 		frame.getContentPane().add(centralPanel, BorderLayout.CENTER);
 		JButton cancelButton = new JButton(getText("Cancel"));
-		cancelButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				closeWindow();
-			}
-		});
+		cancelButton.addActionListener(arg0 -> closeWindow());
 		JButton okButton = new JButton(getText("OK"));
-		okButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				feedback.writeProperties(getOptionProperties());
-				closeWindow();
-			}
-
-		});
+		okButton.addActionListener(arg0 -> {
+            feedback.writeProperties(getOptionProperties());
+            closeWindow();
+        });
 		frame.getRootPane().setDefaultButton(okButton);
 		frame.getContentPane().add(
 				new ButtonBarBuilder().addGlue().addButton(cancelButton).addButton(okButton).build(),
@@ -313,10 +296,10 @@ public class OptionPanel implements TextTranslator {
 			cardLayout.show(centralPanel, tabName);
 			// design: mark selected button with a color
 			Collection c = getAllButtons();
-			for (Iterator i = c.iterator(); i.hasNext();) {
-				JButton button = (JButton) i.next();
-				button.setForeground(null);
-			}
+            for (Object aC : c) {
+                JButton button = (JButton) aC;
+                button.setForeground(null);
+            }
 			getTabButton(tabName).setForeground(MARKED_BUTTON_COLOR);
 			selectedPanel = tabName;
 		}
@@ -377,25 +360,22 @@ public class OptionPanel implements TextTranslator {
 			this.description = description;
 			this.label = label;
 			kb=createBinding(getText(label), label, fmMain.getAdjustableProperty(label), this);
-			mButton.addActionListener(new ActionListener() {
+			mButton.addActionListener(arg0 -> {
 
-				public void actionPerformed(ActionEvent arg0) {
-
-					GrabKeyDialog dialog = new GrabKeyDialog(fmMain, frame,
-							new GrabKeyDialog.KeyBinding(getLabel(), getLabel(), getValue(), false),
-							allBindings, null, modifierMask);
-					if (dialog.isOK()) {
-						if(dialog.bindingReset!=null){
-							KeyProperty k=findControlByKB(dialog.bindingReset);
-							if(k!=null){
-								k.setValue("");
-							}
-						}
-						setValue(dialog.getShortcut());
-						firePropertyChangeEvent();
-					}
-				}
-			});
+                GrabKeyDialog dialog = new GrabKeyDialog(fmMain, frame,
+                        new KeyBinding(getLabel(), getLabel(), getValue(), false),
+                        allBindings, null, modifierMask);
+                if (dialog.isOK()) {
+                    if(dialog.bindingReset!=null){
+                        KeyProperty k=findControlByKB(dialog.bindingReset);
+                        if(k!=null){
+                            k.setValue("");
+                        }
+                    }
+                    setValue(dialog.getShortcut());
+                    firePropertyChangeEvent();
+                }
+            });
 		}
 
 		public void disableModifiers() {

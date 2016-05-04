@@ -38,6 +38,7 @@ import javax.swing.WindowConstants;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
 import freemind.common.PropertyBean;
@@ -88,12 +89,11 @@ public class FormDialog extends JDialog implements
 		mFormDialogValidator = pValidator;
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
-		FormLayout formLayout = new FormLayout(
-				"right:max(40dlu;p), 4dlu, 80dlu, 7dlu", "");
+		FormLayout formLayout = new FormLayout("right:max(40dlu;p), 4dlu, 80dlu, 7dlu", "");
 		DefaultFormBuilder builder = new DefaultFormBuilder(formLayout);
-		builder.setDefaultDialogBorder();
-		for (Iterator it = controls.iterator(); it.hasNext();) {
-			PropertyControl prop = (PropertyControl) it.next();
+		builder.border(Borders.DIALOG);
+		for (Object control : controls) {
+			PropertyControl prop = (PropertyControl) control;
 			prop.layout(builder, mController2);
 			PropertyBean bean = (PropertyBean) prop;
 			bean.addPropertyChangeListener(this);
@@ -101,23 +101,15 @@ public class FormDialog extends JDialog implements
 		getContentPane().add(builder.getPanel(), BorderLayout.CENTER);
 		JButton cancelButton = new JButton();
 		Tools.setLabelAndMnemonic(cancelButton, getText("cancel"));
-		cancelButton.addActionListener(new ActionListener() {
+		cancelButton.addActionListener(arg0 -> closeWindow());
 
-			public void actionPerformed(ActionEvent arg0) {
-				closeWindow();
-			}
-
-		});
 		mOkButton = new JButton();
 		Tools.setLabelAndMnemonic(mOkButton, getText("ok"));
-		mOkButton.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent arg0) {
-				mSuccess = true;
-				closeWindow();
-			}
-
-		});
+		mOkButton.addActionListener(arg0 -> {
+            mSuccess = true;
+            closeWindow();
+        });
 		getRootPane().setDefaultButton(mOkButton);
 		getContentPane().add(
 				new ButtonBarBuilder().addGlue().addButton(cancelButton).addButton(mOkButton).build(),
