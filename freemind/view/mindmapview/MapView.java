@@ -235,11 +235,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	private static Stroke standardSelectionStroke;
 	private static FreemindPropertyListener propertyChangeListener;
 
-	/** Used to identify a right click onto a link curve. */
-	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
-
+	private Vector mArrowLinkViews = new Vector();
 	private Point rootContentLocation;
-
 	private NodeView nodeToBeVisible = null;
 
 	private int extraWidth;
@@ -263,60 +260,14 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		mCenterNodeTimer = new Timer();
 		// initialize the standard colors.
 		if (standardNodeTextColor == null) {
-			try {
-				String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_BACKGROUND_COLOR);
-				standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				standardMapBackgroundColor = Color.WHITE;
-			}
-			try {
-				String stdcolor = mFeedback.getProperty(
-						FreeMind.RESOURCES_NODE_TEXT_COLOR);
-				standardNodeTextColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				standardSelectColor = Color.WHITE;
-			}
-			// initialize the selectedColor:
-			try {
-				String stdcolor = mFeedback.getProperty(
-						FreeMind.RESOURCES_SELECTED_NODE_COLOR);
-				standardSelectColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				standardSelectColor = Color.BLUE.darker();
-			}
+			standardMapBackgroundColor = getColorFromProperty(FreeMind.RESOURCES_BACKGROUND_COLOR, Color.WHITE);
+			standardNodeTextColor = getColorFromProperty(FreeMind.RESOURCES_NODE_TEXT_COLOR, Color.WHITE);
+			standardSelectColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_COLOR, Color.BLUE.darker());
+			standardSelectRectangleColor = getColorFromProperty(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR, Color.WHITE);
+			standardDrawRectangleForSelection = getBooleanFromProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, false);
+			printOnWhiteBackground = getBooleanFromProperty(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND, true);
 
-			// initialize the selectedTextColor:
-			try {
-				String stdtextcolor = mFeedback.getProperty(
-						FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR);
-				standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				standardSelectRectangleColor = Color.WHITE;
-			}
-			try {
-				String drawCircle = mFeedback.getProperty(
-						FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION);
-				standardDrawRectangleForSelection = Tools
-						.xmlToBoolean(drawCircle);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				standardDrawRectangleForSelection = false;
-			}
-
-			try {
-				String printOnWhite = mFeedback.getProperty(
-						FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND);
-				printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
-			} catch (Exception ex) {
-				freemind.main.Resources.getInstance().logException(ex);
-				printOnWhiteBackground = true;
-			}
 			createPropertyChangeListener();
-
 			propertyChangeListener.propertyChanged(FreeMindCommon.RESOURCE_ANTIALIAS, mFeedback.getProperty(FreeMindCommon.RESOURCE_ANTIALIAS), null);
 		}
 		this.setAutoscrolls(true);
@@ -366,6 +317,24 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 				"disable_cursor_move_paper");
 
 		addComponentListener(new ResizeListener());
+	}
+
+	private Boolean getBooleanFromProperty(String property, Boolean failSafe) {
+		try {
+			return Tools.xmlToBoolean(mFeedback.getProperty(property));
+		} catch (Exception ex) {
+			freemind.main.Resources.getInstance().logException(ex);
+			return failSafe;
+		}
+	}
+
+	private Color getColorFromProperty(String property, Color failSafe) {
+		try {
+			return Tools.xmlToColor(mFeedback.getProperty(property));
+		} catch (Exception ex) {
+			freemind.main.Resources.getInstance().logException(ex);
+			return failSafe;
+		}
 	}
 
 	/**
