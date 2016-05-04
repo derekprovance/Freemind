@@ -217,35 +217,21 @@ public class StylePatternFactory {
 		if (pPattern.getPatternNodeBackgroundColor() != null) {
 			result = addSeparatorIfNecessary(result);
 			if (pPattern.getPatternNodeBackgroundColor().getValue() == null) {
-				result += "-"
-						+ translator.getText("PatternToString.backgroundColor");
+				result += "-" + translator.getText("PatternToString.backgroundColor");
 			} else {
-				result += "+"
-						+ translator.getText("PatternToString.backgroundColor");
+				result += "+" + translator.getText("PatternToString.backgroundColor");
 			}
 		}
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternNodeFontSize(),
-				"PatternToString.NodeFontSize");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternNodeFontName(), "PatternToString.FontName");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternNodeFontBold(), "PatternToString.FontBold");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternNodeFontStrikethrough(), "PatternToString.FontStrikethrough");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternNodeFontItalic(),
-				"PatternToString.FontItalic");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternEdgeStyle(), "PatternToString.EdgeStyle");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternEdgeColor(), "PatternToString.EdgeColor");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternEdgeWidth(), "PatternToString.EdgeWidth");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternIcon(), "PatternToString.Icon");
-		result = addSubPatternToString(translator, result,
-				pPattern.getPatternChild(), "PatternToString.Child");
+		result = addSubPatternToString(translator, result, pPattern.getPatternNodeFontSize(), "PatternToString.NodeFontSize");
+		result = addSubPatternToString(translator, result, pPattern.getPatternNodeFontName(), "PatternToString.FontName");
+		result = addSubPatternToString(translator, result, pPattern.getPatternNodeFontBold(), "PatternToString.FontBold");
+		result = addSubPatternToString(translator, result, pPattern.getPatternNodeFontStrikethrough(), "PatternToString.FontStrikethrough");
+		result = addSubPatternToString(translator, result, pPattern.getPatternNodeFontItalic(), "PatternToString.FontItalic");
+		result = addSubPatternToString(translator, result, pPattern.getPatternEdgeStyle(), "PatternToString.EdgeStyle");
+		result = addSubPatternToString(translator, result, pPattern.getPatternEdgeColor(), "PatternToString.EdgeColor");
+		result = addSubPatternToString(translator, result, pPattern.getPatternEdgeWidth(), "PatternToString.EdgeWidth");
+		result = addSubPatternToString(translator, result, pPattern.getPatternIcon(), "PatternToString.Icon");
+		result = addSubPatternToString(translator, result, pPattern.getPatternChild(), "PatternToString.Child");
 		return result;
 	}
 
@@ -256,8 +242,7 @@ public class StylePatternFactory {
 			if (patternType.getValue() == null) {
 				result += "-" + translator.getText(patternString);
 			} else {
-				result += "+" + translator.getText(patternString) + " "
-						+ patternType.getValue();
+				result += "+" + translator.getText(patternString) + " " + patternType.getValue();
 			}
 		}
 		return result;
@@ -277,8 +262,7 @@ public class StylePatternFactory {
 		if (patternString == null) {
 			patternString = PATTERN_DUMMY;
 		}
-		Pattern pat = (Pattern) XmlBindingTools.getInstance().unMarshall(
-				patternString);
+		Pattern pat = (Pattern) XmlBindingTools.getInstance().unMarshall(patternString);
 		return pat;
 	}
 
@@ -289,8 +273,7 @@ public class StylePatternFactory {
 		if (patternsString == null) {
 			patternsString = PATTERNS_DUMMY;
 		}
-		Patterns pat = (Patterns) XmlBindingTools.getInstance().unMarshall(
-				patternsString);
+		Patterns pat = (Patterns) XmlBindingTools.getInstance().unMarshall(patternsString);
 		return pat;
 	}
 
@@ -301,42 +284,18 @@ public class StylePatternFactory {
 	 */
 	public static Pattern intersectPattern(Pattern p1, Pattern p2) {
 		Pattern result = new Pattern();
-		result.setPatternEdgeColor((PatternEdgeColor) processPatternProperties(
-				p1.getPatternEdgeColor(), p2.getPatternEdgeColor(),
-				new PatternEdgeColor()));
-		result.setPatternEdgeStyle((PatternEdgeStyle) processPatternProperties(
-				p1.getPatternEdgeStyle(), p2.getPatternEdgeStyle(),
-				new PatternEdgeStyle()));
-		result.setPatternEdgeWidth((PatternEdgeWidth) processPatternProperties(
-				p1.getPatternEdgeWidth(), p2.getPatternEdgeWidth(),
-				new PatternEdgeWidth()));
-		result.setPatternIcon((PatternIcon) processPatternProperties(
-				p1.getPatternIcon(), p2.getPatternIcon(), new PatternIcon()));
-		result.setPatternNodeBackgroundColor((PatternNodeBackgroundColor) processPatternProperties(
-				p1.getPatternNodeBackgroundColor(),
-				p2.getPatternNodeBackgroundColor(),
-				new PatternNodeBackgroundColor()));
-		result.setPatternNodeColor((PatternNodeColor) processPatternProperties(
-				p1.getPatternNodeColor(), p2.getPatternNodeColor(),
-				new PatternNodeColor()));
-		result.setPatternNodeFontBold((PatternNodeFontBold) processPatternProperties(
-				p1.getPatternNodeFontBold(), p2.getPatternNodeFontBold(),
-				new PatternNodeFontBold()));
-		result.setPatternNodeFontStrikethrough((PatternNodeFontStrikethrough) processPatternProperties(
-				p1.getPatternNodeFontStrikethrough(), p2.getPatternNodeFontStrikethrough(),
-				new PatternNodeFontStrikethrough()));
-		result.setPatternNodeFontItalic((PatternNodeFontItalic) processPatternProperties(
-				p1.getPatternNodeFontItalic(), p2.getPatternNodeFontItalic(),
-				new PatternNodeFontItalic()));
-		result.setPatternNodeFontName((PatternNodeFontName) processPatternProperties(
-				p1.getPatternNodeFontName(), p2.getPatternNodeFontName(),
-				new PatternNodeFontName()));
-		result.setPatternNodeFontSize((PatternNodeFontSize) processPatternProperties(
-				p1.getPatternNodeFontSize(), p2.getPatternNodeFontSize(),
-				new PatternNodeFontSize()));
-		result.setPatternNodeStyle((PatternNodeStyle) processPatternProperties(
-				p1.getPatternNodeStyle(), p2.getPatternNodeStyle(),
-				new PatternNodeStyle()));
+		result.setPatternEdgeColor((PatternEdgeColor) processPatternProperties(p1.getPatternEdgeColor(), p2.getPatternEdgeColor(), new PatternEdgeColor()));
+		result.setPatternEdgeStyle((PatternEdgeStyle) processPatternProperties(p1.getPatternEdgeStyle(), p2.getPatternEdgeStyle(), new PatternEdgeStyle()));
+		result.setPatternEdgeWidth((PatternEdgeWidth) processPatternProperties(p1.getPatternEdgeWidth(), p2.getPatternEdgeWidth(), new PatternEdgeWidth()));
+		result.setPatternIcon((PatternIcon) processPatternProperties(p1.getPatternIcon(), p2.getPatternIcon(), new PatternIcon()));
+		result.setPatternNodeBackgroundColor((PatternNodeBackgroundColor) processPatternProperties(p1.getPatternNodeBackgroundColor(), p2.getPatternNodeBackgroundColor(), new PatternNodeBackgroundColor()));
+		result.setPatternNodeColor((PatternNodeColor) processPatternProperties(p1.getPatternNodeColor(), p2.getPatternNodeColor(), new PatternNodeColor()));
+		result.setPatternNodeFontBold((PatternNodeFontBold) processPatternProperties(p1.getPatternNodeFontBold(), p2.getPatternNodeFontBold(), new PatternNodeFontBold()));
+		result.setPatternNodeFontStrikethrough((PatternNodeFontStrikethrough) processPatternProperties(p1.getPatternNodeFontStrikethrough(), p2.getPatternNodeFontStrikethrough(), new PatternNodeFontStrikethrough()));
+		result.setPatternNodeFontItalic((PatternNodeFontItalic) processPatternProperties(p1.getPatternNodeFontItalic(), p2.getPatternNodeFontItalic(), new PatternNodeFontItalic()));
+		result.setPatternNodeFontName((PatternNodeFontName) processPatternProperties(p1.getPatternNodeFontName(), p2.getPatternNodeFontName(), new PatternNodeFontName()));
+		result.setPatternNodeFontSize((PatternNodeFontSize) processPatternProperties(p1.getPatternNodeFontSize(), p2.getPatternNodeFontSize(), new PatternNodeFontSize()));
+		result.setPatternNodeStyle((PatternNodeStyle) processPatternProperties(p1.getPatternNodeStyle(), p2.getPatternNodeStyle(), new PatternNodeStyle()));
 		return result;
 	}
 
@@ -388,37 +347,28 @@ public class StylePatternFactory {
 	@Deprecated 
 	public static void applyPattern(Pattern pattern, MindMapNode pNode, MapFeedback pFeedback) {
 		if (pattern.getPatternNodeColor() != null) {
-			pNode.setColor(Tools.xmlToColor(pattern
-					.getPatternNodeColor().getValue()));
+			pNode.setColor(Tools.xmlToColor(pattern.getPatternNodeColor().getValue()));
 		}
 		if (pattern.getPatternNodeBackgroundColor() != null) {
-			pNode.setBackgroundColor(Tools
-					.xmlToColor(pattern
-							.getPatternNodeBackgroundColor()
-							.getValue()));
+			pNode.setBackgroundColor(Tools.xmlToColor(pattern.getPatternNodeBackgroundColor().getValue()));
 		}
 		if (pattern.getPatternNodeStyle() != null) {
-			pNode.setStyle(pattern.getPatternNodeStyle()
-					.getValue());
+			pNode.setStyle(pattern.getPatternNodeStyle().getValue());
 		}
 		if (pattern.getPatternEdgeColor() != null) {
-			((EdgeAdapter) pNode.getEdge()).setColor(
-					Tools.xmlToColor(pattern.getPatternEdgeColor()
-							.getValue()));
+			((EdgeAdapter) pNode.getEdge()).setColor(Tools.xmlToColor(pattern.getPatternEdgeColor().getValue()));
 		}
 		if (pattern.getPatternNodeText() != null) {
 			if (pattern.getPatternNodeText().getValue() != null) {
 				pNode.setText(pattern.getPatternNodeText().getValue());
 			} else {
-				// clear text:
 				pNode.setText("");
 			}
 		}
 		if (pattern.getPatternIcon() != null) {
 			String iconName = pattern.getPatternIcon().getValue();
 			if (iconName == null) {
-				while (pNode.getIcons().size() > 0 && pNode.removeIcon(0) > 0) {
-				}
+//				while (pNode.getIcons().size() > 0 && pNode.removeIcon(0) > 0) {}
 			} else {
 				// check if icon is already present:
 				List icons = pNode.getIcons();
@@ -462,10 +412,7 @@ public class StylePatternFactory {
 			}
 		}
 		if (pattern.getPatternNodeFontItalic() != null) {
-			((NodeAdapter) pNode)
-					.setItalic(
-							TRUE_VALUE.equals(pattern.getPatternNodeFontItalic()
-									.getValue()));
+			((NodeAdapter) pNode).setItalic(TRUE_VALUE.equals(pattern.getPatternNodeFontItalic().getValue()));
 		}
 		if (pattern.getPatternNodeFontBold() != null) {
 			((NodeAdapter) pNode).setBold(TRUE_VALUE.equals(pattern.getPatternNodeFontBold().getValue()));
@@ -491,35 +438,24 @@ public class StylePatternFactory {
 			List<Pattern> pPatternList, Set<MindMapControllerPlugin> pPlugins, ExtendedMapFeedback pMapFeedback) {
 		if (pattern.getPatternNodeText() != null) {
 			if (pattern.getPatternNodeText().getValue() != null) {
-				pMapFeedback.setNodeText(node, pattern.getPatternNodeText()
-						.getValue());
+				pMapFeedback.setNodeText(node, pattern.getPatternNodeText().getValue());
 			} else {
-				// clear text:
 				pMapFeedback.setNodeText(node, "");
 			}
 		}
 		if (pattern.getPatternNodeColor() != null) {
-			pMapFeedback.setNodeColor(node,
-					Tools.xmlToColor(pattern.getPatternNodeColor().getValue()));
+			pMapFeedback.setNodeColor(node, Tools.xmlToColor(pattern.getPatternNodeColor().getValue()));
 		}
 		if (pattern.getPatternNodeBackgroundColor() != null) {
-			pMapFeedback.setNodeBackgroundColor(node, Tools.xmlToColor(pattern
-					.getPatternNodeBackgroundColor().getValue()));
+			pMapFeedback.setNodeBackgroundColor(node, Tools.xmlToColor(pattern.getPatternNodeBackgroundColor().getValue()));
 		}
-		// Perhaps already fixed?:
-		// FIXME: fc, 3.1.2004: setting the style to "null" causes strange
-		// behaviour.
-		// see
-		// https://sourceforge.net/tracker/?func=detail&atid=107118&aid=1094623&group_id=7118
 		if (pattern.getPatternNodeStyle() != null) {
-			pMapFeedback.setNodeStyle(node, pattern.getPatternNodeStyle()
-					.getValue());
+			pMapFeedback.setNodeStyle(node, pattern.getPatternNodeStyle().getValue());
 		}
 		if (pattern.getPatternIcon() != null) {
 			String iconName = pattern.getPatternIcon().getValue();
 			if (iconName == null) {
-				while (pMapFeedback.removeLastIcon(node) > 0) {
-				}
+//				while (pMapFeedback.removeLastIcon(node) > 0) {}
 			} else {
 				// check if icon is already present:
 				List icons = node.getIcons();
@@ -536,7 +472,7 @@ public class StylePatternFactory {
 					pMapFeedback.addIcon(node, MindIcon.factory(iconName));
 				}
 			}
-		} // fc, 28.9.2003
+		}
 		if (pattern.getPatternNodeFontName() != null) {
 			String nodeFontFamily = pattern.getPatternNodeFontName().getValue();
 			if (nodeFontFamily == null) {
@@ -552,33 +488,25 @@ public class StylePatternFactory {
 			pMapFeedback.setFontSize(node, String.valueOf(nodeFontSize));
 		}
 		if (pattern.getPatternNodeFontItalic() != null) {
-			pMapFeedback.setItalic(node, TRUE_VALUE.equals(pattern
-					.getPatternNodeFontItalic().getValue()));
+			pMapFeedback.setItalic(node, TRUE_VALUE.equals(pattern.getPatternNodeFontItalic().getValue()));
 		}
 		if (pattern.getPatternNodeFontBold() != null) {
-			pMapFeedback.setBold(node,
-					TRUE_VALUE.equals(pattern.getPatternNodeFontBold().getValue()));
+			pMapFeedback.setBold(node, TRUE_VALUE.equals(pattern.getPatternNodeFontBold().getValue()));
 		}
 		if (pattern.getPatternNodeFontStrikethrough() != null) {
-			pMapFeedback.setStrikethrough(node,
-					TRUE_VALUE.equals(pattern.getPatternNodeFontStrikethrough().getValue()));
+			pMapFeedback.setStrikethrough(node, TRUE_VALUE.equals(pattern.getPatternNodeFontStrikethrough().getValue()));
 		}
 
 		if (pattern.getPatternEdgeColor() != null) {
-			pMapFeedback.setEdgeColor(node,
-					Tools.xmlToColor(pattern.getPatternEdgeColor().getValue()));
+			pMapFeedback.setEdgeColor(node, Tools.xmlToColor(pattern.getPatternEdgeColor().getValue()));
 		}
 		if (pattern.getPatternEdgeStyle() != null) {
-			pMapFeedback.setEdgeStyle(node, pattern.getPatternEdgeStyle()
-					.getValue());
+			pMapFeedback.setEdgeStyle(node, pattern.getPatternEdgeStyle().getValue());
 		}
 		PatternEdgeWidth patternEdgeWidth = pattern.getPatternEdgeWidth();
 		if (patternEdgeWidth != null) {
 			if (patternEdgeWidth.getValue() != null) {
-				pMapFeedback
-						.setEdgeWidth(node, Tools
-								.edgeWidthStringToInt(patternEdgeWidth
-										.getValue()));
+				pMapFeedback.setEdgeWidth(node, Tools.edgeWidthStringToInt(patternEdgeWidth.getValue()));
 			} else {
 				pMapFeedback.setEdgeWidth(node, EdgeAdapter.DEFAULT_WIDTH);
 			}
