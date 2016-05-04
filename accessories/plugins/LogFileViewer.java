@@ -422,7 +422,7 @@ public class LogFileViewer extends MindMapHookAdapter implements
 	}
 
 	private class UpdateTextAreaThread extends Thread {
-		Vector mInbox = new Vector();
+		final Vector mInbox = new Vector();
 		private boolean mCommitSuicide = false;
 		private boolean mSuicided = false;
 

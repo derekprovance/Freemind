@@ -62,7 +62,7 @@ public class UpdateThread extends Thread implements ResultHandler,
 	private boolean mShouldTerminate = false;
 	private boolean mIsTerminated = false;
 	protected Connection mConnection = null;
-	protected BigInteger mPrimaryKeyMutex = BigInteger.valueOf(0);
+	protected final BigInteger mPrimaryKeyMutex = BigInteger.valueOf(0);
 	protected long mPrimaryKey = 1l;
 	protected MindMapController mController;
 	protected boolean mFilterEnabled = true;

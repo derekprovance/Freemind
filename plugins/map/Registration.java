@@ -193,9 +193,9 @@ public class Registration implements HookRegistration, ActorXml,
 
 	private static Timer sTimer;
 
-	private static Boolean sTimerSemaphore = false;
+	private static final Boolean sTimerSemaphore = false;
 
-	private IntHolder mCachePurgerSemaphore = new IntHolder(0);
+	private final IntHolder mCachePurgerSemaphore = new IntHolder(0);
 
 	private static final class MapDialogPropertyContributor implements
 			FreemindPropertyContributor {

@@ -85,7 +85,7 @@ public abstract class CommunicationBase extends TerminateableThread {
 	private static final int MAX_STRING_LENGTH_TO_SEND = 65500;
 
 	private int mCurrentState = STATE_IDLE;
-	private String mCurrentStateMutex = "lockme";
+	private final String mCurrentStateMutex = "lockme";
 	private StringBuffer mCurrentCommand = new StringBuffer();
 
 	/**

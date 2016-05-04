@@ -82,7 +82,7 @@ public class ClientCommunication extends CommunicationBase {
 	private static final int MAX_LOCK_RETRIES = 5;
 	private static final long LOCK_RETRY_SLEEP_TIME = 1000;
 	private String mLockId;
-	private HashSet mLockIds = new HashSet();
+	private final HashSet mLockIds = new HashSet();
 	private String mPassword;
 	private SocketConnectionHook mSocketConnectionHook = null;
 	private boolean mReceivedGoodbye = false;

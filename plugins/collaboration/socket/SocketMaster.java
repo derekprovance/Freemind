@@ -38,6 +38,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
  * @author foltin
  * @date 03.05.2014
  */
+@SuppressWarnings("SynchronizeOnNonFinalField")
 public abstract class SocketMaster extends SocketBasics {
 
 	static final class SessionData {
@@ -45,11 +46,11 @@ public abstract class SocketMaster extends SocketBasics {
 		String mLockId;
 		long mLockedAt;
 		String mLockUserName;
-		Vector<ServerCommunication> mConnections = new Vector<>();
-		public String mLockMutex = "";
+		final Vector<ServerCommunication> mConnections = new Vector<>();
+		public final String mLockMutex = "";
 	}
 	
-	protected HashMap<ExtendedMapFeedback, SessionData> mSessions = new HashMap<>();
+	protected final HashMap<ExtendedMapFeedback, SessionData> mSessions = new HashMap<>();
 	protected int mPort;
 	protected HashMap<String, ExtendedMapFeedback> mFileMap = new HashMap<>();
 
