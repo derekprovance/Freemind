@@ -41,6 +41,7 @@ import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -1530,14 +1531,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		selectedsValid = true;
 		// Keep selected nodes
 		logger.finest("validateSelecteds");
-		ArrayList selectedNodes = new ArrayList();
-        for (NodeView nodeView : getSelecteds()) {
-            if (nodeView != null) {
-                selectedNodes.add(nodeView);
-            }
-        }
-		// Warning, the old views still exist, because JVM has not deleted them.
-		// But don't use them!
+		ArrayList selectedNodes = getSelecteds().stream().filter(nodeView -> nodeView != null).collect(Collectors.toCollection(ArrayList::new));
+
 		selected.clear();
         for (Object selectedNode : selectedNodes) {
             NodeView oldNodeView = ((NodeView) selectedNode);

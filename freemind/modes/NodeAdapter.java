@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.swing.ImageIcon;
 import javax.swing.event.EventListenerList;
@@ -1442,10 +1443,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		if(mAttributeVector==null) {
 			return Collections.EMPTY_LIST;
 		}
-		Vector returnValue = new Vector();
-		for (Attribute attr : mAttributeVector) {
-			returnValue.add(attr.getName());
-		}
+		Vector returnValue = mAttributeVector.stream().map(Attribute::getName).collect(Collectors.toCollection(Vector::new));
 		return returnValue;
 	}
 
