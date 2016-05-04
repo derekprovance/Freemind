@@ -422,10 +422,6 @@ public class PrintGraphics extends Graphics2D {
 		return mG.toString();
 	}
 
-	public Rectangle getClipRect() {
-		return mG.getClipRect();
-	}
-
 	public boolean hitClip(int pX, int pY, int pWidth, int pHeight) {
 		return mG.hitClip(pX, pY, pWidth, pHeight);
 	}

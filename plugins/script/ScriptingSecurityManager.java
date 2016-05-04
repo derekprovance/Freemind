@@ -91,12 +91,6 @@ public class ScriptingSecurityManager extends SecurityManager {
 		throw getException(PERM_GROUP_NETWORK, PERM_Listen);
 	}
 
-	public void checkMulticast(InetAddress pMaddr, byte pTtl) {
-		if (mWithoutNetworkRestriction)
-			return;
-		throw getException(PERM_GROUP_NETWORK, PERM_Multicast);
-	}
-
 	public void checkMulticast(InetAddress pMaddr) {
 		if (mWithoutNetworkRestriction)
 			return;
@@ -178,16 +172,10 @@ public class ScriptingSecurityManager extends SecurityManager {
 	public void checkAccess(ThreadGroup pG) {
 	}
 
-	public void checkAwtEventQueueAccess() {
-	}
-
 	public void checkCreateClassLoader() {
 	}
 
 	public void checkExit(int pStatus) {
-	}
-
-	public void checkMemberAccess(Class arg0, int arg1) {
 	}
 
 	public void checkPackageAccess(String pPkg) {
@@ -215,12 +203,4 @@ public class ScriptingSecurityManager extends SecurityManager {
 
 	public void checkSecurityAccess(String pTarget) {
 	}
-
-	public void checkSystemClipboardAccess() {
-	}
-
-	public boolean checkTopLevelWindow(Object pWindow) {
-		return true;
-	}
-
 }

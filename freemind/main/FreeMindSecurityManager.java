@@ -79,12 +79,6 @@ public final class FreeMindSecurityManager extends SecurityManager {
 		mFinalSecurityManager.checkAccess(pG);
 	}
 
-	public void checkAwtEventQueueAccess() {
-		if (mFinalSecurityManager == null)
-			return;
-		mFinalSecurityManager.checkAwtEventQueueAccess();
-	}
-
 	public void checkConnect(String pHost, int pPort, Object pContext) {
 		if (mFinalSecurityManager == null)
 			return;
@@ -131,18 +125,6 @@ public final class FreeMindSecurityManager extends SecurityManager {
 		if (mFinalSecurityManager == null)
 			return;
 		mFinalSecurityManager.checkListen(pPort);
-	}
-
-	public void checkMemberAccess(Class arg0, int arg1) {
-		if (mFinalSecurityManager == null)
-			return;
-		mFinalSecurityManager.checkMemberAccess(arg0, arg1);
-	}
-
-	public void checkMulticast(InetAddress pMaddr, byte pTtl) {
-		if (mFinalSecurityManager == null)
-			return;
-		mFinalSecurityManager.checkMulticast(pMaddr, pTtl);
 	}
 
 	public void checkMulticast(InetAddress pMaddr) {
@@ -221,18 +203,6 @@ public final class FreeMindSecurityManager extends SecurityManager {
 		if (mFinalSecurityManager == null)
 			return;
 		mFinalSecurityManager.checkSetFactory();
-	}
-
-	public void checkSystemClipboardAccess() {
-		if (mFinalSecurityManager == null)
-			return;
-		mFinalSecurityManager.checkSystemClipboardAccess();
-	}
-
-	public boolean checkTopLevelWindow(Object pWindow) {
-		if (mFinalSecurityManager == null)
-			return true;
-		return mFinalSecurityManager.checkTopLevelWindow(pWindow);
 	}
 
 	public void checkWrite(FileDescriptor pFd) {
