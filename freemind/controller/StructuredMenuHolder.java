@@ -189,8 +189,7 @@ public class StructuredMenuHolder {
 
 	public void updateMenus(final JMenuBar myItem, String prefix) {
 
-		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"),
-				menuMap);
+		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"), menuMap);
 		Map myMap = (Map) pair.map.get(pair.token);
 		updateMenus(new MenuAdder() {
 
@@ -474,8 +473,7 @@ public class StructuredMenuHolder {
 		if (state) {
 			menuItem.setIcon(sSelectedIcon);
 		} else {
-			Icon normalIcon = (Icon) menuItem.getAction().getValue(
-					Action.SMALL_ICON);
+			Icon normalIcon = (Icon) menuItem.getAction().getValue(Action.SMALL_ICON);
 			if (normalIcon == null) {
 				normalIcon = blindIcon;
 			}

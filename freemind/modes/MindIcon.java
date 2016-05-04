@@ -80,8 +80,6 @@ public class MindIcon implements Comparable, IconInformation {
 	 * @return Value of name.
 	 */
 	public String getName() {
-		// DanPolansky: it's essential that we do not return null
-		// for saving of the map.
 		return name == null ? "notfound" : name;
 	}
 
@@ -92,9 +90,7 @@ public class MindIcon implements Comparable, IconInformation {
 	 *            Value to assign to name.
 	 */
 	public void setName(String name) {
-
 		this.name = name;
-
 	}
 
 	public String getDescription() {
@@ -115,10 +111,8 @@ public class MindIcon implements Comparable, IconInformation {
 	}
 
 	public ImageIcon getIcon() {
-		// We need the frame to be able to obtain the resource URL of the icon.
 		if (iconNotFound == null) {
-			iconNotFound = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource(
-					"images/IconNotFound.png"));
+			iconNotFound = freemind.view.ImageFactory.getInstance().createIcon(Resources.getInstance().getResource("images/IconNotFound.png"));
 		}
 
 		if (associatedIcon != null)
@@ -137,8 +131,7 @@ public class MindIcon implements Comparable, IconInformation {
 				} catch (Exception e) {
 				}
 			}
-			ImageIcon icon = imageURL == null ? iconNotFound : freemind.view.ImageFactory.getInstance().createIcon(
-					imageURL);
+			ImageIcon icon = imageURL == null ? iconNotFound : freemind.view.ImageFactory.getInstance().createIcon(imageURL);
 			setIcon(icon);
 			return icon;
 		} else {
@@ -169,8 +162,7 @@ public class MindIcon implements Comparable, IconInformation {
 		if (mAllIconNames != null)
 			return mAllIconNames;
 		Vector mAllIconNames = new Vector();
-		String icons = Resources.getInstance().getProperty(
-				PROPERTY_STRING_ICONS_LIST);
+		String icons = Resources.getInstance().getProperty(PROPERTY_STRING_ICONS_LIST);
 		StringTokenizer tokenizer = new StringTokenizer(icons, ";");
 		while (tokenizer.hasMoreTokens()) {
 			mAllIconNames.add(tokenizer.nextToken());

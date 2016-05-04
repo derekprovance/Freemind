@@ -206,13 +206,10 @@ public class Controller implements MapModuleChangeObserver {
 		page = new PageAction(this);
 		quit = new QuitAction(this);
 		about = new AboutAction(this);
-		freemindUrl = new OpenURLAction(this, getResourceString("FreeMind"),
-				getProperty("webFreeMindLocation"));
-		faq = new OpenURLAction(this, getResourceString("FAQ"),
-				getProperty("webFAQLocation"));
+		freemindUrl = new OpenURLAction(this, getResourceString("FreeMind"), getProperty("webFreeMindLocation"));
+		faq = new OpenURLAction(this, getResourceString("FAQ"), getProperty("webFAQLocation"));
 		keyDocumentation = new KeyDocumentationAction(this);
-		webDocu = new OpenURLAction(this, getResourceString("webDocu"),
-				getProperty("webDocuLocation"));
+		webDocu = new OpenURLAction(this, getResourceString("webDocu"), getProperty("webDocuLocation"));
 		documentation = new DocumentationAction(this);
 		license = new LicenseAction(this);
 		navigationPreviousMap = new NavigationPreviousMapAction(this);
@@ -225,8 +222,7 @@ public class Controller implements MapModuleChangeObserver {
 		toggleLeftToolbar = new ToggleLeftToolbarAction(this);
 		optionAntialiasAction = new OptionAntialiasAction();
 		optionHTMLExportFoldingAction = new OptionHTMLExportFoldingAction(this);
-		optionSelectionMechanismAction = new OptionSelectionMechanismAction(
-				this);
+		optionSelectionMechanismAction = new OptionSelectionMechanismAction(this);
 
 		zoomIn = new ZoomInAction(this);
 		zoomOut = new ZoomOutAction(this);
@@ -257,8 +253,7 @@ public class Controller implements MapModuleChangeObserver {
 		/**
 		 * Arranges the keyboard focus especially after opening FreeMind.
 		 * */
-		KeyboardFocusManager focusManager = KeyboardFocusManager
-				.getCurrentKeyboardFocusManager();
+		KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		focusManager.addPropertyChangeListener(e -> {
             String prop = e.getPropertyName();
             if ("focusOwner".equals(prop)) {
@@ -285,8 +280,7 @@ public class Controller implements MapModuleChangeObserver {
 	//
 	// get/set methods
 	//
-	public static final String JAVA_VERSION = System
-			.getProperty("java.version");
+	public static final String JAVA_VERSION = System.getProperty("java.version");
 
 	public String getProperty(String property) {
 		return frame.getProperty(property);

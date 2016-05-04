@@ -44,8 +44,7 @@ public class IconAction extends MindmapAction implements IconInformation {
 	private final MindMapController modeController;
 	private final RemoveIconAction removeLastIconAction;
 
-	public IconAction(MindMapController controller, MindIcon _icon,
-			RemoveIconAction removeLastIconAction) {
+	public IconAction(MindMapController controller, MindIcon _icon, RemoveIconAction removeLastIconAction) {
 		super(_icon.getDescription(), _icon.getIcon(), controller);
 		this.modeController = controller;
 		this.removeLastIconAction = removeLastIconAction;
@@ -62,14 +61,12 @@ public class IconAction extends MindmapAction implements IconInformation {
 			addLastIcon();
 			return;
 		}
-		if (e == null
-				|| (e.getModifiers() & (ActionEvent.CTRL_MASK | ActionEvent.ALT_MASK)) == 0) {
+		if (e == null || (e.getModifiers() & (ActionEvent.CTRL_MASK | ActionEvent.ALT_MASK)) == 0) {
 			addLastIcon();
 			return;
 		}
-		// e != null
-		if ((e.getModifiers() & ~ActionEvent.SHIFT_MASK
-				& ~ActionEvent.CTRL_MASK & ActionEvent.ALT_MASK) != 0) {
+
+		if ((e.getModifiers() & ~ActionEvent.SHIFT_MASK & ~ActionEvent.CTRL_MASK & ActionEvent.ALT_MASK) != 0) {
 			removeIcon(false);
 			return;
 		}
@@ -108,11 +105,7 @@ public class IconAction extends MindmapAction implements IconInformation {
 		}
 	}
 
-	
-
-
-	protected AddIconAction createAddIconAction(MindMapNode node,
-			MindIcon icon, int iconIndex) {
+	protected AddIconAction createAddIconAction(MindMapNode node, MindIcon icon, int iconIndex) {
 		return getAddIconActor().createAddIconAction(node, icon, iconIndex);
 	}
 

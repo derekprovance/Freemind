@@ -19,7 +19,6 @@
  *
  * Created on 25.02.2006
  */
-/*$Id: IconProperty.java,v 1.1.2.1.2.4 2007/08/05 22:15:21 dpolivaev Exp $*/
 package freemind.common;
 
 import java.awt.event.ActionEvent;
@@ -101,6 +100,7 @@ public class IconProperty extends PropertyBean implements PropertyControl,
 		Vector descriptions = new Vector();
 		for (Object mIcon : mIcons) {
 			MindIcon icon = (MindIcon) mIcon;
+
 			icons.add(icon);
 			descriptions.add(icon.getDescription());
 		}

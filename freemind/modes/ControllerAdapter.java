@@ -1005,9 +1005,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		getController().showFilterToolbarAction.setEnabled(enabled);
 	}
 
-	//
-	// Node editing
-	//
 
 	/**
 	 * listener, that blocks the controler if the menu is active (PN) Take care!

@@ -23,11 +23,9 @@
  */
 package freemind.controller;
 
-import java.awt.Insets;
+import java.awt.*;
 
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
+import javax.swing.*;
 
 import freemind.main.Tools;
 
@@ -55,7 +53,10 @@ public class FreeMindToolBar extends JToolBar {
 	public JButton add(Action arg0) {
 		final Object actionName = arg0.getValue(Action.NAME);
 		arg0.putValue(Action.SHORT_DESCRIPTION, Tools.removeMnemonic(actionName.toString()));
+
+
 		JButton returnValue = super.add(arg0);
+
 		returnValue.setName(actionName.toString());
 		returnValue.setText("");
 		returnValue.setMargin(nullInsets);
@@ -68,5 +69,4 @@ public class FreeMindToolBar extends JToolBar {
 
 		return returnValue;
 	}
-
 }

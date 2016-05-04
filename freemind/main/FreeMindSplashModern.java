@@ -205,6 +205,10 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 
 	}
 
+    public void drawProgressBar() {
+
+    }
+
 	public void close() {
 		setVisible(false);
 		dispose();

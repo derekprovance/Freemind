@@ -41,8 +41,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 	 * @param title
 	 *            is a fixed title (no translation is done via resources)
 	 */
-	public FreemindAction(String title, Icon icon,
-			ControllerAdapter controllerAdapter) {
+	public FreemindAction(String title, Icon icon, ControllerAdapter controllerAdapter) {
 		super(title, icon);
 		this.pControllerAdapter = controllerAdapter;
 		if (logger == null) {
@@ -56,8 +55,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 	 * @param title
 	 *            Title is a resource.
 	 */
-	public FreemindAction(String title, 
-			ControllerAdapter controllerAdapter) {
+	public FreemindAction(String title, ControllerAdapter controllerAdapter) {
 		this(title, (String) null, controllerAdapter);
 	}
 	
@@ -67,8 +65,7 @@ public abstract class FreemindAction extends AbstractAction implements MenuItemE
 	 * @param iconPath
 	 *            is a path to an icon.
 	 */
-	public FreemindAction(String title, String iconPath,
-			final ControllerAdapter controllerAdapter) {
+	public FreemindAction(String title, String iconPath, final ControllerAdapter controllerAdapter) {
 		this(controllerAdapter.getText(title), (iconPath == null) ? null
 				: freemind.view.ImageFactory.getInstance().createIcon(controllerAdapter.getResource(iconPath)),
 				controllerAdapter);
