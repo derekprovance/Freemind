@@ -206,6 +206,13 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		defProps = pDefaultPreferences;
 		props = pUserPreferences;
 		autoPropertiesFile = pAutoPropertiesFile;
+		setupLogger();
+
+		mFreeMindCommon = new FreeMindCommon(this);
+		Resources.createInstance(this);
+	}
+
+	private void setupLogger() {
 		if (logger == null) {
 			logger = getLogger(FreeMind.class.getName());
 			StringBuffer info = new StringBuffer();
@@ -234,27 +241,30 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			info.append(System.getProperty("os.version"));
 			logger.info(info.toString());
 		}
+
+		printAllSystemProperties();
+	}
+
+	private void printAllSystemProperties() {
 		try {
 			StringBuffer b = new StringBuffer();
 			// print all java/sun properties
 			Properties properties = System.getProperties();
 			List list = new ArrayList();
-            for (Object key : properties.keySet()) {
-                list.add(key);
-            }
+			for (Object key : properties.keySet()) {
+				list.add(key);
+			}
 			Collections.sort(list);
-            for (Object aList : list) {
-                String key = (String) aList;
-                if (key.startsWith("java") || key.startsWith("sun")) {
-                    b.append("Environment key ").append(key).append(" = ").append(properties.getProperty(key)).append("\n");
-                }
-            }
+			for (Object aList : list) {
+				String key = (String) aList;
+				if (key.startsWith("java") || key.startsWith("sun")) {
+					b.append("Environment key ").append(key).append(" = ").append(properties.getProperty(key)).append("\n");
+				}
+			}
 			logger.info(b.toString());
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
 		}
-		mFreeMindCommon = new FreeMindCommon(this);
-		Resources.createInstance(this);
 	}
 
 	public void init(FeedBack feedback) {
@@ -276,7 +286,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		feedback.increase("FreeMind.progress.settingPreferences", null);
 		// add a listener for the controller, resource bundle:
 		Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-
 			public void propertyChanged(String propertyName, String newValue,
 					String oldValue) {
 				if (propertyName.equals(FreeMindCommon.RESOURCE_LANGUAGE)) {
@@ -513,13 +522,11 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			// initialize handlers using an old System.err:
 			final Logger parentLogger = loggerForClass.getParent();
 			final Handler[] handlers = parentLogger.getHandlers();
-			for (int i = 0; i < handlers.length; i++) {
-				final Handler handler = handlers[i];
+			for (final Handler handler : handlers) {
 				if (handler instanceof ConsoleHandler) {
 					parentLogger.removeHandler(handler);
 				}
 			}
-
 			try {
 				mFileHandler = new FileHandler(getFreemindDirectory()
 						+ File.separator + LOG_FILE_NAME, 1400000, 5, false);
@@ -549,20 +556,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				System.err.println("Error creating logging File Handler");
 				e.printStackTrace();
 				mFileHandlerError = true;
-				// to avoid infinite recursion.
-				// freemind.main.Resources.getInstance().logExecption(e);
-			}
-	        if (false) {
-				// Obtain a reference to the logger
-				Logger focusLog = Logger.getLogger("java.awt.focus.Component");
-				// The logger should log all messages
-				focusLog.setLevel(Level.ALL);
-				// Create a new handler
-				ConsoleHandler handler = new ConsoleHandler();
-				// The handler must handle all messages
-				handler.setLevel(Level.ALL);
-				// Add the handler to the logger
-				focusLog.addHandler(handler);
 			}
 		}
 		if (sLogFileHandler != null) {
@@ -575,10 +568,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			Properties pDefaultPreferences, Properties pUserPreferences,
 			File pAutoPropertiesFile) {
 		try {
-
-
-			final FreeMind frame = new FreeMind(pDefaultPreferences,
-					pUserPreferences, pAutoPropertiesFile);
+			final FreeMind frame = new FreeMind(pDefaultPreferences, pUserPreferences, pAutoPropertiesFile);
 			int scale = frame.getIntProperty(SCALING_FACTOR_PROPERTY, 100);
 			if (scale != 100) {
 				Tools.scaleAllFonts(scale / 100f);
@@ -613,9 +603,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	
 			Tools.waitForEventQueue();
 			feedBack.increase("FreeMind.progress.endStartup", null);
-			// focus fix after startup.
+
 			frame.addWindowFocusListener(new WindowFocusListener() {
-	
 				public void windowLostFocus(WindowEvent e) {
 				}
 	
@@ -624,6 +613,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 					frame.removeWindowFocusListener(this);
 				}
 			});
+
 			frame.setVisible(true);
 
 			com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(frame,true);

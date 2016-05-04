@@ -19,21 +19,7 @@
 
 package freemind.view.mindmapview;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FocusTraversalPolicy;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.dnd.Autoscroll;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DropTargetListener;
@@ -278,8 +264,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		// initialize the standard colors.
 		if (standardNodeTextColor == null) {
 			try {
-				String stdcolor = mFeedback.getProperty(
-						FreeMind.RESOURCES_BACKGROUND_COLOR);
+				String stdcolor = mFeedback.getProperty(FreeMind.RESOURCES_BACKGROUND_COLOR);
 				standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
@@ -330,9 +315,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 				freemind.main.Resources.getInstance().logException(ex);
 				printOnWhiteBackground = true;
 			}
-			// only created once:
 			createPropertyChangeListener();
-			// initialize antializing:
+
 			propertyChangeListener.propertyChanged(FreeMindCommon.RESOURCE_ANTIALIAS, mFeedback.getProperty(FreeMindCommon.RESOURCE_ANTIALIAS), null);
 		}
 		this.setAutoscrolls(true);
@@ -347,17 +331,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		addMouseWheelListener(pFeedback.getMapMouseWheelListener());
 		addKeyListener(getNodeKeyListener());
 
-		// fc, 20.6.2004: to enable tab for insert.
-		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		// end change.
+		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+		setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+		setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS, Collections.EMPTY_SET);
 
-		// fc, 31.3.2013: set policy to achive that after note window close, the
-		// current node is selected.
 		setFocusTraversalPolicy(new FocusTraversalPolicy() {
 
 			public Component getLastComponent(Container pAContainer) {
@@ -385,8 +362,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			}
 		});
 		this.setFocusTraversalPolicyProvider(true);
-		// like in excel - write a letter means edit (PN)
-		// on the other hand it doesn't allow key navigation (sdfe)
 		disableMoveCursor = Resources.getInstance().getBoolProperty(
 				"disable_cursor_move_paper");
 
@@ -400,58 +375,55 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		return mFeedback;
 	}
 
-
-	
 	private void createPropertyChangeListener() {
-		propertyChangeListener = new FreemindPropertyListener() {
-
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.equals(FreeMind.RESOURCES_NODE_TEXT_COLOR)) {
-					standardNodeTextColor = Tools.xmlToColor(newValue);
-					MapView.this.getRoot().updateAll();
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_BACKGROUND_COLOR)) {
-					standardMapBackgroundColor = Tools.xmlToColor(newValue);
-					MapView.this
-							.setBackground(standardMapBackgroundColor);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_SELECTED_NODE_COLOR)) {
-					standardSelectColor = Tools.xmlToColor(newValue);
-					MapView.this.repaintSelecteds();
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR)) {
-					standardSelectRectangleColor = Tools.xmlToColor(newValue);
-					MapView.this.repaintSelecteds();
-				} else if (propertyName
-						.equals(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION)) {
-					standardDrawRectangleForSelection = Tools
-							.xmlToBoolean(newValue);
-					MapView.this.repaintSelecteds();
-				} else if (propertyName
-						.equals(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND)) {
-					printOnWhiteBackground = Tools.xmlToBoolean(newValue);
-				} else if (propertyName.equals(FreeMindCommon.RESOURCE_ANTIALIAS)) {
-					if ("antialias_none".equals(newValue)) {
-						setAntialiasEdges(false);
-						setAntialiasAll(false);
-					}
-					if ("antialias_edges".equals(newValue)) {
-						setAntialiasEdges(true);
-						setAntialiasAll(false);
-					}
-					if ("antialias_all".equals(newValue)) {
-						setAntialiasEdges(true);
-						setAntialiasAll(true);
-					}
-				}
-
-			}
-		};
+		propertyChangeListener = (propertyName, newValue, oldValue) -> {
+            switch(propertyName) {
+                case FreeMind.RESOURCES_NODE_TEXT_COLOR:
+                    standardNodeTextColor = Tools.xmlToColor(newValue);
+                    MapView.this.getRoot().updateAll();
+                    break;
+                case FreeMind.RESOURCES_BACKGROUND_COLOR:
+                    standardMapBackgroundColor = Tools.xmlToColor(newValue);
+                    MapView.this.setBackground(standardMapBackgroundColor);
+                    break;
+                case FreeMind.RESOURCES_SELECTED_NODE_COLOR:
+                    standardSelectColor = Tools.xmlToColor(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR:
+                    standardSelectRectangleColor = Tools.xmlToColor(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION:
+                    standardDrawRectangleForSelection = Tools.xmlToBoolean(newValue);
+                    MapView.this.repaintSelecteds();
+                    break;
+                case FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND:
+                    printOnWhiteBackground = Tools.xmlToBoolean(newValue);
+                    break;
+                case FreeMindCommon.RESOURCE_ANTIALIAS:
+                    setAntiAlias(newValue);
+                    break;
+            }
+        };
 		Controller.addPropertyChangeListener(propertyChangeListener);
 	}
-	
-	private static void setAntialiasEdges(boolean pAntialiasEdges) {
+
+    private void setAntiAlias(String newValue) {
+        switch(newValue) {
+            case "antialias_none": setAntialiasEdges(false);
+                setAntialiasAll(false);
+                break;
+            case "antialias_edges": setAntialiasEdges(true);
+                setAntialiasAll(false);
+                break;
+            case "antialias_all": setAntialiasEdges(true);
+                setAntialiasAll(true);
+                break;
+        }
+    }
+
+    private static void setAntialiasEdges(boolean pAntialiasEdges) {
 		antialiasEdges = pAntialiasEdges;
 	}
 
@@ -1122,9 +1094,9 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		});
 
 		ArrayList selectedNodes = new ArrayList();
-		for (Iterator it = pointNodePairs.iterator(); it.hasNext();) {
-			selectedNodes.add(((Pair) it.next()).getSecond());
-		}
+        for (Object pointNodePair : pointNodePairs) {
+            selectedNodes.add(((Pair) pointNodePair).getSecond());
+        }
 
 		// logger.fine("Cutting #" + selectedNodes.size());
 		// for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
@@ -1194,13 +1166,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			viewPosition.x += deltaX;
 			viewPosition.y += deltaY;
 			final int scrollMode = getScrollMode();
-			// avoid immediate scrolling here:
 			setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 			setViewPosition(viewPosition);
 			setScrollMode(scrollMode);
 		} else {
-			// FIXME: fc, 7.9.2011: Here, a viewport->repaint was previously.
-			// Test if really needed.
 			repaint();
 		}
 		if (nodeToBeVisible != null) {
@@ -1224,7 +1193,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g) {
-		long startMilli = System.currentTimeMillis();
+        long startMilli = System.currentTimeMillis();
 		if (isValid()) {
 			getRoot().getContent().getLocation(rootContentLocation);
 			Tools.convertPointToAncestor(getRoot(), rootContentLocation,
@@ -1260,8 +1229,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 					renderingTextHint);
 		}
 
-		// final Rectangle rect = getInnerBounds();
-		// g2.drawRect(rect.x, rect.y, rect.width, rect.height);
 		long localTime = System.currentTimeMillis() - startMilli;
 		mPaintingAmount++;
 		mPaintingTime += localTime;
@@ -1354,16 +1321,6 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 							getNodeView(ref.getTarget()));
 					arrowLink.paint(graphics);
 					mArrowLinkViews.add(arrowLink);
-					// resize map?
-					// adjust container size
-					// Rectangle rec = arrowLink.getBounds();
-					// the following does not work correctly. fc, 23.10.2003:
-					// if (rec.x < 0) {
-					// getMindMapLayout().resizeMap(rec.x);
-					// } else if (rec.x+rec.width > getSize().width) {
-					// getMindMapLayout().resizeMap(rec.x+rec.width);
-					// }
-
 				}
 			}
 		}

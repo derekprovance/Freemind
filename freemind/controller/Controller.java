@@ -1358,9 +1358,6 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
 	public void moveTab(int src, int dst) {
-		// snippet taken from
-		// http://www.exampledepot.com/egs/javax.swing/tabbed_TpMove.html
-		// Get all the properties
 		Component comp = mTabbedPane.getComponentAt(src);
 		String label = mTabbedPane.getTitleAt(src);
 		Icon icon = mTabbedPane.getIconAt(src);
