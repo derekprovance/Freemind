@@ -214,8 +214,8 @@ public class MapModuleManager {
 	 */
 	public Map getMapModules() {
 		HashMap returnValue = new HashMap();
-		for (Iterator iterator = mapModuleVector.iterator(); iterator.hasNext();) {
-			MapModule module = (MapModule) iterator.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule module = (MapModule) aMapModuleVector;
 			returnValue.put(module.getDisplayName(), module);
 		}
 		return Collections.unmodifiableMap(returnValue);
@@ -228,8 +228,8 @@ public class MapModuleManager {
 	/** @return an unmodifiable set of all display names of current opened maps. */
 	public List getMapKeys() {
 		LinkedList returnValue = new LinkedList();
-		for (Iterator iterator = mapModuleVector.iterator(); iterator.hasNext();) {
-			MapModule module = (MapModule) iterator.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule module = (MapModule) aMapModuleVector;
 			returnValue.add(module.getDisplayName());
 		}
 		return Collections.unmodifiableList(returnValue);
@@ -240,17 +240,15 @@ public class MapModuleManager {
 	}
 
 	public void newMapModule(MindMap map, ModeController modeController) {
-		MapModule mapModule = new MapModule(map, new MapView(map, modeController),
-				modeController.getMode(), modeController);
+		MapModule mapModule = new MapModule(map, new MapView(map, modeController), modeController.getMode(), modeController);
 		addToOrChangeInMapModules(mapModule.toString(), mapModule);
 		setMapModule(mapModule, modeController.getMode());
 	}
 
 	public MapModule getModuleGivenModeController(ModeController pModeController) {
 		MapModule mapModule = null;
-		for (Iterator iter = getMapModules().entrySet().iterator(); iter
-				.hasNext();) {
-			Map.Entry mapEntry = (Map.Entry) iter.next();
+		for (Object o : getMapModules().entrySet()) {
+			Map.Entry mapEntry = (Map.Entry) o;
 			mapModule = (MapModule) mapEntry.getValue();
 			if (pModeController.equals(mapModule.getModeController())) {
 				break;

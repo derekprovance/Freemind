@@ -65,31 +65,31 @@ public class MenuBar extends JMenuBar {
 	public void updateMenus(ModeController newModeController) {
 		this.removeAll();
 
-        menuHolder = new StructuredMenuHolder();
+		menuHolder = new StructuredMenuHolder();
 
-        addFileMenuCategories();
-        addEditMenuCategories();
-        addViewMenuCategories();
-        addInsertMenuCategories();
-        addFormatMenuCategories();
-        addNavigateMenuCategories();
-        addExtrasMenuCategories();
-        addMapMenu();
-        addModesMenu();
-        addMapsPopupMenu();
+		addFileMenuCategories();
+		addEditMenuCategories();
+		addViewMenuCategories();
+		addInsertMenuCategories();
+		addFormatMenuCategories();
+		addNavigateMenuCategories();
+		addExtrasMenuCategories();
+		addMapMenu();
+		addModesMenu();
+		addMapsPopupMenu();
 
-        updateFileMenu();
-        updateViewMenu();
-        updateEditMenu();
-        updateModeMenu();
+		updateFileMenu();
+		updateViewMenu();
+		updateEditMenu();
+		updateModeMenu();
 
-        updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
-        updateMapsMenu(menuHolder, POPUP_MENU);
-        addAdditionalPopupActions();
-        newModeController.updateMenus(menuHolder);
+		updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
+		updateMapsMenu(menuHolder, POPUP_MENU);
+		addAdditionalPopupActions();
+		newModeController.updateMenus(menuHolder);
 
-        menuHolder.updateMenus(this, MENU_BAR_PREFIX);
-        menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
+		menuHolder.updateMenus(this, MENU_BAR_PREFIX);
+		menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
     }
 
     private void addFileMenuCategories() {
@@ -396,8 +396,7 @@ public class MenuBar extends JMenuBar {
 		return menuHolder;
 	}
 
-	public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition,
-			boolean pressed) {
+	public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed) {
 		return super.processKeyBinding(ks, e, condition, pressed);
 	}
 

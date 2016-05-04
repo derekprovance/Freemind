@@ -204,9 +204,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void refreshMapFrom(MindMapNode node) {
-		final Iterator iterator = node.getChildren().iterator();
-		while (iterator.hasNext()) {
-			MindMapNode child = (MindMapNode) iterator.next();
+		for (Object o : node.getChildren()) {
+			MindMapNode child = (MindMapNode) o;
 			refreshMapFrom(child);
 		}
 		((MapAdapter) getMap()).nodeChangedInternal(node);
@@ -223,9 +222,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	 * Overwrite this method to perform additional operations to an node update.
 	 */
 	protected void updateNode(MindMapNode node) {
-		for (Iterator iter = mNodeSelectionListeners.iterator(); iter.hasNext();) {
-			NodeSelectionListener listener = (NodeSelectionListener) iter
-					.next();
+		for (Object mNodeSelectionListener : mNodeSelectionListeners) {
+			NodeSelectionListener listener = (NodeSelectionListener) mNodeSelectionListener;
 			listener.onUpdateNodeHook(node);
 		}
 	}
@@ -236,14 +234,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			HashSet copy = new HashSet(mNodeSelectionListeners);
 			// we copied the set to be able to remove listeners during a
 			// listener method.
-			for (Iterator iter = copy.iterator(); iter.hasNext();) {
-				NodeSelectionListener listener = (NodeSelectionListener) iter
-						.next();
+			for (Object aCopy : copy) {
+				NodeSelectionListener listener = (NodeSelectionListener) aCopy;
 				listener.onLostFocusNode(node);
 			}
-			for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-					.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
+			for (Object o : node.getModel().getActivatedHooks()) {
+				PermanentNodeHook hook = (PermanentNodeHook) o;
 				hook.onLostFocusNode(node);
 			}
 		} catch (RuntimeException e) {
@@ -258,14 +254,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			HashSet copy = new HashSet(mNodeSelectionListeners);
 			// we copied the set to be able to remove listeners during a
 			// listener method.
-			for (Iterator iter = copy.iterator(); iter.hasNext();) {
-				NodeSelectionListener listener = (NodeSelectionListener) iter
-						.next();
+			for (Object aCopy : copy) {
+				NodeSelectionListener listener = (NodeSelectionListener) aCopy;
 				listener.onFocusNode(node);
 			}
-			for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-					.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
+			for (Object o : node.getModel().getActivatedHooks()) {
+				PermanentNodeHook hook = (PermanentNodeHook) o;
 				hook.onFocusNode(node);
 			}
 		} catch (RuntimeException e) {
@@ -277,9 +271,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public void changeSelection(NodeView pNode, boolean pIsSelected) {
 		try {
 			HashSet copy = new HashSet(mNodeSelectionListeners);
-			for (Iterator iter = copy.iterator(); iter.hasNext();) {
-				NodeSelectionListener listener = (NodeSelectionListener) iter
-						.next();
+			for (Object aCopy : copy) {
+				NodeSelectionListener listener = (NodeSelectionListener) aCopy;
 				listener.onSelectionChange(pNode, pIsSelected);
 			}
 		} catch (RuntimeException e) {
@@ -289,17 +282,15 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void onViewCreatedHook(NodeView node) {
-		for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-				.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : node.getModel().getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.onViewCreatedHook(node);
 		}
 	}
 
 	public void onViewRemovedHook(NodeView node) {
-		for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-				.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : node.getModel().getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.onViewRemovedHook(node);
 		}
 	}
@@ -313,13 +304,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			} catch (Exception e) {
 				freemind.main.Resources.getInstance().logException(e);
 			}
-			for (Iterator it = getView().getSelecteds().iterator(); it
-					.hasNext();) {
-				NodeView view = (NodeView) it.next();
+			for (NodeView view : getView().getSelecteds()) {
 				try {
 					listener.onSelectionChange(view, true);
 				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
+					Resources.getInstance().logException(e);
 				}
 			}
 		}
@@ -349,16 +338,16 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void fireNodePreDeleteEvent(MindMapNode node) {
 		// call lifetime listeners:
-		for (Iterator iter = mNodeLifetimeListeners.iterator(); iter.hasNext();) {
-			NodeLifetimeListener listener = (NodeLifetimeListener) iter.next();
+		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
+			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onPreDeleteNode(node);
 		}
 	}
 
 	public void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent) {
 		// call lifetime listeners:
-		for (Iterator iter = mNodeLifetimeListeners.iterator(); iter.hasNext();) {
-			NodeLifetimeListener listener = (NodeLifetimeListener) iter.next();
+		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
+			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onPostDeleteNode(node, parent);
 		}
 	}
@@ -369,8 +358,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			fireRecursiveNodeCreateEvent(child);
 		}
 		// call lifetime listeners:
-		for (Iterator iter = mNodeLifetimeListeners.iterator(); iter.hasNext();) {
-			NodeLifetimeListener listener = (NodeLifetimeListener) iter.next();
+		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
+			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onCreateNodeHook(node);
 		}
 	}
@@ -378,9 +367,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public void firePreSaveEvent(MindMapNode node) {
 		// copy to prevent concurrent modification.
 		HashSet listenerCopy = new HashSet(mNodeSelectionListeners);
-		for (Iterator iter = listenerCopy.iterator(); iter.hasNext();) {
-			NodeSelectionListener listener = (NodeSelectionListener) iter
-					.next();
+		for (Object aListenerCopy : listenerCopy) {
+			NodeSelectionListener listener = (NodeSelectionListener) aListenerCopy;
 			listener.onSaveNode(node);
 		}
 	}
@@ -627,12 +615,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public List getSelecteds() {
 		LinkedList selecteds = new LinkedList();
 		ListIterator it = getView().getSelecteds().listIterator();
-		if (it != null) {
-			while (it.hasNext()) {
-				NodeView selected = (NodeView) it.next();
-				selecteds.add(selected.getModel());
-			}
-		}
+		while (it.hasNext()) {
+            NodeView selected = (NodeView) it.next();
+            selecteds.add(selected.getModel());
+        }
 		return selecteds;
 	}
 
@@ -643,16 +629,16 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void select(MindMapNode primarySelected, List selecteds) {
 		// are they visible?
-		for (Iterator i = selecteds.iterator(); i.hasNext();) {
-			MindMapNode node = (MindMapNode) (i.next());
+		for (Object selected1 : selecteds) {
+			MindMapNode node = (MindMapNode) (selected1);
 			displayNode(node);
 		}
 		final NodeView focussedNodeView = getNodeView(primarySelected);
 		if (focussedNodeView != null) {
 			getView().selectAsTheOnlyOneSelected(focussedNodeView);
 			getView().scrollNodeToVisible(focussedNodeView);
-			for (Iterator i = selecteds.iterator(); i.hasNext();) {
-				MindMapNode node = (MindMapNode) i.next();
+			for (Object selected : selecteds) {
+				MindMapNode node = (MindMapNode) selected;
 				NodeView nodeView = getNodeView(node);
 				if (nodeView != null) {
 					getView().makeTheSelected(nodeView);
@@ -775,9 +761,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void open() {
 		FreeMindFileDialog chooser = getFileChooser();
-		// fc, 24.4.2008: multi selection has problems as setTitle in Controller
-		// doesn't works
-		// chooser.setMultiSelectionEnabled(true);
 		int returnVal = chooser.showOpenDialog(getView());
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File[] selectedFiles;
@@ -786,8 +769,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			} else {
 				selectedFiles = new File[] { chooser.getSelectedFile() };
 			}
-			for (int i = 0; i < selectedFiles.length; i++) {
-				File theFile = selectedFiles[i];
+			for (File theFile : selectedFiles) {
 				try {
 					lastCurrentDir = theFile.getParentFile();
 					load(theFile);
@@ -982,8 +964,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			store.setLastSelected(lastSelected);
 			store.clearNodeListMemberList();
 			List selecteds = this.getSelecteds();
-			for (Iterator iter = selecteds.iterator(); iter.hasNext();) {
-				MindMapNode node = (MindMapNode) iter.next();
+			for (Object selected : selecteds) {
+				MindMapNode node = (MindMapNode) selected;
 				NodeListMember member = new NodeListMember();
 				member.setNode(this.getNodeID(node));
 				store.addNodeListMember(member);
@@ -1185,6 +1167,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public MindMapNode getSelected() {
+		//TODO - look into why this controller is sending a null value
+
 		final NodeView selectedView = getSelectedView();
 		if (selectedView != null)
 			return selectedView.getModel();
@@ -1245,8 +1229,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		private boolean isDragAcceptable(DropTargetDragEvent event) {
 			// check if there is at least one File Type in the list
 			DataFlavor[] flavors = event.getCurrentDataFlavors();
-			for (int i = 0; i < flavors.length; i++) {
-				if (flavors[i].isFlavorJavaFileListType()) {
+			for (DataFlavor flavor : flavors) {
+				if (flavor.isFlavorJavaFileListType()) {
 					// event.acceptDrag(DnDConstants.ACTION_COPY);
 					return true;
 				}
@@ -1258,8 +1242,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		private boolean isDropAcceptable(DropTargetDropEvent event) {
 			// check if there is at least one File Type in the list
 			DataFlavor[] flavors = event.getCurrentDataFlavors();
-			for (int i = 0; i < flavors.length; i++) {
-				if (flavors[i].isFlavorJavaFileListType()) {
+			for (DataFlavor flavor : flavors) {
+				if (flavor.isFlavorJavaFileListType()) {
 					return true;
 				}
 			}
@@ -1282,9 +1266,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 					dtde.dropComplete(false);
 					return;
 				}
-				Iterator iterator = ((List) data).iterator();
-				while (iterator.hasNext()) {
-					File file = (File) iterator.next();
+				for (Object o : ((List) data)) {
+					File file = (File) o;
 					load(file);
 				}
 			} catch (Exception e) {
@@ -1303,7 +1286,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		public void dragEnter(DropTargetDragEvent dtde) {
 			if (!isDragAcceptable(dtde)) {
 				dtde.rejectDrag();
-				return;
 			}
 		}
 

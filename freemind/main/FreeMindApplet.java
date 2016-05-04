@@ -325,35 +325,25 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 	}
 
 	private void updateLookAndFeel() {
-		// set Look&Feel
 		String lookAndFeel = "";
 		try {
 			setPropertyByParameter("lookandfeel");
 			lookAndFeel = userProps.getProperty("lookandfeel");
-			if (lookAndFeel.equals("windows")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} else if (lookAndFeel.equals("motif")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-			} else if (lookAndFeel.equals("mac")) {
-				// Only available on macOS
-				UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-			} else if (lookAndFeel.equals("metal")) {
-				UIManager
-						.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			} else if (lookAndFeel.equals("gtk")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-			} else if (lookAndFeel.equals("nothing")) {
-			} else if (lookAndFeel.indexOf('.') != -1) { // string contains a
-				// dot
-				UIManager.setLookAndFeel(lookAndFeel);
-				// we assume class name
-			} else {
-				// default.
-				UIManager.setLookAndFeel(UIManager
-						.getSystemLookAndFeelClassName());
+			switch(lookAndFeel) {
+				case "windows": UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+					break;
+				case "motif": UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+					break;
+				case "mac": UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
+					break;
+				case "metal": UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+					break;
+				case "gtk": UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+					break;
+				case "nothing":
+					break;
+				default: UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					break;
 			}
 		} catch (Exception ex) {
 			System.err.println("Error while setting Look&Feel" + lookAndFeel);

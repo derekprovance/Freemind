@@ -306,35 +306,25 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	 * 
 	 */
 	private void updateLookAndFeel() {
-		// set Look&Feel
 		try {
-			String lookAndFeel = props.getProperty(RESOURCE_LOOKANDFEEL);
-			if (lookAndFeel.equals("windows")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} else if (lookAndFeel.equals("motif")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-			} else if (lookAndFeel.equals("mac")) {
-				// Only available on macOS
-				UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-			} else if (lookAndFeel.equals("metal")) {
-				UIManager
-						.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			} else if (lookAndFeel.equals("gtk")) {
-				UIManager
-						.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-			} else if (lookAndFeel.equals("nothing")) {
-			} else if (lookAndFeel.indexOf('.') != -1) { // string contains a
-				// dot
-				UIManager.setLookAndFeel(lookAndFeel);
-				// we assume class name
-			} else {
-				// default.
-				logger.info("Default (System) Look & Feel: "
-						+ UIManager.getSystemLookAndFeelClassName());
-				UIManager.setLookAndFeel(UIManager
-						.getSystemLookAndFeelClassName());
+			String lookAndFeel = props.getProperty(RESOURCE_LOOKANDFEEL).toLowerCase();
+
+			switch(lookAndFeel) {
+				case "windows": UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+					break;
+				case "motif": UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+					break;
+				case "mac": UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
+					break;
+				case "metal": UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+					break;
+				case "gtk": UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+					break;
+				case "nothing":
+					break;
+				default: logger.info("Default (System) Look & Feel: " + UIManager.getSystemLookAndFeelClassName());
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					break;
 			}
 		} catch (Exception ex) {
 			System.err.println("Unable to set Look & Feel.");
@@ -354,7 +344,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		return VERSION;
 	}
 
-	// maintain this methods to keep the last state/size of the window (PN)
 	public int getWinHeight() {
 		return getHeight();
 	}
@@ -637,6 +626,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 				}
 			});
 			frame.setVisible(true);
+
+			com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(frame,true);
 
 			frame.fireStartupDone();
 		} catch(Exception e) {

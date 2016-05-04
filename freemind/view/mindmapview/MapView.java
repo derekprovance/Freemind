@@ -100,12 +100,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		public void componentResized(ComponentEvent pE) {
 			logger.fine("Component resized " + pE + " old size " + mSize
 					+ " new size " + getSize());
-			// int deltaWidth = mSize.width - getWidth();
-			// int deltaHeight = mSize.height - getHeight();
-			// Point viewPosition = getViewPosition();
-			// viewPosition.x += deltaWidth/2;
-			// viewPosition.y += deltaHeight/2;
-			// mapViewport.setViewPosition(viewPosition);
+
 			mSize = getSize();
 
 		}
@@ -113,22 +108,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
 	static public class ScrollPane extends JScrollPane {
 		public ScrollPane() {
-			// /*
-			// * Diagnosis for the input map, but I haven't
-			// * managed to remove the ctrl pageup/down keys
-			// * from it.
-			// */
-			// InputMap inputMap =
-			// getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-			// KeyStroke[] keys = inputMap.allKeys();
-			// if (keys != null) {
-			// for (int i = 0; i < keys.length; i++) {
-			// KeyStroke stroke = keys[i];
-			// logger.fine("Stroke: " + stroke);
-			// }
-			// } else {
-			// logger.fine("No keys in input map");
-			// }
+
 		}
 
 		protected boolean processKeyBinding(KeyStroke pKs, KeyEvent pE,
@@ -138,10 +118,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			 * up and down itself is not very useful, as the map hops away too
 			 * far.
 			 */
-			if (pE.getKeyCode() == KeyEvent.VK_PAGE_DOWN
-					|| pE.getKeyCode() == KeyEvent.VK_PAGE_UP)
-				return false;
-			return super.processKeyBinding(pKs, pE, pCondition, pPressed);
+			return !(pE.getKeyCode() == KeyEvent.VK_PAGE_DOWN || pE.getKeyCode() == KeyEvent.VK_PAGE_UP) && super.processKeyBinding(pKs, pE, pCondition, pPressed);
 		}
 
 		protected void validateTree() {
@@ -166,8 +143,8 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			}
 			mySelected.clear();
 			Vector selectedCopy = new Vector(mySelected);
-			for (Iterator it = selectedCopy.iterator(); it.hasNext();) {
-				NodeView view = (NodeView) it.next();
+			for (Object aSelectedCopy : selectedCopy) {
+				NodeView view = (NodeView) aSelectedCopy;
 				changeSelection(view, false);
 			}
 			logger.finest("Cleared selected.");

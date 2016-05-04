@@ -172,6 +172,7 @@ public class StructuredMenuHolder {
 					newMap.put(ORDER_NAME, newOrder);
 					thisMap.put(nextToken, newMap);
 				}
+
 				Map nextMap = (Map) thisMap.get(nextToken);
 				Vector order = (Vector) thisMap.get(ORDER_NAME);
 				if (!order.contains(nextToken)) {

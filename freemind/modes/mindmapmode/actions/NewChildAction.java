@@ -52,8 +52,7 @@ public class NewChildAction extends MindmapAction  {
 		this.c.addNew(c.getSelected(), MindMapController.NEW_CHILD, null);
 	}
 
-	public MindMapNode addNew(final MindMapNode target, int newNodeMode,
-			final KeyEvent e) {
+	public MindMapNode addNew(final MindMapNode target, int newNodeMode, final KeyEvent e) {
 		final MindMapNode targetNode = target;
 		MindMapNode newNode = null;
 
@@ -76,7 +75,6 @@ public class NewChildAction extends MindmapAction  {
 				// fc, 21.8.07: we don't do anything here and get a new child
 				// instead.
 				newNodeMode = MindMapController.NEW_CHILD;
-				// @fallthrough
 			}
 		}
 

@@ -35,7 +35,6 @@ public class NewSiblingAction extends MindmapAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		controller.addNew(controller.getSelected(),
-				MindMapController.NEW_SIBLING_BEHIND, null);
+		controller.addNew(controller.getSelected(), MindMapController.NEW_SIBLING_BEHIND, null);
 	}
 }

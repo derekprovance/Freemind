@@ -1243,7 +1243,6 @@ public class Controller implements MapModuleChangeObserver {
 				controller.getFrame().openDocument(url);
 			} catch (Exception e2) {
 				freemind.main.Resources.getInstance().logException(e2);
-				return;
 			}
 		}
 	}
