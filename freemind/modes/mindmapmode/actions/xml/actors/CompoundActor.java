@@ -51,8 +51,7 @@ public class CompoundActor extends XmlActorAdapter {
 	public void act(XmlAction action) {
 		CompoundAction compound = (CompoundAction) action;
 		Object[] actions = compound.getListChoiceList().toArray();
-		for (int i = 0; i < actions.length; i++) {
-			Object obj = actions[i];
+		for (Object obj : actions) {
 			if (obj instanceof XmlAction) {
 				XmlAction xmlAction = (XmlAction) obj;
 				ActorXml actor = getExMapFeedback().getActionRegistry().getActor(xmlAction);

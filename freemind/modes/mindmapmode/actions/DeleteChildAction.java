@@ -46,9 +46,8 @@ public class DeleteChildAction extends MindmapAction  {
 
 	public void actionPerformed(ActionEvent e) {
 		// ask user if not root is selected:
-		for (Iterator iterator = mMindMapController.getSelecteds().iterator(); iterator
-				.hasNext();) {
-			MindMapNode node = (MindMapNode) iterator.next();
+		for (Object o : mMindMapController.getSelecteds()) {
+			MindMapNode node = (MindMapNode) o;
 			if (node.isRoot()) {
 				mMindMapController.getController().errorMessage(
 						mMindMapController.getFrame().getResourceString(

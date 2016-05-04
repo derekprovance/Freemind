@@ -789,12 +789,12 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		scrollNodeToVisible(newSelected);
 		newSelected.repaintSelected();
 
-		for (ListIterator e = oldSelecteds.listIterator(); e.hasNext();) {
-			NodeView oldSelected = (NodeView) e.next();
-			if (oldSelected != null) {
-				oldSelected.repaintSelected();
-			}
-		}
+        for (Object oldSelected1 : oldSelecteds) {
+            NodeView oldSelected = (NodeView) oldSelected1;
+            if (oldSelected != null) {
+                oldSelected.repaintSelected();
+            }
+        }
 	}
 
 	/**
@@ -854,11 +854,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			toggleSelected(newlySelectedNodeView);
 		}
 		// select(newSelected,extend);
-		for (ListIterator e = newlySelectedNodeView.getChildrenViews()
-				.listIterator(); e.hasNext();) {
-			NodeView target = (NodeView) e.next();
-			selectBranch(target, true);
-		}
+        for (Object o : newlySelectedNodeView.getChildrenViews()) {
+            NodeView target = (NodeView) o;
+            selectBranch(target, true);
+        }
 	}
 
 	public boolean selectContinuous(NodeView newSelected) {
@@ -1005,7 +1004,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	@Override
 	public LinkedList<NodeView> getSelecteds() {
 		// return an ArrayList of NodeViews.
-		LinkedList<NodeView> result = new LinkedList<NodeView>();
+		LinkedList<NodeView> result = new LinkedList<>();
 		for (int i = 0; i < selected.size(); i++) {
 			result.add(getSelected(i));
 		}
@@ -1249,11 +1248,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		String label = getModel().getLinkRegistry().getLabel(source.getModel());
 		if (label != null)
 			labels.put(label, source);
-		for (ListIterator e = source.getChildrenViews().listIterator(); e
-				.hasNext();) {
-			NodeView target = (NodeView) e.next();
-			collectLabels(target, labels);
-		}
+        for (Object o : source.getChildrenViews()) {
+            NodeView target = (NodeView) o;
+            collectLabels(target, labels);
+        }
 	}
 
 	protected void paintLinks(NodeView source, Graphics2D graphics,
@@ -1269,35 +1267,34 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		// paint own labels:
 		Vector vec = getModel().getLinkRegistry()
 				.getAllLinks(source.getModel());
-		for (int i = 0; i < vec.size(); ++i) {
-			MindMapLink ref = (MindMapLink) vec.get(i);
-			if (LinkAlreadyVisited.add(ref)) {
-				// determine type of link
-				if (ref instanceof MindMapArrowLink) {
-					ArrowLinkView arrowLink = new ArrowLinkView(
-							(MindMapArrowLink) ref,
-							getNodeView(ref.getSource()),
-							getNodeView(ref.getTarget()));
-					arrowLink.paint(graphics);
-					mArrowLinkViews.add(arrowLink);
-				}
-			}
-		}
-		for (ListIterator e = source.getChildrenViews().listIterator(); e
-				.hasNext();) {
-			NodeView target = (NodeView) e.next();
-			paintLinks(target, graphics, labels, LinkAlreadyVisited);
-		}
+        for (Object aVec : vec) {
+            MindMapLink ref = (MindMapLink) aVec;
+            if (LinkAlreadyVisited.add(ref)) {
+                // determine type of link
+                if (ref instanceof MindMapArrowLink) {
+                    ArrowLinkView arrowLink = new ArrowLinkView(
+                            (MindMapArrowLink) ref,
+                            getNodeView(ref.getSource()),
+                            getNodeView(ref.getTarget()));
+                    arrowLink.paint(graphics);
+                    mArrowLinkViews.add(arrowLink);
+                }
+            }
+        }
+        for (Object o : source.getChildrenViews()) {
+            NodeView target = (NodeView) o;
+            paintLinks(target, graphics, labels, LinkAlreadyVisited);
+        }
 	}
 
 	public MindMapArrowLink detectCollision(Point p) {
 		if (mArrowLinkViews == null)
 			return null;
-		for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-			ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkViews.get(i);
-			if (arrowView.detectCollision(p))
-				return arrowView.getModel();
-		}
+        for (Object mArrowLinkView : mArrowLinkViews) {
+            ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkView;
+            if (arrowView.detectCollision(p))
+                return arrowView.getModel();
+        }
 		return null;
 	}
 
@@ -1428,19 +1425,19 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		innerBounds.x += getRoot().getX();
 		innerBounds.y += getRoot().getY();
 		final Rectangle maxBounds = new Rectangle(0, 0, getWidth(), getHeight());
-		for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-			ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkViews.get(i);
-			final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
-			if (arrowLinkCurve == null) {
-				continue;
-			}
-			Rectangle arrowViewBigBounds = arrowLinkCurve.getBounds();
-			if (!innerBounds.contains(arrowViewBigBounds)) {
-				Rectangle arrowViewBounds = PathBBox.getBBox(arrowLinkCurve)
-						.getBounds();
-				innerBounds.add(arrowViewBounds);
-			}
-		}
+        for (Object mArrowLinkView : mArrowLinkViews) {
+            ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkView;
+            final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
+            if (arrowLinkCurve == null) {
+                continue;
+            }
+            Rectangle arrowViewBigBounds = arrowLinkCurve.getBounds();
+            if (!innerBounds.contains(arrowViewBigBounds)) {
+                Rectangle arrowViewBounds = PathBBox.getBBox(arrowLinkCurve)
+                        .getBounds();
+                innerBounds.add(arrowViewBounds);
+            }
+        }
 		return innerBounds.intersection(maxBounds);
 	}
 
@@ -1534,25 +1531,24 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		// Keep selected nodes
 		logger.finest("validateSelecteds");
 		ArrayList selectedNodes = new ArrayList();
-		for (ListIterator it = getSelecteds().listIterator(); it.hasNext();) {
-			NodeView nodeView = (NodeView) it.next();
-			if (nodeView != null) {
-				selectedNodes.add(nodeView);
-			}
-		}
+        for (NodeView nodeView : getSelecteds()) {
+            if (nodeView != null) {
+                selectedNodes.add(nodeView);
+            }
+        }
 		// Warning, the old views still exist, because JVM has not deleted them.
 		// But don't use them!
 		selected.clear();
-		for (ListIterator it = selectedNodes.listIterator(); it.hasNext();) {
-			NodeView oldNodeView = ((NodeView) it.next());
-			if (oldNodeView.isContentVisible()) {
-				NodeView newNodeView = getNodeView(oldNodeView.getModel());
-				// test, whether or not the node is still visible:
-				if (newNodeView != null) {
-					selected.add(newNodeView);
-				}
-			}
-		}
+        for (Object selectedNode : selectedNodes) {
+            NodeView oldNodeView = ((NodeView) selectedNode);
+            if (oldNodeView.isContentVisible()) {
+                NodeView newNodeView = getNodeView(oldNodeView.getModel());
+                // test, whether or not the node is still visible:
+                if (newNodeView != null) {
+                    selected.add(newNodeView);
+                }
+            }
+        }
 	}
 
 	public Point getNodeContentLocation(NodeView nodeView) {
@@ -1609,10 +1605,10 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 
 	public Collection<NodeView> getViewers(MindMapNode pNode) {
 		if (views == null) {
-			views = new HashMap<MindMapNode, Vector<NodeView>>();
+			views = new HashMap<>();
 		}
 		if(!views.containsKey(pNode)) {
-			views.put(pNode, new Vector<NodeView>());
+			views.put(pNode, new Vector<>());
 		}
 		return views.get(pNode);
 	}

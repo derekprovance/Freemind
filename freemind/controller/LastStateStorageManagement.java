@@ -70,18 +70,16 @@ public class LastStateStorageManagement {
 	}
 
 	public void clearTabIndices() {
-		for (Iterator it = mLastStatesMap.getListMindmapLastStateStorageList()
-				.iterator(); it.hasNext();) {
-			MindmapLastStateStorage store = (MindmapLastStateStorage) it.next();
+		for (Object o : mLastStatesMap.getListMindmapLastStateStorageList()) {
+			MindmapLastStateStorage store = (MindmapLastStateStorage) o;
 			store.setTabIndex(-1);
 		}
 	}
 
 	public void changeOrAdd(MindmapLastStateStorage pStore) {
 		boolean found = false;
-		for (Iterator it = mLastStatesMap.getListMindmapLastStateStorageList()
-				.iterator(); it.hasNext();) {
-			MindmapLastStateStorage store = (MindmapLastStateStorage) it.next();
+		for (Object o2 : mLastStatesMap.getListMindmapLastStateStorageList()) {
+			MindmapLastStateStorage store = (MindmapLastStateStorage) o2;
 			if (Tools.safeEquals(pStore.getRestorableName(),
 					store.getRestorableName())) {
 				// deep copy
@@ -91,8 +89,8 @@ public class LastStateStorageManagement {
 				store.setY(pStore.getY());
 				Vector listCopy = new Vector(pStore.getListNodeListMemberList());
 				store.clearNodeListMemberList();
-				for (Iterator it2 = listCopy.iterator(); it2.hasNext();) {
-					NodeListMember member = (NodeListMember) it2.next();
+				for (Object aListCopy : listCopy) {
+					NodeListMember member = (NodeListMember) aListCopy;
 					store.addNodeListMember(member);
 				}
 				found = true;
@@ -108,11 +106,9 @@ public class LastStateStorageManagement {
 		if (mLastStatesMap.sizeMindmapLastStateStorageList() > LIST_AMOUNT_LIMIT) {
 			// make map from date to object:
 			TreeMap dateToStoreMap = new TreeMap();
-			for (Iterator it = mLastStatesMap
-					.getListMindmapLastStateStorageList().iterator(); it
-					.hasNext();) {
-				MindmapLastStateStorage store = (MindmapLastStateStorage) it
-						.next();
+			for (Object o1 : mLastStatesMap
+					.getListMindmapLastStateStorageList()) {
+				MindmapLastStateStorage store = (MindmapLastStateStorage) o1;
 				dateToStoreMap
 						.put(Long.valueOf(-store.getLastChanged()), store);
 			}
@@ -120,9 +116,8 @@ public class LastStateStorageManagement {
 			mLastStatesMap.clearMindmapLastStateStorageList();
 			// rebuild
 			int counter = 0;
-			for (Iterator it = dateToStoreMap.entrySet().iterator(); it
-					.hasNext();) {
-				Entry entry = (Entry) it.next();
+			for (Object o : dateToStoreMap.entrySet()) {
+				Entry entry = (Entry) o;
 				mLastStatesMap
 						.addMindmapLastStateStorage((MindmapLastStateStorage) entry
 								.getValue());
@@ -140,9 +135,8 @@ public class LastStateStorageManagement {
 	}
 
 	public MindmapLastStateStorage getStorage(String pRestorableName) {
-		for (Iterator it = mLastStatesMap.getListMindmapLastStateStorageList()
-				.iterator(); it.hasNext();) {
-			MindmapLastStateStorage store = (MindmapLastStateStorage) it.next();
+		for (Object o : mLastStatesMap.getListMindmapLastStateStorageList()) {
+			MindmapLastStateStorage store = (MindmapLastStateStorage) o;
 			if (Tools.safeEquals(pRestorableName, store.getRestorableName())) {
 				setLastChanged(store);
 				return store;
@@ -153,9 +147,8 @@ public class LastStateStorageManagement {
 
 	public List getLastOpenList() {
 		Vector ret = new Vector();
-		for (Iterator it = mLastStatesMap.getListMindmapLastStateStorageList()
-				.iterator(); it.hasNext();) {
-			MindmapLastStateStorage store = (MindmapLastStateStorage) it.next();
+		for (Object o : mLastStatesMap.getListMindmapLastStateStorageList()) {
+			MindmapLastStateStorage store = (MindmapLastStateStorage) o;
 			if (store.getTabIndex() >= 0) {
 				ret.add(store);
 			}

@@ -169,8 +169,8 @@ public class ImportWizard {
 		}
 		String[] files = currentDir.list();
 		if (files != null) {
-			for (int i = 0; i < files.length; i++) {
-				String current = files[i];
+			for (String file : files) {
+				String current = file;
 				logger.fine("looking at: " + current);
 				if (isInteresting(current)) {
 					String rootPath = rootDir.getPath();

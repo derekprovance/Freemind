@@ -47,7 +47,7 @@ import freemind.view.mindmapview.ViewFeedback;
  */
 public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 
-	private HashMap<String, Font> fontMap = new HashMap<String, Font>();
+	private HashMap<String, Font> fontMap = new HashMap<>();
 	protected static java.util.logging.Logger logger = null;
 
 	/**
@@ -222,8 +222,8 @@ public abstract class MapFeedbackAdapter implements MapFeedback, ViewFeedback {
 			NodeAdapter child = (NodeAdapter) i.next();
 			invokeHooksRecursively(child, getMap());
 		}
-		for (Iterator i = pNode.getHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : pNode.getHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.setController(this);
 			hook.setMap(getMap());
 			pNode.invokeHook(hook);

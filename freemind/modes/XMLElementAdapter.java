@@ -455,8 +455,8 @@ public class XMLElementAdapter extends XMLElement {
 	 */
 	protected void copyAttributesToNode(NodeAdapter node) {
 		// reactivate all settings from nodeAttributes:
-		for (Iterator i = nodeAttributes.keySet().iterator(); i.hasNext();) {
-			String key = (String) i.next();
+		for (Object o : nodeAttributes.keySet()) {
+			String key = (String) o;
 			// to avoid self reference:
 			setNodeAttribute(key, (String) nodeAttributes.get(key), node);
 		}
@@ -505,8 +505,8 @@ public class XMLElementAdapter extends XMLElement {
 	 */
 	public void processUnfinishedLinks(MindMapLinkRegistry registry) {
 		// add labels to the nodes:
-		for (Iterator i1 = mIdToTarget.keySet().iterator(); i1.hasNext();) {
-			String key = (String) i1.next();
+		for (Object o : mIdToTarget.keySet()) {
+			String key = (String) o;
 			NodeAdapter target1 = (NodeAdapter) mIdToTarget.get(key);
 			/*
 			 * key is the proposed name for the target, is changed by the
@@ -515,8 +515,7 @@ public class XMLElementAdapter extends XMLElement {
 			registry.registerLinkTarget(target1, key);
 		}
 		// complete arrow links with right labels:
-		for (int i = 0; i < mArrowLinkAdapters.size(); ++i) {
-			Object arrowObject = mArrowLinkAdapters.get(i);
+		for (Object arrowObject : mArrowLinkAdapters) {
 			if (arrowObject instanceof ArrowLinkTarget) {
 				ArrowLinkTarget linkTarget = (ArrowLinkTarget) arrowObject;
 				// do the same as for ArrowLinkAdapter and start to search for the source.

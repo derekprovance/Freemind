@@ -263,8 +263,8 @@ public class FindAction extends FreemindAction {
 		Collection finalizedSubterms;
 		if (!caseSensitive) {
 			finalizedSubterms = new ArrayList();
-			for (Iterator i = subterms.iterator(); i.hasNext();) {
-				finalizedSubterms.add(((String) i.next()).toLowerCase());
+			for (Object subterm : subterms) {
+				finalizedSubterms.add(((String) subterm).toLowerCase());
 			}
 		} else {
 			finalizedSubterms = subterms;
@@ -317,8 +317,8 @@ public class FindAction extends FreemindAction {
 
 			boolean found = true;
 			boolean foundInNotes = false;
-			for (Iterator i = subterms.iterator(); i.hasNext();) {
-				if (nodeText.indexOf((String) i.next()) < 0) {
+			for (Object subterm1 : subterms) {
+				if (nodeText.indexOf((String) subterm1) < 0) {
 					// Subterm not found
 					found = false;
 					break;
@@ -328,8 +328,8 @@ public class FindAction extends FreemindAction {
 			if ((!found) && searchInNotesToo) {
 				/* now, search the notes. */
 				found = true;
-				for (Iterator i = subterms.iterator(); i.hasNext();) {
-					if (noteText.indexOf((String) i.next()) < 0) {
+				for (Object subterm : subterms) {
+					if (noteText.indexOf((String) subterm) < 0) {
 						// Subterm not found
 						found = false;
 						break;

@@ -146,9 +146,9 @@ public class ExampleFileFilter extends FileFilter {
 	 */
 	public ExampleFileFilter(String[] filters, String description) {
 		this();
-		for (int i = 0; i < filters.length; i++) {
+		for (String filter : filters) {
 			// add filters one by one
-			addExtension(filters[i]);
+			addExtension(filter);
 		}
 		if (description != null)
 			setDescription(description);

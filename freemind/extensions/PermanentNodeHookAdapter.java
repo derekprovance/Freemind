@@ -184,8 +184,8 @@ public class PermanentNodeHookAdapter extends NodeHookAdapter implements
 		if(!nameValuePairs.isEmpty()) {
 			XMLElement child = new XMLElement();
 			child.setName(PARAMETERS);
-			for (Iterator i = nameValuePairs.keySet().iterator(); i.hasNext();) {
-				String key = (String) i.next();
+			for (Object o : nameValuePairs.keySet()) {
+				String key = (String) o;
 				Object value = nameValuePairs.get(key);
 				child.setAttribute(key, value);
 			}

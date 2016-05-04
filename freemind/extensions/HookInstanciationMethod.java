@@ -57,7 +57,7 @@ public class HookInstanciationMethod {
 			DestinationNodesGetter {
 		public Collection<MindMapNode> getDestinationNodes(MapFeedback controller,
 				MindMapNode focussed, List selecteds) {
-			Vector<MindMapNode> returnValue = new Vector<MindMapNode>();
+			Vector<MindMapNode> returnValue = new Vector<>();
 			returnValue.add(controller.getMap().getRootNode());
 			return returnValue;
 		}
@@ -80,7 +80,7 @@ public class HookInstanciationMethod {
 
 		public Collection<MindMapNode> getDestinationNodes(MapFeedback controller,
 				MindMapNode focussed, List selecteds) {
-			Vector<MindMapNode> returnValue = new Vector<MindMapNode>();
+			Vector<MindMapNode> returnValue = new Vector<>();
 			addChilds(controller.getMap().getRootNode(), returnValue);
 			return returnValue;
 		}
@@ -159,8 +159,8 @@ public class HookInstanciationMethod {
 	/**
 	 */
 	public boolean isAlreadyPresent(String hookName, MindMapNode focussed) {
-		for (Iterator i = focussed.getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : focussed.getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			if (hookName.equals(hook.getName())) {
 				return true;
 			}

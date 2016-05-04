@@ -208,10 +208,10 @@ public class FilterController implements MapModuleChangeObserver {
 		loader.parseFromReader(reader);
 		reader.close();
 		final Vector conditions = loader.getChildren();
-		for (int i = 0; i < conditions.size(); i++) {
+		for (Object condition : conditions) {
 			filterConditionModel.addElement(FilterController
 					.getConditionFactory().loadCondition(
-							(XMLElement) conditions.get(i)));
+							(XMLElement) condition));
 		}
 	}
 }

@@ -68,8 +68,8 @@ public class NewChildActor extends XmlActorAdapter {
 		}
 		getExMapFeedback().insertNodeInto(newNode, parent, index);
 		// call hooks:
-		for (Iterator i = parent.getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : parent.getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.onNewChild(newNode);
 		}
 		// done.

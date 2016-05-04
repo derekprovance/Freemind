@@ -48,8 +48,7 @@ public class PersistentEditableComboBox extends JComboBox {
 		String storedUrls = mModeController.getFrame().getProperty(pStorageKey);
 		if (storedUrls != null) {
 			String[] array = storedUrls.split("\t");
-			for (int i = 0; i < array.length; i++) {
-				String string = array[i];
+			for (String string : array) {
 				addUrl(string, false);
 			}
 		}

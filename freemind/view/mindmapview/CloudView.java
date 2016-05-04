@@ -84,8 +84,8 @@ public class CloudView {
 		// getZoom()):0 /* = additionalDistanceForConvexHull */);
 		Vector/* <Point> */res = hull.calculateHull(coordinates);
 		Polygon p = new Polygon();
-		for (int i = 0; i < res.size(); ++i) {
-			Point pt = (Point) res.get(i);
+		for (Object re : res) {
+			Point pt = (Point) re;
 			p.addPoint(pt.x, pt.y);
 		}
 		g.fillPolygon(p);

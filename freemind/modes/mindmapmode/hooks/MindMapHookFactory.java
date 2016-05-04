@@ -110,8 +110,8 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 		actualizePlugins();
 		Vector returnValue = new Vector();
 		String modeName = mode.getPackage().getName();
-		for (Iterator i = allPlugins.iterator(); i.hasNext();) {
-			String label = (String) i.next();
+		for (Object allPlugin : allPlugins) {
+			String label = (String) allPlugin;
 			HookDescriptorPluginAction descriptor = getHookDescriptor(label);
 			// Properties prop = descriptor.properties;
 			try {
@@ -120,9 +120,8 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 						.getBaseClass()))) {
 					// the plugin inherits from the baseClass, we carry on to
 					// look for the mode
-					for (Iterator j = descriptor.getModes().iterator(); j
-							.hasNext();) {
-						String pmode = (String) j.next();
+					for (Object o : descriptor.getModes()) {
+						String pmode = (String) o;
 						if (pmode.equals(modeName)) {
 							// add the class:
 							returnValue.add(label);
@@ -132,7 +131,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 				}
 			} catch (ClassNotFoundException e) {
 				logger.severe("Class not found.");
-				freemind.main.Resources.getInstance().logException(e);
+				Resources.getInstance().logException(e);
 			}
 		}
 		return returnValue;
@@ -153,8 +152,8 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
 					.createUnmarshaller();
 			// the loop
-			for (Iterator i = importWizard.CLASS_LIST.iterator(); i.hasNext();) {
-				String xmlPluginFile = (String) i.next();
+			for (Object aCLASS_LIST : importWizard.CLASS_LIST) {
+				String xmlPluginFile = (String) aCLASS_LIST;
 				if (xmlPluginFile.matches(pluginPrefixRegEx)) {
 					// make file name:
 					/*
@@ -175,13 +174,11 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 								null);
 					} catch (Exception e) {
 						// error case
-						freemind.main.Resources.getInstance().logException(e);
+						Resources.getInstance().logException(e);
 						continue;
 					}
 					// plugin is loaded.
-					for (Iterator j = plugin.getListChoiceList().iterator(); j
-							.hasNext();) {
-						Object obj = j.next();
+					for (Object obj : plugin.getListChoiceList()) {
 						if (obj instanceof PluginAction) {
 							PluginAction action = (PluginAction) obj;
 							pluginInfo.put(action.getLabel(),
@@ -219,8 +216,8 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 			return hook;
 		} catch (Throwable e) {
 			String path = "";
-			for (Iterator it = descriptor.getPluginClasspath().iterator(); it.hasNext();) {
-				PluginClasspath plPath = (PluginClasspath) it.next();
+			for (Object o : descriptor.getPluginClasspath()) {
+				PluginClasspath plPath = (PluginClasspath) o;
 				path += plPath.getJar() + ";";
 			}
 			freemind.main.Resources.getInstance().logException(
@@ -309,15 +306,13 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 		Class mode = MindMapController.class;
 		actualizePlugins();
 		Vector returnValue = new Vector();
-		for (Iterator i = allRegistrations.iterator(); i.hasNext();) {
-			HookDescriptorRegistration descriptor = (HookDescriptorRegistration) i
-					.next();
+		for (Object allRegistration : allRegistrations) {
+			HookDescriptorRegistration descriptor = (HookDescriptorRegistration) allRegistration;
 			// PluginRegistration registration =
 			// descriptor.getPluginRegistration();
 			boolean modeFound = false;
-			for (Iterator j = (descriptor.getListPluginModeList()).iterator(); j
-					.hasNext();) {
-				PluginMode possibleMode = (PluginMode) j.next();
+			for (Object o : (descriptor.getListPluginModeList())) {
+				PluginMode possibleMode = (PluginMode) o;
 				if (mode.getPackage().getName()
 						.equals(possibleMode.getClassName())) {
 					modeFound = true;
@@ -336,7 +331,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 				container.isPluginBase = descriptor.getIsPluginBase();
 				returnValue.add(container);
 			} catch (ClassNotFoundException e) {
-				freemind.main.Resources.getInstance().logException(e);
+				Resources.getInstance().logException(e);
 			}
 		}
 		return returnValue;

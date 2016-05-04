@@ -152,8 +152,8 @@ public class MapNodePositionHolderBase extends PermanentNodeHookAdapter {
 	}
 
 	public static MapNodePositionHolderBase getBaseHook(MindMapNode node) {
-		for (Iterator j = node.getActivatedHooks().iterator(); j.hasNext();) {
-			PermanentNodeHook element = (PermanentNodeHook) j.next();
+		for (Object o : node.getActivatedHooks()) {
+			PermanentNodeHook element = (PermanentNodeHook) o;
 			if (element instanceof MapNodePositionHolderBase) {
 				return (MapNodePositionHolderBase) element;
 			}

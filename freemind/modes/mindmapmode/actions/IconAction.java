@@ -79,33 +79,29 @@ public class IconAction extends MindmapAction implements IconInformation {
 	}
 
 	private void addLastIcon() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
-				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+		for (Object o : modeController.getSelecteds()) {
+			MindMapNodeModel selected = (MindMapNodeModel) o;
 			getAddIconActor().addIcon(selected, icon);
 		}
 	}
 
 	private void removeIcon(boolean removeFirst) {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
-				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+		for (Object o : modeController.getSelecteds()) {
+			MindMapNodeModel selected = (MindMapNodeModel) o;
 			getAddIconActor().removeIcon(selected, icon, removeFirst);
 		}
 	}
 
 	private void toggleIcon() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
-				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+		for (Object o : modeController.getSelecteds()) {
+			MindMapNodeModel selected = (MindMapNodeModel) o;
 			getAddIconActor().toggleIcon(selected, icon);
 		}
 	}
 
 	private void removeAllIcons() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
-				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+		for (Object o : modeController.getSelecteds()) {
+			MindMapNodeModel selected = (MindMapNodeModel) o;
 			if (selected.getIcons().size() > 0) {
 				modeController.removeAllIcons(selected);
 			}

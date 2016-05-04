@@ -97,9 +97,7 @@ public class HtmlTools {
 				logger.fine("Leave toXhtml with " + resultXml);
 				return resultXml;
 			}
-		} catch (IOException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		} catch (BadLocationException e) {
+		} catch (IOException | BadLocationException e) {
 			freemind.main.Resources.getInstance().logException(e);
 		}
 		// fallback:
@@ -203,8 +201,8 @@ public class HtmlTools {
 		 * them, if pair is a tag then we just append
 		 */
 		StringBuffer sbResult = new StringBuffer();
-		for (Iterator iter = splittedStringList.iterator(); iter.hasNext();) {
-			IndexPair pair = (IndexPair) iter.next();
+		for (Object aSplittedStringList : splittedStringList) {
+			IndexPair pair = (IndexPair) aSplittedStringList;
 
 			if (pair.mIsTag)
 				append(sbResult, text, pair.originalStart, pair.originalEnd);
@@ -256,8 +254,8 @@ public class HtmlTools {
 	}
 
 	public int getMinimalOriginalPosition(int pI, ArrayList pListOfIndices) {
-		for (Iterator iter = pListOfIndices.iterator(); iter.hasNext();) {
-			IndexPair pair = (IndexPair) iter.next();
+		for (Object pListOfIndice : pListOfIndices) {
+			IndexPair pair = (IndexPair) pListOfIndice;
 			if (pI >= pair.replacedStart && pI <= pair.replacedEnd) {
 				return pair.originalStart + pI - pair.replacedStart;
 			}

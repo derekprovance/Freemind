@@ -47,8 +47,8 @@ public class PermanentNodeHookSubstituteUnknown extends
 
 	public void save(XMLElement xml) {
 		super.save(xml);
-		for (Iterator i = child.getChildren().iterator(); i.hasNext();) {
-			XMLElement childchild = (XMLElement) i.next();
+		for (Object o : child.getChildren()) {
+			XMLElement childchild = (XMLElement) o;
 			xml.addChild(childchild);
 		}
 	}

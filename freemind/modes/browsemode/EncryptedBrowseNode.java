@@ -128,10 +128,7 @@ public class EncryptedBrowseNode extends BrowseNodeModel {
 				//mMapFeedback.nodeStructureChanged(this);
 				isDecrypted = true;
 				updateIcon();
-			} catch (XMLParseException e) {
-				freemind.main.Resources.getInstance().logException(e);
-				return;
-			} catch (IOException e) {
+			} catch (XMLParseException | IOException e) {
 				freemind.main.Resources.getInstance().logException(e);
 				return;
 			}

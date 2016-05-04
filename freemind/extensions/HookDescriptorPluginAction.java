@@ -59,9 +59,7 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
 		menuPositions = new Vector();
 		properties = new Properties();
 		modes = new Vector();
-		for (Iterator i = pluginAction.getListChoiceList().iterator(); i
-				.hasNext();) {
-			Object obj = i.next();
+		for (Object obj : pluginAction.getListChoiceList()) {
 			if (obj instanceof PluginMenu) {
 				PluginMenu menu = (PluginMenu) obj;
 				menuPositions.add(menu.getLocation());
@@ -86,8 +84,8 @@ public class HookDescriptorPluginAction extends HookDescriptorBase {
 		if (pluginAction.getInstanciation() != null) {
 			HashMap allInstMethods = HookInstanciationMethod
 					.getAllInstanciationMethods();
-			for (Iterator i = allInstMethods.keySet().iterator(); i.hasNext();) {
-				String name = (String) i.next();
+			for (Object o : allInstMethods.keySet()) {
+				String name = (String) o;
 				if (pluginAction.getInstanciation().equalsIgnoreCase(name)) {
 					return (HookInstanciationMethod) allInstMethods.get(name);
 				}

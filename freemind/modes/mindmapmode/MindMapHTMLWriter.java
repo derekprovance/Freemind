@@ -455,8 +455,8 @@ class MindMapHTMLWriter {
 			writeFoldingButtons(localParentID);
 		}
 
-		for (Iterator it = model.getActivatedHooks().iterator(); it.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) it.next();
+		for (Object o : model.getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.saveHtml(fileout);
 		}
 		

@@ -63,8 +63,8 @@ public class MultipleImage extends ImageIcon {
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = outImage.createGraphics();
 		double myX = 0;
-		for (Iterator i = mImages.iterator(); i.hasNext();) {
-			ImageIcon currentIcon = (ImageIcon) i.next();
+		for (Object mImage : mImages) {
+			ImageIcon currentIcon = (ImageIcon) mImage;
 			// py = /* center: */ ( myHeight -
 			// (int)(currentIcon.getIconHeight()* zoomFactor)) /2;
 			// int pheight = (int) (currentIcon.getIconHeight() * zoomFactor);
@@ -116,8 +116,8 @@ public class MultipleImage extends ImageIcon {
 
 	public int getIconWidth() {
 		int myX = 0;
-		for (int i = 0; i < mImages.size(); i++) {
-			myX += ((ImageIcon) mImages.get(i)).getIconWidth();
+		for (Object mImage : mImages) {
+			myX += ((ImageIcon) mImage).getIconWidth();
 		}
 		// System.out.println("width: "+myX);
 		return (int) (myX * zoomFactor);
@@ -125,8 +125,8 @@ public class MultipleImage extends ImageIcon {
 
 	public int getIconHeight() {
 		int myY = 0;
-		for (int i = 0; i < mImages.size(); i++) {
-			int otherHeight = ((ImageIcon) mImages.get(i)).getIconHeight();
+		for (Object mImage : mImages) {
+			int otherHeight = ((ImageIcon) mImage).getIconHeight();
 			if (otherHeight > myY)
 				myY = otherHeight;
 		}

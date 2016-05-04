@@ -115,9 +115,6 @@ public class BrowseController extends ViewControllerAdapter {
 							+ "&layers=" + tileSources.get(barePositions[5]);
 					logger.fine("Try to open link " + link);
 					modeController.getFrame().openDocument(new URL(link));
-				} catch (MalformedURLException e1) {
-					freemind.main.Resources.getInstance().logException(e1);
-
 				} catch (Exception e1) {
 					freemind.main.Resources.getInstance().logException(e1);
 				}
@@ -254,18 +251,17 @@ public class BrowseController extends ViewControllerAdapter {
 					link.getSource());
 			links.addAll(getModel().getLinkRegistry().getAllLinks(
 					link.getTarget()));
-			for (int i = 0; i < links.size(); ++i) {
-				BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) links
-						.get(i);
-				if (nodeAlreadyVisited.add(foreign_link.getTarget())) {
-					arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link
-							.getTarget()));
-				}
-				if (nodeAlreadyVisited.add(foreign_link.getSource())) {
-					arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link
-							.getSource()));
-				}
-			}
+            for (Object link1 : links) {
+                BrowseArrowLinkModel foreign_link = (BrowseArrowLinkModel) link1;
+                if (nodeAlreadyVisited.add(foreign_link.getTarget())) {
+                    arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link
+                            .getTarget()));
+                }
+                if (nodeAlreadyVisited.add(foreign_link.getSource())) {
+                    arrowLinkPopup.add(getGotoLinkNodeAction(foreign_link
+                            .getSource()));
+                }
+            }
 			return arrowLinkPopup;
 		}
 		return null;

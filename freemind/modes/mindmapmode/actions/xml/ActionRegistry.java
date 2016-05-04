@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
 
@@ -59,9 +60,9 @@ public class ActionRegistry {
 			logger = freemind.main.Resources.getInstance().getLogger(
 					this.getClass().getName());
 		}
-		registeredHandler = new Vector<ActionHandler>();
-		registeredFilters = new Vector<ActionFilter>();
-		registeredActors = new HashMap<Class, ActorXml>();
+		registeredHandler = new Vector<>();
+		registeredFilters = new Vector<>();
+		registeredActors = new HashMap<>();
 	}
 
 	/**
@@ -91,8 +92,7 @@ public class ActionRegistry {
 			} else {
 				/* Insert before FinalActionFilters */
 				int index = 0;
-				for (Iterator<ActionFilter> it = registeredFilters.iterator(); it.hasNext();) {
-					ActionFilter filter = it.next();
+				for (ActionFilter filter : registeredFilters) {
 					if (filter instanceof FinalActionFilter) {
 						break;
 					}
@@ -114,15 +114,13 @@ public class ActionRegistry {
 	}
 
 	private void startTransaction(String name) {
-		for (Iterator<ActionHandler> i = registeredHandler.iterator(); i.hasNext();) {
-			ActionHandler handler = i.next();
+		for (ActionHandler handler : registeredHandler) {
 			handler.startTransaction(name);
 		}
 	}
 
 	private void endTransaction(String name) {
-		for (Iterator<ActionHandler> i = registeredHandler.iterator(); i.hasNext();) {
-			ActionHandler handler = i.next();
+		for (ActionHandler handler : registeredHandler) {
 			handler.endTransaction(name);
 		}
 	}
@@ -158,18 +156,17 @@ public class ActionRegistry {
 
 		ActionPair filteredPair = pair;
 		// first filter:
-		for (Iterator<ActionFilter> i = registeredFilters.iterator(); i.hasNext();) {
-			ActionFilter filter = i.next();
+		for (ActionFilter filter : registeredFilters) {
 			filteredPair = filter.filterAction(filteredPair);
 		}
 
 		Object[] aArray = registeredHandler.toArray();
-		for (int i = 0; i < aArray.length; i++) {
-			ActionHandler handler = (ActionHandler) aArray[i];
+		for (Object anAArray : aArray) {
+			ActionHandler handler = (ActionHandler) anAArray;
 			try {
 				handler.executeAction(filteredPair.getDoAction());
 			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
+				Resources.getInstance().logException(e);
 				returnValue = false;
 				// to break or not to break. this is the question here...
 			}
@@ -190,8 +187,7 @@ public class ActionRegistry {
 	}
 
 	public ActorXml getActor(XmlAction action) {
-		for (Iterator<Class> i = registeredActors.keySet().iterator(); i.hasNext();) {
-			Class actorClass = i.next();
+		for (Class actorClass : registeredActors.keySet()) {
 			if (actorClass.isInstance(action)) {
 				return registeredActors.get(actorClass);
 			}

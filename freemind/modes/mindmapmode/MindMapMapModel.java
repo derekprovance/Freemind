@@ -146,8 +146,8 @@ public class MindMapMapModel extends MapAdapter {
 			StringWriter stringWriter = new StringWriter();
 			BufferedWriter fileout = new BufferedWriter(stringWriter);
 
-			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-				((MindMapNodeModel) it.next()).saveTXT(fileout,/* depth= */0);
+			for (Object mindMapNode : mindMapNodes) {
+				((MindMapNodeModel) mindMapNode).saveTXT(fileout,/* depth= */0);
 			}
 
 			fileout.close();
@@ -196,8 +196,8 @@ public class MindMapMapModel extends MapAdapter {
 
 			// First collect all used colors
 			HashSet colors = new HashSet();
-			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-				((MindMapNodeModel) it.next()).collectColors(colors);
+			for (Object mindMapNode1 : mindMapNodes) {
+				((MindMapNodeModel) mindMapNode1).collectColors(colors);
 			}
 
 			// Prepare table of colors containing indices to color table
@@ -220,8 +220,8 @@ public class MindMapMapModel extends MapAdapter {
 					+ "\\viewkind4\\uc1\\pard\\f0\\fs20{}");
 			// ^ If \\ud is appended here, Unicode does not work in MS Word.
 
-			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-				((MindMapNodeModel) it.next()).saveRTF(fileout,/* depth= */0,
+			for (Object mindMapNode : mindMapNodes) {
+				((MindMapNodeModel) mindMapNode).saveRTF(fileout,/* depth= */0,
 						colorTable);
 			}
 
@@ -411,11 +411,10 @@ public class MindMapMapModel extends MapAdapter {
 					throw new Exception();
 				}
 			} // locking failed
-			catch (UnsatisfiedLinkError eUle) {
+			catch (UnsatisfiedLinkError | NoClassDefFoundError eUle) {
 			} // This may come with Windows95. We don't insist on detailed
 				// locking in that case.
-			catch (NoClassDefFoundError eDcdf) {
-			} // ^ just like above.
+			// ^ just like above.
 			// ^ On Windows95, the necessary libraries are missing.
 			semaphoreOutputStream.write(System.getProperty("user.name")
 					.getBytes());
@@ -598,9 +597,7 @@ public class MindMapMapModel extends MapAdapter {
                     }
                     tempFileStack.add(tempFile); // add at the back.
                 });
-			} catch (InterruptedException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (InvocationTargetException e) {
+			} catch (InterruptedException | InvocationTargetException e) {
 				freemind.main.Resources.getInstance().logException(e);
 			}
 		}

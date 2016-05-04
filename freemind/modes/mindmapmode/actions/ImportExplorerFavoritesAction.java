@@ -26,6 +26,7 @@ import java.io.FileReader;
 
 import javax.swing.JFileChooser;
 
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.FreeMindFileDialog;
 import freemind.modes.MindMapNode;
@@ -68,14 +69,14 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
 		if (folder.isDirectory()) {
 			File[] list = folder.listFiles();
 			// Go recursively to subfolders
-			for (int i = 0; i < list.length; i++) {
-				if (list[i].isDirectory()) {
+			for (File aList1 : list) {
+				if (aList1.isDirectory()) {
 					// Insert a new node
-					String nodeContent = list[i].getName();
+					String nodeContent = aList1.getName();
 					MindMapNode node = addNode(target, nodeContent);
 					//
 					boolean favoritesFoundInSubfolder = importExplorerFavorites(
-							list[i], node, false);
+							aList1, node, false);
 					if (favoritesFoundInSubfolder) {
 						favoritesFound = true;
 					} else {
@@ -85,16 +86,16 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
 			}
 
 			// For each .url file: add it
-			for (int i = 0; i < list.length; i++) {
-				if (!list[i].isDirectory()
-						&& Tools.getExtension(list[i]).equals("url")) {
+			for (File aList : list) {
+				if (!aList.isDirectory()
+						&& Tools.getExtension(aList).equals("url")) {
 					favoritesFound = true;
 					try {
 						MindMapNode node = addNode(target,
-								Tools.removeExtension(list[i].getName()));
+								Tools.removeExtension(aList.getName()));
 						// For each line: Is it URL? => Set it as link
 						BufferedReader in = new BufferedReader(new FileReader(
-								list[i]));
+								aList));
 						while (in.ready()) {
 							String line = in.readLine();
 							if (line.startsWith("URL=")) {
@@ -104,7 +105,7 @@ public class ImportExplorerFavoritesAction extends MindmapAction {
 						}
 
 					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
+						Resources.getInstance().logException(e);
 					}
 				}
 			}

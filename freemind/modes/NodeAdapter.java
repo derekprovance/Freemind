@@ -826,9 +826,8 @@ public abstract class NodeAdapter implements MindMapNode {
 			MindMapNode addedChild) {
 		// Tell any node hooks that the node is added:
 		if (node instanceof MindMapNode) {
-			for (Iterator i = ((MindMapNode) node).getActivatedHooks()
-					.iterator(); i.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
+			for (Object o : ((MindMapNode) node).getActivatedHooks()) {
+				PermanentNodeHook hook = (PermanentNodeHook) o;
 				if (addedChild.getParentNode() == node) {
 					hook.onAddChild(addedChild);
 				}
@@ -845,8 +844,8 @@ public abstract class NodeAdapter implements MindMapNode {
 	 */
 	private void recursiveCallRemoveChildren(MindMapNode node,
 			MindMapNode removedChild, MindMapNode oldDad) {
-		for (Iterator i = node.getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : node.getActivatedHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			if (removedChild.getParentNode() == node) {
 				hook.onRemoveChild(removedChild);
 			}
@@ -1159,20 +1158,18 @@ public abstract class NodeAdapter implements MindMapNode {
 		}
 
 		Vector linkVector = registry.getAllLinksFromMe(this);
-		for (int i = 0; i < linkVector.size(); ++i) {
-			if (linkVector.get(i) instanceof ArrowLinkAdapter) {
-				XMLElement arrowLinkElement = ((ArrowLinkAdapter) linkVector
-						.get(i)).save();
+		for (Object aLinkVector : linkVector) {
+			if (aLinkVector instanceof ArrowLinkAdapter) {
+				XMLElement arrowLinkElement = ((ArrowLinkAdapter) aLinkVector).save();
 				node.addChild(arrowLinkElement);
 			}
 		}
 
 		// virtual link targets:
 		Vector targetVector = registry.getAllLinksIntoMe(this);
-		for (int i = 0; i < targetVector.size(); ++i) {
-			if (targetVector.get(i) instanceof ArrowLinkAdapter) {
-				XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) targetVector
-						.get(i)).createArrowLinkTarget(registry).save();
+		for (Object aTargetVector : targetVector) {
+			if (aTargetVector instanceof ArrowLinkAdapter) {
+				XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) aTargetVector).createArrowLinkTarget(registry).save();
 				node.addChild(arrowLinkTargetElement);
 			}
 		}
@@ -1273,8 +1270,8 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.addChild(iconElement);
 		}
 
-		for (Iterator i = getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook permHook = (PermanentNodeHook) i.next();
+		for (Object o : getActivatedHooks()) {
+			PermanentNodeHook permHook = (PermanentNodeHook) o;
 			if (permHook instanceof DontSaveMarker) {
 				continue;
 			}
@@ -1284,10 +1281,10 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.addChild(hookElement);
 		}
 		if (mAttributeVector != null) {
-			for (int i = 0; i < mAttributeVector.size(); i++) {
+			for (Attribute aMAttributeVector : mAttributeVector) {
 				XMLElement attributeElement = new XMLElement();
 				attributeElement.setName(XMLElementAdapter.XML_NODE_ATTRIBUTE);
-				Attribute attr = mAttributeVector.get(i);
+				Attribute attr = aMAttributeVector;
 				attributeElement.setAttribute("NAME", attr.getName());
 				attributeElement.setAttribute("VALUE", attr.getValue());
 				node.addChild(attributeElement);
@@ -1446,9 +1443,7 @@ public abstract class NodeAdapter implements MindMapNode {
 			return Collections.EMPTY_LIST;
 		}
 		Vector returnValue = new Vector();
-		for (Iterator iter = mAttributeVector.iterator(); iter
-				.hasNext();) {
-			Attribute attr = (Attribute) iter.next();
+		for (Attribute attr : mAttributeVector) {
 			returnValue.add(attr.getName());
 		}
 		return returnValue;
@@ -1537,7 +1532,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	
 	private Vector<Attribute> getAttributeVector() {
 		if(mAttributeVector==null) {
-			mAttributeVector = new Vector<Attribute>();
+			mAttributeVector = new Vector<>();
 		}
 		return mAttributeVector;
 	}

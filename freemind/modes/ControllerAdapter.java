@@ -433,10 +433,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			IOException {
 		try {
 			return load(Tools.fileToUrl(file));
-		} catch (XMLParseException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			throw new RuntimeException(e);
-		} catch (URISyntaxException e) {
+		} catch (XMLParseException | URISyntaxException e) {
 			freemind.main.Resources.getInstance().logException(e);
 			throw new RuntimeException(e);
 		}
@@ -461,9 +458,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				sel = modeController.getNodeFromID(store.getLastSelected());
 				modeController.centerNode(sel);
 				List selected = new Vector();
-				for (Iterator iter = store.getListNodeListMemberList()
-						.iterator(); iter.hasNext();) {
-					NodeListMember member = (NodeListMember) iter.next();
+				for (Object o : store.getListNodeListMemberList()) {
+					NodeListMember member = (NodeListMember) o;
 					NodeAdapter selNode = modeController.getNodeFromID(member
 							.getNode());
 					selected.add(selNode);
@@ -1325,9 +1321,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 							selectedNodes), null, null, createForNodeIdsFlavor);
 		}
 
-		catch (UnsupportedFlavorException ex) {
-			freemind.main.Resources.getInstance().logException(ex);
-		} catch (IOException ex) {
+		catch (UnsupportedFlavorException | IOException ex) {
 			freemind.main.Resources.getInstance().logException(ex);
 		}
 		return null;
@@ -1337,8 +1331,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			throws UnsupportedFlavorException, IOException {
 		String forNodesFlavor = "";
 		boolean firstLoop = true;
-		for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
-			MindMapNode tmpNode = (MindMapNode) it.next();
+		for (Object selectedNode : selectedNodes) {
+			MindMapNode tmpNode = (MindMapNode) selectedNode;
 			if (firstLoop) {
 				firstLoop = false;
 			} else {
@@ -1355,8 +1349,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			throws UnsupportedFlavorException, IOException {
 		Vector forNodesFlavor = new Vector();
 		boolean firstLoop = true;
-		for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
-			MindMapNode tmpNode = (MindMapNode) it.next();
+		for (Object selectedNode : selectedNodes) {
+			MindMapNode tmpNode = (MindMapNode) selectedNode;
 
 			forNodesFlavor.add(getNodeID(tmpNode));
 		}

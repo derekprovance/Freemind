@@ -174,7 +174,7 @@ public class Controller implements MapModuleChangeObserver {
 	private Vector mTabbedPaneMapModules;
 	private JTabbedPane mTabbedPane;
 	private boolean mTabbedPaneSelectionUpdate = true;
-	private Map<SplitComponentType,JComponent> mSouthComponents = new HashMap<Controller.SplitComponentType, JComponent>();
+	private Map<SplitComponentType,JComponent> mSouthComponents = new HashMap<>();
 
 	//
 	// Constructors
@@ -305,10 +305,8 @@ public class Controller implements MapModuleChangeObserver {
 	private void firePropertyChanged(String property, String value,
 			String oldValue) {
 		if (oldValue == null || !oldValue.equals(value)) {
-			for (Iterator i = Controller.getPropertyChangeListeners()
-					.iterator(); i.hasNext();) {
-				FreemindPropertyListener listener = (FreemindPropertyListener) i
-						.next();
+			for (Object o : Controller.getPropertyChangeListeners()) {
+				FreemindPropertyListener listener = (FreemindPropertyListener) o;
 				listener.propertyChanged(property, value, oldValue);
 			}
 		}
@@ -1458,8 +1456,7 @@ public class Controller implements MapModuleChangeObserver {
 		public void actionPerformed(ActionEvent e) {
 			// logger.info("ZoomInAction actionPerformed");
 			float currentZoom = getView().getZoom();
-			for (int i = 0; i < zoomValues.length; i++) {
-				float val = zoomValues[i];
+			for (float val : zoomValues) {
 				if (val > currentZoom) {
 					setZoom(val);
 					return;
@@ -1477,8 +1474,7 @@ public class Controller implements MapModuleChangeObserver {
 		public void actionPerformed(ActionEvent e) {
 			float currentZoom = getView().getZoom();
 			float lastZoom = zoomValues[0];
-			for (int i = 0; i < zoomValues.length; i++) {
-				float val = zoomValues[i];
+			for (float val : zoomValues) {
 				if (val >= currentZoom) {
 					setZoom(lastZoom);
 					return;
@@ -1549,8 +1545,8 @@ public class Controller implements MapModuleChangeObserver {
 			FreemindPropertyListener listener) {
 		Controller.addPropertyChangeListener(listener);
 		Properties properties = Resources.getInstance().getProperties();
-		for (Iterator it = properties.keySet().iterator(); it.hasNext();) {
-			String key = (String) it.next();
+		for (Object o : properties.keySet()) {
+			String key = (String) o;
 			listener.propertyChanged(key, properties.getProperty(key), null);
 		}
 	}

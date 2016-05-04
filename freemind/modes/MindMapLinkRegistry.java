@@ -250,8 +250,8 @@ public class MindMapLinkRegistry {
 		String id = _registerLinkTarget(target);
 		Vector vec = getAssignedLinksVector(id);
 		// already present?
-		for (int i = 0; i < vec.size(); ++i) {
-			if (vec.get(i) == link)
+		for (Object aVec : vec) {
+			if (aVec == link)
 				return;
 		}
 		vec.add(link);
@@ -308,8 +308,8 @@ public class MindMapLinkRegistry {
 		String id = getState(target);
 		if (id != null) {
 			Vector vec = getAssignedLinksVector(id);
-			for (int i = 0; i < vec.size(); ++i) {
-				returnValue.add(((MindMapLink) vec.get(i)).getSource());
+			for (Object aVec : vec) {
+				returnValue.add(((MindMapLink) aVec).getSource());
 			}
 		}
 		return returnValue;
@@ -327,7 +327,7 @@ public class MindMapLinkRegistry {
 
 	/** @return returns all links to this node as {@link MindMapLink} vector. */
 	public Vector<MindMapLink> getAllLinksIntoMe(MindMapNode target) {
-		Vector<MindMapLink> returnValue = new Vector<MindMapLink>();
+		Vector<MindMapLink> returnValue = new Vector<>();
 		String id = getState(target);
 		if (id != null) {
 			Vector vec = getAssignedLinksVector(id);
@@ -339,7 +339,7 @@ public class MindMapLinkRegistry {
 
 	/** @return returns all links from this node as {@link MindMapLink} vector. */
 	public Vector<MindMapLink> getAllLinksFromMe(MindMapNode source) {
-		Vector<MindMapLink> returnValue = new Vector<MindMapLink>();
+		Vector<MindMapLink> returnValue = new Vector<>();
 		Collection vec = (Collection) mSourceToLinks.get(source);
 		if (vec != null) {
 			returnValue.addAll(vec);

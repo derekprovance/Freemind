@@ -99,8 +99,8 @@ public class DisjunctConditions implements Condition {
 	public void save(XMLElement element) {
 		XMLElement child = new XMLElement();
 		child.setName(NAME);
-		for (int i = 0; i < conditions.length; i++) {
-			Condition cond = (Condition) conditions[i];
+		for (Object condition : conditions) {
+			Condition cond = (Condition) condition;
 			cond.save(child);
 		}
 		element.addChild(child);

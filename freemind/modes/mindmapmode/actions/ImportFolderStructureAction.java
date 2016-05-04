@@ -86,19 +86,19 @@ public class ImportFolderStructureAction extends MindmapAction {
 			File[] list = folder.listFiles();
 			if (list != null) {
 				// Go recursively to subfolders
-				for (int i = 0; i < list.length; i++) {
-					if (list[i].isDirectory()) {
+				for (File aList1 : list) {
+					if (aList1.isDirectory()) {
 						// Insert a new node
-						MindMapNode node = addNode(target, list[i].getName(),
-								Tools.fileToUrl(list[i]).toString());
-						importFolderStructure(list[i], node, false);
+						MindMapNode node = addNode(target, aList1.getName(),
+								Tools.fileToUrl(aList1).toString());
+						importFolderStructure(aList1, node, false);
 					}
 				}
 				// For each file: add it
-				for (int i = 0; i < list.length; i++) {
-					if (!list[i].isDirectory()) {
-						addNode(target, list[i].getName(),
-								Tools.fileToUrl(list[i]).toString());
+				for (File aList : list) {
+					if (!aList.isDirectory()) {
+						addNode(target, aList.getName(),
+								Tools.fileToUrl(aList).toString());
 					}
 				}
 			}

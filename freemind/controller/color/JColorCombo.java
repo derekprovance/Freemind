@@ -61,8 +61,7 @@ public class JColorCombo extends JComboBox<ColorPair> {
 
 	public JColorCombo() {
 		ColorPair[] colorList = sColorList;
-		for (int i = 0; i < colorList.length; i++) {
-			ColorPair colorPair = colorList[i];
+		for (ColorPair colorPair : colorList) {
 			addItem(colorPair);
 		}
 		ComboBoxRenderer renderer = new ComboBoxRenderer();

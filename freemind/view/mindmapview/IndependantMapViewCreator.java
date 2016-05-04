@@ -69,15 +69,7 @@ public class IndependantMapViewCreator extends MapFeedbackAdapter {
 			creator.exportFileToPng(args[0], outputFileName, freeMindMain);
 			System.out.println("Export to " + outputFileName + " done.");
 			System.exit(0);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			freemind.main.Resources.getInstance().logException(e);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			freemind.main.Resources.getInstance().logException(e);
-
-		} catch (URISyntaxException e) {
+		} catch (URISyntaxException | IOException e) {
 			// TODO Auto-generated catch block
 			freemind.main.Resources.getInstance().logException(e);
 

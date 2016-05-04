@@ -70,9 +70,9 @@ public class NodeUpActor extends XmlActorAdapter {
 			MindMapNode parent = selected.getParentNode();
 			// multiple move:
 			Vector sortedChildren = getSortedSiblings(parent);
-			TreeSet<Integer> range = new TreeSet<Integer>(comparator);
-			for (Iterator<NodeAdapter> i = selecteds.iterator(); i.hasNext();) {
-				MindMapNode node = (MindMapNode) i.next();
+			TreeSet<Integer> range = new TreeSet<>(comparator);
+			for (NodeAdapter selected1 : (Iterable<NodeAdapter>) selecteds) {
+				MindMapNode node = (MindMapNode) selected1;
 				if (node.getParent() != parent) {
 					logger.warning("Not all selected nodes (here: "
 							+ node.getText() + ") have the same parent "
@@ -83,16 +83,14 @@ public class NodeUpActor extends XmlActorAdapter {
 			}
 			// test range for adjacent nodes:
 			Integer last = (Integer) range.iterator().next();
-			for (Iterator i = range.iterator(); i.hasNext();) {
-				Integer newInt = (Integer) i.next();
+			for (Integer newInt : range) {
 				if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
 					logger.warning("Not adjacent nodes. Skipped. ");
 					return;
 				}
 				last = newInt;
 			}
-			for (Iterator i = range.iterator(); i.hasNext();) {
-				Integer position = (Integer) i.next();
+			for (Integer position : range) {
 				// from above:
 				MindMapNode node = (MindMapNode) sortedChildren.get(position
 						.intValue());
@@ -164,9 +162,8 @@ public class NodeUpActor extends XmlActorAdapter {
 			MindMapNode selected = getNodeFromID(moveAction
 					.getNode());
 			Vector selecteds = new Vector();
-			for (Iterator i = moveAction.getListNodeListMemberList().iterator(); i
-					.hasNext();) {
-				NodeListMember node = (NodeListMember) i.next();
+			for (Object o : moveAction.getListNodeListMemberList()) {
+				NodeListMember node = (NodeListMember) o;
 				selecteds.add(getNodeFromID(node.getNode()));
 			}
 			_moveNodes(selected, selecteds, moveAction.getDirection());
@@ -183,8 +180,8 @@ public class NodeUpActor extends XmlActorAdapter {
 		moveAction.setDirection(direction);
 		moveAction.setNode(getNodeID(selected));
 		// selectedNodes list
-		for (Iterator i = selecteds.iterator(); i.hasNext();) {
-			MindMapNode node = (MindMapNode) i.next();
+		for (Object selected1 : selecteds) {
+			MindMapNode node = (MindMapNode) selected1;
 			NodeListMember nodeListMember = new NodeListMember();
 			nodeListMember.setNode(getNodeID(node));
 			moveAction.addNodeListMember(nodeListMember);

@@ -53,8 +53,8 @@ public class IconContainedCondition implements Condition {
 	private static boolean isStateIconContained(MindMapNode node,
 			String iconName) {
 		Set stateIcons = node.getStateIcons().keySet();
-		for (Iterator stateIcon = stateIcons.iterator(); stateIcon.hasNext();) {
-			String nextIcon = (String) stateIcon.next();
+		for (Object stateIcon1 : stateIcons) {
+			String nextIcon = (String) stateIcon1;
 			if (iconName.equals(nextIcon))
 				return true;
 		}

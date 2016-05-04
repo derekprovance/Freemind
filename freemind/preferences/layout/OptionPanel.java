@@ -145,7 +145,7 @@ public class OptionPanel implements TextTranslator {
 			OptionPanelWindowConfigurationStorage oWindowSettings = (OptionPanelWindowConfigurationStorage) storage;
 			selectedPanel = oWindowSettings.getPanel();
 		}
-		allBindings = new Vector<KeyBinding>();
+		allBindings = new Vector<>();
 	}
 
 	public interface OptionPanelFeedback {
@@ -437,7 +437,7 @@ public class OptionPanel implements TextTranslator {
 
 	//
 	private Vector<PropertyControl> getControls() {
-		Vector<PropertyControl> controls = new Vector<PropertyControl>();
+		Vector<PropertyControl> controls = new Vector<>();
 		/***********************************************************************
 		 * Language
 		 * ****************************************************************
@@ -1316,10 +1316,9 @@ public class OptionPanel implements TextTranslator {
 		controls.add(new BooleanProperty("export_icons_in_html.tooltip",
 				"export_icons_in_html")); // false
 
-		for (Iterator<FreemindPropertyContributor> iter = sContributors.iterator(); iter.hasNext();) {
-			FreemindPropertyContributor contributor = iter.next();
-			controls.addAll(contributor.getControls(this));
-		}
+        for (FreemindPropertyContributor contributor : sContributors) {
+            controls.addAll(contributor.getControls(this));
+        }
 		return controls;
 	}
 
@@ -1333,7 +1332,7 @@ public class OptionPanel implements TextTranslator {
 		frame.dispose();
 	}
 
-	private static Set<FreemindPropertyContributor> sContributors = new HashSet<FreemindPropertyContributor>();
+	private static Set<FreemindPropertyContributor> sContributors = new HashSet<>();
 
 	public static void addContributor(FreemindPropertyContributor contributor) {
 		sContributors.add(contributor);

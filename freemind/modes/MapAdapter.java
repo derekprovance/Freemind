@@ -106,23 +106,21 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 				}
 			}
 			if (shouldFire) {
-				for (Iterator it = mMapSourceChangedObserverSet.iterator(); it
-						.hasNext();) {
+				for (Object aMMapSourceChangedObserverSet : mMapSourceChangedObserverSet) {
 					logger.info("File " + getFile()
 							+ " changed on disk as it was last modified at "
 							+ new Date(lastModified));
-					MapSourceChangedObserver observer = (MapSourceChangedObserver) it
-							.next();
+					MapSourceChangedObserver observer = (MapSourceChangedObserver) aMMapSourceChangedObserverSet;
 					try {
 						boolean changeAccepted = observer.mapSourceChanged(MapAdapter.this);
-						if(!changeAccepted) {
+						if (!changeAccepted) {
 							// this is a trick: at the next save/load the correct value is set again. 
 							mFileTime = Long.MAX_VALUE;
 						} else {
 							mFileTime = lastModified;
 						}
 					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
+						Resources.getInstance().logException(e);
 					}
 				}
 			}
@@ -263,16 +261,15 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 			node = parent;
 		}
 		// bind all parents to a new chain:
-		for (Iterator it = parents.iterator(); it.hasNext();) {
-			node = (MindMapNode) it.next();
+		for (Object parent1 : parents) {
+			node = (MindMapNode) parent1;
 			MindMapNode parent = node.getParentNode();
 			// remove parent
 			node.removeFromParent();
 			// special treatment for left/right
 			if (node == newRoot) {
-				for (Iterator it2 = node.getChildren().iterator(); it2
-						.hasNext();) {
-					MindMapNode child = (MindMapNode) it2.next();
+				for (Object o : node.getChildren()) {
+					MindMapNode child = (MindMapNode) o;
 					child.setLeft(left);
 				}
 				parent.setLeft(!left);
@@ -583,13 +580,13 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 				versionInfoLength);
 		// the resulting file is accessed by the reader:
 		Reader reader = null;
-		for (int i = 0; i < EXPECTED_START_STRINGS.length; i++) {
-			versionInfoLength = EXPECTED_START_STRINGS[i].length();
+		for (String EXPECTED_START_STRING : EXPECTED_START_STRINGS) {
+			versionInfoLength = EXPECTED_START_STRING.length();
 			String mapStart = "";
 			if (buffer.length() >= versionInfoLength) {
 				mapStart = buffer.substring(0, versionInfoLength);
 			}
-			if (mapStart.startsWith(EXPECTED_START_STRINGS[i])) {
+			if (mapStart.startsWith(EXPECTED_START_STRING)) {
 				// actual version:
 				reader = Tools.getActualReader(pReaderCreator.createReader());
 				break;

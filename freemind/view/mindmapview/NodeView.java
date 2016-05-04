@@ -402,11 +402,11 @@ public class NodeView extends JComponent implements TreeModelListener {
 	public LinkedList getChildrenViews() {
 		LinkedList childrenViews = new LinkedList();
 		final Component[] components = getComponents();
-		for (int i = 0; i < components.length; i++) {
-			if (!(components[i] instanceof NodeView)) {
+		for (Component component : components) {
+			if (!(component instanceof NodeView)) {
 				continue;
 			}
-			NodeView view = (NodeView) components[i];
+			NodeView view = (NodeView) component;
 			childrenViews.add(view); // child.getViewer() );
 		}
 		return childrenViews;
@@ -600,17 +600,17 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 */
 	NodeView getFirst(Component startAfter, boolean leftOnly, boolean rightOnly) {
 		final Component[] components = getComponents();
-		for (int i = 0; i < components.length; i++) {
+		for (Component component : components) {
 			if (startAfter != null) {
-				if (components[i] == startAfter) {
+				if (component == startAfter) {
 					startAfter = null;
 				}
 				continue;
 			}
-			if (!(components[i] instanceof NodeView)) {
+			if (!(component instanceof NodeView)) {
 				continue;
 			}
-			NodeView view = (NodeView) components[i];
+			NodeView view = (NodeView) component;
 			if (leftOnly && !view.isLeft() || rightOnly && view.isLeft()) {
 				continue;
 			}
@@ -662,8 +662,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	LinkedList getLeft(boolean onlyVisible) {
 		LinkedList all = getChildrenViews();
 		LinkedList left = new LinkedList();
-		for (ListIterator e = all.listIterator(); e.hasNext();) {
-			NodeView node = (NodeView) e.next();
+		for (Object anAll : all) {
+			NodeView node = (NodeView) anAll;
 			if (node == null)
 				continue;
 			if (node.isLeft())
@@ -675,8 +675,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	LinkedList getRight(boolean onlyVisible) {
 		LinkedList all = getChildrenViews();
 		LinkedList right = new LinkedList();
-		for (ListIterator e = all.listIterator(); e.hasNext();) {
-			NodeView node = (NodeView) e.next();
+		for (Object anAll : all) {
+			NodeView node = (NodeView) anAll;
 			if (node == null)
 				continue;
 			if (!node.isLeft())
@@ -797,8 +797,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 * removed (it needs to stay in memory)
 	 */
 	void remove() {
-		for (ListIterator e = getChildrenViews().listIterator(); e.hasNext();) {
-			((NodeView) e.next()).remove();
+		for (Object o : getChildrenViews()) {
+			((NodeView) o).remove();
 		}
 		if (isSelected()) {
 			getMap().deselect(this);
@@ -849,10 +849,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 		boolean widthMustBeRestricted = false;
 		if (!isHtml) {
 			String[] lines = nodeText.split("\n");
-			for (int line = 0; line < lines.length; line++) {
+			for (String line1 : lines) {
 				// Compute the width the node would spontaneously take,
 				// by preliminarily setting the text.
-				setText(lines[line]);
+				setText(line1);
 				widthMustBeRestricted = mainView.getPreferredSize().width > mapView
 						.getZoomed(mapView.getMaxNodeWidth())
 						+ mainView.getIconWidth();
@@ -953,8 +953,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		/* fc, 06.10.2003: images? */
 
 		Map stateIcons = (getModel()).getStateIcons();
-		for (Iterator i = stateIcons.keySet().iterator(); i.hasNext();) {
-			String key = (String) i.next();
+		for (Object o : stateIcons.keySet()) {
+			String key = (String) o;
 			iconPresent = true;
 			ImageIcon myIcon = (ImageIcon) stateIcons.get(key);
 			iconImages.addImage(myIcon);
@@ -972,8 +972,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 
 		List icons = (getModel()).getIcons();
-		for (Iterator i = icons.iterator(); i.hasNext();) {
-			MindIcon myIcon = (MindIcon) i.next();
+		for (Object icon1 : icons) {
+			MindIcon myIcon = (MindIcon) icon1;
 			iconPresent = true;
 			// System.out.println("print the icon " + myicon.toString());
 			iconImages.addImage(myIcon.getUnscaledIcon());
@@ -1046,8 +1046,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 			// html table
 			StringBuffer text = new StringBuffer("<html><table width=\""
 					+ getMaxToolTipWidth() + "\">");
-			for (Iterator i = tooltips.keySet().iterator(); i.hasNext();) {
-				String key = (String) i.next();
+			for (Object o : tooltips.keySet()) {
+				String key = (String) o;
 				String value = (String) tooltips.get(key);
 				// no html end inside the value:
 				value = value.replaceAll("</html>", "");
@@ -1081,8 +1081,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	public void updateAll() {
 		update();
 		invalidate();
-		for (ListIterator e = getChildrenViews().listIterator(); e.hasNext();) {
-			NodeView child = (NodeView) e.next();
+		for (Object o : getChildrenViews()) {
+			NodeView child = (NodeView) o;
 			child.updateAll();
 		}
 	}
@@ -1290,8 +1290,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		}
 		final int[] childIndices = e.getChildIndices();
 
-		for (int i = 0; i < childIndices.length; i++) {
-			int index = childIndices[i];
+		for (int index : childIndices) {
 			insert((MindMapNode) getModel().getChildAt(index), index);
 		}
 		revalidate();
@@ -1370,8 +1369,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 */
 	public void treeStructureChanged(TreeModelEvent e) {
 		getMap().resetShiftSelectionOrigin();
-		for (ListIterator i = getChildrenViews().listIterator(); i.hasNext();) {
-			((NodeView) i.next()).remove();
+		for (Object o : getChildrenViews()) {
+			((NodeView) o).remove();
 		}
 		insert();
 		if (mapView.getSelected() == null) {

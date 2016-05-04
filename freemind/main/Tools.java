@@ -710,11 +710,7 @@ public class Tools {
 					// Create the ciphers
 					ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
 					dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
-				} catch (java.security.InvalidAlgorithmParameterException e) {
-				} catch (java.security.spec.InvalidKeySpecException e) {
-				} catch (javax.crypto.NoSuchPaddingException e) {
-				} catch (java.security.NoSuchAlgorithmException e) {
-				} catch (java.security.InvalidKeyException e) {
+				} catch (java.security.InvalidAlgorithmParameterException | java.security.InvalidKeyException | java.security.NoSuchAlgorithmException | javax.crypto.NoSuchPaddingException | java.security.spec.InvalidKeySpecException e) {
 				}
 			}
 		}
@@ -736,9 +732,7 @@ public class Tools {
 				// Encode bytes to base64 to get a string
 				return Tools.toBase64(newSalt) + SALT_PRESENT_INDICATOR
 						+ Tools.toBase64(enc);
-			} catch (javax.crypto.BadPaddingException e) {
-			} catch (IllegalBlockSizeException e) {
-			} catch (UnsupportedEncodingException e) {
+			} catch (javax.crypto.BadPaddingException | UnsupportedEncodingException | IllegalBlockSizeException e) {
 			}
 			return null;
 		}
@@ -766,9 +760,7 @@ public class Tools {
 
 				// Decode using utf-8
 				return new String(utf8, "UTF8");
-			} catch (javax.crypto.BadPaddingException e) {
-			} catch (IllegalBlockSizeException e) {
-			} catch (UnsupportedEncodingException e) {
+			} catch (javax.crypto.BadPaddingException | UnsupportedEncodingException | IllegalBlockSizeException e) {
 			}
 			return null;
 		}
@@ -1171,13 +1163,13 @@ public class Tools {
 		System.err.println();
 		System.err.println("BEGIN OF Transferable:\t" + t);
 		DataFlavor[] dataFlavors = t.getTransferDataFlavors();
-		for (int i = 0; i < dataFlavors.length; i++) {
-			System.out.println("  Flavor:\t" + dataFlavors[i]);
+		for (DataFlavor dataFlavor : dataFlavors) {
+			System.out.println("  Flavor:\t" + dataFlavor);
 			System.out.println("    Supported:\t"
-					+ t.isDataFlavorSupported(dataFlavors[i]));
+					+ t.isDataFlavorSupported(dataFlavor));
 			try {
 				System.out.println("    Content:\t"
-						+ t.getTransferData(dataFlavors[i]));
+						+ t.getTransferData(dataFlavor));
 			} catch (Exception e) {
 			}
 		}
@@ -1713,8 +1705,7 @@ public class Tools {
 	public static Object getField(Object[] pObjects, String pField)
 			throws IllegalArgumentException, SecurityException,
 			IllegalAccessException, NoSuchFieldException {
-		for (int i = 0; i < pObjects.length; i++) {
-			Object object = pObjects[i];
+		for (Object object : pObjects) {
 			for (int j = 0; j < object.getClass().getFields().length; j++) {
 				Field f = object.getClass().getFields()[j];
 				if (Tools.safeEquals(pField, f.getName())) {
@@ -1769,13 +1760,12 @@ public class Tools {
 
 	public static String arrayToUrls(String[] pArgs) {
 		StringBuffer b = new StringBuffer();
-		for (int i = 0; i < pArgs.length; i++) {
-			String fileName = pArgs[i];
+		for (String fileName : pArgs) {
 			try {
 				b.append(fileToUrl(new File(fileName)));
 				b.append('\n');
 			} catch (MalformedURLException e) {
-				freemind.main.Resources.getInstance().logException(e);
+				Resources.getInstance().logException(e);
 			}
 		}
 		return b.toString();
@@ -1821,14 +1811,13 @@ public class Tools {
 	 * @return a list of MindMapNode s if they are currently contained in the clipboard. An empty list otherwise.
 	 */
 	public static Vector<MindMapNode> getMindMapNodesFromClipboard(MindMapController pMindMapController) {
-		Vector<MindMapNode> mindMapNodes = new Vector<MindMapNode>();
+		Vector<MindMapNode> mindMapNodes = new Vector<>();
 		Transferable clipboardContents = pMindMapController.getClipboardContents();
 		if (clipboardContents != null) {
 			try {
 				List<String> transferData = (List<String>) clipboardContents
 						.getTransferData(MindMapNodesSelection.copyNodeIdsFlavor);
-				for (Iterator<String> it = transferData.iterator(); it.hasNext();) {
-					String nodeId = (String) it.next();
+				for (String nodeId : transferData) {
 					MindMapNode node = pMindMapController.getNodeFromID(nodeId);
 					mindMapNodes.add(node);
 				}
@@ -1867,17 +1856,16 @@ public class Tools {
 		// on purpose without shift.
 		int modifiersMask = KeyEvent.ALT_MASK | KeyEvent.CTRL_MASK
 				| KeyEvent.META_MASK;
-		for (int i = 0; i < specialKeyActions.length; i++) {
-			Action specialKeyAction = specialKeyActions[i];
+		for (Action specialKeyAction : specialKeyActions) {
 			KeyStroke actionKeyStroke = (KeyStroke) specialKeyAction
 					.getValue(Action.ACCELERATOR_KEY);
 			if (pEvent.getKeyChar() == actionKeyStroke.getKeyChar()
 					&& (pEvent.getModifiers() & modifiersMask) == (actionKeyStroke
-							.getModifiers() & modifiersMask)
+					.getModifiers() & modifiersMask)
 					&& specialKeyAction.isEnabled()) {
 				specialKeyAction.actionPerformed(new ActionEvent(pObject,
 						ActionEvent.ACTION_PERFORMED, (String) specialKeyAction
-								.getValue(Action.ACTION_COMMAND_KEY)));
+						.getValue(Action.ACTION_COMMAND_KEY)));
 				pEvent.consume();
 			}
 		}
@@ -1975,12 +1963,11 @@ public class Tools {
 		if (pAction instanceof CompoundAction) {
 			CompoundAction compound = (CompoundAction) pAction;
 			StringBuffer buf = new StringBuffer("[");
-			for (Iterator it = compound.getListChoiceList().iterator(); it
-					.hasNext();) {
+			for (Object o : compound.getListChoiceList()) {
 				if (buf.length() > 1) {
 					buf.append(',');
 				}
-				XmlAction subAction = (XmlAction) it.next();
+				XmlAction subAction = (XmlAction) o;
 				buf.append(printXmlAction(subAction));
 			}
 			buf.append(']');
@@ -2054,8 +2041,8 @@ public class Tools {
 	public static Properties copyChangedProperties(Properties props2,
 			Properties defProps2) {
 		Properties toBeStored = new Properties();
-		for (Iterator it = props2.keySet().iterator(); it.hasNext();) {
-			String key = (String) it.next();
+		for (Object o : props2.keySet()) {
+			String key = (String) o;
 			if (!safeEquals(props2.get(key), defProps2.get(key))) {
 				toBeStored.put(key, props2.get(key));
 			}
@@ -2171,9 +2158,7 @@ public class Tools {
 	}
 
 	public static void scaleAllFonts(float pScale) {
-		for (Iterator i = UIManager.getLookAndFeelDefaults().keySet()
-				.iterator(); i.hasNext();) {
-			Object next = i.next();
+		for (Object next : UIManager.getLookAndFeelDefaults().keySet()) {
 			if (next instanceof String) {
 				String key = (String) next;
 				if (key.endsWith(".font")) {
@@ -2181,7 +2166,7 @@ public class Tools {
 					Font biggerFont = font.deriveFont(pScale * font.getSize2D());
 					// change ui default to bigger font
 					UIManager.put(key, biggerFont);
-				}				
+				}
 			}
 		}
 	}

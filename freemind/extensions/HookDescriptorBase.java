@@ -102,9 +102,7 @@ public class HookDescriptorBase {
 
 	public List getPluginClasspath() {
 		Vector returnValue = new Vector();
-		for (Iterator i = pluginBase.getListChoiceList().iterator(); i
-				.hasNext();) {
-			Object obj = (Object) i.next();
+		for (Object obj : pluginBase.getListChoiceList()) {
 			if (obj instanceof PluginClasspath) {
 				PluginClasspath pluginClasspath = (PluginClasspath) obj;
 				returnValue.add(pluginClasspath);
@@ -128,8 +126,8 @@ public class HookDescriptorBase {
 	 */
 	private String createPluginClasspathString(List pluginClasspathList) {
 		String result = "";
-		for (Iterator i = pluginClasspathList.iterator(); i.hasNext();) {
-			PluginClasspath type = (PluginClasspath) i.next();
+		for (Object aPluginClasspathList : pluginClasspathList) {
+			PluginClasspath type = (PluginClasspath) aPluginClasspathList;
 			result += type.getJar() + ",";
 		}
 		return result;
@@ -145,8 +143,8 @@ public class HookDescriptorBase {
 		try {
 			URL[] urls = new URL[pluginClasspathList.size()];
 			int j = 0;
-			for (Iterator i = pluginClasspathList.iterator(); i.hasNext();) {
-				PluginClasspath classPath = (PluginClasspath) i.next();
+			for (Object aPluginClasspathList : pluginClasspathList) {
+				PluginClasspath classPath = (PluginClasspath) aPluginClasspathList;
 				String jarString = classPath.getJar();
 				// if(jarString.startsWith(FREEMIND_BASE_DIR_STRING)){
 				// jarString = frame.getFreemindBaseDir() +

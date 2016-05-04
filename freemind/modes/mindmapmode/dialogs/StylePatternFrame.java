@@ -453,8 +453,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
 	private Vector getPatternNames() {
 		Vector childNames = new Vector();
-		for (Iterator iter = mPatternList.iterator(); iter.hasNext();) {
-			Pattern pattern = (Pattern) iter.next();
+		for (Object aMPatternList : mPatternList) {
+			Pattern pattern = (Pattern) aMPatternList;
 			childNames.add(pattern.getName());
 		}
 		return childNames;
@@ -509,9 +509,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 							.getName() : null);
 
 		}
-		for (Iterator iter = mPropertyChangePropagation.keySet().iterator(); iter
-				.hasNext();) {
-			ThreeCheckBoxProperty prop = (ThreeCheckBoxProperty) iter.next();
+		for (Object o : mPropertyChangePropagation.keySet()) {
+			ThreeCheckBoxProperty prop = (ThreeCheckBoxProperty) o;
 			propertyChange(new PropertyChangeEvent(prop, prop.getLabel(), null,
 					prop.getValue()));
 		}
@@ -574,8 +573,8 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 			return null;
 		int edgeWidth = Tools.edgeWidthStringToInt(pEdgeWidth);
 		HashMap transformator = getEdgeWidthTransformation();
-		for (Iterator iter = transformator.keySet().iterator(); iter.hasNext();) {
-			String widthString = (String) iter.next();
+		for (Object o : transformator.keySet()) {
+			String widthString = (String) o;
 			Integer width = (Integer) transformator.get(widthString);
 			if (edgeWidth == width.intValue()) {
 				return widthString;

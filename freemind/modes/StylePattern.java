@@ -386,10 +386,10 @@ public class StylePattern {
 			setRecursive(true);
 		}
 
-		for (Iterator i = pattern.getChildren().iterator(); i.hasNext();) {
+		for (Object o1 : pattern.getChildren()) {
 			// this has to be improved!
 			// NODE
-			XMLElement child = (XMLElement) i.next();
+			XMLElement child = (XMLElement) o1;
 			if (child.getName().equals("node")) {
 				if (child.getStringAttribute("color") != null
 						&& child.getStringAttribute("color").length() == 7) {
@@ -398,7 +398,7 @@ public class StylePattern {
 				}
 				if (child.getStringAttribute("background_color") != null
 						&& child.getStringAttribute("background_color")
-								.length() == 7) {
+						.length() == 7) {
 					setNodeBackgroundColor(Tools.xmlToColor(child
 							.getStringAttribute("background_color")));
 				}
@@ -408,12 +408,12 @@ public class StylePattern {
 				if (child.getStringAttribute("icon") != null) {
 					setNodeIcon(child.getStringAttribute("icon").equals("none") ? null
 							: MindIcon
-									.factory(child.getStringAttribute("icon")));
+							.factory(child.getStringAttribute("icon")));
 				}
 				setText(child.getStringAttribute("text"));
 
-				for (Iterator j = child.getChildren().iterator(); j.hasNext();) {
-					XMLElement nodeChild = (XMLElement) j.next();
+				for (Object o : child.getChildren()) {
+					XMLElement nodeChild = (XMLElement) o;
 					// FONT
 					if (nodeChild.getName().equals("font")) {
 
@@ -453,7 +453,7 @@ public class StylePattern {
 				if (child.getStringAttribute("width") != null) {
 					if (child.getStringAttribute("width").equals("thin")) {
 						setEdgeWidth(new Integer(
-								freemind.modes.EdgeAdapter.WIDTH_THIN));
+								EdgeAdapter.WIDTH_THIN));
 					} else {
 						setEdgeWidth(new Integer(Integer.parseInt(child
 								.getStringAttribute("width"))));
@@ -467,9 +467,8 @@ public class StylePattern {
 					// find name in list of justConstructedPatterns:
 					String searchName = child.getStringAttribute("pattern");
 					boolean anythingFound = false;
-					for (ListIterator e = justConstructedPatterns
-							.listIterator(); e.hasNext();) {
-						StylePattern patternFound = (StylePattern) e.next();
+					for (Object justConstructedPattern : justConstructedPatterns) {
+						StylePattern patternFound = (StylePattern) justConstructedPattern;
 						if (patternFound.getName().equals(searchName)) {
 							setChildrenStylePattern(patternFound);
 							anythingFound = true;

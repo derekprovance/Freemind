@@ -100,9 +100,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
 
 	public void xmlActionPerformed(ActionEvent e) {
 		if (singleNodeOperation != null) {
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
-					.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			for (Object o : modeController.getSelecteds()) {
+				MindMapNodeModel selected = (MindMapNodeModel) o;
 				singleNodeOperation.apply(
 						(MindMapMapModel) this.modeController.getMap(),
 						selected);
@@ -115,9 +114,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			CompoundAction undo = new CompoundAction();
 			// sort selectedNodes list by depth, in order to guarantee that
 			// sons are deleted first:
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
-					.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			for (Object o : modeController.getSelecteds()) {
+				MindMapNodeModel selected = (MindMapNodeModel) o;
 				ActionPair pair = getActionPair(selected);
 				if (pair != null) {
 					doAction.addChoice(pair.getDoAction());

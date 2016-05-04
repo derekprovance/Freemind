@@ -61,8 +61,7 @@ public class CutActor extends XmlActorAdapter {
 		CompoundAction undo = new CompoundAction();
 		// sort selectedNodes list by depth, in order to guarantee that sons are
 		// deleted first:
-		for (Iterator<MindMapNode> i = nodeList.iterator(); i.hasNext();) {
-			MindMapNode node = i.next();
+		for (MindMapNode node : nodeList) {
 			if (node.getParentNode() == null)
 				continue;
 			CutNodeAction cutNodeAction = getCutNodeAction(node);

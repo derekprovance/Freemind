@@ -97,10 +97,7 @@ public class ScriptEditorProperty extends PropertyBean implements
 
 	public void actionPerformed(ActionEvent arg0) {
 		// search for plugin that handles the script editor.
-		for (Iterator iter = mMindMapController.getPlugins().iterator(); iter
-				.hasNext();) {
-			MindMapControllerPlugin plugin = (MindMapControllerPlugin) iter
-					.next();
+		for (MindMapControllerPlugin plugin : mMindMapController.getPlugins()) {
 			if (plugin instanceof ScriptEditorStarter) {
 				ScriptEditorStarter starter = (ScriptEditorStarter) plugin;
 				String resultScript = starter.startEditor(script);

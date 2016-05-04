@@ -93,10 +93,8 @@ public class MapModuleManager {
 		public boolean isMapModuleChangeAllowed(MapModule oldMapModule,
 				Mode oldMode, MapModule newMapModule, Mode newMode) {
 			boolean returnValue = true;
-			for (Iterator iter = new Vector(listeners).iterator(); iter
-					.hasNext();) {
-				MapModuleChangeObserver observer = (MapModuleChangeObserver) iter
-						.next();
+			for (Object o : new Vector(listeners)) {
+				MapModuleChangeObserver observer = (MapModuleChangeObserver) o;
 				returnValue = observer.isMapModuleChangeAllowed(oldMapModule,
 						oldMode, newMapModule, newMode);
 				if (!returnValue) {
@@ -108,10 +106,8 @@ public class MapModuleManager {
 
 		public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode,
 				MapModule newMapModule, Mode newMode) {
-			for (Iterator iter = new Vector(listeners).iterator(); iter
-					.hasNext();) {
-				MapModuleChangeObserver observer = (MapModuleChangeObserver) iter
-						.next();
+			for (Object o : new Vector(listeners)) {
+				MapModuleChangeObserver observer = (MapModuleChangeObserver) o;
 				observer.beforeMapModuleChange(oldMapModule, oldMode,
 						newMapModule, newMode);
 			}
@@ -119,29 +115,23 @@ public class MapModuleManager {
 
 		public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode,
 				MapModule newMapModule, Mode newMode) {
-			for (Iterator iter = new Vector(listeners).iterator(); iter
-					.hasNext();) {
-				MapModuleChangeObserver observer = (MapModuleChangeObserver) iter
-						.next();
+			for (Object o : new Vector(listeners)) {
+				MapModuleChangeObserver observer = (MapModuleChangeObserver) o;
 				observer.afterMapModuleChange(oldMapModule, oldMode,
 						newMapModule, newMode);
 			}
 		}
 
 		public void numberOfOpenMapInformation(int number, int pIndex) {
-			for (Iterator iter = new Vector(listeners).iterator(); iter
-					.hasNext();) {
-				MapModuleChangeObserver observer = (MapModuleChangeObserver) iter
-						.next();
+			for (Object o : new Vector(listeners)) {
+				MapModuleChangeObserver observer = (MapModuleChangeObserver) o;
 				observer.numberOfOpenMapInformation(number, pIndex);
 			}
 		}
 
 		public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
-			for (Iterator iter = new Vector(listeners).iterator(); iter
-					.hasNext();) {
-				MapModuleChangeObserver observer = (MapModuleChangeObserver) iter
-						.next();
+			for (Object o : new Vector(listeners)) {
+				MapModuleChangeObserver observer = (MapModuleChangeObserver) o;
 				observer.afterMapClose(pOldMapModule, pOldMode);
 			}
 		}
@@ -323,8 +313,8 @@ public class MapModuleManager {
 	 */
 	public String checkIfFileIsAlreadyOpened(URL urlToCheck)
 			throws MalformedURLException {
-		for (Iterator iter = mapModuleVector.iterator(); iter.hasNext();) {
-			MapModule module = (MapModule) iter.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule module = (MapModule) aMapModuleVector;
 			if (module.getModel() != null) {
 				final URL moduleUrl = module.getModel().getURL();
 				if (sameFile(urlToCheck, moduleUrl))
@@ -348,8 +338,8 @@ public class MapModuleManager {
 
 	public boolean changeToMapModule(String mapModuleDisplayName) {
 		MapModule mapModuleCandidate = null;
-		for (Iterator iterator = mapModuleVector.iterator(); iterator.hasNext();) {
-			MapModule mapMod = (MapModule) iterator.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule mapMod = (MapModule) aMapModuleVector;
 			if (Tools.safeEquals(mapModuleDisplayName, mapMod.getDisplayName())) {
 				mapModuleCandidate = mapMod;
 				break;
@@ -367,8 +357,8 @@ public class MapModuleManager {
 	}
 
 	public void changeToMapOfMode(Mode mode) {
-		for (Iterator iterator = mapModuleVector.iterator(); iterator.hasNext();) {
-			MapModule mapMod = (MapModule) iterator.next();
+		for (Object aMapModuleVector : mapModuleVector) {
+			MapModule mapMod = (MapModule) aMapModuleVector;
 			if (mapMod.getMode() == mode) {
 				changeToMapModule(mapMod);
 				return;

@@ -471,7 +471,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	private MenuStructure mMenuStructure;
 	private List mRegistrations;
-	private List<Pattern> mPatternsList = new Vector<Pattern>();
+	private List<Pattern> mPatternsList = new Vector<>();
 	private long mGetEventIfChangedAfterThisTimeInMillies = 0;
 
 	public MindMapController(Mode mode) {
@@ -802,24 +802,23 @@ public class MindMapController extends ControllerAdapter implements
 		List pluginRegistrations = hookFactory.getRegistrations();
 		logger.fine("mScheduledActions are executed: "
 				+ pluginRegistrations.size());
-		for (Iterator i = pluginRegistrations.iterator(); i.hasNext();) {
+		for (Object pluginRegistration : pluginRegistrations) {
 			// call constructor:
 			try {
-				RegistrationContainer container = (RegistrationContainer) i
-						.next();
+				RegistrationContainer container = (RegistrationContainer) pluginRegistration;
 				Class registrationClass = container.hookRegistrationClass;
 				Constructor hookConstructor = registrationClass
-						.getConstructor(new Class[] { ModeController.class,
-								MindMap.class });
+						.getConstructor(new Class[]{ModeController.class,
+								MindMap.class});
 				HookRegistration registrationInstance = (HookRegistration) hookConstructor
-						.newInstance(new Object[] { this, getMap() });
+						.newInstance(new Object[]{this, getMap()});
 				// register the instance to enable basePlugins.
 				hookFactory.registerRegistrationContainer(container,
 						registrationInstance);
 				registrationInstance.register();
 				mRegistrations.add(registrationInstance);
 			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
+				Resources.getInstance().logException(e);
 			}
 		}
 		invokeHooksRecursively((NodeAdapter) getRootNode(), getMap());
@@ -841,8 +840,8 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void shutdownController() {
 		super.shutdownController();
-		for (Iterator i = mRegistrations.iterator(); i.hasNext();) {
-			HookRegistration registrationInstance = (HookRegistration) i.next();
+		for (Object mRegistration : mRegistrations) {
+			HookRegistration registrationInstance = (HookRegistration) mRegistration;
 			registrationInstance.deRegister();
 		}
 		getHookFactory().deregisterAllRegistrationContainer();
@@ -871,8 +870,8 @@ public class MindMapController extends ControllerAdapter implements
 		if (iconDir.exists()) {
 			String[] userIconArray = iconDir.list((dir, name) -> name.matches(".*\\.png"));
 			if (userIconArray != null)
-				for (int i = 0; i < userIconArray.length; ++i) {
-					String iconName = userIconArray[i];
+				for (String anUserIconArray : userIconArray) {
+					String iconName = anUserIconArray;
 					iconName = iconName.substring(0, iconName.length() - 4);
 					if (iconName.equals("")) {
 						continue;
@@ -1075,8 +1074,7 @@ public class MindMapController extends ControllerAdapter implements
 			String category) {
 		String categoryCopy = category;
 		ButtonGroup buttonGroup = null;
-		for (Iterator i = list.iterator(); i.hasNext();) {
-			Object obj = (Object) i.next();
+		for (Object obj : list) {
 			if (obj instanceof MenuCategoryBase) {
 				MenuCategoryBase cat = (MenuCategoryBase) obj;
 				String newCategory = categoryCopy + "/" + cat.getName();
@@ -1097,8 +1095,8 @@ public class MindMapController extends ControllerAdapter implements
 				}
 				String keystroke = action.getKeyRef();
 				try {
-					Action theAction = (Action) Tools.getField(new Object[] {
-							this, getController() }, field);
+					Action theAction = (Action) Tools.getField(new Object[]{
+							this, getController()}, field);
 					String theCategory = categoryCopy + "/" + name;
 					if (obj instanceof MenuCheckedAction) {
 						addCheckBox(holder, theCategory, theAction, keystroke);
@@ -1114,7 +1112,7 @@ public class MindMapController extends ControllerAdapter implements
 						add(holder, theCategory, theAction, keystroke);
 					}
 				} catch (Exception e1) {
-					freemind.main.Resources.getInstance().logException(e1);
+					Resources.getInstance().logException(e1);
 				}
 			} else if (obj instanceof MenuSeparator) {
 				holder.addSeparator(categoryCopy);
@@ -1830,9 +1828,8 @@ public class MindMapController extends ControllerAdapter implements
 			if (!super.isEnabled(pItem, pAction)) {
 				return false;
 			}
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
+			for (Object o : getSelecteds()) {
+				MindMapNode selNode = (MindMapNode) o;
 				if (selNode.getLink() != null)
 					return true;
 			}
@@ -1847,9 +1844,8 @@ public class MindMapController extends ControllerAdapter implements
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
+			for (Object o : getSelecteds()) {
+				MindMapNode selNode = (MindMapNode) o;
 				if (selNode.getLink() != null) {
 					loadURL(selNode.getLink());
 				}
@@ -1864,9 +1860,8 @@ public class MindMapController extends ControllerAdapter implements
 
 		public void actionPerformed(ActionEvent event) {
 			String link = "";
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
+			for (Object o : getSelecteds()) {
+				MindMapNode selNode = (MindMapNode) o;
 				link = selNode.getLink();
 				if (link != null) {
 					// as link is an URL, '/' is the only correct one.
@@ -2049,10 +2044,7 @@ public class MindMapController extends ControllerAdapter implements
 						- secondStart).write();
 				strings[1] = out.toString();
 				return strings;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (BadLocationException e) {
+			} catch (IOException | BadLocationException e) {
 				// TODO Auto-generated catch block
 				freemind.main.Resources.getInstance().logException(e);
 			}

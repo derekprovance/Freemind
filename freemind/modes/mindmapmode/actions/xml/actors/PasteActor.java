@@ -233,8 +233,8 @@ public class PasteActor extends XmlActorAdapter {
 				boolean asSibling, boolean isLeft, Transferable t) {
 			// TODO: Does not correctly interpret asSibling.
 			List fileList = (List) TransferData;
-			for (ListIterator it = fileList.listIterator(); it.hasNext();) {
-				File file = (File) it.next();
+			for (Object aFileList : fileList) {
+				File file = (File) aFileList;
 				MindMapNode node = getExMapFeedback().newNode(file.getName(),
 						target.getMap());
 				node.setLeft(isLeft);
@@ -265,8 +265,8 @@ public class PasteActor extends XmlActorAdapter {
 				// and now? paste it:
 				String mapContent = MapAdapter.MAP_INITIAL_START
 						+ FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">";
-				for (int j = 0; j < textLines.length; j++) {
-					mapContent += textLines[j];
+				for (String textLine : textLines) {
+					mapContent += textLine;
 				}
 				mapContent += "</node></map>";
 				// logger.info("Pasting " + mapContent);
@@ -587,17 +587,14 @@ public class PasteActor extends XmlActorAdapter {
 		 * fl.length; i++) { System.out.println(fl[i]); }
 		 */
 		DataFlavorHandler[] dataFlavorHandlerList = getFlavorHandlers();
-		for (int i = 0; i < dataFlavorHandlerList.length; i++) {
-			DataFlavorHandler handler = dataFlavorHandlerList[i];
+		for (DataFlavorHandler handler : dataFlavorHandlerList) {
 			DataFlavor flavor = handler.getDataFlavor();
 			if (t.isDataFlavorSupported(flavor)) {
 				try {
 					handler.paste(t.getTransferData(flavor), target, asSibling,
 							isLeft, t);
 					break;
-				} catch (UnsupportedFlavorException e) {
-					Resources.getInstance().logException(e);
-				} catch (IOException e) {
+				} catch (UnsupportedFlavorException | IOException e) {
 					Resources.getInstance().logException(e);
 				}
 			}
@@ -707,8 +704,8 @@ public class PasteActor extends XmlActorAdapter {
 
 		MindMapNode pastedNode = null;
 
-		for (int i = 0; i < textLines.length; ++i) {
-			String text = textLines[i];
+		for (String textLine : textLines) {
+			String text = textLine;
 //			System.out.println("Text to paste: "+text);
 			text = text.replaceAll("\t", "        ");
 			if (text.matches(" *")) {
@@ -740,7 +737,7 @@ public class PasteActor extends XmlActorAdapter {
 					}
 					visibleText += textPartIdx == 0 ? textParts[textPartIdx]
 							: Tools.firstLetterCapitalized(textParts[textPartIdx]
-									.replaceAll("^~*", ""));
+							.replaceAll("^~*", ""));
 				}
 			}
 
@@ -761,14 +758,14 @@ public class PasteActor extends XmlActorAdapter {
 			// heuristic, it is probable that it can be improved to include
 			// some matches or exclude some matches.
 
-			for (int j = 0; j < linkPrefixes.length; j++) {
-				int linkStart = text.indexOf(linkPrefixes[j]);
+			for (String linkPrefixe : linkPrefixes) {
+				int linkStart = text.indexOf(linkPrefixe);
 				if (linkStart != -1) {
 					int linkEnd = linkStart;
 					while (linkEnd < text.length()
 							&& !nonLinkCharacter.matcher(
-									text.substring(linkEnd, linkEnd + 1))
-									.matches()) {
+							text.substring(linkEnd, linkEnd + 1))
+							.matches()) {
 						linkEnd++;
 					}
 					node.setLink(text.substring(linkStart, linkEnd));
@@ -798,8 +795,8 @@ public class PasteActor extends XmlActorAdapter {
 			}
 		}
 
-		for (int k = 0; k < parentNodes.size(); ++k) {
-			MindMapNode n = (MindMapNode) parentNodes.get(k);
+		for (Object parentNode : parentNodes) {
+			MindMapNode n = (MindMapNode) parentNode;
 			if (n.getParentNode() == parent) {
 				// addUndoAction(n);
 			}
@@ -830,8 +827,8 @@ public class PasteActor extends XmlActorAdapter {
 				 */
 				List fileList = (List) t
 						.getTransferData(MindMapNodesSelection.fileListFlavor);
-				for (Iterator iter = fileList.iterator(); iter.hasNext();) {
-					File fileName = (File) iter.next();
+				for (Object aFileList : fileList) {
+					File fileName = (File) aFileList;
 					TransferableFile transferableFile = new TransferableFile();
 					transferableFile.setFileName(fileName.getAbsolutePath());
 					trans.addTransferableFile(transferableFile);
@@ -913,17 +910,13 @@ public class PasteActor extends XmlActorAdapter {
 						amountAlreadySet = true;
 					}
 				} // getData throws this.
-				catch (UnsupportedFlavorException ufe) {
+				catch (UnsupportedFlavorException | IOException ufe) {
 					freemind.main.Resources.getInstance().logException(ufe);
-				} catch (IOException ioe) {
-					freemind.main.Resources.getInstance().logException(ioe);
 				}
 
 			}
 			return trans;
-		} catch (UnsupportedFlavorException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		} catch (IOException e) {
+		} catch (UnsupportedFlavorException | IOException e) {
 			freemind.main.Resources.getInstance().logException(e);
 		}
 		return null;
@@ -992,9 +985,8 @@ public class PasteActor extends XmlActorAdapter {
 		// create Transferable:
 		// Add file list to this selection.
 		Vector fileList = new Vector();
-		for (Iterator iter = trans.getListTransferableFileList().iterator(); iter
-				.hasNext();) {
-			TransferableFile tFile = (TransferableFile) iter.next();
+		for (Object o : trans.getListTransferableFileList()) {
+			TransferableFile tFile = (TransferableFile) o;
 			fileList.add(new File(tFile.getFileName()));
 		}
 		Transferable copy = new MindMapNodesSelection(trans.getTransferable(),
@@ -1016,8 +1008,8 @@ public class PasteActor extends XmlActorAdapter {
 			MindMapNode child = (MindMapNode) i.next();
 			processUnfinishedLinksInHooks(child);
 		}
-		for (Iterator i = node.getHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
+		for (Object o : node.getHooks()) {
+			PermanentNodeHook hook = (PermanentNodeHook) o;
 			hook.processUnfinishedLinks();
 		}
 	}

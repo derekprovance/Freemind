@@ -58,10 +58,10 @@ public class IntegerComboProperty extends ComboProperty {
 			int givenVal;
 			try {
 				givenVal = Integer.parseInt(pValue);
-				for (Iterator it = possibleValues.iterator(); it.hasNext();) {
-					String stringValue = (String) it.next();
+				for (Object possibleValue : possibleValues) {
+					String stringValue = (String) possibleValue;
 					int val = Integer.parseInt(stringValue);
-					if(val > givenVal && lastMatchedValue != null) {
+					if (val > givenVal && lastMatchedValue != null) {
 						super.setValue(lastMatchedValue);
 						return;
 					}

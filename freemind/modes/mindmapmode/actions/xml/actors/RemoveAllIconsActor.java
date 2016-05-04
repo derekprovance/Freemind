@@ -74,8 +74,8 @@ public class RemoveAllIconsActor extends NodeXmlActorAdapter {
 
 	public ActionPair apply(MindMap model, MindMapNode selected) {
 		CompoundAction undoAction = new CompoundAction();
-		for (Iterator i = selected.getIcons().iterator(); i.hasNext();) {
-			MindIcon icon = (MindIcon) i.next();
+		for (Object o : selected.getIcons()) {
+			MindIcon icon = (MindIcon) o;
 			undoAction.addChoice(getExMapFeedback().getActorFactory().getAddIconActor().createAddIconAction(selected,
 					icon, MindIcon.LAST));
 		}

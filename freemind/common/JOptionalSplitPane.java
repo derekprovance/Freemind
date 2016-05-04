@@ -46,7 +46,7 @@ import freemind.main.Resources;
  */
 public class JOptionalSplitPane extends JPanel {
 
-	private HashMap<Integer, JComponent> mComponentHash = new HashMap<Integer, JComponent>();
+	private HashMap<Integer, JComponent> mComponentHash = new HashMap<>();
 	private JComponent mBasicComponent = null;
 	private int mLastDividerPosition = -1; 
 	

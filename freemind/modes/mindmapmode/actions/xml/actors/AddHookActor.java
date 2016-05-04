@@ -113,15 +113,14 @@ public class AddHookActor extends XmlActorAdapter {
 		// test if hook already present
 		if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
 			// remove the hook:
-			for (Iterator i = destinationNodes.iterator(); i.hasNext();) {
-				MindMapNode currentDestinationNode = (MindMapNode) i.next();
+			for (Object destinationNode : destinationNodes) {
+				MindMapNode currentDestinationNode = (MindMapNode) destinationNode;
 				// find the hook in the current node, if present:
-				for (Iterator j = currentDestinationNode.getActivatedHooks()
-						.iterator(); j.hasNext();) {
-					PermanentNodeHook hook = (PermanentNodeHook) j.next();
+				for (Object o : currentDestinationNode.getActivatedHooks()) {
+					PermanentNodeHook hook = (PermanentNodeHook) o;
 					if (hook.getName().equals(hookName)) {
 						XMLElement child = new XMLElement();
-						if(!(hook instanceof DontSaveMarker)) {
+						if (!(hook instanceof DontSaveMarker)) {
 							hook.save(child);
 							if (child.countChildren() == 1) {
 								XMLElement parameters = (XMLElement) child
@@ -131,7 +130,7 @@ public class AddHookActor extends XmlActorAdapter {
 									// standard save mechanism
 									for (Iterator it = parameters
 											.enumerateAttributeNames(); it
-											.hasNext();) {
+												 .hasNext(); ) {
 										String name = (String) it.next();
 										NodeChildParameter nodeHookChild = new NodeChildParameter();
 										nodeHookChild.setKey(name);
@@ -140,7 +139,7 @@ public class AddHookActor extends XmlActorAdapter {
 										hookNodeAction
 												.addNodeChildParameter(nodeHookChild);
 									}
-	
+
 								} else {
 									logger.warning("Unusual save mechanism, implement me.");
 								}
@@ -168,15 +167,15 @@ public class AddHookActor extends XmlActorAdapter {
 		hookNodeAction.setNode(getNodeID(focussed));
 		hookNodeAction.setHookName(hookName);
 		// selectedNodes list
-		for (Iterator i = selecteds.iterator(); i.hasNext();) {
-			MindMapNode node = (MindMapNode) i.next();
+		for (Object selected : selecteds) {
+			MindMapNode node = (MindMapNode) selected;
 			NodeListMember nodeListMember = new NodeListMember();
 			nodeListMember.setNode(getNodeID(node));
 			hookNodeAction.addNodeListMember(nodeListMember);
 		}
 		if(pHookProperties != null) {
-			for (Iterator it = pHookProperties.entrySet().iterator(); it.hasNext();) {
-				Map.Entry entry = (Map.Entry) it.next();
+			for (Map.Entry<Object, Object> objectObjectEntry : pHookProperties.entrySet()) {
+				Map.Entry entry = (Map.Entry) objectObjectEntry;
 				NodeChildParameter nodeChildParameter = new NodeChildParameter();
 				nodeChildParameter.setKey((String) entry.getKey());
 				nodeChildParameter.setValue((String) entry.getValue());
@@ -192,9 +191,8 @@ public class AddHookActor extends XmlActorAdapter {
 			MindMapNode selected = getNodeFromID(
 					hookNodeAction.getNode());
 			Vector selecteds = new Vector();
-			for (Iterator i = hookNodeAction.getListNodeListMemberList()
-					.iterator(); i.hasNext();) {
-				NodeListMember node = (NodeListMember) i.next();
+			for (Object o1 : hookNodeAction.getListNodeListMemberList()) {
+				NodeListMember node = (NodeListMember) o1;
 				selecteds.add(getNodeFromID(node.getNode()));
 			}
 			// reconstruct child-xml:
@@ -203,10 +201,8 @@ public class AddHookActor extends XmlActorAdapter {
 			XMLElement child = new XMLElement();
 			xmlParent.addChild(child);
 			child.setName(PermanentNodeHookAdapter.PARAMETERS);
-			for (Iterator it = hookNodeAction.getListNodeChildParameterList()
-					.iterator(); it.hasNext();) {
-				NodeChildParameter childParameter = (NodeChildParameter) it
-						.next();
+			for (Object o : hookNodeAction.getListNodeChildParameterList()) {
+				NodeChildParameter childParameter = (NodeChildParameter) o;
 				child.setAttribute(childParameter.getKey(),
 						childParameter.getValue());
 			}
@@ -245,12 +241,10 @@ public class AddHookActor extends XmlActorAdapter {
 		// test if hook already present
 		if (instMethod.isAlreadyPresent(hookName, adaptedFocussedNode)) {
 			// remove the hook:
-			for (Iterator<MindMapNode> i = destinationNodes.iterator(); i.hasNext();) {
-				MindMapNode currentDestinationNode = i.next();
+			for (MindMapNode currentDestinationNode : destinationNodes) {
 				// find the hook ini the current node, if present:
-				for (Iterator j = currentDestinationNode.getActivatedHooks()
-						.iterator(); j.hasNext();) {
-					PermanentNodeHook hook = (PermanentNodeHook) j.next();
+				for (Object o : currentDestinationNode.getActivatedHooks()) {
+					PermanentNodeHook hook = (PermanentNodeHook) o;
 					if (hook.getName().equals(hookName)) {
 						currentDestinationNode.removeHook(hook);
 						getExMapFeedback().nodeChanged(currentDestinationNode);
@@ -267,8 +261,7 @@ public class AddHookActor extends XmlActorAdapter {
 			}
 		} else {
 			// add the hook
-			for (Iterator it = destinationNodes.iterator(); it.hasNext();) {
-				MindMapNode currentDestinationNode = (MindMapNode) it.next();
+			for (MindMapNode currentDestinationNode : destinationNodes) {
 				NodeHook hook = getExMapFeedback().createNodeHook(hookName,
 						currentDestinationNode);
 				logger.finest("created hook " + hookName);

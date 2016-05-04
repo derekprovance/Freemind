@@ -178,8 +178,8 @@ public class UndoAction extends AbstractXmlAction {
 	public void print() {
 		logger.info("Undo list:");
 		int j = 0;
-		for (Iterator i = actionPairList.iterator(); i.hasNext();) {
-			ActionPair pair = (ActionPair) i.next();
+		for (Object anActionPairList : actionPairList) {
+			ActionPair pair = (ActionPair) anActionPairList;
 			logger.info("line " + (j++) + " = "
 					+ Tools.printXmlAction(pair.getDoAction()));
 		}

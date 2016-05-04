@@ -49,8 +49,8 @@ public abstract class PropertyBean {
 	protected void firePropertyChangeEvent() {
 		PropertyChangeEvent evt = new PropertyChangeEvent(this, getLabel(),
 				null, getValue());
-		for (Iterator i = mPropertyChangeListeners.iterator(); i.hasNext();) {
-			PropertyChangeListener listener = (PropertyChangeListener) i.next();
+		for (Object mPropertyChangeListener : mPropertyChangeListeners) {
+			PropertyChangeListener listener = (PropertyChangeListener) mPropertyChangeListener;
 			listener.propertyChange(evt);
 		}
 	}

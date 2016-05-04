@@ -73,8 +73,8 @@ public class IconProperty extends PropertyBean implements PropertyControl,
 	}
 
 	public void setValue(String value) {
-		for (Iterator iter = mIcons.iterator(); iter.hasNext();) {
-			MindIcon icon = (MindIcon) iter.next();
+		for (Object mIcon : mIcons) {
+			MindIcon icon = (MindIcon) mIcon;
 			if (icon.getName().equals(value)) {
 				mActualIcon = icon;
 				setIcon(mActualIcon);
@@ -99,8 +99,8 @@ public class IconProperty extends PropertyBean implements PropertyControl,
 	public void actionPerformed(ActionEvent arg0) {
 		Vector icons = new Vector();
 		Vector descriptions = new Vector();
-		for (Iterator iter = mIcons.iterator(); iter.hasNext();) {
-			MindIcon icon = (MindIcon) iter.next();
+		for (Object mIcon : mIcons) {
+			MindIcon icon = (MindIcon) mIcon;
 			icons.add(icon);
 			descriptions.add(icon.getDescription());
 		}

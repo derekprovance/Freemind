@@ -115,8 +115,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
 					// make a 0.8.0 map out of it:
 					String mapContent = MapAdapter.MAP_INITIAL_START
 							+ "0.8.0\"><node TEXT=\"DUMMY\">";
-					for (int j = 0; j < childs.length; j++) {
-						String nodeContent = childs[j];
+					for (String nodeContent : childs) {
 						mapContent += nodeContent;
 					}
 					mapContent += "</node></map>";
