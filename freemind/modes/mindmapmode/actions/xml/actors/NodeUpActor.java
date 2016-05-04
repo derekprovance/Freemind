@@ -62,8 +62,8 @@ public class NodeUpActor extends XmlActorAdapter {
 
 	private void _moveNodes(MindMapNode selected, List selecteds, int direction) {
 		Comparator comparator = (direction == -1) ? null : (Comparator) (o1, o2) -> {
-            int i1 = ((Integer) o1).intValue();
-            int i2 = ((Integer) o2).intValue();
+            int i1 = (Integer) o1;
+            int i2 = (Integer) o2;
             return i2 - i1;
         };
 		if (!selected.isRoot()) {
@@ -84,7 +84,7 @@ public class NodeUpActor extends XmlActorAdapter {
 			// test range for adjacent nodes:
 			Integer last = (Integer) range.iterator().next();
 			for (Integer newInt : range) {
-				if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
+				if (Math.abs(newInt - last) > 1) {
 					logger.warning("Not adjacent nodes. Skipped. ");
 					return;
 				}
@@ -92,8 +92,7 @@ public class NodeUpActor extends XmlActorAdapter {
 			}
 			for (Integer position : range) {
 				// from above:
-				MindMapNode node = (MindMapNode) sortedChildren.get(position
-						.intValue());
+				MindMapNode node = (MindMapNode) sortedChildren.get(position);
 				moveNodeTo(node, parent, direction);
 			}
 		}

@@ -576,7 +576,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 		for (Object o : transformator.keySet()) {
 			String widthString = (String) o;
 			Integer width = (Integer) transformator.get(widthString);
-			if (edgeWidth == width.intValue()) {
+			if (edgeWidth == width) {
 				return widthString;
 			}
 		}
@@ -586,7 +586,7 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 
 	private String transformStringToWidth(String value) {
 		HashMap transformator = getEdgeWidthTransformation();
-		int intWidth = ((Integer) transformator.get(value)).intValue();
+		int intWidth = (Integer) transformator.get(value);
 		return ApplyPatternAction.edgeWidthIntToString(intWidth);
 	}
 

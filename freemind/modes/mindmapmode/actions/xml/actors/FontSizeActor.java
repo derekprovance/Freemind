@@ -80,7 +80,7 @@ public class FontSizeActor extends XmlActorAdapter {
 			FontSizeNodeAction fontSizeAction = (FontSizeNodeAction) action;
 			MindMapNode node = getNodeFromID(fontSizeAction.getNode());
 			try {
-				int size = Integer.valueOf(fontSizeAction.getSize()).intValue();
+				int size = Integer.valueOf(fontSizeAction.getSize());
 				if (!node.getFontSize().equals(fontSizeAction.getSize())) {
 					node.setFontSize(size);
 					getExMapFeedback().nodeChanged(node);

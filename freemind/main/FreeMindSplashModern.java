@@ -176,8 +176,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 							freemindVersion);
 				}
 				int yCoordinate = calcYRelative(58);
-				int xCoordinate = (int) (getSize().getWidth() / 2 - mWidth
-						.intValue() / 2);
+				int xCoordinate = (int) (getSize().getWidth() / 2 - mWidth / 2);
 				g2.setColor(new Color(0x4d, 0x63, 0xb4));
 				g2.drawString(freemindVersion, xCoordinate, yCoordinate);
 				// Draw progress bar
@@ -202,7 +201,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 					// g2.setColor(new Color(0x4d,0x63,0xb4));
 					g2.setColor(new Color(0xff, 0xff, 0xff));
 					g2.fill(new Rectangle(xBase + calcXRelative(1), yBase + calcYRelative(1),
-							(int) (width * percent.doubleValue()), calcYRelative(2)));
+							(int) (width * percent), calcYRelative(2)));
 				}
 			}
 		};

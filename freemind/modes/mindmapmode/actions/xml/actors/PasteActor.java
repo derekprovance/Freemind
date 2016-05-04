@@ -776,7 +776,7 @@ public class PasteActor extends XmlActorAdapter {
 			// Change the array of candidate parents accordingly
 
 			for (int j = parentNodes.size() - 1; j >= 0; --j) {
-				if (depth > ((Integer) parentNodesDepths.get(j)).intValue()) {
+				if (depth > (Integer) parentNodesDepths.get(j)) {
 					for (int k = j + 1; k < parentNodes.size(); ++k) {
 						MindMapNode n = (MindMapNode) parentNodes.get(k);
 						if (n.getParentNode() == parent) {

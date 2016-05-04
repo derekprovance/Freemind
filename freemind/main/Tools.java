@@ -891,7 +891,7 @@ public class Tools {
 	 */
 	public static Date xmlToDate(String xmlString) {
 		try {
-			return new Date(Long.valueOf(xmlString).longValue());
+			return new Date(Long.valueOf(xmlString));
 		} catch (Exception e) {
 			return new Date(System.currentTimeMillis());
 		}
@@ -2085,7 +2085,7 @@ public class Tools {
 		if (value.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {
 			return EdgeAdapter.WIDTH_THIN;
 		}
-		return Integer.valueOf(value).intValue();
+		return Integer.valueOf(value);
 	}
 
 	static public int iconFirstIndex(MindMapNode node, String iconName) {
@@ -2149,7 +2149,7 @@ public class Tools {
 				Object scale = field.get(device);
 
 				if (scale instanceof Integer
-						&& ((Integer) scale).intValue() == 2) {
+						&& (Integer) scale == 2) {
 					return true;
 				}
 			}

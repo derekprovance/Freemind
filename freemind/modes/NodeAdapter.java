@@ -162,7 +162,7 @@ public abstract class NodeAdapter implements MindMapNode {
                 if (propertyName
                         .equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
                     sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(
-                            newValue).booleanValue();
+							newValue);
                 }
             };
 			Controller

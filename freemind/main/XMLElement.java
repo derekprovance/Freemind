@@ -1403,7 +1403,7 @@ public class XMLElement {
 				throw this.invalidValue(name, (String) key);
 			}
 		}
-		return result.intValue();
+		return result;
 	}
 
 	/**
@@ -1477,7 +1477,7 @@ public class XMLElement {
 			return defaultValue;
 		} else {
 			try {
-				return Double.valueOf(value).doubleValue();
+				return Double.valueOf(value);
 			} catch (NumberFormatException e) {
 				throw this.invalidValue(name, value);
 			}
@@ -1548,7 +1548,7 @@ public class XMLElement {
 				throw this.invalidValue(name, (String) key);
 			}
 		}
-		return result.doubleValue();
+		return result;
 	}
 
 	/**

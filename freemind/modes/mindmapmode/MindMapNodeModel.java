@@ -161,7 +161,7 @@ public class MindMapNodeModel extends NodeAdapter {
 		}
 		String fontsize = "";
 		if (color != null) {
-			pre += "\\cf" + ((Integer) colorTable.get(getColor())).intValue();
+			pre += "\\cf" + (Integer) colorTable.get(getColor());
 		}
 
 		if (isItalic()) {

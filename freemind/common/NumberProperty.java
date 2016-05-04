@@ -85,7 +85,7 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
 	}
 	
 	public int getIntValue() {
-		return ((Integer)(spinner.getValue())).intValue();
+		return (Integer) (spinner.getValue());
 	}
 
 	public void layout(DefaultFormBuilder builder, TextTranslator pTranslator) {
