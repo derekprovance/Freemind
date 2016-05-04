@@ -1859,7 +1859,7 @@ public class Controller implements MapModuleChangeObserver {
 			return mIndex;
 		}
 		
-	};
+	}
 
 	private JOptionalSplitPane mOptionalSplitPane = null;
 	

@@ -170,7 +170,6 @@ public class ExampleFileFilter extends FileFilter {
 			if (extension != null && filters.get(getExtension(f)) != null) {
 				return true;
 			}
-			;
 		}
 		return false;
 	}
@@ -186,7 +185,6 @@ public class ExampleFileFilter extends FileFilter {
 			if (i > 0 && i < filename.length() - 1) {
 				return filename.substring(i + 1).toLowerCase();
 			}
-			;
 		}
 		return null;
 	}

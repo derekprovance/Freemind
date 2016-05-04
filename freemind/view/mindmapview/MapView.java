@@ -148,9 +148,9 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 		private Vector mySelected = new Vector();
 
 		public Selected() {
-		};
+		}
 
-		public void clear() {
+        public void clear() {
 			if (size() > 0) {
 				removeFocusForHooks(get(0));
 			}
@@ -1419,9 +1419,9 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 	 */
 	public boolean isCurrentlyPrinting() {
 		return isPrinting;
-	};
+	}
 
-	/**
+    /**
 	 * Return the bounding box of all the descendants of the source view, that
 	 * without BORDER. Should that be implemented in LayoutManager as minimum
 	 * size?

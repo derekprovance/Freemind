@@ -152,13 +152,6 @@ public class EditServer extends Thread {
 				if (!abort)
 					logger.info("" + e);
 				abort = true;
-			} finally {
-				/*
-				 * if(client != null) { try { client.close(); } catch(Exception
-				 * e) { logger.info(e); }
-				 * 
-				 * client = null; }
-				 */
 			}
 		}
 	} // }}}

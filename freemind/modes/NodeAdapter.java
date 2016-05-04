@@ -383,11 +383,11 @@ public abstract class NodeAdapter implements MindMapNode {
 	// fc, 24.2.2004: background color:
 	public Color getBackgroundColor() {
 		return backgroundColor;
-	};
+	}
 
 	public void setBackgroundColor(Color color) {
 		this.backgroundColor = color;
-	};
+	}
 
 	//
 	// font handling
@@ -540,7 +540,7 @@ public abstract class NodeAdapter implements MindMapNode {
 			icons = null;
 		}
 		return returnSize;
-	};
+	}
 
 	// end, fc, 24.9.2003
 

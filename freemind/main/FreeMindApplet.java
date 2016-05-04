@@ -155,7 +155,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 
 	public String getFreemindDirectory() {
 		return null;
-	};
+	}
 
 	static int iMaxNodeWidth = 0;
 

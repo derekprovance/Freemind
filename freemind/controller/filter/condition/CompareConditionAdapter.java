@@ -47,7 +47,6 @@ abstract class CompareConditionAdapter extends NodeCondition {
 			return i1 < i2 ? -1 : (i1 == i2 ? 0 : 1);
 		} catch (NumberFormatException fne) {
 		}
-		;
 		double d2;
 		try {
 			d2 = Double.parseDouble(conditionValue);
@@ -55,7 +54,6 @@ abstract class CompareConditionAdapter extends NodeCondition {
 			return ignoreCase ? nodeValue.compareToIgnoreCase(conditionValue)
 					: nodeValue.compareTo(conditionValue);
 		}
-		;
 		double d1 = Double.parseDouble(nodeValue);
 		return Double.compare(d1, d2);
 	}

@@ -34,8 +34,6 @@ import javax.swing.ListCellRenderer;
 import freemind.main.Resources;
 import freemind.modes.MindIcon;
 
-;
-
 /**
  * @author dimitri 06.05.2005
  */

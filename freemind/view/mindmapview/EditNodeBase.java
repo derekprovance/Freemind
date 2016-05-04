@@ -57,7 +57,7 @@ import freemind.modes.ModeController;
  */
 public class EditNodeBase {
 	protected static boolean checkSpelling = Resources.getInstance().
-    		getBoolProperty(FreeMindCommon.CHECK_SPELLING);;
+    		getBoolProperty(FreeMindCommon.CHECK_SPELLING);
 	protected static final int BUTTON_OK = 0;
 	protected static final int BUTTON_CANCEL = 1;
 	protected static final int BUTTON_SPLIT = 2;
@@ -309,7 +309,7 @@ public class EditNodeBase {
 
 			public void focusLost(FocusEvent e) {
 			}
-		};
+		}
 		final KeyEventQueue keyEventDispatcher = new KeyEventQueue();
 		currentKeyboardFocusManager.addKeyEventDispatcher(keyEventDispatcher);
 		textComponent.addFocusListener(keyEventDispatcher);

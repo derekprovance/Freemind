@@ -1191,7 +1191,7 @@ public class Tools {
 
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
-			};
+			}
 		}
 		addEscapeActionToDialog(dialog, new EscapeAction());
 	}
@@ -1279,7 +1279,6 @@ public class Tools {
 
 			c = c.getParent();
 		}
-		;
 
 	}
 
@@ -1581,7 +1580,7 @@ public class Tools {
 					public void run() {
 						// logger.info("Waited for event queue.");
 						// e.printStackTrace();
-					};
+					}
 				});
 			} else {
 				logger.warning("Can't wait for event queue, if I'm inside this queue!");

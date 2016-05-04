@@ -93,7 +93,7 @@ public class PersistentEditableComboBox extends JComboBox {
 					resultBuffer.toString());
 		}
 		return true;
-	};
+	}
 
 	public String getText() {
 		return getSelectedItem().toString();

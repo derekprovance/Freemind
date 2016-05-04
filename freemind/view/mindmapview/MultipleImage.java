@@ -39,17 +39,17 @@ public class MultipleImage extends ImageIcon {
 	public MultipleImage(double zoom) {
 		zoomFactor = zoom;
 		isDirty = true;
-	};
+	}
 
 	public int getImageCount() {
 		return mImages.size();
-	};
+	}
 
 	public void addImage(ImageIcon image) {
 		mImages.add(image);
 		setImage(image.getImage());
 		isDirty = true;
-	};
+	}
 
 	public Image getImage() {
 		if (!isDirty)
@@ -134,4 +134,4 @@ public class MultipleImage extends ImageIcon {
 		return (int) (myY * zoomFactor);
 	}
 
-};
+}
