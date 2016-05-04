@@ -80,7 +80,7 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
                     mImageJLabel.putClientProperty("progressString",
                             progressString);
                     mImageJLabel.putClientProperty("progressPercent",
-                            new Double(percent));
+							percent);
                     mImageJLabel.repaint();
                 }
             });
@@ -172,8 +172,8 @@ public class FreeMindSplashModern extends JFrame implements IFreeMindSplash {
 				// Determine width of string to center it
 				String freemindVersion = frame.getFreemindVersion().toString();
 				if (mWidth == null) {
-					mWidth = new Integer(g2.getFontMetrics().stringWidth(
-							freemindVersion));
+					mWidth = g2.getFontMetrics().stringWidth(
+							freemindVersion);
 				}
 				int yCoordinate = calcYRelative(58);
 				int xCoordinate = (int) (getSize().getWidth() / 2 - mWidth

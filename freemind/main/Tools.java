@@ -1384,7 +1384,7 @@ public class Tools {
 			int vk = (int) charAfterMnemoSign;
 			if (vk >= 'a' && vk <= 'z')
 				vk -= ('a' - 'A');
-			action.putValue(Action.MNEMONIC_KEY, new Integer(vk));
+			action.putValue(Action.MNEMONIC_KEY, vk);
 		}
 
 		/*

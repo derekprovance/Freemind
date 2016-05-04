@@ -77,7 +77,7 @@ public class NumberProperty extends PropertyBean implements PropertyControl {
 		} catch (NumberFormatException e) {
 			freemind.main.Resources.getInstance().logException(e);
 		}
-		spinner.setValue(new Integer(intValue));
+		spinner.setValue(intValue);
 	}
 
 	public String getValue() {

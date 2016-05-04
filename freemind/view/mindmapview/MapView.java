@@ -1034,7 +1034,7 @@ public class MapView extends JPanel implements ViewAbstraction, Printable, Autos
 			}
 			view.getContent().getLocation(point);
 			Tools.convertPointToAncestor(view, point, this);
-			pointNodePairs.add(new Pair(new Integer(point.y), node));
+			pointNodePairs.add(new Pair(point.y, node));
 		}
 		// do the sorting:
 		Collections.sort(pointNodePairs, (arg0, arg1) -> {

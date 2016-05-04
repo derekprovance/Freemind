@@ -210,7 +210,7 @@ public class MindMapMapModel extends MapAdapter {
 				Color color = (Color) it.next();
 				colorTableString += "\\red" + color.getRed() + "\\green"
 						+ color.getGreen() + "\\blue" + color.getBlue() + ";";
-				colorTable.put(color, new Integer(colorPosition));
+				colorTable.put(color, colorPosition);
 			}
 			colorTableString += "}";
 

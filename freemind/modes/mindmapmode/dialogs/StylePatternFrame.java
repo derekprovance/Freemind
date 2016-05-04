@@ -593,12 +593,12 @@ public class StylePatternFrame extends JPanel implements TextTranslator,
 	private HashMap getEdgeWidthTransformation() {
 		HashMap transformator = new HashMap();
 		transformator
-				.put(EDGE_WIDTHS[0], new Integer(EdgeAdapter.WIDTH_PARENT));
-		transformator.put(EDGE_WIDTHS[1], new Integer(EdgeAdapter.WIDTH_THIN));
-		transformator.put(EDGE_WIDTHS[2], new Integer(1));
-		transformator.put(EDGE_WIDTHS[3], new Integer(2));
-		transformator.put(EDGE_WIDTHS[4], new Integer(4));
-		transformator.put(EDGE_WIDTHS[5], new Integer(8));
+				.put(EDGE_WIDTHS[0], EdgeAdapter.WIDTH_PARENT);
+		transformator.put(EDGE_WIDTHS[1], EdgeAdapter.WIDTH_THIN);
+		transformator.put(EDGE_WIDTHS[2], 1);
+		transformator.put(EDGE_WIDTHS[3], 2);
+		transformator.put(EDGE_WIDTHS[4], 4);
+		transformator.put(EDGE_WIDTHS[5], 8);
 		return transformator;
 	}
 

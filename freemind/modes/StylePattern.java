@@ -452,11 +452,10 @@ public class StylePattern {
 				}
 				if (child.getStringAttribute("width") != null) {
 					if (child.getStringAttribute("width").equals("thin")) {
-						setEdgeWidth(new Integer(
-								EdgeAdapter.WIDTH_THIN));
+						setEdgeWidth(EdgeAdapter.WIDTH_THIN);
 					} else {
-						setEdgeWidth(new Integer(Integer.parseInt(child
-								.getStringAttribute("width"))));
+						setEdgeWidth(Integer.parseInt(child
+								.getStringAttribute("width")));
 					}
 				}
 			}

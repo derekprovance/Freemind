@@ -698,7 +698,7 @@ public class PasteActor extends XmlActorAdapter {
 		ArrayList parentNodesDepths = new ArrayList();
 
 		parentNodes.add(parent);
-		parentNodesDepths.add(new Integer(-1));
+		parentNodesDepths.add(-1);
 
 		String[] linkPrefixes = { "http://", "ftp://", "https://" };
 
@@ -789,7 +789,7 @@ public class PasteActor extends XmlActorAdapter {
 					node.setLeft(isLeft);
 					insertNodeInto(node, target);
 					parentNodes.add(node);
-					parentNodesDepths.add(new Integer(depth));
+					parentNodesDepths.add(depth);
 					break;
 				}
 			}

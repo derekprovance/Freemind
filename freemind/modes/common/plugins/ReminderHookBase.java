@@ -86,7 +86,7 @@ public abstract class ReminderHookBase extends PermanentNodeHookAdapter {
 	public void save(XMLElement xml) {
 		super.save(xml);
 		HashMap nameValuePairs = new HashMap();
-		nameValuePairs.put(REMINDUSERAT, new Long(remindUserAt));
+		nameValuePairs.put(REMINDUSERAT, remindUserAt);
 		saveNameValuePairs(nameValuePairs, xml);
 	}
 

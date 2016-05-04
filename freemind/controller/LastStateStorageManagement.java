@@ -110,7 +110,7 @@ public class LastStateStorageManagement {
 					.getListMindmapLastStateStorageList()) {
 				MindmapLastStateStorage store = (MindmapLastStateStorage) o1;
 				dateToStoreMap
-						.put(Long.valueOf(-store.getLastChanged()), store);
+						.put(-store.getLastChanged(), store);
 			}
 			// clear list
 			mLastStatesMap.clearMindmapLastStateStorageList();
