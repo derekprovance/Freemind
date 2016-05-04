@@ -210,7 +210,7 @@ public class FilterComposerDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			Object[] selectedValues = conditionList.getSelectedValues();
+			Object[] selectedValues = conditionList.getSelectedValuesList().toArray();
 			if (selectedValues.length < 2)
 				return;
 			Condition newCond = new ConjunctConditions(selectedValues);
@@ -218,7 +218,6 @@ public class FilterComposerDialog extends JDialog {
 					.getModel();
 			model.addElement(newCond);
 			validate();
-
 		}
 	}
 
@@ -238,7 +237,7 @@ public class FilterComposerDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			Object[] selectedValues = conditionList.getSelectedValues();
+			Object[] selectedValues = conditionList.getSelectedValuesList().toArray();
 			if (selectedValues.length < 2)
 				return;
 			Condition newCond = new DisjunctConditions(selectedValues);

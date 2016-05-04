@@ -161,13 +161,12 @@ public class ArrayListTransferHandler extends TransferHandler {
 		if (c instanceof JList) {
 			source = (JList) c;
 			indices = source.getSelectedIndices();
-			Object[] values = source.getSelectedValues();
-			if (values == null || values.length == 0) {
+			Object[] values = source.getSelectedValuesList().toArray();
+			if (values.length == 0) {
 				return null;
 			}
 			ArrayList alist = new ArrayList(values.length);
-			for (int i = 0; i < values.length; i++) {
-				Object o = values[i];
+			for (Object o : values) {
 				String str = o.toString();
 				if (str == null)
 					str = "";
