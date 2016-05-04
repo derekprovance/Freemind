@@ -258,7 +258,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	}
 
 	public void init(FeedBack feedback) {
-		/* This is only for apple but does not harm for the others. */
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		patternsFile = new File(getFreemindDirectory(),
 				getDefaultProperty("patternsfile"));
@@ -300,7 +299,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 		feedback.increase("FreeMind.progress.createInitialMode", null);
 		controller.createNewMode(getProperty("initial_mode"));
-	}// Constructor
+	}
 
 	/**
 	 * 
