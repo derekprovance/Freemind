@@ -61,9 +61,7 @@ public class MacChanges extends ApplicationAdapter {
 		logger.info("Performing Mac Changes.");
 		pFrame.setProperty("keystroke_add_child", pFrame.getProperty("keystroke_add_child_mac"));
 		pFrame.setProperty("load_new_map_when_no_other_is_specified", "false");
-
-		FullScreenUtilities.setWindowCanFullScreen(pFrame.getJFrame(),true);
-
+		
 		Controller.localDocumentationLinkConverter = link -> {
             try {
                 return Tools.fileToUrl(new File(Tools.getFreeMindBasePath() + File.separator + link));
