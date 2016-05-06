@@ -3,3 +3,4 @@
 out/*
 .DS_Store
 bin/*
+__artifacts_temp

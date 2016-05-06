@@ -603,8 +603,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			splash.setVisible(false);
 			frame.setVisible(true);
 
-			com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(frame,true);
-
 			frame.fireStartupDone();
 		} catch(Exception e) {
 			e.printStackTrace();
