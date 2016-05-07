@@ -32,6 +32,7 @@ public class StructuredMenuHolder {
 
 	private static final String SEPARATOR_TEXT = "000";
 	private static final String ORDER_NAME = "/order";
+
 	private Map menuMap;
 	private static java.util.logging.Logger logger = null;
 
@@ -188,7 +189,6 @@ public class StructuredMenuHolder {
 	}
 
 	public void updateMenus(final JMenuBar myItem, String prefix) {
-
 		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"), menuMap);
 		Map myMap = (Map) pair.map.get(pair.token);
 		updateMenus(new MenuAdder() {
@@ -464,5 +464,4 @@ public class StructuredMenuHolder {
 			menuItem.setIcon(normalIcon);
 		}
 	}
-
 }
