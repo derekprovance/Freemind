@@ -503,6 +503,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
 		ModeController oldModeController;
+
 		this.mMode = newMode;
 		if (oldMapModule != null) {
 			oldModeController = oldMapModule.getModeController();
@@ -535,17 +536,19 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		setTitle();
+
         generateTopToolbar(newModeController);
         generateLeftToolbar(newModeController);
 
-		toolbar.validate();
-		toolbar.repaint();
-		MenuBar menuBar = getFrame().getFreeMindMenuBar();
-		menuBar.updateMenus(newModeController);
-		menuBar.revalidate();
-		menuBar.repaint();
+        toolbar.validate();
+        toolbar.repaint();
 
-		obtainFocusForSelected();
+        MenuBar menuBar = getFrame().getFreeMindMenuBar();
+        menuBar.updateMenus(newModeController);
+        menuBar.revalidate();
+        menuBar.repaint();
+
+        obtainFocusForSelected();
 	}
 
     private ModeController setViewToNoMap(Mode newMode) {

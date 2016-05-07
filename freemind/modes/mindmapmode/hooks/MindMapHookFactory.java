@@ -149,8 +149,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 			allPlugins = new Vector();
 			allRegistrations = new HashSet();
 			// the unmarshaller:
-			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
-					.createUnmarshaller();
+			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance().createUnmarshaller();
 			// the loop
 			for (Object aCLASS_LIST : importWizard.CLASS_LIST) {
 				String xmlPluginFile = (String) aCLASS_LIST;
@@ -164,17 +163,15 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 					// this is one of our plugins:
 					URL pluginURL = Resources.getInstance().getFreeMindClassLoader().getResource(
 							xmlPluginFile);
-					// unmarshal xml:
-					Plugin plugin = null;
+					Plugin plugin;
 					try {
 						logger.finest("Reading: " + xmlPluginFile + " from "
 								+ pluginURL);
 						InputStream in = pluginURL.openStream();
-						plugin = (Plugin) unmarshaller.unmarshalDocument(in,
-								null);
+						plugin = (Plugin) unmarshaller.unmarshalDocument(in, null);
 					} catch (Exception e) {
 						// error case
-						Resources.getInstance().logException(e);
+//						Resources.getInstance().logException(e);
 						continue;
 					}
 					// plugin is loaded.
@@ -187,11 +184,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 
 						} else if (obj instanceof PluginRegistration) {
 							PluginRegistration registration = (PluginRegistration) obj;
-							allRegistrations
-									.add(new HookDescriptorRegistration(xmlPluginFile, plugin, registration));
-							// logger.info("Added registration " +
-							// registration.getClassName() +
-							// " to allRegistrations=" + allRegistrations);
+							allRegistrations.add(new HookDescriptorRegistration(xmlPluginFile, plugin, registration));
 						}
 					}
 				}
@@ -220,10 +213,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 				PluginClasspath plPath = (PluginClasspath) o;
 				path += plPath.getJar() + ";";
 			}
-			freemind.main.Resources.getInstance().logException(
-					e,
-					"Error occurred loading hook: " + descriptor.getClassName()
-							+ "\nClasspath: " + path + "\nException:");
+			freemind.main.Resources.getInstance().logException(e, "Error occurred loading hook: " + descriptor.getClassName() + "\nClasspath: " + path + "\nException:");
 			return null;
 		}
 	}

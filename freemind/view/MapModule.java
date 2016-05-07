@@ -87,6 +87,10 @@ public class MapModule {
 		return modeController;
 	}
 
+	public void setModeController(ModeController modeController) {
+		this.modeController = modeController;
+	}
+
 	public String getName() {
 		return name;
 	}

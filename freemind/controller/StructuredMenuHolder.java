@@ -208,8 +208,7 @@ public class StructuredMenuHolder {
 	}
 
 	public void updateMenus(final JPopupMenu myItem, String prefix) {
-		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"),
-				menuMap);
+		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"), menuMap);
 		Map myMap = (Map) pair.map.get(pair.token);
 		updateMenus(new MenuAdder() {
 
@@ -218,7 +217,6 @@ public class StructuredMenuHolder {
 			public void addMenuItem(StructuredMenuItemHolder holder) {
 				Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
 				JMenuItem menuItem = holder.getMenuItem();
-				adjustMenuItem(menuItem);
 				myItem.add(menuItem);
 				if (myItem instanceof MenuEventSupplier) {
 					MenuEventSupplier receiver = (MenuEventSupplier) myItem;
@@ -240,11 +238,9 @@ public class StructuredMenuHolder {
 	}
 
 	public void updateMenus(final JToolBar bar, String prefix) {
-		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"),
-				menuMap);
+		MapTokenPair pair = getCategoryMap(new StringTokenizer(prefix, "/"), menuMap);
 		Map myMap = (Map) pair.map.get(pair.token);
 		updateMenus(new MenuAdder() {
-
 			public void addMenuItem(StructuredMenuItemHolder holder) {
 				bar.add(holder.getAction());
 			}
@@ -300,7 +296,6 @@ public class StructuredMenuHolder {
 			}
 			Tools.setLabelAndMnemonic(holder.getMenuItem(), null);
 			JMenuItem item = holder.getMenuItem();
-			adjustMenuItem(item);
 			listener.addItem(holder);
 			myMenuItem.add(item);
 		}
@@ -313,17 +308,6 @@ public class StructuredMenuHolder {
 		}
 
 		public void addCategory(String category) {
-		}
-	}
-
-	static private void adjustMenuItem(JMenuItem item) {
-		if (item.getIcon() == null) {
-			item.setIcon(blindIcon);
-		} else {
-			if (item.getIcon().getIconWidth() < ICON_SIZE) {
-				item.setIconTextGap(item.getIconTextGap()
-						+ (ICON_SIZE - item.getIcon().getIconWidth()));
-			}
 		}
 	}
 
