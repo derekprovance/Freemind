@@ -109,7 +109,7 @@
 			<menu_category name="clones">
 			</menu_category>
 		</menu_category>	
-	
+
 		<menu_category name="format">
 			<menu_category name="change">
 			</menu_category>
@@ -157,13 +157,13 @@
 			<menu_separator/>
 			<menu_category name="edges">
 				<menu_action field="edgeColor" key_ref="keystroke_edge_color"/>
-				<menu_submenu name="styles" name_ref="format_menu_edge_styles">				
+				<menu_submenu name="styles" name_ref="format_menu_edge_styles">
 						<menu_checked_action field="EdgeStyle_linear"/>
 						<menu_checked_action field="EdgeStyle_bezier"/>
 						<menu_checked_action field="EdgeStyle_sharp_linear"/>
 						<menu_checked_action field="EdgeStyle_sharp_bezier"/>
 				</menu_submenu>
-				<menu_submenu name="widths" name_ref="format_menu_edge_widths">				
+				<menu_submenu name="widths" name_ref="format_menu_edge_widths">
 						<menu_checked_action field="EdgeWidth_WIDTH_PARENT"/>
 						<menu_checked_action field="EdgeWidth_WIDTH_THIN"/>
 						<menu_checked_action field="EdgeWidth_1"/>
@@ -172,19 +172,19 @@
 						<menu_checked_action field="EdgeWidth_8"/>
 				</menu_submenu>
 			</menu_category>
-		</menu_category>	
-	
+		</menu_category>
+
 		<menu_category name="view">
-<!--			
-		<menu_separator/>			
+<!--
+		<menu_separator/>
 		<menu_submenu name="attributes" name_ref="menu_attributes">
 			<menu_radio_action name="showAllAttributes" field="showAllAttributes" key_ref="keystroke_show_all_attributes" selected ="true"/>
 			<menu_radio_action name="showSelectedAttributes" field="showSelectedAttributes" key_ref="keystroke_show_selected_attributes"/>
 			<menu_radio_action name="hideAllAttributes" field="hideAllAttributes" key_ref="keystroke_hide_all_attributes"/>
-		</menu_submenu>	
--->					
+		</menu_submenu>
+-->
 		</menu_category>
-			
+
 		<menu_category name="extras">
 			<menu_category name="first">
 				<menu_category name="join">
@@ -269,13 +269,13 @@
 			<menu_separator/>
 			<menu_category name="edges">
 				<menu_action field="edgeColor" key_ref="keystroke_edge_color"/>
-				<menu_submenu name="styles" name_ref="format_menu_edge_styles">				
+				<menu_submenu name="styles" name_ref="format_menu_edge_styles">
 						<menu_checked_action field="EdgeStyle_linear"/>
 						<menu_checked_action field="EdgeStyle_bezier"/>
 						<menu_checked_action field="EdgeStyle_sharp_linear"/>
 						<menu_checked_action field="EdgeStyle_sharp_bezier"/>
 				</menu_submenu>
-				<menu_submenu name="widths" name_ref="format_menu_edge_widths">				
+				<menu_submenu name="widths" name_ref="format_menu_edge_widths">
 						<menu_checked_action field="EdgeWidth_WIDTH_PARENT"/>
 						<menu_checked_action field="EdgeWidth_WIDTH_THIN"/>
 						<menu_checked_action field="EdgeWidth_1"/>
