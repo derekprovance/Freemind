@@ -20,9 +20,7 @@
 
 package freemind.modes.mindmapmode;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Vector;
@@ -64,6 +62,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 
 	private static final String[] sizes = { "8", "10", "12", "14", "16", "18",
 			"20", "24", "28" };
+	private static final String FONT_COMBO_BOX_DISPLAY_TEXT = "xxxxxxxxxx";
 	private MindMapController c;
 	private JComboBox fonts, size;
 	private JAutoScrollBarPane iconToolBarScrollPane;
@@ -139,6 +138,8 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		
 		colorCombo = new JColorCombo();
 		colorCombo.setFocusable(false);
+		fonts.setPrototypeDisplayValue(FONT_COMBO_BOX_DISPLAY_TEXT);
+		colorCombo.setPrototypeDisplayValue(new ColorPair(Color.BLACK, ""));
 		colorCombo.addItemListener(e -> {
             if(color_IgnoreChangeEvent){
                 return;
