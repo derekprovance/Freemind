@@ -72,8 +72,6 @@ public class NewChildAction extends MindmapAction  {
 						false);
 				break;
 			} else {
-				// fc, 21.8.07: we don't do anything here and get a new child
-				// instead.
 				newNodeMode = MindMapController.NEW_CHILD;
 			}
 		}

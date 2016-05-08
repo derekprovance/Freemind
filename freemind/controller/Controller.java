@@ -352,7 +352,6 @@ public class Controller implements MapModuleChangeObserver {
 		if (getMapModule() != null) {
 			return getMapModule().getView();
 		} else {
-			// System.err.println("[Freemind-Developer-Internal-Warning (do not write a bug report, please)]: Tried to get view without being able to get map module.");
 			return null;
 		}
 	}
@@ -408,9 +407,6 @@ public class Controller implements MapModuleChangeObserver {
 	//
 
 	public Font getDefaultFont() {
-		// Maybe implement handling for cases when the font is not
-		// available on this system.
-
 		int fontSize = getDefaultFontSize();
 		int fontStyle = getDefaultFontStyle();
 		String fontFamily = getDefaultFontFamilyName();
@@ -503,6 +499,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void beforeMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
 		ModeController oldModeController;
+
 		this.mMode = newMode;
 		if (oldMapModule != null) {
 			oldModeController = oldMapModule.getModeController();
@@ -535,17 +532,19 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		setTitle();
+
         generateTopToolbar(newModeController);
         generateLeftToolbar(newModeController);
 
-		toolbar.validate();
-		toolbar.repaint();
-		MenuBar menuBar = getFrame().getFreeMindMenuBar();
-		menuBar.updateMenus(newModeController);
-		menuBar.revalidate();
-		menuBar.repaint();
+        toolbar.validate();
+        toolbar.repaint();
 
-		obtainFocusForSelected();
+        MenuBar menuBar = getFrame().getFreeMindMenuBar();
+        menuBar.updateMenus(newModeController);
+        menuBar.revalidate();
+        menuBar.repaint();
+
+        obtainFocusForSelected();
 	}
 
     private ModeController setViewToNoMap(Mode newMode) {
@@ -1150,18 +1149,11 @@ public class Controller implements MapModuleChangeObserver {
 	private class DefaultLocalLinkConverter implements LocalLinkConverter {
 
 		public URL convertLocalLink(String map) throws MalformedURLException {
-			/* new handling for relative urls. fc, 29.10.2003. */
 			String applicationPath = frame.getFreemindBaseDir();
-			// remove "." and make url
 			return Tools
 					.fileToUrl(new File(applicationPath + map.substring(1)));
-			/* end: new handling for relative urls. fc, 29.10.2003. */
 		}
 	}
-
-	//
-	// Help
-	//
 
 	private class DocumentationAction extends AbstractAction {
 		Controller controller;
@@ -1173,21 +1165,16 @@ public class Controller implements MapModuleChangeObserver {
 
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String map = controller.getFrame().getResourceString(
-						"browsemode_initial_map");
-				// if the current language does not provide its own translation,
-				// POSTFIX_TRANSLATE_ME is appended:
+				String map = controller.getFrame().getResourceString("browsemode_initial_map");
 				map = Tools.removeTranslateComment(map);
-				URL url = null;
+				URL url;
 				if (map != null && map.startsWith(".")) {
 					url = localDocumentationLinkConverter.convertLocalLink(map);
 				} else {
 					url = Tools.fileToUrl(new File(map));
 				}
 				final URL endUrl = url;
-				// invokeLater is necessary, as the mode changing removes
-				// all
-				// menus (inclusive this action!).
+
 				SwingUtilities.invokeLater(() -> {
                     try {
                         createNewMode(BrowseMode.MODENAME);
@@ -1198,7 +1185,6 @@ public class Controller implements MapModuleChangeObserver {
                     }
                 });
 			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
 				freemind.main.Resources.getInstance().logException(e1);
 			}
 		}
@@ -1213,10 +1199,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			String urlText = controller.getFrame().getResourceString(
-					"pdfKeyDocLocation");
-			// if the current language does not provide its own translation,
-			// POSTFIX_TRANSLATE_ME is appended:
+			String urlText = controller.getFrame().getResourceString("pdfKeyDocLocation");
 			urlText = Tools.removeTranslateComment(urlText);
 			try {
 				URL url = null;

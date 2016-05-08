@@ -46,10 +46,9 @@ import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.ViewFeedback;
 
-public interface ModeController extends TextTranslator, MapFeedback,
-		ViewFeedback {
+public interface ModeController extends TextTranslator, MapFeedback, ViewFeedback {
 
-	public static final String NODESEPARATOR = "<nodeseparator>";
+	String NODESEPARATOR = "<nodeseparator>";
 
 	/**
 	 * @param file
@@ -61,14 +60,13 @@ public interface ModeController extends TextTranslator, MapFeedback,
 	 * @return returns the new mode controller created for this url.
 	 * @throws URISyntaxException
 	 */
-	MapFeedback load(URL file) throws FileNotFoundException, IOException,
-			XMLParseException, URISyntaxException;
+	MapFeedback load(URL file) throws IOException, XMLParseException, URISyntaxException;
 
 	/**
 	 * This is the same as load(URL) for those points where you have a file
 	 * instead of an url (conversion is difficult between them...).
 	 */
-	MapFeedback load(File file) throws FileNotFoundException, IOException;
+	MapFeedback load(File file) throws IOException;
 
 	/**
 	 * Opens a link in * the opened map * another map * another file.

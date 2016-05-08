@@ -5,8 +5,10 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -65,16 +67,8 @@ public class MenuBar extends JMenuBar {
 
 		menuHolder = new StructuredMenuHolder();
 
-		addFileMenuCategories();
-		addEditMenuCategories();
-		addViewMenuCategories();
-		addInsertMenuCategories();
-		addFormatMenuCategories();
-		addNavigateMenuCategories();
-		addExtrasMenuCategories();
-		addMapMenu();
-		addModesMenu();
-		addMapsPopupMenu();
+		generateMenuBar();
+		generatePopupBar();
 
 		updateFileMenu();
 		updateViewMenu();
@@ -90,7 +84,26 @@ public class MenuBar extends JMenuBar {
 		menuHolder.updateMenus(mapsPopupMenu, GENERAL_POPUP_PREFIX);
     }
 
-    private void addFileMenuCategories() {
+	private void generateMenuBar() {
+		addFileMenuCategories();
+		addEditMenuCategories();
+		addViewMenuCategories();
+		addInsertMenuCategories();
+		addFormatMenuCategories();
+		addNavigateMenuCategories();
+		addExtrasMenuCategories();
+		addMapMenu();
+		addModesMenu();
+		addMapsPopupMenu();
+	}
+
+	private void generatePopupBar() {
+		mapsPopupMenu = new FreeMindPopupMenu();
+        mapsPopupMenu.setName(c.getResourceString("mindmaps"));
+        menuHolder.addCategory(POPUP_MENU + "navigate");
+	}
+
+	private void addFileMenuCategories() {
         filemenu = menuHolder.addMenu(new JMenu(c.getResourceString("file")), FILE_MENU + ".");
 
         menuHolder.addCategory(FILE_MENU + "open");
@@ -161,10 +174,6 @@ public class MenuBar extends JMenuBar {
     }
 
     private void addMapsPopupMenu() {
-        mapsPopupMenu = new FreeMindPopupMenu();
-        mapsPopupMenu.setName(c.getResourceString("mindmaps"));
-        menuHolder.addCategory(POPUP_MENU + "navigate");
-
         menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU + ".");
         menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
         menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");

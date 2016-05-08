@@ -68,43 +68,15 @@ public class FreeMindCommon {
 					}
 				}
 				if ("no".equals(lang)) {
-					// Bugs item #1935818
 					lang = "nb";
 				}
 				languageResources = getLanguageResources(lang);
-				/*
-				 * fc, 26.4.2008. the following line is a bug, as the
-				 * defaultResources are used, even, when a single string is
-				 * missing inside a bundle and not only, when the complete
-				 * bundle is missing.
-				 */
-				// if(languageResources == null)
 				defaultResources = getLanguageResources(DEFAULT_LANGUAGE);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
 				logger.severe("Error loading Resources");
 			}
-			// printResourceTable();
 		}
-
-		// /** This is useful, if you want to see all resource strings in a HTML
-		// table.
-		// * Just rename the log file to log.0.html, open in a browser and set
-		// the
-		// * coding to UTF-8 */
-		// private void printResourceTable() {
-		// StringBuffer b = new StringBuffer("<html><body><table>");
-		// Set keySet = languageResources.keySet();
-		// Vector keys = new Vector(keySet);
-		// Collections.sort(keys);
-		// for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-		// String key = (String) iterator.next();
-		// b.append("<tr><td>" + key + "</td><td>" +
-		// languageResources.getString(key)+"</td></tr>\n");
-		// }
-		// b.append("</table></body></html>");
-		// logger.info(b.toString());
-		// }
 
 		/**
 		 * @throws IOException
@@ -130,7 +102,6 @@ public class FreeMindCommon {
 				return languageResources.getString(key);
 			} catch (Exception ex) {
 				if(key != null && key.startsWith("__")) {
-					// private string, only translate on demand
 					return key;
 				} else {
 					logger.severe("Warning - resource string not found:\n" + key);

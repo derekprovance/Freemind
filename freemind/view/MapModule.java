@@ -34,9 +34,8 @@ public class MapModule {
 	private MapView view;
 	private Mode mode;
 	private ModeController modeController;
-	/** Contains an extension if a map with same file name is already opened. */
 	private String displayName;
-	private static int unnamedMapsNumber = 1;// used to give unique names to maps
+	private static int unnamedMapsNumber = 1;
 
 	public MapModule(MindMap model, MapView view, Mode mode,
 			ModeController modeController) {
@@ -85,6 +84,10 @@ public class MapModule {
 
 	public ModeController getModeController() {
 		return modeController;
+	}
+
+	public void setModeController(ModeController modeController) {
+		this.modeController = modeController;
 	}
 
 	public String getName() {
