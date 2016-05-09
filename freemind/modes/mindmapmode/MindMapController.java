@@ -219,10 +219,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?[0-9]*[.,]?[0-9]+)\\b";
 	private static final String ACCESSORIES_PLUGINS_NODE_NOTE = "accessories.plugins.NodeNote";
-	/**
-	 * @author foltin
-	 * @date 19.11.2013
-	 */
+
 	private final class NodeInformationTimerAction implements ActionListener {
 		private boolean mIsInterrupted = false;
 		private boolean mIsDone = true;
@@ -231,9 +228,6 @@ public class MindMapController extends ControllerAdapter implements
 			return !mIsDone;
 		}
 
-		/**
-		 * @return true, if successfully interrupted.
-		 */
 		public boolean interrupt() {
 			mIsInterrupted = true;
 			int i = 1000;
@@ -311,9 +305,6 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	private final class MapSourceChangeDialog implements Runnable {
-		/**
-		 * 
-		 */
 		private boolean mReturnValue = true;
 
 		private MapSourceChangeDialog() {
@@ -795,11 +786,8 @@ public class MindMapController extends ControllerAdapter implements
 			try {
 				RegistrationContainer container = (RegistrationContainer) pluginRegistration;
 				Class registrationClass = container.hookRegistrationClass;
-				Constructor hookConstructor = registrationClass
-						.getConstructor(new Class[]{ModeController.class,
-								MindMap.class});
-				HookRegistration registrationInstance = (HookRegistration) hookConstructor
-						.newInstance(new Object[]{this, getMap()});
+				Constructor hookConstructor = registrationClass.getConstructor(new Class[]{ModeController.class, MindMap.class});
+				HookRegistration registrationInstance = (HookRegistration) hookConstructor.newInstance(new Object[]{this, getMap()});
 				// register the instance to enable basePlugins.
 				hookFactory.registerRegistrationContainer(container,
 						registrationInstance);
@@ -809,21 +797,18 @@ public class MindMapController extends ControllerAdapter implements
 				Resources.getInstance().logException(e);
 			}
 		}
-		invokeHooksRecursively((NodeAdapter) getRootNode(), getMap());
+		invokeHooksRecursively(getRootNode(), getMap());
 
-		// register mouse motion handler:
-		getMapMouseMotionListener().register(
-				new MindMapMouseMotionManager(this));
-		getNodeDropListener().register(
-				new MindMapNodeDropListener(this));
-		getNodeKeyListener().register(
-				new CommonNodeKeyListener(this, MindMapController.this::edit));
-		getNodeMotionListener().register(
-				new MindMapNodeMotionListener(this));
-		getNodeMouseMotionListener().register(
-				new CommonNodeMouseMotionListener(this));
-		getMap().registerMapSourceChangedObserver(this,
-				mGetEventIfChangedAfterThisTimeInMillies);
+		registerMouseMotionHandler();
+	}
+
+	private void registerMouseMotionHandler() {
+		getMapMouseMotionListener().register(new MindMapMouseMotionManager(this));
+		getNodeDropListener().register(new MindMapNodeDropListener(this));
+		getNodeKeyListener().register(new CommonNodeKeyListener(this, MindMapController.this::edit));
+		getNodeMotionListener().register(new MindMapNodeMotionListener(this));
+		getNodeMouseMotionListener().register(new CommonNodeMouseMotionListener(this));
+		getMap().registerMapSourceChangedObserver(this, mGetEventIfChangedAfterThisTimeInMillies);
 	}
 
 	public void shutdownController() {
@@ -909,7 +894,6 @@ public class MindMapController extends ControllerAdapter implements
 	public void nodeChanged(MindMapNode n) {
 		super.nodeChanged(n);
 		final MapModule mapModule = getController().getMapModule();
-		// only for the selected node (fc, 2.5.2004)
 		if (mapModule != null
 				&& n == mapModule.getModeController().getSelected()) {
 			updateToolbar(n);
@@ -974,7 +958,6 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
-
 		public MindMapNode createNode(Object userObject, MindMap map) {
 			return new MindMapNodeModel(userObject, map);
 		}
@@ -993,9 +976,6 @@ public class MindMapController extends ControllerAdapter implements
 		return myNewNodeCreator.createNode(userObject, map);
 	}
 
-
-	/**
-	 */
 	public void updateMenus(StructuredMenuHolder holder) {
 
 		processMenuCategory(holder, mMenuStructure.getListChoiceList(), "");
@@ -1020,7 +1000,6 @@ public class MindMapController extends ControllerAdapter implements
 		createPatternSubMenu(holder, formatMenuString);
 
 		// editMenu.add(getIconMenu());
-
 	}
 
 	/**
@@ -1107,10 +1086,6 @@ public class MindMapController extends ControllerAdapter implements
 		return popupmenu;
 	}
 
-	/**
-	 * Link implementation: If this is a link, we want to make a popup with at
-	 * least removelink available.
-	 */
 	public JPopupMenu getPopupForModel(java.lang.Object obj) {
 		if (obj instanceof MindMapArrowLinkModel) {
 			// yes, this is a link.
@@ -1171,7 +1146,6 @@ public class MindMapController extends ControllerAdapter implements
 		return null;
 	}
 
-	// convenience methods
 	public MindMapMapModel getMindMapMapModel() {
 		return (MindMapMapModel) getMap();
 	}
