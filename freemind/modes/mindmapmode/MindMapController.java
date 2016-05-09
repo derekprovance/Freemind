@@ -1249,12 +1249,6 @@ public class MindMapController extends ControllerAdapter implements
 		usePlainText.setEnabled(enabled);
 	}
 
-	//
-	// Actions
-	// _______________________________________________________________________________
-
-	// This may later be moved to ControllerAdapter. So far there is no reason
-	// for it.
 	protected class ExportToHTMLAction extends MindmapAction {
 
 		public ExportToHTMLAction(MindMapController controller) {
@@ -1262,8 +1256,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			// from
-			// https://sourceforge.net/tracker2/?func=detail&atid=307118&aid=1789765&group_id=7118
 			if (getMap().getFile() == null) {
 				JOptionPane.showMessageDialog(getFrame().getContentPane(),
 						getText("map_not_saved"), "FreeMind",
@@ -1297,8 +1289,7 @@ public class MindMapController extends ControllerAdapter implements
 			}
 			try {
 				File file = File.createTempFile(
-						mindmapFile.getName().replace(
-								FreeMindCommon.FREEMIND_FILE_EXTENSION, "_"),
+						mindmapFile.getName().replace(FreeMindCommon.FREEMIND_FILE_EXTENSION, "_"),
 						".html", mindmapFile.getParentFile());
 				saveHTML((MindMapNodeModel) getSelected(), file);
 				loadURL(file.toString());
@@ -1344,20 +1335,18 @@ public class MindMapController extends ControllerAdapter implements
 						getText("import_linked_branch_no_link"));
 				return;
 			}
-			URL absolute = null;
+			URL absolute;
 			try {
 				String relative = selected.getLink();
 				absolute = new URL(Tools.fileToUrl(getMap().getFile()),
 						relative);
 			} catch (MalformedURLException ex) {
-				JOptionPane.showMessageDialog(getView(),
-						"Couldn't create valid URL for:" + getMap().getFile());
+				JOptionPane.showMessageDialog(getView(), "Couldn't create valid URL for:" + getMap().getFile());
 				freemind.main.Resources.getInstance().logException(ex);
 				return;
 			}
 			try {
-				MindMapNode node = loadTree(
-						Tools.urlToFile(absolute));
+				MindMapNode node = loadTree(Tools.urlToFile(absolute));
 				paste(node, selected);
 				invokeHooksRecursively(node, getMindMapMapModel());
 			} catch (Exception ex) {
@@ -1366,9 +1355,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	/**
-	 * This is exactly the opposite of exportBranch.
-	 */
 	private class ImportLinkedBranchWithoutRootAction extends MindmapAction {
 		ImportLinkedBranchWithoutRootAction() {
 			super("import_linked_branch_without_root", MindMapController.this);
@@ -1407,36 +1393,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	/*
-	 * MindMapController.java private class NodeViewStyleAction extends
-	 * AbstractAction { NodeViewStyleAction(final String style) {
-	 * super(getText(style)); m_style = style; } public void
-	 * actionPerformed(ActionEvent e) { for(ListIterator it =
-	 * getSelecteds().listIterator();it.hasNext();) { MindMapNodeModel selected
-	 * = (MindMapNodeModel)it.next(); getModel().setNodeStyle(selected,
-	 * m_style); }} private String m_style;}
-	 * 
-	 * private class EdgeStyleAction extends AbstractAction { String style;
-	 * EdgeStyleAction(String style) { super(getText(style)); this.style =
-	 * style; } public void actionPerformed(ActionEvent e) { for(ListIterator it
-	 * = getSelecteds().listIterator();it.hasNext();) { MindMapNodeModel
-	 * selected = (MindMapNodeModel)it.next(); getModel().setEdgeStyle(selected,
-	 * style); }}}
-	 * 
-	 * private class ApplyPatternAction extends AbstractAction { StylePattern
-	 * pattern; ApplyPatternAction(StylePattern pattern) {
-	 * super(pattern.getName()); this.pattern=pattern; } public void
-	 * actionPerformed(ActionEvent e) { for(ListIterator it =
-	 * getSelecteds().listIterator();it.hasNext();) { MindMapNodeModel selected
-	 * = (MindMapNodeModel)it.next();
-	 * ((MindMapMapModel)getModel()).applyPattern(selected, pattern); }}}
-	 * 
-	 * 
-	 * 
-	 * 
-	 * // Nonaction classes //
-	 * ________________________________________________________________________
-	 */
 	private class MindMapFilter extends FileFilter {
 		public boolean accept(File f) {
 			if (f.isDirectory())
@@ -1475,10 +1431,6 @@ public class MindMapController extends ControllerAdapter implements
 		getActorFactory().getFontSizeActor().setFontSize(node, fontSizeValue);
 	}
 
-	/**
-     *
-     */
-
 	public void increaseFontSize(MindMapNode node, int increment) {
 		int newSize = Integer.valueOf(node.getFontSize())
 				+ increment;
@@ -1502,14 +1454,21 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void blendNodeColor(MindMapNode node) {
 		Color mapColor = getView().getBackground();
-		Color nodeColor = node.getColor();
-		if (nodeColor == null) {
-			nodeColor = MapView.standardNodeTextColor;
-		}
-		setNodeColor(node,
-				new Color((3 * mapColor.getRed() + nodeColor.getRed()) / 4,
-						(3 * mapColor.getGreen() + nodeColor.getGreen()) / 4,
-						(3 * mapColor.getBlue() + nodeColor.getBlue()) / 4));
+		Color nodeColor = node.getColor() == null ? MapView.standardNodeTextColor : node.getColor();
+
+		setNodeColor(node, new Color(generateBlendRed(mapColor, nodeColor), generateBlendGreen(mapColor, nodeColor), generateBlendBlue(mapColor, nodeColor)));
+	}
+
+	private int generateBlendRed(Color mapColor, Color nodeColor) {
+		return (3 * mapColor.getRed() + nodeColor.getRed()) / 4;
+	}
+
+	private int generateBlendGreen(Color mapColor, Color nodeColor) {
+		return (3 * mapColor.getGreen() + nodeColor.getGreen()) / 4;
+	}
+
+	private int generateBlendBlue(Color mapColor, Color nodeColor) {
+		return (3 * mapColor.getBlue() + nodeColor.getBlue()) / 4;
 	}
 
 	public void setEdgeColor(MindMapNode node, Color color) {
