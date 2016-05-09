@@ -357,17 +357,9 @@ public class Controller implements MapModuleChangeObserver {
 		return lastOpened;
 	}
 
-	//
-
 	public MapModule getMapModule() {
 		return getMapModuleManager().getMapModule();
 	}
-
-	private JToolBar getToolBar() {
-		return toolbar;
-	}
-
-	//
 
 	public Font getFontThroughMap(Font font) {
 		if (!fontMap.containsKey(getFontStringCode(font))) {
@@ -822,7 +814,7 @@ public class Controller implements MapModuleChangeObserver {
 		page.setEnabled(enabled && isPrintingAllowed);
 		close.setEnabled(enabled);
 		moveToRoot.setEnabled(enabled);
-		((MainToolBar) getToolBar()).setAllActions(enabled);
+		toolbar.setAllActions(enabled);
 		showSelectionAsRectangle.setEnabled(enabled);
 	}
 
@@ -1785,5 +1777,4 @@ public class Controller implements MapModuleChangeObserver {
     public void setSouthToolbarPanel(JPanel southToolbarPanel) {
         this.southToolbarPanel = southToolbarPanel;
     }
-
 }
