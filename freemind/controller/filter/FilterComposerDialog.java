@@ -480,8 +480,7 @@ public class FilterComposerDialog extends JDialog {
 		getContentPane().add(simpleConditionBox, BorderLayout.NORTH);
 
 		attributes = new JComboBox();
-		filteredAttributeComboBoxModel = new ExtendedComboBoxModel(mFilterController
-				.getConditionFactory().getAttributeConditionNames());
+		filteredAttributeComboBoxModel = new ExtendedComboBoxModel(mFilterController.getConditionFactory().getAttributeConditionNames());
 		filteredAttributeComboBoxModel.setExtensionList(null);
 		attributes.setModel(filteredAttributeComboBoxModel);
 		attributes.addItemListener(new SelectedAttributeChangeListener());
@@ -489,10 +488,8 @@ public class FilterComposerDialog extends JDialog {
 		simpleConditionBox.add(attributes);
 		attributes.setRenderer(mFilterController.getConditionRenderer());
 
-		simpleNodeConditionComboBoxModel = new DefaultComboBoxModel(mFilterController
-				.getConditionFactory().getNodeConditionNames());
-		simpleIconConditionComboBoxModel = new DefaultComboBoxModel(mFilterController
-				.getConditionFactory().getIconConditionNames());
+		simpleNodeConditionComboBoxModel = new DefaultComboBoxModel(mFilterController.getConditionFactory().getNodeConditionNames());
+		simpleIconConditionComboBoxModel = new DefaultComboBoxModel(mFilterController.getConditionFactory().getIconConditionNames());
 
 		simpleCondition = new JComboBox();
 		simpleCondition.setModel(simpleNodeConditionComboBoxModel);
@@ -515,8 +512,7 @@ public class FilterComposerDialog extends JDialog {
 		caseInsensitive = new JCheckBox();
 		simpleConditionBox.add(Box.createHorizontalGlue());
 		simpleConditionBox.add(caseInsensitive);
-		caseInsensitive.setText(Resources.getInstance().getResourceString(
-				"filter_ignore_case"));
+		caseInsensitive.setText(Resources.getInstance().getResourceString("filter_ignore_case"));
 
 		final Box conditionButtonBox = Box.createVerticalBox();
 		conditionButtonBox.setBorder(new EmptyBorder(0, 10, 0, 10));
@@ -559,20 +555,17 @@ public class FilterComposerDialog extends JDialog {
 		CloseAction closeAction = new CloseAction();
 
 		btnOK = new JButton();
-		Tools.setLabelAndMnemonic(btnOK, Resources.getInstance()
-				.getResourceString("ok"));
+		Tools.setLabelAndMnemonic(btnOK, Resources.getInstance().getResourceString("ok"));
 		btnOK.addActionListener(closeAction);
 		btnOK.setMaximumSize(maxButtonDimension);
 
 		btnApply = new JButton();
-		Tools.setLabelAndMnemonic(btnApply, Resources.getInstance()
-				.getResourceString("apply"));
+		Tools.setLabelAndMnemonic(btnApply, Resources.getInstance().getResourceString("apply"));
 		btnApply.addActionListener(closeAction);
 		btnApply.setMaximumSize(maxButtonDimension);
 
 		btnCancel = new JButton();
-		Tools.setLabelAndMnemonic(btnCancel, Resources.getInstance()
-				.getResourceString("cancel"));
+		Tools.setLabelAndMnemonic(btnCancel, Resources.getInstance().getResourceString("cancel"));
 		btnCancel.addActionListener(closeAction);
 		btnCancel.setMaximumSize(maxButtonDimension);
 

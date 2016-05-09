@@ -20,15 +20,7 @@
 
 package freemind.main;
 
-import java.awt.AWTEvent;
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -83,6 +75,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import com.inet.jortho.SpellChecker;
 
@@ -757,8 +750,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			// tabbed panes eat control up. This is corrected here.
 			InputMap map;
 			map = (InputMap) UIManager.get("TabbedPane.ancestorInputMap");
-			KeyStroke keyStrokeCtrlUp = KeyStroke.getKeyStroke(KeyEvent.VK_UP,
-					InputEvent.CTRL_DOWN_MASK);
+			KeyStroke keyStrokeCtrlUp = KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_DOWN_MASK);
 			map.remove(keyStrokeCtrlUp);
 			mTabbedPane = new JTabbedPane();
 			mTabbedPane.setFocusable(false);

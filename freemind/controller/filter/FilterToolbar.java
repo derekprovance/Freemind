@@ -184,17 +184,14 @@ class FilterToolbar extends FreeMindToolBar {
 		add(btnEdit);
 
 		btnUnfoldAncestors = add(new UnfoldAncestorsAction());
-		btnUnfoldAncestors.setToolTipText(Resources.getInstance()
-				.getResourceString("filter_unfold_ancestors"));
+		btnUnfoldAncestors.setToolTipText(Resources.getInstance().getResourceString("filter_unfold_ancestors"));
 		add(btnUnfoldAncestors);
 
-		showAncestors = new JCheckBox(Resources.getInstance()
-				.getResourceString("filter_show_ancestors"), true);
+		showAncestors = new JCheckBox(Resources.getInstance().getResourceString("filter_show_ancestors"), true);
 		add(showAncestors);
 		showAncestors.getModel().addActionListener(filterChangeListener);
 
-		showDescendants = new JCheckBox(Resources.getInstance()
-				.getResourceString("filter_show_descendants"), false);
+		showDescendants = new JCheckBox(Resources.getInstance().getResourceString("filter_show_descendants"), false);
 		add(showDescendants);
 		showDescendants.getModel().addActionListener(filterChangeListener);
 
@@ -245,9 +242,7 @@ class FilterToolbar extends FreeMindToolBar {
 
 	private void setMapFilter() {
 		if (activeFilter == null)
-			activeFilter = new DefaultFilter(getSelectedCondition(),
-					showAncestors.getModel().isSelected(), showDescendants
-							.getModel().isSelected());
+			activeFilter = new DefaultFilter(getSelectedCondition(), showAncestors.getModel().isSelected(), showDescendants.getModel().isSelected());
 		final MindMap map = mFilterController.getMap();
 		if (map != null) {
 			map.setFilter(activeFilter);

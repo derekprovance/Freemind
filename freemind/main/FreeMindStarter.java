@@ -108,8 +108,7 @@ public class FreeMindStarter {
 					+ ", installed in "
 					+ System.getProperty("java.home") + ").";
 			System.err.println(message);
-			JOptionPane.showMessageDialog(null, message, "FreeMind",
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, message, "FreeMind", JOptionPane.WARNING_MESSAGE);
 			System.exit(1);
 		}
 		System.out.println("Checking Java Version done.");

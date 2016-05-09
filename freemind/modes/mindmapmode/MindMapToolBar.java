@@ -101,7 +101,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            // TODO: this is super-dirty, why doesn't the toolbar know the
             if (fontFamily_IgnoreChangeEvent) {
                 return;
             }
@@ -114,7 +113,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
             if (e.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-            // TODO: this is super-dirty, why doesn't the toolbar know the model?
             if (fontSize_IgnoreChangeEvent) {
                 return;
             }
@@ -124,13 +122,12 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		userDefinedZoom = controller.getText("user_defined_zoom");
 
 		zoom = new FreeMindComboBox(controller.getController().getZooms());
+		zoom.setPreferredSize(new Dimension(90,15));
 		zoom.setSelectedItem("100%");
 		zoom.addItem(userDefinedZoom);
 		// Focus fix.
 		zoom.setFocusable(false);
 		zoom.addItemListener(e -> {
-            // todo: dialog with user zoom value, if user zoom is chosen.
-            // change proposed by dimitri:
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 setZoomByItem(e.getItem());
             }

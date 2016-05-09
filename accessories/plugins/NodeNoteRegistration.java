@@ -82,9 +82,7 @@ public class NodeNoteRegistration implements HookRegistration,
 			if (resourceString == null) {
 				resourceString = Resources.getInstance().getProperty(pKey);
 			}
-//			if(resourceString == null) {
-//				System.err.println("Can't find string " + pKey);
-//			}
+
 			return resourceString;
 		}
 	}
@@ -124,8 +122,7 @@ public class NodeNoteRegistration implements HookRegistration,
 						+ Tools.compareText(noteText, documentText) + "'.");
 				if (!Tools.safeEquals(noteText, documentText)) {
 					logger.finest("Making map dirty.");
-					// make map dirty in order to enable automatic save on note
-					// change.
+
 					getMindMapController().setSaved(false);
 				}
 			}
@@ -144,8 +141,6 @@ public class NodeNoteRegistration implements HookRegistration,
 		}
 	}
 
-	// private NodeTextListener listener;
-
 	private final class NotesManager implements NodeSelectionListener,
 			NodeLifetimeListener {
 
@@ -157,7 +152,7 @@ public class NodeNoteRegistration implements HookRegistration,
 		public void onLostFocusNode(NodeView node) {
 			getDocument().removeDocumentListener(
 					mNoteDocumentListener);
-			// store its content:
+
 			onSaveNode(node.getModel());
 			this.node = null;
 		}
@@ -165,15 +160,9 @@ public class NodeNoteRegistration implements HookRegistration,
 		public void onFocusNode(NodeView nodeView) {
 			this.node = nodeView.getModel();
 			final HTMLDocument document = getDocument();
-			// remove listener to avoid unnecessary dirty events.
+
 			document.removeDocumentListener(mNoteDocumentListener);
 			try {
-				// Dimitry:
-				// Images referenced from documents with bases given by
-				// pFile.toURI().toURL() are not shown in SimplyHTML
-				// (bug [ freemind-Bugs-2019223 ] Images are not shown in the
-				// Notes view)
-				// => the old method File.toURL() must be used again.
 				document.setBase(node.getMap().getFile().toURI().toURL());
 			} catch (Exception e) {
 			}
@@ -194,12 +183,8 @@ public class NodeNoteRegistration implements HookRegistration,
 			if (this.node != node) {
 				return;
 			}
-			boolean editorContentEmpty = true;
-			// // TODO: Save the style with the note.
-			// StyleSheet styleSheet = noteViewerComponent.getDocument()
-			// .getStyleSheet();
-			// styleSheet.removeStyle("body");
-			// styleSheet.removeStyle("p");
+			boolean editorContentEmpty;
+
 			JEditorPane editorPane = noteViewerComponent.getEditorPane();
 			int caretPosition = editorPane.getCaretPosition();
 			int selectionStart = editorPane.getSelectionStart();
@@ -221,7 +206,6 @@ public class NodeNoteRegistration implements HookRegistration,
 				mLastContentEmpty = editorContentEmpty;
 			}
 			try {
-				// on inserting tabs, the caret position changes, as they are deleted:
 				if (caretPosition < getDocument().getLength()) {
 					editorPane.setCaretPosition(caretPosition);
 				}
@@ -239,7 +223,6 @@ public class NodeNoteRegistration implements HookRegistration,
 		}
 		
 		public void onUpdateNodeHook(MindMapNode node) {
-			// update display only, if the node is displayed.
 			String newText = node.getNoteText();
 			if (node == controller.getSelected()
 					&& (!Tools.safeEquals(newText, getHtmlEditorPanel()
@@ -341,8 +324,7 @@ public class NodeNoteRegistration implements HookRegistration,
 				KeyStroke.getKeyStroke(keystroke), "jumpToMapAction");
 
 		// Register action
-		noteViewerComponent.getActionMap().put("jumpToMapAction",
-				jumpToMapAction);
+		noteViewerComponent.getActionMap().put("jumpToMapAction", jumpToMapAction);
 
 		if (shouldShowSplitPane()) {
 			showNotesPanel();
@@ -372,17 +354,8 @@ public class NodeNoteRegistration implements HookRegistration,
 				FreeMind.RESOURCES_USE_DEFAULT_FONT_FOR_NOTES_TOO))) {
 			// set default font for notes:
 			Font defaultFont = controller.getController().getDefaultFont();
-			if (Resources.getInstance().getBoolProperty(
-					"experimental_font_sizing_for_long_node_editors")) {
-				/*
-				 * This is a proposal of Dan, but it doesn't work as expected.
-				 * 
-				 * http://sourceforge.net/tracker/?func=detail&aid=2800933&group_id
-				 * =7118&atid=107118
-				 */
-				defaultFont = Tools.updateFontSize(defaultFont,
-						this.getMindMapController().getView().getZoom(),
-						defaultFont.getSize());
+			if (Resources.getInstance().getBoolProperty("experimental_font_sizing_for_long_node_editors")) {
+				defaultFont = Tools.updateFontSize(defaultFont, this.getMindMapController().getView().getZoom(), defaultFont.getSize());
 			}
 			String rule = "BODY {";
 			rule += "font-family: " + defaultFont.getFamily() + ";";
@@ -390,11 +363,6 @@ public class NodeNoteRegistration implements HookRegistration,
 			rule += "}\n";
 			if ("true".equals(controller.getProperty(
 					FreeMind.RESOURCES_USE_MARGIN_TOP_ZERO_FOR_NOTES))) {
-				/*
-				 * this is used for paragraph spacing. I put it here, too, as
-				 * the tooltip display uses the same spacing. But it is to be
-				 * discussed. fc, 23.3.2009.
-				 */
 				rule += "p {";
 				rule += "margin-top:0;";
 				rule += "}\n";
@@ -402,19 +370,15 @@ public class NodeNoteRegistration implements HookRegistration,
 			getDocument().getStyleSheet().addRule(rule);
 			// done setting default font.
 		}
-		noteViewerComponent.setOpenHyperlinkHandler(new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				try {
-					getMindMapController().getFrame().openDocument(
-							new URL(pE.getActionCommand()));
-				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
-				}
-			}
-		});
-		controller.getController().insertComponentIntoSplitPane(
-				southPanel, SplitComponentType.NOTE_PANEL);
+		noteViewerComponent.setOpenHyperlinkHandler(pE -> {
+            try {
+                getMindMapController().getFrame().openDocument(
+                        new URL(pE.getActionCommand()));
+            } catch (Exception e) {
+                Resources.getInstance().logException(e);
+            }
+        });
+		controller.getController().insertComponentIntoSplitPane(southPanel, SplitComponentType.NOTE_PANEL);
 		mSplitPaneVisible  = true;
 		southPanel.revalidate();
 	}

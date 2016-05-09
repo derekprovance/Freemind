@@ -20,8 +20,7 @@
 
 package freemind.main;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
+import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -261,8 +260,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		c = new Controller(this);
 		c.init();
 
-		c.optionAntialiasAction
-				.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
+		c.optionAntialiasAction.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
 
 		// Create the MenuBar
 		menuBar = new MenuBar(c); // new MenuBar(c);
@@ -273,14 +271,12 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		// Create the scroll pane.
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		// taken from Lukasz Pekacki, NodeText version:
 		southPanel = new JPanel(new BorderLayout());
 
 		status = new JLabel();
 		southPanel.add(status, BorderLayout.SOUTH);
 
 		getContentPane().add(southPanel, BorderLayout.SOUTH);
-		// end taken.
 
 		SwingUtilities.updateComponentTreeUI(this); // Propagate LookAndFeel to
 
@@ -311,7 +307,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 
 	private void setPropertyByParameter(String key) {
 		String val = getParameter(key);
-		// System.out.println("Got prop:"+key+":"+val);
 		if (val != null && val != "") {
 			userProps.setProperty(key, val);
 		}
@@ -342,8 +337,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 			System.err.println("Error while setting Look&Feel" + lookAndFeel);
 		}
 		mFreeMindCommon.loadUIProperties(userProps);
-		userProps.put(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION,
-				Tools.BooleanToXml(true));
+		userProps.put(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, Tools.BooleanToXml(true));
 	}
 
 	/*

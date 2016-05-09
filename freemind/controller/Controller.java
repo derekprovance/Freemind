@@ -1,15 +1,6 @@
 package freemind.controller;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.KeyboardFocusManager;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -40,24 +31,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -233,10 +207,11 @@ public class Controller implements MapModuleChangeObserver {
 		moveToRoot = new MoveToRootAction(this);
 
 		// Create the ToolBar
-		northToolbarPanel = new JPanel(new BorderLayout());
 		toolbar = new MainToolBar(this);
 		mFilterController = new FilterController(this);
 		filterToolbar = mFilterController.getFilterToolbar();
+
+		northToolbarPanel = new JPanel(new BorderLayout());
 		getFrame().getContentPane().add(northToolbarPanel, BorderLayout.NORTH);
 		northToolbarPanel.add(toolbar, BorderLayout.NORTH);
 		northToolbarPanel.add(filterToolbar, BorderLayout.SOUTH);
@@ -245,10 +220,6 @@ public class Controller implements MapModuleChangeObserver {
 
 	}
 
-	/**
-	 * Does basic initializations of this class. Normally, init is called, but
-	 * if you don't need the actions, call this method instead.
-	 */
 	public void initialization() {
 		/**
 		 * Arranges the keyboard focus especially after opening FreeMind.
@@ -276,11 +247,6 @@ public class Controller implements MapModuleChangeObserver {
 			frame.setProperty("defaultfont", "SansSerif");
 		}
 	}
-
-	//
-	// get/set methods
-	//
-	public static final String JAVA_VERSION = System.getProperty("java.version");
 
 	public String getProperty(String property) {
 		return frame.getProperty(property);
@@ -536,7 +502,8 @@ public class Controller implements MapModuleChangeObserver {
         generateTopToolbar(newModeController);
         generateLeftToolbar(newModeController);
 
-        toolbar.validate();
+
+		toolbar.validate();
         toolbar.repaint();
 
         MenuBar menuBar = getFrame().getFreeMindMenuBar();
@@ -547,7 +514,7 @@ public class Controller implements MapModuleChangeObserver {
         obtainFocusForSelected();
 	}
 
-    private ModeController setViewToNoMap(Mode newMode) {
+	private ModeController setViewToNoMap(Mode newMode) {
         ModeController newModeController = newMode.getDefaultModeController();
         getFrame().setView(null);
         setAllActions(false);
@@ -634,8 +601,7 @@ public class Controller implements MapModuleChangeObserver {
 		getMode().activate();
 
 		Object[] messageArguments = { getMode().toLocalizedString() };
-		MessageFormat formatter = new MessageFormat(
-				getResourceString("mode_status"));
+		MessageFormat formatter = new MessageFormat(getResourceString("mode_status"));
 		getFrame().out(formatter.format(messageArguments));
 
 		return true;
@@ -726,8 +692,7 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
 	public void informationMessage(Object message, JComponent component) {
-		JOptionPane.showMessageDialog(component, message.toString(),
-				"FreeMind", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(component, message.toString(), "FreeMind", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void errorMessage(Object message) {
@@ -741,22 +706,18 @@ public class Controller implements MapModuleChangeObserver {
 				myMessage = "Undefined error";
 			}
 		}
-		JOptionPane.showMessageDialog(getFrame().getContentPane(), myMessage,
-				"FreeMind", JOptionPane.ERROR_MESSAGE);
-
+		JOptionPane.showMessageDialog(getFrame().getContentPane(), myMessage, "FreeMind", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void errorMessage(Object message, JComponent component) {
-		JOptionPane.showMessageDialog(component, message.toString(),
-				"FreeMind", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(component, message.toString(), "FreeMind", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void obtainFocusForSelected() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.clearGlobalFocusOwner();
-		if (getView() != null) { // is null if the last map was closed.
-			logger.fine("Requesting Focus for " + getView() + " in model "
-					+ getView().getModel());
+		if (getView() != null) {
+			logger.fine("Requesting Focus for " + getView() + " in model " + getView().getModel());
 			getView().requestFocusInWindow();
 		} else {
 			logger.info("No view present. No focus!");
@@ -838,9 +799,6 @@ public class Controller implements MapModuleChangeObserver {
 		mMapTitleContributorSet.remove(pMapTitleContributor);
 	}
 
-	//
-	// Actions management
-	//
 
 	/**
 	 * Manage the availabilty of all Actions dependend of whether there is a map
@@ -856,10 +814,6 @@ public class Controller implements MapModuleChangeObserver {
 		((MainToolBar) getToolBar()).setAllActions(enabled);
 		showSelectionAsRectangle.setEnabled(enabled);
 	}
-
-	//
-	// program/map control
-	//
 
 	private void quit() {
 		String currentMapRestorable = (getModel() != null) ? getModel()
@@ -966,18 +920,6 @@ public class Controller implements MapModuleChangeObserver {
 		return true;
 	}
 
-	// ////////////
-	// Inner Classes
-	// //////////
-
-	/**
-	 * Manages the history of visited maps. Maybe explicitly closed maps should
-	 * be removed from History too?
-	 */
-
-	//
-	// program/map control
-	//
 
 	private class QuitAction extends AbstractAction {
 		QuitAction(Controller controller) {
@@ -989,7 +931,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	/** This closes only the current map */
 	public static class CloseAction extends AbstractAction {
 		private final Controller controller;
 
@@ -1053,8 +994,7 @@ public class Controller implements MapModuleChangeObserver {
 					getView(),
 					getPageFormat());
 			previewDialog.pack();
-			previewDialog.setLocationRelativeTo(JOptionPane
-					.getFrameForComponent(getView()));
+			previewDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(getView()));
 			previewDialog.setVisible(true);
 		}
 	}
@@ -1075,13 +1015,10 @@ public class Controller implements MapModuleChangeObserver {
 
 			// Ask about custom printing settings
 			final JDialog dialog = new JDialog((JFrame) getFrame(),
-					getResourceString("printing_settings"), /* modal= */true);
-			final JCheckBox fitToPage = new JCheckBox(
-					getResourceString("fit_to_page"), Resources.getInstance()
-							.getBoolProperty("fit_to_page"));
+					getResourceString("printing_settings"), true);
+			final JCheckBox fitToPage = new JCheckBox(getResourceString("fit_to_page"), Resources.getInstance().getBoolProperty("fit_to_page"));
 			final JLabel userZoomL = new JLabel(getResourceString("user_zoom"));
-			final JTextField userZoom = new JTextField(
-					getProperty("user_zoom"), 3);
+			final JTextField userZoom = new JTextField(getProperty("user_zoom"), 3);
 			userZoom.setEditable(!fitToPage.isSelected());
 			final JButton okButton = new JButton();
 			Tools.setLabelAndMnemonic(okButton, getResourceString("ok"));
@@ -1202,7 +1139,7 @@ public class Controller implements MapModuleChangeObserver {
 			String urlText = controller.getFrame().getResourceString("pdfKeyDocLocation");
 			urlText = Tools.removeTranslateComment(urlText);
 			try {
-				URL url = null;
+				URL url;
 				if (urlText != null && urlText.startsWith(".")) {
 					url = localDocumentationLinkConverter
 							.convertLocalLink(urlText);
@@ -1431,7 +1368,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			// logger.info("ZoomInAction actionPerformed");
 			float currentZoom = getView().getZoom();
 			for (float val : zoomValues) {
 				if (val > currentZoom) {
@@ -1469,7 +1405,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			// logger.info("ShowSelectionAsRectangleAction action Performed");
 			toggleSelectionAsRectangle();
 		}
 
@@ -1488,17 +1423,14 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void toggleSelectionAsRectangle() {
 		if (isSelectionAsRectangle()) {
-			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION,
-					BooleanProperty.FALSE_VALUE);
+			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, BooleanProperty.FALSE_VALUE);
 		} else {
-			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION,
-					BooleanProperty.TRUE_VALUE);
+			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, BooleanProperty.TRUE_VALUE);
 		}
 	}
 
 	private boolean isSelectionAsRectangle() {
-		return getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION)
-				.equalsIgnoreCase(BooleanProperty.TRUE_VALUE);
+		return getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION).equalsIgnoreCase(BooleanProperty.TRUE_VALUE);
 	}
 
 	/**
@@ -1518,8 +1450,7 @@ public class Controller implements MapModuleChangeObserver {
 	 *            to the listener after registration. Here, the oldValue
 	 *            parameter is set to null.
 	 */
-	public static void addPropertyChangeListenerAndPropagate(
-			FreemindPropertyListener listener) {
+	public static void addPropertyChangeListenerAndPropagate(FreemindPropertyListener listener) {
 		Controller.addPropertyChangeListener(listener);
 		Properties properties = Resources.getInstance().getProperties();
 		for (Object o : properties.keySet()) {
@@ -1528,8 +1459,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	public static void removePropertyChangeListener(
-			FreemindPropertyListener listener) {
+	public static void removePropertyChangeListener(FreemindPropertyListener listener) {
 		Controller.propertyChangeListeners.remove(listener);
 	}
 
@@ -1550,7 +1480,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
-			JDialog dialog = new JDialog(getFrame().getJFrame(), true /* modal */);
+			JDialog dialog = new JDialog(getFrame().getJFrame(), true);
 			dialog.setResizable(true);
 			dialog.setUndecorated(false);
 			final OptionPanel options = new OptionPanel((FreeMind) getFrame(),
@@ -1559,6 +1489,7 @@ public class Controller implements MapModuleChangeObserver {
                         sortedKeys.addAll(props.keySet());
                         Collections.sort(sortedKeys);
                         boolean propertiesChanged = false;
+
 				for (Object sortedKey : sortedKeys) {
 					String key = (String) sortedKey;
 					// save only changed keys:
@@ -1570,10 +1501,7 @@ public class Controller implements MapModuleChangeObserver {
 				}
 
                         if (propertiesChanged) {
-                            JOptionPane
-                                    .showMessageDialog(
-                                            null,
-                                            getResourceString("option_changes_may_require_restart"));
+                            JOptionPane.showMessageDialog(null, getResourceString("option_changes_may_require_restart"));
                             controller.getFrame().saveProperties(false);
                         }
                     });
@@ -1667,7 +1595,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	// open faq url from freeminds page:
 	private class OpenURLAction extends AbstractAction {
 		Controller c;
 		private final String url;
@@ -1777,7 +1704,6 @@ public class Controller implements MapModuleChangeObserver {
 				mTabbedPane.setComponentAt(j, new JPanel());
 		}
 		if (selectedIndex < 0) {
-			// nothing selected. probably, the last map was closed
 			return;
 		}
 		MapModule module = (MapModule) mTabbedPaneMapModules.get(selectedIndex);
@@ -1790,7 +1716,7 @@ public class Controller implements MapModuleChangeObserver {
 		// mScrollPane could be set invisible by JTabbedPane
 		frame.getScrollPane().setVisible(true);
 		mTabbedPane.setComponentAt(selectedIndex, frame.getContentComponent());
-		// double call, due to mac strangeness.
+
 		obtainFocusForSelected();
 	}
 
