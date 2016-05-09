@@ -741,7 +741,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			getContentPane().add(mContentComponent, BorderLayout.CENTER);
 		}
 		getContentPane().add(status, BorderLayout.SOUTH);
-		
+
 		// Disable the default close button, instead use windowListener
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 

@@ -60,10 +60,9 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		}
 	}
 
-	private static final String[] sizes = { "8", "10", "12", "14", "16", "18",
-			"20", "24", "28" };
+	private static final String[] sizes = { "8", "10", "12", "14", "16", "18", "20", "24", "28" };
 	private static final String FONT_COMBO_BOX_DISPLAY_TEXT = "xxxxxxxxxx";
-	private MindMapController c;
+	private MindMapController controller;
 	private JComboBox fonts, size;
 	private JAutoScrollBarPane iconToolBarScrollPane;
 	private JToolBar iconToolBar;
@@ -81,11 +80,11 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	
 	public MindMapToolBar(MindMapController controller) {
 		super();
-		this.c = controller;
+		this.controller = controller;
 		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
+			logger = freemind.main.Resources.getInstance().getLogger(this.getClass().getName());
 		}
+
 		this.setRollover(true);
 
 		createIconToolbar();
@@ -115,7 +114,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			if (fontSize_IgnoreChangeEvent) {
 				return;
 			}
-			c.fontSize.actionPerformed((String) e.getItem());
+			controller.fontSize.actionPerformed((String) e.getItem());
 		};
 		size.addItemListener(sizeListener);
 	}
@@ -132,7 +131,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 				return;
 			}
 			fontFamily_IgnoreChangeEvent = true;
-			c.fontFamily.actionPerformed((String) e.getItem());
+			controller.fontFamily.actionPerformed((String) e.getItem());
 			fontFamily_IgnoreChangeEvent = false;
 		};
 		fonts.addItemListener(fontsListener);
@@ -147,6 +146,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			if(color_IgnoreChangeEvent){
 				return;
 			}
+
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				color_IgnoreChangeEvent = true;
 				setFontColorByItem((ColorPair) e.getItem());
@@ -156,9 +156,9 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	}
 
 	private void createZoomComboBox() {
-		userDefinedZoom = this.c.getText("user_defined_zoom");
+		userDefinedZoom = this.controller.getText("user_defined_zoom");
 
-		zoom = new FreeMindComboBox(this.c.getController().getZooms());
+		zoom = new FreeMindComboBox(this.controller.getController().getZooms());
 		zoom.setPreferredSize(new Dimension(90,15));
 		zoom.setSelectedItem("100%");
 		zoom.addItem(userDefinedZoom);
@@ -177,21 +177,21 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			return;
 		String dirty = (String) item;
 		String cleaned = dirty.substring(0, dirty.length() - 1);
-		// change representation ("125" to 1.25)
-		float zoomValue = Float.parseFloat(cleaned) / 100F; // nothing to do...
+
+		float zoomValue = Float.parseFloat(cleaned) / 100F;
 		// remove '%' sign
 		getController().setZoom(zoomValue);
 	}
 
 	private void setFontColorByItem(ColorPair pItem) {
-		for (Object o : c.getSelecteds()) {
+		for (Object o : controller.getSelecteds()) {
 			MindMapNode node = (MindMapNode) o;
-			c.setNodeColor(node, pItem.color);
+			controller.setNodeColor(node, pItem.color);
 		}
 	}
 	
 	protected Controller getController() {
-		return c.getController();
+		return controller.getController();
 	}
 	
 	public void update(StructuredMenuHolder holder) {
@@ -213,11 +213,11 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		
 		// button tool bar.
 		iconToolBar.removeAll();
-		iconToolBar.add(c.removeLastIconAction);
-		iconToolBar.add(c.removeAllIconsAction);
+		iconToolBar.add(controller.removeLastIconAction);
+		iconToolBar.add(controller.removeAllIconsAction);
 		iconToolBar.addSeparator();
-		for (int i = 0; i < c.iconActions.size(); ++i) {
-			iconToolBar.add((Action) c.iconActions.get(i));
+		for (int i = 0; i < controller.iconActions.size(); ++i) {
+			iconToolBar.add((Action) controller.iconActions.get(i));
 		}
 	}
 
@@ -229,7 +229,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		return label;
 	}
 
-	void selectFontSize(String fontSize) // (DiPo)
+	void selectFontSize(String fontSize)
 	{
 		fontSize_IgnoreChangeEvent = true;
 		size.setSelectedItem(fontSize);
@@ -240,11 +240,12 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		return iconToolBarScrollPane;
 	}
 
-	void selectFontName(String fontName) // (DiPo)
+	void selectFontName(String fontName)
 	{
 		if (fontFamily_IgnoreChangeEvent) {
 			return;
 		}
+
 		fontFamily_IgnoreChangeEvent = true;
 		fonts.setEditable(true);
 		fonts.setSelectedItem(fontName);
@@ -261,7 +262,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		logger.fine("setZoomComboBox is called with " + f + ".");
 		String toBeFound = getItemForZoom(f);
 		for (int i = 0; i < zoom.getItemCount(); ++i) {
-			if (toBeFound.equals((String) zoom.getItemAt(i))) {
+			if (toBeFound.equals(zoom.getItemAt(i))) {
 				// found
 				zoom.setSelectedItem(toBeFound);
 				return;
