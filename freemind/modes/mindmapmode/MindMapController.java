@@ -514,28 +514,18 @@ public class MindMapController extends ControllerAdapter implements
 		logger.info("MindMapToolBar");
 		toolbar = new MindMapToolBar(this);
 
-		addAsChildMode = Resources.getInstance()
-				.getBoolProperty("add_as_child");
+		addAsChildMode = Resources.getInstance().getBoolProperty("add_as_child");
 		mRegistrations = new Vector();
 
 		propertyAction = getController().propertyAction;
 	}
 
 	private void createStandardActions() {
-		// prepare undo:
 		undo = new UndoAction(this);
 		redo = new RedoAction(this);
-		// register default action handler:
-		// the executor must be the first here, because it is executed last
-		// then.
-		getActionRegistry().registerHandler(
-				new DefaultActionHandler(getActionRegistry()));
-		getActionRegistry().registerUndoHandler(
-				new UndoActionHandler(this, undo, redo));
-		// debug:
-		// getActionFactory().registerHandler(
-		// new freemind.modes.mindmapmode.actions.xml.PrintActionHandler(
-		// this));
+
+		getActionRegistry().registerHandler(new DefaultActionHandler(getActionRegistry()));
+		getActionRegistry().registerUndoHandler(new UndoActionHandler(this, undo, redo));
 
 		cut = new CutAction(this);
 		paste = new PasteAction(this);
@@ -565,9 +555,7 @@ public class MindMapController extends ControllerAdapter implements
 		// this is an unknown icon and thus corrected by mindicon:
 		removeLastIconAction = new RemoveIconAction(this);
 		// this action handles the xml stuff: (undo etc.)
-		unknownIconAction = new IconAction(this,
-				MindIcon.factory((String) MindIcon.getAllIconNames().get(0)),
-				removeLastIconAction);
+		unknownIconAction = new IconAction(this, MindIcon.factory((String) MindIcon.getAllIconNames().get(0)), removeLastIconAction);
 		removeLastIconAction.setIconAction(unknownIconAction);
 		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
 		// load pattern actions:
@@ -975,12 +963,7 @@ public class MindMapController extends ControllerAdapter implements
 		toolbar.selectColor(n.getColor());
 	}
 
-	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
-	/**
-	 * A general list of MindMapControllerPlugin s. Members need to be tested
-	 * for the right class and casted to be applied.
-	 */
 	private HashSet mPlugins = new HashSet();
 	private Timer mNodeInformationTimer;
 	private NodeInformationTimerAction mNodeInformationTimerAction;

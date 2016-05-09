@@ -12,8 +12,6 @@ import java.awt.font.TextAttribute;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.PrinterJob;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -23,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -71,18 +68,17 @@ public class Controller implements MapModuleChangeObserver {
 	 * (Used to change this behaviour under MacOSX).
 	 */
 	private static Logger logger;
-	/** Used for MAC!!! */
 	public static LocalLinkConverter localDocumentationLinkConverter;
 	private static JColorChooser colorChooser = new JColorChooser();
-	private LastOpenedList lastOpened;// A list of the pathnames of all the maps
-										// that were opened in the last time
-	private MapModuleManager mapModuleManager;// new MapModuleManager();
-	/** The current mode */
+	private LastOpenedList lastOpened;
+	private MapModuleManager mapModuleManager;
+
 	private Mode mMode;
 	private FreeMindMain frame;
 	private MainToolBar toolbar;
 	private JToolBar filterToolbar;
 	private JPanel northToolbarPanel;
+    private JPanel southToolbarPanel;
 	private NodeMouseMotionListener nodeMouseMotionListener;
 	private NodeMotionListener nodeMotionListener;
 	private NodeKeyListener nodeKeyListener;
@@ -93,8 +89,9 @@ public class Controller implements MapModuleChangeObserver {
 	private ModesCreator mModescreator = new ModesCreator(this);
 	private PageFormat pageFormat = null;
 	private PrinterJob printerJob = null;
-	private Icon bswatch = new BackgroundSwatch();// needed for BackgroundAction
+	private Icon bswatch = new BackgroundSwatch();
 	private Map fontMap = new HashMap();
+    private JLabel status;
 
 	private FilterController mFilterController;
 
@@ -159,7 +156,15 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	public void init() {
+    public JLabel getStatus() {
+        return status;
+    }
+
+    public void setStatus(JLabel status) {
+        this.status = status;
+    }
+
+    public void init() {
 		initialization();
 
 		nodeMouseMotionListener = new NodeMouseMotionListener(this);
@@ -205,24 +210,33 @@ public class Controller implements MapModuleChangeObserver {
 
 		moveToRoot = new MoveToRootAction(this);
 
-		// Create the ToolBar
-		toolbar = new MainToolBar(this);
-		mFilterController = new FilterController(this);
-		filterToolbar = mFilterController.getFilterToolbar();
-
-		northToolbarPanel = new JPanel(new BorderLayout());
-		getFrame().getContentPane().add(northToolbarPanel, BorderLayout.NORTH);
-		northToolbarPanel.add(toolbar, BorderLayout.NORTH);
-		northToolbarPanel.add(filterToolbar, BorderLayout.SOUTH);
+        generateNorthToolBar();
+        generateSouthToolBar();
 
 		setAllActions(false);
-
 	}
 
-	public void initialization() {
-		/**
-		 * Arranges the keyboard focus especially after opening FreeMind.
-		 * */
+    private void generateNorthToolBar() {
+        toolbar = new MainToolBar(this);
+        mFilterController = new FilterController(this);
+        filterToolbar = mFilterController.getFilterToolbar();
+
+        northToolbarPanel = new JPanel(new BorderLayout());
+        getFrame().getContentPane().add(northToolbarPanel, BorderLayout.NORTH);
+        northToolbarPanel.add(toolbar, BorderLayout.NORTH);
+        northToolbarPanel.add(filterToolbar, BorderLayout.SOUTH);
+    }
+
+    private void generateSouthToolBar() {
+        southToolbarPanel = new JPanel(new BorderLayout());
+        status = new JLabel("!");
+        status.setPreferredSize(status.getPreferredSize());
+        status.setText("");
+        southToolbarPanel.add(status);
+        getFrame().getContentPane().add(southToolbarPanel, BorderLayout.SOUTH);
+    }
+
+    public void initialization() {
 		KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		focusManager.addPropertyChangeListener(e -> {
             String prop = e.getPropertyName();
@@ -241,8 +255,7 @@ public class Controller implements MapModuleChangeObserver {
 		mapModuleManager = new MapModuleManager(this);
 		mapModuleManager.addListener(this);
 		if (!Tools.isAvailableFontFamily(getProperty("defaultfont"))) {
-			logger.warning("Warning: the font you have set as standard - "
-					+ getProperty("defaultfont") + " - is not available.");
+			logger.warning("Warning: the font you have set as standard - " + getProperty("defaultfont") + " - is not available.");
 			frame.setProperty("defaultfont", "SansSerif");
 		}
 	}
@@ -261,8 +274,7 @@ public class Controller implements MapModuleChangeObserver {
 		firePropertyChanged(property, value, oldValue);
 	}
 
-	private void firePropertyChanged(String property, String value,
-			String oldValue) {
+	private void firePropertyChanged(String property, String value, String oldValue) {
 		if (oldValue == null || !oldValue.equals(value)) {
 			for (Object o : Controller.getPropertyChangeListeners()) {
 				FreemindPropertyListener listener = (FreemindPropertyListener) o;
@@ -299,7 +311,6 @@ public class Controller implements MapModuleChangeObserver {
 			return getMapModule().getModeController();
 		}
 		if (getMode() != null) {
-			// no map present: we take the default:
 			return getMode().getDefaultModeController();
 		}
 		return null;
@@ -412,8 +423,7 @@ public class Controller implements MapModuleChangeObserver {
 		pane.setColor(initialColor);
 
 		ColorTracker ok = new ColorTracker(pane);
-		JDialog dialog = JColorChooser.createDialog(component, title, true,
-				pane, ok, null);
+		JDialog dialog = JColorChooser.createDialog(component, title, true, pane, ok, null);
 		dialog.addWindowListener(new Closer());
 		dialog.addComponentListener(new DisposeOnClose());
 
@@ -697,7 +707,7 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
 	public void errorMessage(Object message) {
-		String myMessage = "";
+		String myMessage;
 
 		if (message != null) {
 			myMessage = message.toString();
@@ -851,8 +861,7 @@ public class Controller implements MapModuleChangeObserver {
 		// store last tab session:
 		int index = 0;
 		String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-		LastStateStorageManagement management = new LastStateStorageManagement(
-				lastStateMapXml);
+		LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
 		management.setLastFocussedTab(-1);
 		management.clearTabIndices();
         for (Object restorable1 : restorables) {
@@ -879,10 +888,8 @@ public class Controller implements MapModuleChangeObserver {
 			if (JFrame.MAXIMIZED_BOTH != (winState & JFrame.MAXIMIZED_BOTH)) {
 				setProperty("appwindow_x", String.valueOf(getFrame().getWinX()));
 				setProperty("appwindow_y", String.valueOf(getFrame().getWinY()));
-				setProperty("appwindow_width",
-						String.valueOf(getFrame().getWinWidth()));
-				setProperty("appwindow_height",
-						String.valueOf(getFrame().getWinHeight()));
+				setProperty("appwindow_width", String.valueOf(getFrame().getWinWidth()));
+				setProperty("appwindow_height", String.valueOf(getFrame().getWinHeight()));
 			}
 			setProperty("appwindow_state", String.valueOf(winState));
 		}
@@ -904,11 +911,9 @@ public class Controller implements MapModuleChangeObserver {
 		}
 		if (Tools.safeEquals(getProperty("page_orientation"), "landscape")) {
 			pageFormat.setOrientation(PageFormat.LANDSCAPE);
-		} else if (Tools
-				.safeEquals(getProperty("page_orientation"), "portrait")) {
+		} else if (Tools.safeEquals(getProperty("page_orientation"), "portrait")) {
 			pageFormat.setOrientation(PageFormat.PORTRAIT);
-		} else if (Tools.safeEquals(getProperty("page_orientation"),
-				"reverse_landscape")) {
+		} else if (Tools.safeEquals(getProperty("page_orientation"), "reverse_landscape")) {
 			pageFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);
 		}
 		String pageFormatProperty = getProperty(PAGE_FORMAT_PROPERTY);
@@ -1181,10 +1186,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(getView(),
-					controller.getResourceString("license_text"),
-					controller.getResourceString("license"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(getView(), controller.getResourceString("license_text"), controller.getResourceString("license"), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -1295,10 +1297,6 @@ public class Controller implements MapModuleChangeObserver {
 		mTabbedPane.setForegroundAt(dst, fg);
 		mTabbedPane.setBackgroundAt(dst, bg);
 	}
-
-	//
-	// Node navigation
-	//
 
 	private class MoveToRootAction extends AbstractAction {
 		MoveToRootAction(Controller controller) {
@@ -1414,11 +1412,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	//
-	// Preferences
-	//
-
-	public static Collection getPropertyChangeListeners() {
+    public static Collection getPropertyChangeListeners() {
 		return Collections.unmodifiableCollection(propertyChangeListeners);
 	}
 
@@ -1434,8 +1428,6 @@ public class Controller implements MapModuleChangeObserver {
 		return getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION).equalsIgnoreCase(BooleanProperty.TRUE_VALUE);
 	}
 
-	/**
-     */
 	public MindMap getMap() {
 		return getMapModule().getModel();
 	}
@@ -1472,9 +1464,6 @@ public class Controller implements MapModuleChangeObserver {
 
 		private final Controller controller;
 
-		/**
-		 *
-		 */
 		public PropertyAction(Controller controller) {
 			super(controller.getResourceString("property_dialog"));
 			this.controller = controller;
@@ -1540,8 +1529,6 @@ public class Controller implements MapModuleChangeObserver {
 			changeAntialias(command);
 		}
 
-		/**
-	     */
 		public void changeAntialias(String command) {
 			if (command == null) {
 				return;
@@ -1784,9 +1771,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	/**
-	 * 
-	 */
 	private void storeOptionSplitPanePosition() {
 		if (mOptionalSplitPane != null) {
 			setProperty(FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, ""
@@ -1794,5 +1778,12 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
+    public JPanel getSouthToolbarPanel() {
+        return southToolbarPanel;
+    }
+
+    public void setSouthToolbarPanel(JPanel southToolbarPanel) {
+        this.southToolbarPanel = southToolbarPanel;
+    }
 
 }

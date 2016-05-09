@@ -147,7 +147,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	public static Properties props;
 	private static Properties defProps;
 	private MenuBar menuBar;
-	private JLabel status;
 	private Timer mStatusMessageDisplayTimer;
 	private Map filetypes; // Hopefully obsolete. Used to store applications
 	private File autoPropertiesFile;
@@ -414,11 +413,10 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	}
 
 	public void out(String msg) {
+		JLabel status = controller.getStatus();
 		if (status != null) {
 			status.setText(msg);
-			// Automatically remove old messages after a certain time.
 			mStatusMessageDisplayTimer.restart();
-			// logger.info(msg);
 		}
 	}
 
@@ -426,9 +424,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 		out(msg);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	public void actionPerformed(ActionEvent pE) {
 		out("");
 		mStatusMessageDisplayTimer.stop();
@@ -718,9 +713,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			mScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			mScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
-		status = new JLabel("!");
-		status.setPreferredSize(status.getPreferredSize());
-		status.setText("");
+
 		mStatusMessageDisplayTimer = new Timer(TIME_TO_DISPLAY_MESSAGES, this);
 		mContentComponent = mScrollPane;
 
@@ -740,7 +733,6 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			// don't use tabbed panes.
 			getContentPane().add(mContentComponent, BorderLayout.CENTER);
 		}
-		getContentPane().add(status, BorderLayout.SOUTH);
 
 		// Disable the default close button, instead use windowListener
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
