@@ -53,7 +53,6 @@ import freemind.modes.ModesCreator;
 import freemind.modes.browsemode.BrowseMode;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
-import freemind.preferences.layout.OptionPanel.OptionPanelFeedback;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 
@@ -423,7 +422,9 @@ public class Controller implements MapModuleChangeObserver {
 		return ok.getColor();
 	}
 
-	private static class ColorTracker implements ActionListener, Serializable {
+
+
+    private static class ColorTracker implements ActionListener, Serializable {
 		JColorChooser chooser;
 		Color color;
 

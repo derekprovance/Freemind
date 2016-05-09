@@ -87,66 +87,89 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 					this.getClass().getName());
 		}
 		this.setRollover(true);
-		fonts = new FreeMindComboBox(Tools.getAvailableFontFamilyNamesAsVector());
-		fonts.setFocusable(false);
-		size = new FreeMindComboBox(sizes);
-		size.setFocusable(false);
+
+		createIconToolbar();
+		createFontsComboBox();
+		createFontSizeComboBox();
+		createZoomComboBox();
+		createColorComboBox();
+	}
+
+	private void createIconToolbar() {
 		iconToolBar = new FreeMindToolBar();
 		iconToolBarScrollPane = new JAutoScrollBarPane(iconToolBar);
 		iconToolBar.setOrientation(JToolBar.VERTICAL);
 		iconToolBar.setRollover(true);
-		iconToolBar.setLayout(new GridLayout(0, getController().getIntProperty(FreeMind.ICON_BAR_COLUMN_AMOUNT, 1))); 
+		iconToolBar.setLayout(new GridLayout(0, getController().getIntProperty(FreeMind.ICON_BAR_COLUMN_AMOUNT, 1)));
 		iconToolBarScrollPane.getVerticalScrollBar().setUnitIncrement(100);
-		fontsListener = e -> {
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                return;
-            }
-            if (fontFamily_IgnoreChangeEvent) {
-                return;
-            }
-            fontFamily_IgnoreChangeEvent = true;
-            c.fontFamily.actionPerformed((String) e.getItem());
-            fontFamily_IgnoreChangeEvent = false;
-        };
-		fonts.addItemListener(fontsListener);
-		sizeListener = e -> {
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                return;
-            }
-            if (fontSize_IgnoreChangeEvent) {
-                return;
-            }
-            c.fontSize.actionPerformed((String) e.getItem());
-        };
-		size.addItemListener(sizeListener);
-		userDefinedZoom = controller.getText("user_defined_zoom");
+	}
 
-		zoom = new FreeMindComboBox(controller.getController().getZooms());
-		zoom.setPreferredSize(new Dimension(90,15));
-		zoom.setSelectedItem("100%");
-		zoom.addItem(userDefinedZoom);
-		// Focus fix.
-		zoom.setFocusable(false);
-		zoom.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                setZoomByItem(e.getItem());
-            }
-        });
-		
+	private void createFontSizeComboBox() {
+		size = new FreeMindComboBox(sizes);
+		size.setFocusable(false);
+
+		sizeListener = e -> {
+			if (e.getStateChange() != ItemEvent.SELECTED) {
+				return;
+			}
+			if (fontSize_IgnoreChangeEvent) {
+				return;
+			}
+			c.fontSize.actionPerformed((String) e.getItem());
+		};
+		size.addItemListener(sizeListener);
+	}
+
+	private void createFontsComboBox() {
+		fonts = new FreeMindComboBox(Tools.getAvailableFontFamilyNamesAsVector());
+		fonts.setFocusable(false);
+
+		fontsListener = e -> {
+			if (e.getStateChange() != ItemEvent.SELECTED) {
+				return;
+			}
+			if (fontFamily_IgnoreChangeEvent) {
+				return;
+			}
+			fontFamily_IgnoreChangeEvent = true;
+			c.fontFamily.actionPerformed((String) e.getItem());
+			fontFamily_IgnoreChangeEvent = false;
+		};
+		fonts.addItemListener(fontsListener);
+	}
+
+	private void createColorComboBox() {
 		colorCombo = new JColorCombo();
 		colorCombo.setFocusable(false);
 		fonts.setPrototypeDisplayValue(FONT_COMBO_BOX_DISPLAY_TEXT);
 		colorCombo.setPrototypeDisplayValue(new ColorPair(Color.BLACK, ""));
 		colorCombo.addItemListener(e -> {
-            if(color_IgnoreChangeEvent){
-                return;
-            }
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                color_IgnoreChangeEvent = true;
-                setFontColorByItem((ColorPair) e.getItem());
-                color_IgnoreChangeEvent = false;
-            }
-        });
+			if(color_IgnoreChangeEvent){
+				return;
+			}
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				color_IgnoreChangeEvent = true;
+				setFontColorByItem((ColorPair) e.getItem());
+				color_IgnoreChangeEvent = false;
+			}
+		});
+	}
+
+	private void createZoomComboBox() {
+		userDefinedZoom = this.c.getText("user_defined_zoom");
+
+		zoom = new FreeMindComboBox(this.c.getController().getZooms());
+		zoom.setPreferredSize(new Dimension(90,15));
+		zoom.setSelectedItem("100%");
+		zoom.addItem(userDefinedZoom);
+
+		// Focus fix.
+		zoom.setFocusable(false);
+		zoom.addItemListener(e -> {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				setZoomByItem(e.getItem());
+			}
+		});
 	}
 
 	private void setZoomByItem(Object item) {
