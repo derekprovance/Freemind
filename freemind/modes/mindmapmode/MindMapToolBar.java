@@ -157,8 +157,6 @@ public class MindMapToolBar extends FreeMindToolBar {
 		label.setToolTipText(Resources.getInstance().getText("mindmapmode_toolbar_font_color"));
 		add(colorCombo);
 		add(Box.createHorizontalGlue());
-		addIcon("images/page-zoom.png");
-//		add(zoom);
 
 		// button tool bar.
 		iconToolBar.removeAll();

@@ -75,7 +75,8 @@ public class Controller implements MapModuleChangeObserver {
 
 	private Mode mMode;
 	private FreeMindMain frame;
-	private MainToolBar toolbar;
+	private MainToolBar northToolbar;
+	private MainToolBar southToolbar;
 	private JToolBar filterToolbar;
 	private JPanel northToolbarPanel;
     private JPanel southToolbarPanel;
@@ -89,7 +90,6 @@ public class Controller implements MapModuleChangeObserver {
 	private ModesCreator mModescreator = new ModesCreator(this);
 	private PageFormat pageFormat = null;
 	private PrinterJob printerJob = null;
-	private Icon bswatch = new BackgroundSwatch();
 	private Map fontMap = new HashMap();
     private JLabel status;
 
@@ -218,33 +218,43 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
     private void generateNorthToolBar() {
-        toolbar = new MainToolBar(this);
+        northToolbar = new MainToolBar(this);
         mFilterController = new FilterController(this);
         filterToolbar = mFilterController.getFilterToolbar();
 
         northToolbarPanel = new JPanel(new BorderLayout());
         getFrame().getContentPane().add(northToolbarPanel, BorderLayout.NORTH);
-        northToolbarPanel.add(toolbar, BorderLayout.NORTH);
+        northToolbarPanel.add(northToolbar, BorderLayout.NORTH);
         northToolbarPanel.add(filterToolbar, BorderLayout.SOUTH);
     }
 
     private void generateSouthToolBar() {
+		southToolbar = new MainToolBar(this);
+
         southToolbarPanel = new JPanel(new BorderLayout());
-        status = new JLabel("!");
-        status.setPreferredSize(status.getPreferredSize());
-        status.setText("");
-        southToolbarPanel.add(status);
+		initializeStatus();
+        southToolbar.add(status);
+        southToolbar.add(createZoomComboBox());
+        southToolbarPanel.add(southToolbar);
         getFrame().getContentPane().add(southToolbarPanel, BorderLayout.SOUTH);
-		southToolbarPanel.add(createZoomComboBox());
+
+		//TODO - investigate if this should be moved to JPanel
+		//TODO - look into moving this to the MindMapToolbar
+	}
+
+	private void initializeStatus() {
+		status = new JLabel("!");
+		status.setPreferredSize(status.getPreferredSize());
+		status.setText("");
 	}
 
 	private JComboBox createZoomComboBox() {
 		JComboBox zoom = new JComboBox(this.getZooms());
-		zoom.setPreferredSize(new Dimension(90,15));
 		zoom.setSelectedItem("100%");
+        zoom.setPreferredSize(new Dimension(90, 20));
+        zoom.setMaximumSize(zoom.getPreferredSize());
 		zoom.addItem(userDefinedZoom);
 
-		// Focus fix.
 		zoom.setFocusable(false);
 		zoom.addItemListener(e -> {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -511,13 +521,13 @@ public class Controller implements MapModuleChangeObserver {
         }
 
         if (oldModeController.getModeToolBar() != null) {
-            toolbar.remove(oldModeController.getModeToolBar());
-            toolbar.activate(true);
+            northToolbar.remove(oldModeController.getModeToolBar());
+            northToolbar.activate(true);
         }
         if (oldModeController.getLeftToolBar() != null) {
             getFrame().getContentPane().remove(oldModeController.getLeftToolBar());
         }
-        toolbar.activate(true);
+        northToolbar.activate(true);
 	}
 
 	public void afterMapModuleChange(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
@@ -533,9 +543,8 @@ public class Controller implements MapModuleChangeObserver {
         generateTopToolbar(newModeController);
         generateLeftToolbar(newModeController);
 
-
-		toolbar.validate();
-        toolbar.repaint();
+		northToolbar.validate();
+        northToolbar.repaint();
 
         MenuBar menuBar = getFrame().getFreeMindMenuBar();
         menuBar.updateMenus(newModeController);
@@ -572,8 +581,8 @@ public class Controller implements MapModuleChangeObserver {
     private void generateTopToolbar(ModeController newModeController) {
         JToolBar newToolBar = newModeController.getModeToolBar();
         if (newToolBar != null) {
-            toolbar.activate(false);
-            toolbar.add(newToolBar, 0);
+            northToolbar.activate(false);
+            northToolbar.add(newToolBar, 0);
             newToolBar.repaint();
         }
     }
@@ -645,14 +654,14 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void setToolbarVisible(boolean visible) {
 		toolbarVisible = visible;
-		toolbar.setVisible(toolbarVisible);
+		northToolbar.setVisible(toolbarVisible);
 	}
 
 	/**
-	 * @return Returns the main toolbar.
+	 * @return Returns the main northToolbar.
 	 */
-	public JToolBar getToolbar() {
-		return toolbar;
+	public JToolBar getNorthToolbar() {
+		return northToolbar;
 	}
 
 	public void setLeftToolbarVisible(boolean visible) {
@@ -842,7 +851,7 @@ public class Controller implements MapModuleChangeObserver {
 		page.setEnabled(enabled && isPrintingAllowed);
 		close.setEnabled(enabled);
 		moveToRoot.setEnabled(enabled);
-		toolbar.setAllActions(enabled);
+		northToolbar.setAllActions(enabled);
 		showSelectionAsRectangle.setEnabled(enabled);
 	}
 
@@ -1797,12 +1806,4 @@ public class Controller implements MapModuleChangeObserver {
 					+ mOptionalSplitPane.getDividerPosition());
 		}
 	}
-
-    public JPanel getSouthToolbarPanel() {
-        return southToolbarPanel;
-    }
-
-    public void setSouthToolbarPanel(JPanel southToolbarPanel) {
-        this.southToolbarPanel = southToolbarPanel;
-    }
 }
