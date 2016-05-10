@@ -156,7 +156,7 @@ public class MindMapToolBar extends FreeMindToolBar {
 		JLabel label = addIcon("images/format-text-color.png");
 		label.setToolTipText(Resources.getInstance().getText("mindmapmode_toolbar_font_color"));
 		add(colorCombo);
-		add(Box.createHorizontalGlue());
+        add(Box.createHorizontalGlue());
 
 		// button tool bar.
 		iconToolBar.removeAll();
