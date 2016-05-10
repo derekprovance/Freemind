@@ -134,6 +134,7 @@ public class Controller implements MapModuleChangeObserver {
 	public Action showSelectionAsRectangle;
 	public PropertyAction propertyAction;
 	public OpenURLAction freemindUrl;
+	private String userDefinedZoom;
 
 	private static final float[] zoomValues = { 25 / 100f, 50 / 100f,
 			75 / 100f, 100 / 100f, 150 / 100f, 200 / 100f, 300 / 100f,
@@ -234,7 +235,34 @@ public class Controller implements MapModuleChangeObserver {
         status.setText("");
         southToolbarPanel.add(status);
         getFrame().getContentPane().add(southToolbarPanel, BorderLayout.SOUTH);
-    }
+		southToolbarPanel.add(createZoomComboBox());
+	}
+
+	private JComboBox createZoomComboBox() {
+		JComboBox zoom = new JComboBox(this.getZooms());
+		zoom.setPreferredSize(new Dimension(90,15));
+		zoom.setSelectedItem("100%");
+		zoom.addItem(userDefinedZoom);
+
+		// Focus fix.
+		zoom.setFocusable(false);
+		zoom.addItemListener(e -> {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				setZoomByItem(e.getItem());
+			}
+		});
+
+		return zoom;
+	}
+
+	private void setZoomByItem(Object item) {
+		String dirty = (String) item;
+		String cleaned = dirty.substring(0, dirty.length() - 1);
+
+		float zoomValue = Float.parseFloat(cleaned) / 100F;
+		// remove '%' sign
+		this.setZoom(zoomValue);
+	}
 
     public void initialization() {
 		KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();

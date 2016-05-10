@@ -1,23 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-/*$Id: MindMapToolBar.java,v 1.12.18.1.12.5 2009/07/04 20:38:27 christianfoltin Exp $*/
-
 package freemind.modes.mindmapmode;
 
 import java.awt.*;
@@ -44,7 +24,7 @@ import freemind.modes.MindMapNode;
 import freemind.view.ImageFactory;
 import freemind.view.mindmapview.MapView;
 
-public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
+public class MindMapToolBar extends FreeMindToolBar {
 
 	private final class FreeMindComboBox extends JComboBox {
 		private FreeMindComboBox(Vector pItems) {
@@ -71,8 +51,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	private boolean color_IgnoreChangeEvent = false;
 	private ItemListener fontsListener;
 	private ItemListener sizeListener;
-	private JComboBox zoom;
-	private String userDefinedZoom;
 	private JColorCombo colorCombo;
 	private int userDefinedCounter = 1;
 
@@ -90,7 +68,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		createIconToolbar();
 		createFontsComboBox();
 		createFontSizeComboBox();
-		createZoomComboBox();
 		createColorComboBox();
 	}
 
@@ -155,34 +132,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		});
 	}
 
-	private void createZoomComboBox() {
-		userDefinedZoom = this.controller.getText("user_defined_zoom");
-
-		zoom = new FreeMindComboBox(this.controller.getController().getZooms());
-		zoom.setPreferredSize(new Dimension(90,15));
-		zoom.setSelectedItem("100%");
-		zoom.addItem(userDefinedZoom);
-
-		// Focus fix.
-		zoom.setFocusable(false);
-		zoom.addItemListener(e -> {
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				setZoomByItem(e.getItem());
-			}
-		});
-	}
-
-	private void setZoomByItem(Object item) {
-		if ((item.equals(userDefinedZoom)))
-			return;
-		String dirty = (String) item;
-		String cleaned = dirty.substring(0, dirty.length() - 1);
-
-		float zoomValue = Float.parseFloat(cleaned) / 100F;
-		// remove '%' sign
-		getController().setZoom(zoomValue);
-	}
-
 	private void setFontColorByItem(ColorPair pItem) {
 		for (Object o : controller.getSelecteds()) {
 			MindMapNode node = (MindMapNode) o;
@@ -209,8 +158,8 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		add(colorCombo);
 		add(Box.createHorizontalGlue());
 		addIcon("images/page-zoom.png");
-		add(zoom);
-		
+//		add(zoom);
+
 		// button tool bar.
 		iconToolBar.removeAll();
 		iconToolBar.add(controller.removeLastIconAction);
@@ -256,32 +205,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	void setAllActions(boolean enabled) {
 		fonts.setEnabled(enabled);
 		size.setEnabled(enabled);
-	}
-
-	public void setZoom(float f) {
-		logger.fine("setZoomComboBox is called with " + f + ".");
-		String toBeFound = getItemForZoom(f);
-		for (int i = 0; i < zoom.getItemCount(); ++i) {
-			if (toBeFound.equals(zoom.getItemAt(i))) {
-				// found
-				zoom.setSelectedItem(toBeFound);
-				return;
-			}
-		}
-		zoom.setSelectedItem(userDefinedZoom);
-		
-	}
-	
-	private String getItemForZoom(float f) {
-		return (int) (f * 100F) + "%";
-	}
-
-	public void startup() {
-		getController().registerZoomListener(this);
-	}
-		
-	public void shutdown() {
-		getController().deregisterZoomListener(this);
 	}
 
 	void selectColor(Color pColor) {

@@ -214,8 +214,7 @@ import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 
-public class MindMapController extends ControllerAdapter implements
-		ExtendedMapFeedback, MapSourceChangedObserver {
+public class MindMapController extends ControllerAdapter implements ExtendedMapFeedback, MapSourceChangedObserver {
 
 	public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?[0-9]*[.,]?[0-9]+)\\b";
 	private static final String ACCESSORIES_PLUGINS_NODE_NOTE = "accessories.plugins.NodeNote";
@@ -549,7 +548,6 @@ public class MindMapController extends ControllerAdapter implements
 		unknownIconAction = new IconAction(this, MindIcon.factory((String) MindIcon.getAllIconNames().get(0)), removeLastIconAction);
 		removeLastIconAction.setIconAction(unknownIconAction);
 		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
-		// load pattern actions:
 		loadPatternActions();
 		EdgeWidth_WIDTH_PARENT = new EdgeWidthAction(this,
 				EdgeAdapter.WIDTH_PARENT);
@@ -558,28 +556,20 @@ public class MindMapController extends ControllerAdapter implements
 		EdgeWidth_2 = new EdgeWidthAction(this, 2);
 		EdgeWidth_4 = new EdgeWidthAction(this, 4);
 		EdgeWidth_8 = new EdgeWidthAction(this, 8);
-		edgeWidths = new EdgeWidthAction[] { EdgeWidth_WIDTH_PARENT,
-				EdgeWidth_WIDTH_THIN, EdgeWidth_1, EdgeWidth_2, EdgeWidth_4,
-				EdgeWidth_8 };
-		EdgeStyle_linear = new EdgeStyleAction(this,
-				EdgeAdapter.EDGESTYLE_LINEAR);
-		EdgeStyle_bezier = new EdgeStyleAction(this,
-				EdgeAdapter.EDGESTYLE_BEZIER);
-		EdgeStyle_sharp_linear = new EdgeStyleAction(this,
-				EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
-		EdgeStyle_sharp_bezier = new EdgeStyleAction(this,
-				EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
-		edgeStyles = new EdgeStyleAction[] { EdgeStyle_linear,
-				EdgeStyle_bezier, EdgeStyle_sharp_linear,
-				EdgeStyle_sharp_bezier };
+		//TODO - possible enum refactor here
+		edgeWidths = new EdgeWidthAction[] { EdgeWidth_WIDTH_PARENT, EdgeWidth_WIDTH_THIN, EdgeWidth_1, EdgeWidth_2, EdgeWidth_4, EdgeWidth_8 };
+		EdgeStyle_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_LINEAR);
+		EdgeStyle_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_BEZIER);
+		EdgeStyle_sharp_linear = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_LINEAR);
+		EdgeStyle_sharp_bezier = new EdgeStyleAction(this, EdgeAdapter.EDGESTYLE_SHARP_BEZIER);
+		//TODO - possible enum refactor here
+		edgeStyles = new EdgeStyleAction[] { EdgeStyle_linear, EdgeStyle_bezier, EdgeStyle_sharp_linear, EdgeStyle_sharp_bezier };
 		cloud = new CloudAction(this);
-		cloudColor = new freemind.modes.mindmapmode.actions.CloudColorAction(
-				this);
+		cloudColor = new freemind.modes.mindmapmode.actions.CloudColorAction(this);
 		addArrowLinkAction = new AddArrowLinkAction(this);
 		removeArrowLinkAction = new RemoveArrowLinkAction(this, null);
 		colorArrowLinkAction = new ColorArrowLinkAction(this, null);
-		changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this,
-				"none", null, null, true, true);
+		changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this, "none", null, null, true, true);
 		nodeBackgroundColor = new NodeBackgroundColorAction(this);
 		removeNodeBackgroundColor = new RemoveNodeBackgroundColorAction(this);
 		setLinkByTextField = new SetLinkByTextFieldAction(this);
@@ -727,11 +717,8 @@ public class MindMapController extends ControllerAdapter implements
                     "really_convert_to_current_version2",
                     "confirmation",
                     MindMapController.this,
-                    new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-                            getController(),
-                            FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION),
-                    OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
-                    .show().getResult();
+                    new OptionalDontShowMeAgainDialog.StandardPropertyHandler(getController(), FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION),
+                    OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED).show().getResult();
             return (showResult == JOptionPane.OK_OPTION);
         });
 	}
@@ -769,7 +756,6 @@ public class MindMapController extends ControllerAdapter implements
 	 */
 	public void startupController() {
 		super.startupController();
-		getToolBar().startup();
 		HookFactory hookFactory = getHookFactory();
 		List pluginRegistrations = hookFactory.getRegistrations();
 		logger.fine("mScheduledActions are executed: "
@@ -816,10 +802,7 @@ public class MindMapController extends ControllerAdapter implements
 		getNodeKeyListener().deregister();
 		getNodeMotionListener().deregister();
 		getNodeMouseMotionListener().deregister();
-		mGetEventIfChangedAfterThisTimeInMillies = getMap()
-				.deregisterMapSourceChangedObserver(this);
-		getToolBar().shutdown();
-
+		mGetEventIfChangedAfterThisTimeInMillies = getMap().deregisterMapSourceChangedObserver(this);
 	}
 
 	public MapAdapter newModel(ModeController modeController) {
@@ -846,8 +829,7 @@ public class MindMapController extends ControllerAdapter implements
 		for (Object iconName1 : iconNames) {
 			String iconName = ((String) iconName1);
 			MindIcon myIcon = MindIcon.factory(iconName);
-			IconAction myAction = new IconAction(this, myIcon,
-					removeLastIconAction);
+			IconAction myAction = new IconAction(this, myIcon, removeLastIconAction);
 			iconActions.add(myAction);
 		}
 	}
@@ -858,7 +840,6 @@ public class MindMapController extends ControllerAdapter implements
 	protected void createNodeHookActions() {
 		if (hookActions == null) {
 			hookActions = new Vector();
-			// HOOK TEST
 			MindMapHookFactory factory = (MindMapHookFactory) getHookFactory();
 			List nodeHookNames = factory.getPossibleNodeHooks();
 			for (Object nodeHookName : nodeHookNames) {
@@ -871,8 +852,7 @@ public class MindMapController extends ControllerAdapter implements
 					.getPossibleModeControllerHooks();
 			for (Object modeControllerHookName : modeControllerHookNames) {
 				String hookName = (String) modeControllerHookName;
-				MindMapControllerHookAction action = new MindMapControllerHookAction(
-						hookName, this);
+				MindMapControllerHookAction action = new MindMapControllerHookAction(hookName, this);
 				hookActions.add(action);
 			}
 		}
@@ -957,15 +937,14 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	public MindMapNode newNode(Object userObject, MindMap map) {
-		// singleton default:
 		if (myNewNodeCreator == null) {
 			myNewNodeCreator = new DefaultMindMapNodeCreator();
 		}
+
 		return myNewNodeCreator.createNode(userObject, map);
 	}
 
 	public void updateMenus(StructuredMenuHolder holder) {
-
 		processMenuCategory(holder, mMenuStructure.getListChoiceList(), "");
 		MindMapHookFactory hookFactory = (MindMapHookFactory) getHookFactory();
 		for (Object hookAction1 : hookActions) {
@@ -997,7 +976,6 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	public MenuStructure updateMenusFromXml(InputStream in) {
-		// get from resources:
 		try {
 			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
 					.createUnmarshaller();
@@ -1010,8 +988,7 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	public void processMenuCategory(StructuredMenuHolder holder, List list,
-			String category) {
+	public void processMenuCategory(StructuredMenuHolder holder, List list, String category) {
 		String categoryCopy = category;
 		ButtonGroup buttonGroup = null;
 		for (Object obj : list) {
@@ -1734,13 +1711,11 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	public void moveNodePosition(MindMapNode node, int parentVGap, int hGap,
-			int shiftY) {
+	public void moveNodePosition(MindMapNode node, int parentVGap, int hGap, int shiftY) {
 		getActorFactory().getMoveNodeActor().moveNodeTo(node, parentVGap, hGap, shiftY);
 	}
 
 	public void plainClick(MouseEvent e) {
-		/* perform action only if one selected node. */
 		if (getSelecteds().size() != 1)
 			return;
 		final MainView component = (MainView) e.getComponent();
@@ -1749,7 +1724,6 @@ public class MindMapController extends ControllerAdapter implements
 		} else {
 			MindMapNode node = (component).getNodeView().getModel();
 			if (!node.hasChildren()) {
-				// then emulate the plain click.
 				doubleClick(e);
 				return;
 			}
@@ -1758,7 +1732,6 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	public HookFactory getHookFactory() {
-		// lazy creation.
 		if (nodeHookFactory == null) {
 			nodeHookFactory = new MindMapHookFactory();
 		}
@@ -1767,13 +1740,12 @@ public class MindMapController extends ControllerAdapter implements
 
 	public NodeHook createNodeHook(String hookName, MindMapNode node) {
 		HookFactory hookFactory = getHookFactory();
-		NodeHook hook = (NodeHook) hookFactory.createNodeHook(hookName);
+		NodeHook hook = hookFactory.createNodeHook(hookName);
 		hook.setController(this);
 		hook.setMap(getMap());
 		if (hook instanceof PermanentNodeHook) {
 			PermanentNodeHook permHook = (PermanentNodeHook) hook;
 			if (hookFactory.getInstanciationMethod(hookName).isSingleton()) {
-				// search for already instanciated hooks of this type:
 				PermanentNodeHook otherHook = hookFactory.getHookInNode(node,
 						hookName);
 				if (otherHook != null) {
@@ -1813,16 +1785,13 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file)
-			throws IOException {
-		BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(file)));
+	static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file) throws IOException {
+		BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
 		MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
 		htmlWriter.saveHTML(rootNodeOfBranch);
 	}
 
-	static public void saveHTML(List mindMapNodes, Writer fileout)
-			throws IOException {
+	static public void saveHTML(List mindMapNodes, Writer fileout) throws IOException {
 		MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
 		htmlWriter.saveHTML(mindMapNodes);
 	}
@@ -1835,7 +1804,7 @@ public class MindMapController extends ControllerAdapter implements
 		String futureText = newText != null ? newText : node.toString();
 
 		String[] strings = getContent(futureText, caretPosition);
-		if (strings == null) { // do nothing
+		if (strings == null) {
 			return;
 		}
 		String newUpperContent = strings[0];
@@ -1898,7 +1867,6 @@ public class MindMapController extends ControllerAdapter implements
 				strings[1] = out.toString();
 				return strings;
 			} catch (IOException | BadLocationException e) {
-				// TODO Auto-generated catch block
 				freemind.main.Resources.getInstance().logException(e);
 			}
 		} else {
@@ -2010,21 +1978,16 @@ public class MindMapController extends ControllerAdapter implements
 		return Tools.unMarshall(inputString);
 	}
 
-	public void storeDialogPositions(JDialog dialog,
-			WindowConfigurationStorage pStorage,
-			String window_preference_storage_property) {
-		XmlBindingTools.getInstance().storeDialogPositions(getController(),
-				dialog, pStorage, window_preference_storage_property);
+	public void storeDialogPositions(JDialog dialog, WindowConfigurationStorage pStorage, String window_preference_storage_property) {
+		XmlBindingTools.getInstance().storeDialogPositions(getController(), dialog, pStorage, window_preference_storage_property);
 	}
 
-	public WindowConfigurationStorage decorateDialog(JDialog dialog,
-			String window_preference_storage_property) {
+	public WindowConfigurationStorage decorateDialog(JDialog dialog, String window_preference_storage_property) {
 		return XmlBindingTools.getInstance().decorateDialog(getController(),
 				dialog, window_preference_storage_property);
 	}
 
-	public void insertNodeInto(MindMapNode newNode, MindMapNode parent,
-			int index) {
+	public void insertNodeInto(MindMapNode newNode, MindMapNode parent, int index) {
 		setSaved(false);
 		getMap().insertNodeInto(newNode, parent, index);
 	}
@@ -2053,8 +2016,7 @@ public class MindMapController extends ControllerAdapter implements
 		erasePattern.setPatternEdgeStyle(new PatternEdgeStyle());
 		erasePattern.setPatternEdgeWidth(new PatternEdgeWidth());
 		erasePattern.setPatternIcon(new PatternIcon());
-		erasePattern
-				.setPatternNodeBackgroundColor(new PatternNodeBackgroundColor());
+		erasePattern.setPatternNodeBackgroundColor(new PatternNodeBackgroundColor());
 		erasePattern.setPatternNodeColor(new PatternNodeColor());
 		erasePattern.setPatternNodeFontBold(new PatternNodeFontBold());
 		erasePattern.setPatternNodeFontItalic(new PatternNodeFontItalic());
