@@ -225,10 +225,8 @@
         <include name="freemind.sh"/>
         <include name="license"/>
         <include name="patterns.xml"/>
-      </fileset>
-      <fileset dir="${src}/dictionaries">
-        <include name="dictionaries.properties"/>
-        <include name="dictionary_??.ortho"/>
+        <include name="dictionaries/dictionaries.properties"/>
+        <include name="dictionaries/dictionary_??.ortho"/>
       </fileset>
     </copy>
     <chmod file="${dist}/freemind.sh" perm="u+rx"/>
