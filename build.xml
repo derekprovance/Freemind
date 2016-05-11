@@ -473,7 +473,7 @@
         <include name="version.properties"/>
         <include name="patterns.xml"/>
         <include name="patterns_updater.xslt"/>
-        <include name="Resources*"/>
+        <include name="properties/Resources*"/>
         <include name="mindmap_menus.xml"/>
         <include name="**/freemind_version_updater.xslt"/>
         <include name="dictionar*"/>
@@ -510,7 +510,7 @@
         <include name="images/*"/>
         <include name="images/icons/*.png"/>
         <include name="*.properties"/>
-        <exclude name="Resources_*.properties"/>
+        <exclude name="properties/Resources_*.properties"/>
         <!--				<include name="*.xml"/>
         <exclude name="build.xml"/> -->
         <exclude name="images/*.svg"/>
@@ -519,7 +519,7 @@
         <exclude name="images/FreeMindWindowIcon.icns"/>
 
       </fileset>
-      <fileset dir="${src}">
+      <fileset dir="${src}/properties">
         <include name="Resources_en.properties"/>
       </fileset>
     </jar>

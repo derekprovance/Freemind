@@ -81,10 +81,8 @@ public class FreeMindCommon {
 		/**
 		 * @throws IOException
 		 */
-		private PropertyResourceBundle getLanguageResources(String lang)
-				throws IOException {
-			URL systemResource = mFreeMindMain.getResource("Resources_" + lang
-					+ ".properties");
+		private PropertyResourceBundle getLanguageResources(String lang) throws IOException {
+			URL systemResource = mFreeMindMain.getResource("properties/Resources_" + lang + ".properties");
 			if (systemResource == null) {
 				return null;
 			}
