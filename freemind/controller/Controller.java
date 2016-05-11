@@ -1164,11 +1164,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(getView(),
-					controller.getResourceString("about_text")
-							+ getFrame().getFreemindVersion(),
-					controller.getResourceString("about"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(getView(), controller.getResourceString("about_text") + getFrame().getFreemindVersion(), controller.getResourceString("about"), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
