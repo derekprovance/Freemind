@@ -2020,21 +2020,17 @@ public class Tools {
 		}
 	}
 
-	public static String getFreeMindBasePath()
-			throws UnsupportedEncodingException {
-		String path = FreeMindStarter.class.getProtectionDomain()
-				.getCodeSource().getLocation().getPath();
+	public static String getFreeMindBasePath() throws UnsupportedEncodingException {
+		String path = FreeMindStarter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = URLDecoder.decode(path, "UTF-8");
 		logger.info("Path: " + decodedPath);
 		if (decodedPath.endsWith(CONTENTS_JAVA_FREEMIND_JAR)) {
-			decodedPath = decodedPath.substring(0, decodedPath.length()
-					- CONTENTS_JAVA_FREEMIND_JAR.length());
+			decodedPath = decodedPath.substring(0, decodedPath.length() - CONTENTS_JAVA_FREEMIND_JAR.length());
 			decodedPath = decodedPath + FREE_MIND_APP_CONTENTS_RESOURCES_JAVA;
 			logger.info("macPath: " + decodedPath);
 		} else if (decodedPath.endsWith(FREEMIND_LIB_FREEMIND_JAR)) {
-			decodedPath = decodedPath.substring(0, decodedPath.length()
-					- FREEMIND_LIB_FREEMIND_JAR.length());
-			logger.info("reducded Path: " + decodedPath);
+			decodedPath = decodedPath.substring(0, decodedPath.length() - FREEMIND_LIB_FREEMIND_JAR.length());
+			logger.info("reduced Path: " + decodedPath);
 		}
 		return decodedPath;
 	}

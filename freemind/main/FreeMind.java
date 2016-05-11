@@ -589,7 +589,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 			Tools.safeEquals("true", props.getProperty(FreeMindCommon.CHECK_SPELLING));
 		if (checkSpelling) {
 			try {
-				String decodedPath = Tools.getFreeMindBasePath();
+				String decodedPath = Tools.getFreeMindBasePath() + "dictionaries/";
 				URL url = null;
 				if (new File (decodedPath).exists()) {
 					url = new URL("file", null, decodedPath);

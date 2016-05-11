@@ -225,8 +225,8 @@
         <include name="freemind.sh"/>
         <include name="license"/>
         <include name="patterns.xml"/>
-        <include name="dictionaries.properties"/>
-        <include name="dictionary_??.ortho"/>
+        <include name="dictionaries/dictionaries.properties"/>
+        <include name="dictionaries/dictionary_??.ortho"/>
       </fileset>
     </copy>
     <chmod file="${dist}/freemind.sh" perm="u+rx"/>
@@ -322,7 +322,7 @@
     <copy todir="${dist_macos_contents}/Resources/Java">
       <fileset dir="${dist}">
         <include name="doc/*" />
-        <include name="dictionar*" />
+        <include name="dictionaries/**" />
       </fileset>
     </copy>
     <!-- change freemind.properties -->
