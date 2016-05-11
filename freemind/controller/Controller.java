@@ -234,6 +234,7 @@ public class Controller implements MapModuleChangeObserver {
         southToolbarPanel = new JPanel(new BorderLayout());
 		initializeStatus();
         southToolbar.add(status);
+
         //TODO - look into moving this to the MindMapToolbar
         southToolbar.add(createZoomComboBox());
         southToolbarPanel.add(southToolbar);
