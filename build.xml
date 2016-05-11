@@ -280,13 +280,7 @@
     <condition property="isMacOs">
       <os family="mac"/>
     </condition>
-    <antcall target="dist_icon"/>
     <antcall target="dist_macos"/>
-  </target>
-
-  <target name="dist_icon">
-    <!--		<copy file="${src}/windows-launcher/Freemind_light_bulb.exe"
-      tofile="${dist}/Freemind.exe" overwrite="true"/> -->
   </target>
 
   <target name="dist_macos" if="isMacOs">
@@ -745,77 +739,6 @@
       <arg value="/Users/foltin/.wine/drive_c/Programme/Inno Setup 5/ISCC.exe"/>
       <arg value="Freemind.iss"/>
     </exec>
-  </target>
-
-  <!-- - - - - - - - - - - - - - - - - -
-        target: installers_chris_mac
-       - - - - - - - - - - - - - - - - - -->
-  <target name="installers_chris_mac">
-    <exec dir="." executable="ssh" os="Linux">
-      <arg value="foltin@${macName}"/>
-      <arg value="export JAVA_HOME=`/usr/libexec/java_home` ; cd /tmp ; rm -rf fm_installers ; mkdir fm_installers ; cd fm_installers ; /opt/local/bin/git clone -b ${branch} ${gitRoot} .; cd freemind ; /opt/local/bin/ant post"/>
-    </exec>
-    <exec dir="." executable="scp" os="Linux">
-      <arg value="foltin@${macName}:/tmp/fm_installers/post/*.dmg"/>
-      <arg value="${inst.dest.dir}/"/>
-    </exec>
-  </target>
-
-
-  <!-- =================================
-        target: installers, for Chris' computers
-       ================================= -->
-  <target name="installers_chris" depends="" description="--> Creates all installers. This is a task that only works on Chris laptops. But it should be informative to others who want to build the installers">
-    <property name="gitRoot" value="git://git.code.sf.net/p/freemind/code"/>
-    <property name="macName" value="mahler.local"/>
-    <property name="branch" value="1.1.0"/>
-
-    <property name="inst.dir" location="/tmp/fm_installer"/>
-    <property name="inst.dest.dir" location="../installers"/>
-    <property name="inst.windows.installer" location="${inst.dir}/admin/installer/windows"/>
-    <mkdir dir="${inst.dest.dir}"/>
-    <delete dir="${inst.dir}" failonerror="false"/>
-    <mkdir dir="${inst.dir}"/>
-    <exec dir="." executable="git">
-      <arg value="clone"/>
-      <arg value="-b"/>
-      <arg value="${branch}"/>
-      <arg value="${gitRoot}"/>
-      <arg value="${inst.dir}/"/>
-    </exec>
-    <copy todir="${inst.dir}/freemind" file="${freemind.buildnumber.file}">
-    </copy>
-    <ant dir="${inst.dir}/freemind" target="post" inheritall="false">
-    </ant>
-    <copy todir="${inst.dest.dir}">
-      <fileset dir="${inst.dir}/post">
-        <include name="*"/>
-      </fileset>
-    </copy>
-    <copy todir="${inst.windows.installer}">
-      <fileset dir="../admin/installer/windows/">
-        <include name="jre_installer.exe"/>
-        <include name="jre/**"/>
-      </fileset>
-    </copy>
-    <property name="freemind.version" value="${ver}"/>
-    <antcall target="create_windows_installer">
-      <param name="inst.windows.variant" value="installer"/>
-    </antcall>
-    <antcall target="create_windows_installer">
-      <param name="inst.windows.variant" value="installer_min"/>
-    </antcall>
-    <antcall target="create_windows_installer">
-      <param name="inst.windows.variant" value="installer_java_installer_embedded"/>
-    </antcall>
-    <copy todir="${inst.dest.dir}">
-      <fileset dir="${inst.windows.installer}/Output/">
-        <include name="*.exe"/>
-      </fileset>
-    </copy>
-    <antcall target="installers_chris_mac">
-    </antcall>
-    <delete dir="${inst.dir}" failonerror="false"/>
   </target>
 
 </project>
