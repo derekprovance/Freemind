@@ -11,7 +11,7 @@
     Thanks to:  Tayeb.Lemlouma@inrialpes.fr for writing the LaTeX escape scripts and giving inspiration
     ChangeLog:
 
-    See: http://freemind.sourceforge.net/
+    See: https://github.com/derekprovance/Freemind/releases/
 -->
 
 <xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>  

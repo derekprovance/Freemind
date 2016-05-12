@@ -74,7 +74,7 @@ public class StandaloneMapTests extends FreeMindTestBase {
 		String expected = "<map version=\""
 				+ FreeMind.XML_VERSION
 				+ "\">\n"
-				+ "<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->\n"
+				+ "<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->\n"
 				+ "<node CREATED=\"\" MODIFIED=\"\" TEXT=\"ROOT\">\n"
 				+ "<node CREATED=\"\" MODIFIED=\"\" POSITION=\"right\" TEXT=\"FormatMe\">\n"
 				+ "<node CREATED=\"\" MODIFIED=\"\" TEXT=\"Child1\"/>\n"

@@ -1,8 +1,8 @@
 <map version="0.8.0">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node COLOR="#993300" CREATED="1124560950701" ID="Freemind_Link_37609021" MODIFIED="1170661549281" TEXT="&lt;html&gt;&#xa;  &lt;head&gt;&#xa;    &#xa;  &lt;/head&gt;&#xa;  &lt;body width=&quot;&quot;&gt;&#xa;    &lt;p align=&quot;center&quot;&gt;&#xa;      FreeMind&lt;br&gt;&lt;small&gt;- Aplicaci&#xf3;n libre para la creaci&#xf3;n de mapas mentales -&lt;/small&gt;&#xa0;&#xa;    &lt;/p&gt;&#xa;  &lt;/body&gt;&#xa;&lt;/html&gt;&#xa;">
 <font BOLD="true" NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="Freemind_Link_367746551" LINK="http://freemind.sourceforge.net" MODIFIED="1170318639020" POSITION="left" TEXT="P&#xe1;gina web de Freemind">
+<node CREATED="1124560950701" ID="Freemind_Link_367746551" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1170318639020" POSITION="left" TEXT="P&#xe1;gina web de Freemind">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1170318817613" POSITION="left" TEXT="Tabla de teclas r&#xe1;pidas">

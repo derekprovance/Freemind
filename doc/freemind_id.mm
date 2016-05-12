@@ -1,5 +1,5 @@
 <map version="0.9.0_Beta_8">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node COLOR="#993300" CREATED="1124560950701" ID="ID_1694064349" MODIFIED="1207926619789">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -12,7 +12,7 @@
   </body>
 </html></richcontent>
 <font BOLD="true" NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="ID_278812263" LINK="http://freemind.sourceforge.net" MODIFIED="1207927061884" POSITION="left" TEXT="Situs web FreeMind">
+<node CREATED="1124560950701" ID="ID_278812263" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1207927061884" POSITION="left" TEXT="Situs web FreeMind">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1207927121089" POSITION="left" TEXT="Tabel kunci pintasan">

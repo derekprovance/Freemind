@@ -13,7 +13,7 @@
 
     Source code of this program can be downloaded from
 
-    http://freemind.sourceforge.net/HotEqn/
+    https://github.com/derekprovance/Freemind/releases/HotEqn/
 
     Home page: http://www.atp.ruhr-uni-bochum.de/VCLab/software/HotEqn/HotEqn.html
 

@@ -1,5 +1,5 @@
 <map version="0.9.0">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <attribute_registry>
 <attribute_name NAME="CHECKPOINT_LIST" RESTRICTED="true">
 <attribute_value VALUE="[174156662,0,/home/foltin/java/freemind/0_9_0/freemind/doc/.CHECKPOINT/CHECKPOINT_freemind3888192519106551893.mm]"/>
@@ -35,7 +35,7 @@
 </html>
 </richcontent>
 <font NAME="SansSerif" SIZE="18"/>
-<node CREATED="1124560950701" FOLDED="true" ID="ID_323315382" LINK="http://freemind.sourceforge.net" MODIFIED="1286966621562" POSITION="left">
+<node CREATED="1124560950701" FOLDED="true" ID="ID_323315382" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1286966621562" POSITION="left">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -639,7 +639,7 @@
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node CREATED="1124560950701" LINK="http://freemind.sourceforge.net/wiki/index.php/Download#Download" MODIFIED="1216753620941" TEXT="Download the Application">
+<node CREATED="1124560950701" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Download#Download" MODIFIED="1216753620941" TEXT="Download the Application">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -873,7 +873,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="ID_1722555166" LINK="http://freemind.sourceforge.net/wiki/index.php/Translation" MODIFIED="1286966621609" TEXT="&#x7ffb;&#x8a33;&#x8005;">
+<node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="ID_1722555166" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Translation" MODIFIED="1286966621609" TEXT="&#x7ffb;&#x8a33;&#x8005;">
 <richcontent TYPE="NOTE"><html>
   <head>
     

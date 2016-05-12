@@ -1,5 +1,5 @@
 <map version="0.9.0">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node CREATED="1216974513042" ID="ID_833600903" MODIFIED="1238925165356" TEXT="Example of map exportable to LaTex">
 <richcontent TYPE="NOTE"><html>
   <head>

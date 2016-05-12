@@ -1,5 +1,5 @@
 <map version="0.9.0">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node COLOR="#993300" CREATED="1124560950701" ID="ID_251547339" MODIFIED="1216187545281">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -12,7 +12,7 @@
   </body>
 </html></richcontent>
 <font BOLD="true" NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="ID_228039332" LINK="http://freemind.sourceforge.net/" MODIFIED="1216250158741" POSITION="left" TEXT="FreeMind-i koduleht">
+<node CREATED="1124560950701" ID="ID_228039332" LINK="https://github.com/derekprovance/Freemind/releases/" MODIFIED="1216250158741" POSITION="left" TEXT="FreeMind-i koduleht">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1231887626533" POSITION="left" TEXT="Kiirklahvikombinatsioonid">
@@ -271,7 +271,7 @@
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="http://freemind.sourceforge.net/wiki/index.php/Download#Download" MODIFIED="1216187545266" TEXT="Laadi alla programm FreeMind">
+<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Download#Download" MODIFIED="1216187545266" TEXT="Laadi alla programm FreeMind">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -569,7 +569,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="Freemind_Link_360501151" LINK="http://freemind.sourceforge.net/wiki/index.php/Translation" MODIFIED="1231892656995" TEXT="T&#xf5;lkijad">
+<node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="Freemind_Link_360501151" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Translation" MODIFIED="1231892656995" TEXT="T&#xf5;lkijad">
 <font NAME="SansSerif" SIZE="12"/>
 <node COLOR="#996600" CREATED="1124561374999" ID="ID_180090574" MODIFIED="1216272357942" TEXT="Edmund Laugasson">
 <font NAME="SansSerif" SIZE="12"/>

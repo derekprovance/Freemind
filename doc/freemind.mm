@@ -1,5 +1,5 @@
 <map version="1.0.1">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <attribute_registry>
 <attribute_name NAME="CHECKPOINT_LIST" RESTRICTED="true">
 <attribute_value VALUE="[174156662,0,/home/foltin/java/freemind/0_9_0/freemind/doc/.CHECKPOINT/CHECKPOINT_freemind3888192519106551893.mm]"/>
@@ -24,7 +24,7 @@
   </body>
 </html></richcontent>
 <font NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="ID_91518160" LINK="http://freemind.sourceforge.net" MODIFIED="1124560950701" POSITION="left" TEXT="Home page of FreeMind">
+<node CREATED="1124560950701" ID="ID_91518160" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1124560950701" POSITION="left" TEXT="Home page of FreeMind">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1256324974012" POSITION="left" TEXT="Table of key mappings">
@@ -38,7 +38,7 @@
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="http://freemind.sourceforge.net/wiki/index.php/Download#Download" MODIFIED="1216753620941" TEXT="Download the Application">
+<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Download#Download" MODIFIED="1216753620941" TEXT="Download the Application">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -179,7 +179,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#006699" CREATED="1124560950701" ID="Freemind_Link_360501151" LINK="http://freemind.sourceforge.net/wiki/index.php/Translation" MODIFIED="1225908677657" TEXT="Translations">
+<node COLOR="#006699" CREATED="1124560950701" ID="Freemind_Link_360501151" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Translation" MODIFIED="1225908677657" TEXT="Translations">
 <node COLOR="#996600" CREATED="1124560950701" ID="Freemind_Link_807977431" MODIFIED="1124560950701" TEXT="Bob Alexander">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
@@ -632,7 +632,7 @@
 </node>
 <node COLOR="#407000" CREATED="1124560950717" FOLDED="true" ID="Freemind_Link_203858515" MODIFIED="1246861665297" POSITION="right" TEXT="Adding hyperlinks">
 <node CREATED="1225954212343" ID="ID_1101307863" MODIFIED="1246861653502" TEXT="Usual Hyperlinks point to">
-<node CREATED="1225954232570" ID="ID_1162864540" LINK="http://freemind.sourceforge.net/" MODIFIED="1225954246192" TEXT="Web pages"/>
+<node CREATED="1225954232570" ID="ID_1162864540" LINK="https://github.com/derekprovance/Freemind/releases/" MODIFIED="1225954246192" TEXT="Web pages"/>
 <node CREATED="1225954247489" ID="ID_988448955" LINK="freemind_de.mm" MODIFIED="1225954280306" TEXT="Other maps"/>
 <node CREATED="1225954285662" ID="ID_564328177" MODIFIED="1225954291636" TEXT="Local files"/>
 </node>
@@ -1896,7 +1896,7 @@ c.registerNodeSelectionListener(newListener);</pre>
 </node>
 </node>
 </node>
-<node COLOR="#407000" CREATED="1354041409110" FOLDED="true" ID="ID_1185769793" LINK="http://freemind.sourceforge.net/wiki/index.php/FreeMind_1.0.0:_The_New_Features" MODIFIED="1381609476303" POSITION="right" STYLE="fork" TEXT="New features in version 1.0.0">
+<node COLOR="#407000" CREATED="1354041409110" FOLDED="true" ID="ID_1185769793" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/FreeMind_1.0.0:_The_New_Features" MODIFIED="1381609476303" POSITION="right" STYLE="fork" TEXT="New features in version 1.0.0">
 <edge COLOR="#808080" STYLE="bezier" WIDTH="thin"/>
 <node COLOR="#407000" CREATED="1354041534617" ID="ID_485992024" MODIFIED="1354049372607" STYLE="fork" TEXT="Clones are supported">
 <edge COLOR="#808080" STYLE="bezier" WIDTH="thin"/>

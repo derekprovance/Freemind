@@ -1,5 +1,5 @@
 <map version="0.9.0">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node COLOR="#ff0000" CREATED="1124560950701" ID="ID_911274459" MODIFIED="1228309505186">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -18,7 +18,7 @@
   </body>
 </html></richcontent>
 <font BOLD="true" NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="ID_1120116737" LINK="http://freemind.sourceforge.net" MODIFIED="1224486501603" POSITION="left" TEXT="FreeMind&apos;s Hjemmeside">
+<node CREATED="1124560950701" ID="ID_1120116737" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1224486501603" POSITION="left" TEXT="FreeMind&apos;s Hjemmeside">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1227780198462" POSITION="left" TEXT="Key mappings tabel">
@@ -42,7 +42,7 @@
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="http://freemind.sourceforge.net/wiki/index.php/Download#Download" MODIFIED="1225872422718" TEXT="Download Applikationen(Freemind)">
+<node CREATED="1124560950701" ID="_Freemind_Link_1612101865" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Download#Download" MODIFIED="1225872422718" TEXT="Download Applikationen(Freemind)">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -59,7 +59,7 @@
   </body>
 </html></richcontent>
 </node>
-<node CREATED="1124560950701" ID="_Freemind_Link_1380352758" LINK="http://freemind.sourceforge.net/wiki/index.php/FreeMind_on_Linux" MODIFIED="1226051125792">
+<node CREATED="1124560950701" ID="_Freemind_Link_1380352758" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/FreeMind_on_Linux" MODIFIED="1226051125792">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -172,7 +172,7 @@
       <font size="3">FreeMind 0.8.0 doesn't work properly with Java 6. </font>
     </p>
     <p>
-      <font size="3">0.9.0.betaX is not yet packaged, check therefore <a href="http://freemind.sourceforge.net/wiki/index.php/FreeMind_on_Linux#On_any_UN.2AX_kind_of_system_.28also_Linux.29" title="">the UN*X installation method</a> </font>
+      <font size="3">0.9.0.betaX is not yet packaged, check therefore <a href="https://github.com/derekprovance/Freemind/releases/wiki/index.php/FreeMind_on_Linux#On_any_UN.2AX_kind_of_system_.28also_Linux.29" title="">the UN*X installation method</a> </font>
     </p>
   </body>
 </html></richcontent>
@@ -445,7 +445,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#006699" CREATED="1124560950701" ID="Freemind_Link_360501151" LINK="http://freemind.sourceforge.net/wiki/index.php/Translation" MODIFIED="1225973199857" TEXT="Overs&#xe6;ttelser">
+<node COLOR="#006699" CREATED="1124560950701" ID="Freemind_Link_360501151" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/Translation" MODIFIED="1225973199857" TEXT="Overs&#xe6;ttelser">
 <node COLOR="#996600" CREATED="1124560950701" ID="Freemind_Link_807977431" MODIFIED="1124560950701" TEXT="Bob Alexander">
 <edge WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="12"/>

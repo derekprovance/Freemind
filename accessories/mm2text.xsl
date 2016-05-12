@@ -10,7 +10,7 @@
                     mentioned. thank you
     ChangeLog:
     
-    See: http://freemind.sourceforge.net/
+    See: https://github.com/derekprovance/Freemind/releases/
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">

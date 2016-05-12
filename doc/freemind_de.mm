@@ -1,5 +1,5 @@
 <map version="1.0.1">
-<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<!-- To view this file, download free mind mapping software FreeMind from https://github.com/derekprovance/Freemind/releases -->
 <node COLOR="#993300" CREATED="1124560950701" ID="Freemind_Link_1694418332" MODIFIED="1381605745737">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -12,7 +12,7 @@
   </body>
 </html></richcontent>
 <font BOLD="true" NAME="Dialog" SIZE="18"/>
-<node CREATED="1124560950701" ID="Freemind_Link_296874513" LINK="http://freemind.sourceforge.net" MODIFIED="1131994301515" POSITION="left" TEXT="Zur Homepage von FreeMind">
+<node CREATED="1124560950701" ID="Freemind_Link_296874513" LINK="https://github.com/derekprovance/Freemind/releases" MODIFIED="1131994301515" POSITION="left" TEXT="Zur Homepage von FreeMind">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node COLOR="#006699" CREATED="1124560950701" FOLDED="true" ID="_Freemind_Link_1091417446" MODIFIED="1131983900430" POSITION="left" TEXT="Tabelle der Tastaturk&#xfc;rzel">
@@ -1716,7 +1716,7 @@ c.registerNodeSelectionListener(newListener);</pre>
 </node>
 </node>
 </node>
-<node COLOR="#407000" CREATED="1354041409110" FOLDED="true" ID="ID_1185769793" LINK="http://freemind.sourceforge.net/wiki/index.php/FreeMind_1.0.0:_The_New_Features" MODIFIED="1381609485199" POSITION="right" STYLE="fork" TEXT="Neue Funktionen in 1.0.0">
+<node COLOR="#407000" CREATED="1354041409110" FOLDED="true" ID="ID_1185769793" LINK="https://github.com/derekprovance/Freemind/releases/wiki/index.php/FreeMind_1.0.0:_The_New_Features" MODIFIED="1381609485199" POSITION="right" STYLE="fork" TEXT="Neue Funktionen in 1.0.0">
 <edge COLOR="#808080" STYLE="bezier" WIDTH="thin"/>
 <node COLOR="#407000" CREATED="1354041534617" ID="ID_485992024" MODIFIED="1381608262912" STYLE="fork" TEXT="Unterst&#xfc;tzung von Klons">
 <edge COLOR="#808080" STYLE="bezier" WIDTH="thin"/>
