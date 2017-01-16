@@ -109,13 +109,9 @@ public class ManagePatternsPopupDialog extends JDialog implements
 	protected final class PatternListModel extends AbstractListModel {
 		private final List mPatternList;
 
-		// private final List mListeners;
 
 		public PatternListModel(List patternList) {
-			// we take a copy of the list as it may came from the patterns xml
-			// element and would be read-only
 			this.mPatternList = new Vector(patternList);
-			// this.mListeners = new Vector();
 		}
 
 		public int getSize() {
@@ -127,8 +123,6 @@ public class ManagePatternsPopupDialog extends JDialog implements
 		 */
 		public Object getElementAt(int index) {
 			return getPatternAt(index).getName();
-			// return
-			// "<html><table width=\"100\"><tr><td>"+getPatternAt(index).getName()+"</td><td align=\"right\">TEST</td></tr></table></html>";
 		}
 
 		/**
@@ -156,8 +150,7 @@ public class ManagePatternsPopupDialog extends JDialog implements
 		}
 
 		public void addPattern(Pattern newPattern, int selectedIndex) {
-			logger.info("Pattern " + newPattern.getName()
-					+ " should be added at " + selectedIndex);
+			logger.info("Pattern " + newPattern.getName() + " should be added at " + selectedIndex);
 			mPatternList.add(selectedIndex, newPattern);
 			fireIntervalAdded(mList, selectedIndex, selectedIndex);
 		}
@@ -278,7 +271,6 @@ public class ManagePatternsPopupDialog extends JDialog implements
 			}
 		};
 		Tools.addEscapeActionToDialog(this, cancelAction);
-		// // recover latest pattern:
 		int i = 0;
 		if (sLastSelectedPattern != null) {
 			for (Iterator iterator = mPatternListModel.getPatternList()
@@ -302,8 +294,7 @@ public class ManagePatternsPopupDialog extends JDialog implements
 	/**
 	 */
 	private String getDialogTitle() {
-		return mController
-				.getText("accessories/plugins/ManagePatterns.dialog.title");
+		return mController.getText("accessories/plugins/ManagePatterns.dialog.title");
 	}
 
 	private void close() {
@@ -357,73 +348,43 @@ public class ManagePatternsPopupDialog extends JDialog implements
 				}
 			});
 			/* Some common action listeners */
-			ActionListener addPatternActionListener = new ActionListener() {
-				public void actionPerformed(ActionEvent actionEvent) {
-					addPattern(actionEvent);
-				}
-			};
-			ActionListener fromNodesActionListener = new ActionListener() {
-				public void actionPerformed(ActionEvent actionEvent) {
-					insertPatternFromNode(actionEvent);
-				}
-			};
-			ActionListener applyActionListener = new ActionListener() {
-				public void actionPerformed(ActionEvent actionEvent) {
-					applyToNode(actionEvent);
-				}
-			};
+			ActionListener addPatternActionListener = this::addPattern;
+			ActionListener fromNodesActionListener = this::insertPatternFromNode;
+			ActionListener applyActionListener = this::applyToNode;
 			/** Menu **/
 			JMenuBar menu = new JMenuBar();
 			StructuredMenuHolder menuHolder = new StructuredMenuHolder();
-			JMenu mainItem = new JMenu(
-					mController.getText("ManagePatternsPopupDialog.Actions"));
+			JMenu mainItem = new JMenu(mController.getText("ManagePatternsPopupDialog.Actions"));
 			menuHolder.addMenu(mainItem, "main/actions/.");
-			JMenuItem menuItemApplyPattern = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.apply"));
+			JMenuItem menuItemApplyPattern = new JMenuItem(mController.getText("ManagePatternsPopupDialog.apply"));
 			menuItemApplyPattern.addActionListener(applyActionListener);
 			menuHolder.addMenuItem(menuItemApplyPattern, "main/actions/apply");
-			JMenuItem menuItemAddPattern = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.add"));
+			JMenuItem menuItemAddPattern = new JMenuItem(mController.getText("ManagePatternsPopupDialog.add"));
 			menuItemAddPattern.addActionListener(addPatternActionListener);
 			menuHolder.addMenuItem(menuItemAddPattern, "main/actions/add");
-			JMenuItem menuItemPatternFromNodes = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.from_nodes"));
+			JMenuItem menuItemPatternFromNodes = new JMenuItem(mController.getText("ManagePatternsPopupDialog.from_nodes"));
 			menuItemPatternFromNodes.addActionListener(fromNodesActionListener);
-			menuHolder.addMenuItem(menuItemPatternFromNodes,
-					"main/actions/from_nodes");
+			menuHolder.addMenuItem(menuItemPatternFromNodes, "main/actions/from_nodes");
 			menuHolder.updateMenus(menu, "main/");
 			this.setJMenuBar(menu);
 			/* Popup menu */
 			popupMenu = new JPopupMenu();
 			// menuHolder.addMenuItem(new JPopupMenu.Separator());
-			JMenuItem menuItemApply = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.apply"));
+			JMenuItem menuItemApply = new JMenuItem(mController.getText("ManagePatternsPopupDialog.apply"));
 			menuHolder.addMenuItem(menuItemApply, "popup/apply");
 			menuItemApply.addActionListener(applyActionListener);
-			JMenuItem menuItemAdd = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.add"));
+			JMenuItem menuItemAdd = new JMenuItem(mController.getText("ManagePatternsPopupDialog.add"));
 			menuHolder.addMenuItem(menuItemAdd, "popup/add");
 			menuItemAdd.addActionListener(addPatternActionListener);
-			JMenuItem menuItemDuplicate = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.duplicate"));
+			JMenuItem menuItemDuplicate = new JMenuItem(mController.getText("ManagePatternsPopupDialog.duplicate"));
 			menuHolder.addMenuItem(menuItemDuplicate, "popup/duplicate");
-			menuItemDuplicate.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent actionEvent) {
-					duplicatePattern(actionEvent);
-				}
-			});
-			JMenuItem menuItemFromNodes = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.from_nodes"));
+			menuItemDuplicate.addActionListener(this::duplicatePattern);
+			JMenuItem menuItemFromNodes = new JMenuItem(mController.getText("ManagePatternsPopupDialog.from_nodes"));
 			menuHolder.addMenuItem(menuItemFromNodes, "popup/from_nodes");
 			menuItemFromNodes.addActionListener(fromNodesActionListener);
 			menuHolder.addSeparator("popup/sep");
-			JMenuItem menuItemRemove = new JMenuItem(
-					mController.getText("ManagePatternsPopupDialog.remove"));
-			menuItemRemove.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent actionEvent) {
-					removePattern(actionEvent);
-				}
-			});
+			JMenuItem menuItemRemove = new JMenuItem(mController.getText("ManagePatternsPopupDialog.remove"));
+			menuItemRemove.addActionListener(this::removePattern);
 			menuHolder.addMenuItem(menuItemRemove, "popup/remove");
 			menuHolder.updateMenus(popupMenu, "popup/");
 			mList.addMouseListener(new MouseAdapter() {
@@ -431,13 +392,11 @@ public class ManagePatternsPopupDialog extends JDialog implements
 					showPopup(mList, me);
 				}
 
-				/** For Linux */
 				public void mousePressed(MouseEvent me) {
 					showPopup(mList, me);
 				}
 
 				private void showPopup(final JList mList, MouseEvent me) {
-					// if right mouse button clicked (or me.isPopupTrigger())
 					if (me.isPopupTrigger()
 							&& !mList.isSelectionEmpty()
 							&& mList.locationToIndex(me.getPoint()) == mList
@@ -450,15 +409,12 @@ public class ManagePatternsPopupDialog extends JDialog implements
 			mCardLayout = new CardLayout();
 			mRightStack = new JPanel(mCardLayout);
 			mRightStack.add(new JPanel(), EMPTY_FRAME);
-			mStylePatternFrame = new StylePatternFrame(this, mController,
-					StylePatternFrameType.WITH_NAME_AND_CHILDS);
+			mStylePatternFrame = new StylePatternFrame(this, mController, StylePatternFrameType.WITH_NAME_AND_CHILDS);
 			mStylePatternFrame.init();
 			mStylePatternFrame.addListeners();
-			mRightStack.add(new JScrollPane(mStylePatternFrame),
-					STACK_PATTERN_FRAME);
+			mRightStack.add(new JScrollPane(mStylePatternFrame), STACK_PATTERN_FRAME);
 			JScrollPane leftPane = new JScrollPane(mList);
-			mSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true,
-					leftPane, mRightStack);
+			mSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, leftPane, mRightStack);
 			jContentPane.add(mSplitPane, new GridBagConstraints(0, 0, 2, 1,
 					1.0, 8.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 					new Insets(0, 0, 0, 0), 0, 0));
@@ -466,13 +422,6 @@ public class ManagePatternsPopupDialog extends JDialog implements
 					new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.EAST, GridBagConstraints.NONE,
 							new Insets(0, 0, 0, 0), 0, 0));
-			// jContentPane.add(getJOKButton(), new GridBagConstraints(1, 1, 1,
-			// 1,
-			// 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE,
-			// new Insets(0, 0, 0, 0), 0, 0));
-			// jContentPane.add(getJCancelButton(), new GridBagConstraints(2, 1,
-			// 1, 1, 1.0, 1.0, GridBagConstraints.EAST,
-			// GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 			getRootPane().setDefaultButton(getJOKButton());
 		}
 		return jContentPane;
@@ -496,7 +445,6 @@ public class ManagePatternsPopupDialog extends JDialog implements
 		writePatternBackToModel();
 		setLastSelectedPattern(null);
 		Pattern oldPattern = mPatternListModel.getPatternAt(selectedIndex);
-		// deep copy:
 		Pattern newPattern = (Pattern) Tools.deepCopy(oldPattern);
 		newPattern.setName(searchForNameForNewPattern());
 		mPatternListModel.addPattern(newPattern, selectedIndex);
@@ -532,9 +480,7 @@ public class ManagePatternsPopupDialog extends JDialog implements
 	}
 
 	private String searchForNameForNewPattern() {
-		// give it a good name:
 		String newName = mController.getText("PatternNewNameProperty");
-		// collect names:
 		Vector allNames = new Vector();
 		for (Iterator iter = mPatternListModel.getPatternList().iterator(); iter
 				.hasNext();) {
@@ -623,44 +569,30 @@ public class ManagePatternsPopupDialog extends JDialog implements
 
 	private void writePatternBackToModel() {
 		if (getLastSelectedPattern() != null) {
-			// save pattern:
 			Pattern pattern = getLastSelectedPattern();
 			Pattern resultPatternCopy = mStylePatternFrame.getResultPattern();
-			// check for name change:
 			String oldPatternName = pattern.getName();
 			String newPatternName = resultPatternCopy.getName();
 			if (!(oldPatternName.equals(newPatternName))) {
-				// now, let's check, whether or not it is still unique:
 				for (Iterator iter = mPatternListModel.getPatternList()
 						.iterator(); iter.hasNext();) {
 					Pattern otherPattern = (Pattern) iter.next();
 					if (otherPattern == pattern) {
-						// myself is not regarded:
 						continue;
 					}
 					if (otherPattern.getName().equals(newPatternName)) {
-						// duplicate found. What now?
-						JOptionPane
-								.showMessageDialog(
-										this,
-										mController
-												.getText("ManagePatternsPopupDialog.DuplicateNameMessage"));
+						JOptionPane.showMessageDialog(this, mController.getText("ManagePatternsPopupDialog.DuplicateNameMessage"));
 					}
 				}
 			}
-			// no duplicates. We search for uses of the old name:
 			for (Iterator iter = mPatternListModel.getPatternList().iterator(); iter
 					.hasNext();) {
 				Pattern otherPattern = (Pattern) iter.next();
-				if (otherPattern.getPatternChild() != null
-						&& oldPatternName.equals(otherPattern.getPatternChild()
-								.getValue())) {
-					// change to new name
+				if (otherPattern.getPatternChild() != null && oldPatternName.equals(otherPattern.getPatternChild().getValue())) {
 					otherPattern.getPatternChild().setValue(newPatternName);
 				}
 			}
 			mStylePatternFrame.getResultPattern(pattern);
-			// Special case that a pattern that points to itself is renamed:
 			if (pattern.getPatternChild() != null
 					&& oldPatternName.equals(pattern.getPatternChild()
 							.getValue())) {

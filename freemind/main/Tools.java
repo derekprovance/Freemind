@@ -731,8 +731,7 @@ public class Tools {
 				byte[] enc = ecipher.doFinal(utf8);
 
 				// Encode bytes to base64 to get a string
-				return Tools.toBase64(newSalt) + SALT_PRESENT_INDICATOR
-						+ Tools.toBase64(enc);
+				return Tools.toBase64(newSalt) + SALT_PRESENT_INDICATOR + Tools.toBase64(enc);
 			} catch (javax.crypto.BadPaddingException | UnsupportedEncodingException | IllegalBlockSizeException e) {
 			}
 			return null;
@@ -1031,12 +1030,8 @@ public class Tools {
 				logger.info("File start after UTF8 replacement: '"
 						+ fileContents.substring(0, 9) + "'");
 			}
-			final StreamSource sr = new StreamSource(new StringReader(
-					fileContents));
-			// Dimitry: to avoid a memory leak and properly release resources
-			// after the XSLT transformation
-			// everything should run in own thread. Only after the thread dies
-			// the resources are released.
+			final StreamSource sr = new StreamSource(new StringReader(fileContents));
+
 			class TransformerRunnable implements Runnable {
 				private boolean successful = false;
 				private String errorMessage;
@@ -1070,9 +1065,7 @@ public class Tools {
 			Thread transformerThread = new Thread(transformer, "XSLT");
 			transformerThread.start();
 			transformerThread.join();
-			logger.info("Updating the reader " + pReader
-					+ " to the current version. Done."); // +
-															// writer.getBuffer().toString());
+			logger.info("Updating the reader " + pReader + " to the current version. Done.");
 			successful = transformer.isSuccessful();
 			errorMessage = transformer.getErrorMessage();
 		} catch (Exception ex) {
@@ -1088,14 +1081,10 @@ public class Tools {
 		}
 		if (successful) {
 			String content = writer.getBuffer().toString();
-			// logger.info("Content before transformation: " + content);
-			String replacedContent = Tools
-					.replaceUtf8AndIllegalXmlChars(content);
-			// logger.info("Content after transformation: " + replacedContent);
+			String replacedContent = Tools.replaceUtf8AndIllegalXmlChars(content);
 			return new StringReader(replacedContent);
 		} else {
-			return new StringReader("<map><node TEXT='"
-					+ HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
+			return new StringReader("<map><node TEXT='" + HtmlTools.toXMLEscapedText(errorMessage) + "'/></map>");
 		}
 	}
 

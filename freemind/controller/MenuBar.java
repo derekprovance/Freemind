@@ -91,7 +91,7 @@ public class MenuBar extends JMenuBar {
 		addExtrasMenuCategories();
 		addMapMenu();
 		addModesMenu();
-		addMapsPopupMenu();
+		addHelpPopupMenu();
 	}
 
 	private void generatePopupBar() {
@@ -170,7 +170,7 @@ public class MenuBar extends JMenuBar {
         menuHolder.addCategory(MODES_MENU);
     }
 
-    private void addMapsPopupMenu() {
+    private void addHelpPopupMenu() {
         menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU + ".");
         menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
         menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");
@@ -198,8 +198,7 @@ public class MenuBar extends JMenuBar {
 			} else {
 				newItem.setSelected(false);
 			}
-			String keystroke = c.getFrame().getAdjustableProperty(
-					"keystroke_mode_" + key);
+			String keystroke = c.getFrame().getAdjustableProperty("keystroke_mode_" + key);
 			if (keystroke != null) {
 				newItem.setAccelerator(KeyStroke.getKeyStroke(keystroke));
 			}

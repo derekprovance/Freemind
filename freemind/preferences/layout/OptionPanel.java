@@ -472,7 +472,6 @@ public class OptionPanel implements TextTranslator {
 		// "The Modes which Freemind will load on startup, full Class names,
 		// comma, identifier, separated by a comma.",
 		// "modes_since_0_8_0")); //
-		// freemind.modes.browsemode.BrowseMode,Browse,freemind.modes.mindmapmode.MindMapMode,MindMap,freemind.modes.filemode.FileMode,File
 		//
 		// controls.add(new StringProperty(
 		// "The initial mode that is loaded on startup", "initial_mode")); //
@@ -856,12 +855,6 @@ public class OptionPanel implements TextTranslator {
 
 		controls.add(new KeyProperty(frame, null, "keystroke_mode_MindMap")); // alt
 		// 1
-
-		controls.add(new KeyProperty(frame, null, "keystroke_mode_Browse")); // alt
-		// 2
-
-		controls.add(new KeyProperty(frame, null, "keystroke_mode_File")); // alt
-		// 3
 
 		controls.add(new KeyProperty(frame, null,
 				"keystroke_node_toggle_italic")); // control
