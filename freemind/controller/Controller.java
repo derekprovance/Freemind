@@ -47,7 +47,6 @@ import freemind.modes.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
-import freemind.modes.browsemode.BrowseMode;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.MapModule;
@@ -855,12 +854,9 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
 	private void quit() {
-		String currentMapRestorable = (getModel() != null) ? getModel()
-				.getRestorable() : null;
+		String currentMapRestorable = (getModel() != null) ? getModel().getRestorable() : null;
 		storeOptionSplitPanePosition();
-		// collect all maps:
 		Vector restorables = new Vector();
-		// move to first map in the window.
 		List mapModuleVector = getMapModuleManager().getMapModuleVector();
 		if (mapModuleVector.size() > 0) {
 			String displayName = ((MapModule) mapModuleVector.get(0))
@@ -1145,16 +1141,6 @@ public class Controller implements MapModuleChangeObserver {
 					url = Tools.fileToUrl(new File(map));
 				}
 				final URL endUrl = url;
-
-				SwingUtilities.invokeLater(() -> {
-                    try {
-                        createNewMode(BrowseMode.MODENAME);
-                        controller.getModeController().load(endUrl);
-                    } catch (Exception e1) {
-                        Resources.getInstance().logException(
-                                e1);
-                    }
-                });
 			} catch (MalformedURLException e1) {
 				freemind.main.Resources.getInstance().logException(e1);
 			}
@@ -1218,14 +1204,9 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	//
-	// Map navigation
-	//
-
 	private class NavigationPreviousMapAction extends AbstractAction {
 		NavigationPreviousMapAction(Controller controller) {
-			super(controller.getResourceString("previous_map"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/1leftarrow.png")));
+			super(controller.getResourceString("previous_map"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/1leftarrow.png")));
 			setEnabled(false);
 		}
 
@@ -1236,8 +1217,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	private class ShowFilterToolbarAction extends AbstractAction {
 		ShowFilterToolbarAction(Controller controller) {
-			super(getResourceString("filter_toolbar"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/filter.gif")));
+			super(getResourceString("filter_toolbar"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/filter.gif")));
 		}
 
 		public void actionPerformed(ActionEvent event) {
@@ -1251,8 +1231,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	private class NavigationNextMapAction extends AbstractAction {
 		NavigationNextMapAction(Controller controller) {
-			super(controller.getResourceString("next_map"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/1rightarrow.png")));
+			super(controller.getResourceString("next_map"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/1rightarrow.png")));
 			setEnabled(false);
 		}
 
@@ -1263,8 +1242,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	private class NavigationMoveMapLeftAction extends AbstractAction {
 		NavigationMoveMapLeftAction(Controller controller) {
-			super(controller.getResourceString("move_map_left"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/draw-arrow-back.png")));
+			super(controller.getResourceString("move_map_left"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/draw-arrow-back.png")));
 			setEnabled(false);
 		}
 
@@ -1280,16 +1258,14 @@ public class Controller implements MapModuleChangeObserver {
 
 	private class NavigationMoveMapRightAction extends AbstractAction {
 		NavigationMoveMapRightAction(Controller controller) {
-			super(controller.getResourceString("move_map_right"),
-					freemind.view.ImageFactory.getInstance().createIcon(getResource("images/draw-arrow-forward.png")));
+			super(controller.getResourceString("move_map_right"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/draw-arrow-forward.png")));
 			setEnabled(false);
 		}
 
 		public void actionPerformed(ActionEvent event) {
 			if (mTabbedPane != null) {
 				int selectedIndex = mTabbedPane.getSelectedIndex();
-				int previousIndex = (selectedIndex >= mTabbedPane.getTabCount() - 1) ? 0
-						: (selectedIndex + 1);
+				int previousIndex = (selectedIndex >= mTabbedPane.getTabCount() - 1) ? 0 : (selectedIndex + 1);
 				moveTab(selectedIndex, previousIndex);
 			}
 		}
@@ -1308,16 +1284,13 @@ public class Controller implements MapModuleChangeObserver {
 		Color bg = mTabbedPane.getBackgroundAt(src);
 
 		mTabbedPaneSelectionUpdate = false;
-		// Remove the tab
 		mTabbedPane.remove(src);
-		// Add a new tab
 		mTabbedPane.insertTab(label, icon, comp, tooltip, dst);
 		Tools.swapVectorPositions(mTabbedPaneMapModules, src, dst);
 		getMapModuleManager().swapModules(src, dst);
 		mTabbedPane.setSelectedIndex(dst);
 		mTabbedPaneSelectionUpdate = true;
 
-		// Restore all properties
 		mTabbedPane.setDisabledIconAt(dst, iconDis);
 		mTabbedPane.setEnabledAt(dst, enabled);
 		mTabbedPane.setMnemonicAt(dst, keycode);
@@ -1337,8 +1310,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	private class ToggleMenubarAction extends AbstractAction implements
-			MenuItemSelectedListener {
+	private class ToggleMenubarAction extends AbstractAction implements MenuItemSelectedListener {
 		ToggleMenubarAction(Controller controller) {
 			super(controller.getResourceString("toggle_menubar"));
 			setEnabled(true);
@@ -1354,8 +1326,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	private class ToggleToolbarAction extends AbstractAction implements
-			MenuItemSelectedListener {
+	private class ToggleToolbarAction extends AbstractAction implements MenuItemSelectedListener {
 		ToggleToolbarAction(Controller controller) {
 			super(controller.getResourceString("toggle_toolbar"));
 			setEnabled(true);
@@ -1372,8 +1343,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	private class ToggleLeftToolbarAction extends AbstractAction implements
-			MenuItemSelectedListener {
+	private class ToggleLeftToolbarAction extends AbstractAction implements MenuItemSelectedListener {
 		ToggleLeftToolbarAction(Controller controller) {
 			super(controller.getResourceString("toggle_left_toolbar"));
 			setEnabled(true);
@@ -1425,8 +1395,7 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	protected class ShowSelectionAsRectangleAction extends AbstractAction
-			implements MenuItemSelectedListener {
+	protected class ShowSelectionAsRectangleAction extends AbstractAction implements MenuItemSelectedListener {
 		public ShowSelectionAsRectangleAction(Controller controller) {
 			super(controller.getResourceString("selection_as_rectangle"));
 		}
@@ -1460,8 +1429,7 @@ public class Controller implements MapModuleChangeObserver {
 		return getMapModule().getModel();
 	}
 
-	public static void addPropertyChangeListener(
-			FreemindPropertyListener listener) {
+	public static void addPropertyChangeListener(FreemindPropertyListener listener) {
 		Controller.propertyChangeListeners.add(listener);
 	}
 
@@ -1484,10 +1452,6 @@ public class Controller implements MapModuleChangeObserver {
 		Controller.propertyChangeListeners.remove(listener);
 	}
 
-	/**
-	 * @author foltin
-	 * 
-	 */
 	public class PropertyAction extends AbstractAction {
 
 		private final Controller controller;
@@ -1501,28 +1465,24 @@ public class Controller implements MapModuleChangeObserver {
 			JDialog dialog = new JDialog(getFrame().getJFrame(), true);
 			dialog.setResizable(true);
 			dialog.setUndecorated(false);
-			final OptionPanel options = new OptionPanel((FreeMind) getFrame(),
-					dialog, props -> {
-                        Vector sortedKeys = new Vector();
-                        sortedKeys.addAll(props.keySet());
-                        Collections.sort(sortedKeys);
-                        boolean propertiesChanged = false;
+			final OptionPanel options = new OptionPanel((FreeMind) getFrame(), dialog, props -> {
+				Vector sortedKeys = new Vector();
+				sortedKeys.addAll(props.keySet());
+				Collections.sort(sortedKeys);
+				boolean propertiesChanged = false;
 
 				for (Object sortedKey : sortedKeys) {
 					String key = (String) sortedKey;
-					// save only changed keys:
 					String newProperty = props.getProperty(key);
-					propertiesChanged = propertiesChanged
-							|| !newProperty.equals(controller
-							.getProperty(key));
+					propertiesChanged = propertiesChanged || !newProperty.equals(controller.getProperty(key));
 					controller.setProperty(key, newProperty);
 				}
 
-                        if (propertiesChanged) {
-                            JOptionPane.showMessageDialog(null, getResourceString("option_changes_may_require_restart"));
-                            controller.getFrame().saveProperties(false);
-                        }
-                    });
+				if (propertiesChanged) {
+					JOptionPane.showMessageDialog(null, getResourceString("option_changes_may_require_restart"));
+					controller.getFrame().saveProperties(false);
+				}
+			});
 			options.buildPanel();
 			options.setProperties();
 			dialog.setTitle("Freemind Properties");
@@ -1562,8 +1522,9 @@ public class Controller implements MapModuleChangeObserver {
 				return;
 			}
 			setProperty(FreeMindCommon.RESOURCE_ANTIALIAS, command);
-			if (getView() != null)
+			if (getView() != null) {
 				getView().repaint();
+			}
 		}
 
 	}
@@ -1577,7 +1538,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	// switch auto properties for selection mechanism fc, 7.12.2003.
 	private class OptionSelectionMechanismAction extends AbstractAction
 			implements FreemindPropertyListener {
 		Controller c;
@@ -1592,11 +1552,8 @@ public class Controller implements MapModuleChangeObserver {
 			changeSelection(command);
 		}
 
-		/**
-         */
 		private void changeSelection(String command) {
 			setProperty("selection_method", command);
-			// and update the selection method in the NodeMouseMotionListener
 			c.getNodeMouseMotionListener().updateSelectionMethod();
 			String statusBarString = c.getResourceString(command);
 			if (statusBarString != null) // should not happen
@@ -1616,8 +1573,7 @@ public class Controller implements MapModuleChangeObserver {
 		private final String url;
 
 		OpenURLAction(Controller controller, String description, String url) {
-			super(description, freemind.view.ImageFactory.getInstance().createIcon(
-					controller.getResource("images/Link.png")));
+			super(description, freemind.view.ImageFactory.getInstance().createIcon(controller.getResource("images/Link.png")));
 			c = controller;
 			this.url = url;
 		}
@@ -1659,7 +1615,6 @@ public class Controller implements MapModuleChangeObserver {
 				if (pNewMapModule == null) {
 					return;
 				}
-				// search, if already present:
 				for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
 					if (mTabbedPaneMapModules.get(i) == pNewMapModule) {
 						if (selectedIndex != i) {
@@ -1668,7 +1623,6 @@ public class Controller implements MapModuleChangeObserver {
 						return;
 					}
 				}
-				// create new tab:
 				mTabbedPaneMapModules.add(pNewMapModule);
 				mTabbedPane.addTab(pNewMapModule.toString(), new JPanel());
 				mTabbedPane.setSelectedIndex(mTabbedPane.getTabCount() - 1);
@@ -1687,8 +1641,7 @@ public class Controller implements MapModuleChangeObserver {
 			public void afterMapClose(MapModule pOldMapModule, Mode pOldMode) {
 				for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
 					if (mTabbedPaneMapModules.get(i) == pOldMapModule) {
-						logger.fine("Remove tab:" + i + " with title:"
-								+ mTabbedPane.getTitleAt(i));
+						logger.fine("Remove tab:" + i + " with title:" + mTabbedPane.getTitleAt(i));
 						mTabbedPaneSelectionUpdate = false;
 						mTabbedPane.removeTabAt(i);
 						mTabbedPaneMapModules.remove(i);
@@ -1702,8 +1655,7 @@ public class Controller implements MapModuleChangeObserver {
 		registerMapTitleChangeListener((pNewMapTitle, pMapModule, pModel) -> {
             for (int i = 0; i < mTabbedPaneMapModules.size(); ++i) {
                 if (mTabbedPaneMapModules.get(i) == pMapModule) {
-                    mTabbedPane.setTitleAt(i,
-                            pNewMapTitle + ((pModel.isSaved()) ? "" : "*"));
+                    mTabbedPane.setTitleAt(i, pNewMapTitle + ((pModel.isSaved()) ? "" : "*"));
                 }
             }
         });
@@ -1714,7 +1666,6 @@ public class Controller implements MapModuleChangeObserver {
 		if (!mTabbedPaneSelectionUpdate)
 			return;
 		int selectedIndex = mTabbedPane.getSelectedIndex();
-		// display nothing on the other tabs:
 		for (int j = 0; j < mTabbedPane.getTabCount(); j++) {
 			if (j != selectedIndex)
 				mTabbedPane.setComponentAt(j, new JPanel());
@@ -1723,13 +1674,10 @@ public class Controller implements MapModuleChangeObserver {
 			return;
 		}
 		MapModule module = (MapModule) mTabbedPaneMapModules.get(selectedIndex);
-		logger.fine("Selected index of tab is now: " + selectedIndex
-				+ " with title:" + module.toString());
+		logger.fine("Selected index of tab is now: " + selectedIndex + " with title:" + module.toString());
 		if (module != getMapModule()) {
-			// we have to change the active map actively:
 			getMapModuleManager().changeToMapModule(module.toString());
 		}
-		// mScrollPane could be set invisible by JTabbedPane
 		frame.getScrollPane().setVisible(true);
 		mTabbedPane.setComponentAt(selectedIndex, frame.getContentComponent());
 
@@ -1754,7 +1702,7 @@ public class Controller implements MapModuleChangeObserver {
 		
 		private int mIndex;
 
-		private SplitComponentType(int index) {
+		SplitComponentType(int index) {
 			mIndex = index;
 		}
 		
@@ -1801,8 +1749,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	private void storeOptionSplitPanePosition() {
 		if (mOptionalSplitPane != null) {
-			setProperty(FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, ""
-					+ mOptionalSplitPane.getDividerPosition());
+			setProperty(FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, "" + mOptionalSplitPane.getDividerPosition());
 		}
 	}
 }
