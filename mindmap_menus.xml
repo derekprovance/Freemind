@@ -61,7 +61,6 @@
 				<menu_category name="findReplace"/>
 				<menu_category name="otherFinds"/>
 			</menu_category>
-	
 		</menu_category>
 		<menu_category name="insert">
 			<menu_category name="nodes">
@@ -80,8 +79,7 @@
 			<menu_category name="other">
 			</menu_category>
 		</menu_category>	
-	
-	
+
 		<menu_category name="navigate">
 			<menu_separator/>
 			<menu_category name="nodes">

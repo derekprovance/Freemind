@@ -70,7 +70,6 @@ public class MenuBar extends JMenuBar {
 		updateFileMenu();
 		updateViewMenu();
 		updateEditMenu();
-		updateModeMenu();
 
 		updateMapsMenu(menuHolder, MENU_MINDMAP_CATEGORY + "/");
 		updateMapsMenu(menuHolder, POPUP_MENU);
@@ -182,29 +181,6 @@ public class MenuBar extends JMenuBar {
         menuHolder.addAction(c.license, HELP_MENU + "about/license");
         menuHolder.addAction(c.about, HELP_MENU + "about/about");
     }
-
-	private void updateModeMenu() {
-		ButtonGroup group = new ButtonGroup();
-		ActionListener modesMenuActionListener = new ModesMenuActionListener();
-		List keys = new LinkedList(c.getModes());
-		for (Object key1 : keys) {
-			String key = (String) key1;
-			JRadioButtonMenuItem item = new JRadioButtonMenuItem(c.getResourceString("mode_" + key));
-			item.setActionCommand(key);
-			JRadioButtonMenuItem newItem = (JRadioButtonMenuItem) menuHolder.addMenuItem(item, MODES_MENU + key);
-			group.add(newItem);
-			if (c.getMode() != null) {
-				newItem.setSelected(c.getMode().toString().equals(key));
-			} else {
-				newItem.setSelected(false);
-			}
-			String keystroke = c.getFrame().getAdjustableProperty("keystroke_mode_" + key);
-			if (keystroke != null) {
-				newItem.setAccelerator(KeyStroke.getKeyStroke(keystroke));
-			}
-			newItem.addActionListener(modesMenuActionListener);
-		}
-	}
 
 	private void addAdditionalPopupActions() {
 		menuHolder.addSeparator(POPUP_MENU);
@@ -337,5 +313,4 @@ public class MenuBar extends JMenuBar {
 	public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed) {
 		return super.processKeyBinding(ks, e, condition, pressed);
 	}
-
 }
