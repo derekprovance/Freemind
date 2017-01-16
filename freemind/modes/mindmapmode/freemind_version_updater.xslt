@@ -155,12 +155,6 @@
 							select="@SHIFT_Y"/>
 					</xsl:attribute>
 				</xsl:when>
-				<xsl:when test="$version &lt; 0800400 and @ADDITIONAL_INFO">
-					<xsl:attribute name="ENCRYPTED_CONTENT">
-						<xsl:value-of 
-							select="@ADDITIONAL_INFO"/>
-					</xsl:attribute>
-				</xsl:when>
 			</xsl:choose>
 			<xsl:if test="attrlayout">
 				<xsl:element name="attribute_layout">

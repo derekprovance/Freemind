@@ -324,15 +324,6 @@ public class MindMapMock implements MindMap {
 	}
 
 	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEncryptedNode(java.lang.String)
-	 */
-	@Override
-	public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see freemind.modes.MindMap#insertNodeInto(freemind.modes.MindMapNode, freemind.modes.MindMapNode, int)
 	 */
 	@Override

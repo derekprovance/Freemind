@@ -199,7 +199,6 @@
    <xs:attribute name='HGAP' type='xs:integer' use='optional'/>
    <xs:attribute name='VGAP' type='xs:integer' use='optional'/>
    <xs:attribute name='VSHIFT' type='xs:integer' use='optional'/>
-   <xs:attribute name='ENCRYPTED_CONTENT' type='xs:string' use='optional'/>
   </xs:complexType>
  </xs:element>
 </xs:schema>

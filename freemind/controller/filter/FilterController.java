@@ -86,8 +86,6 @@ public class FilterController implements MapModuleChangeObserver {
 					.getInstance().getResource("images/showAttributes.gif")));
 			MindIcon.factory(NodeNoteBase.NODE_NOTE_ICON, freemind.view.ImageFactory.getInstance().createIcon(
 					Resources.getInstance().getResource("images/knotes.png")));
-			MindIcon.factory("encrypted");
-			MindIcon.factory("decrypted");
 
 			filterToolbar.initConditions();
 		}

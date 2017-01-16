@@ -37,9 +37,6 @@ import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 
 public class BrowseMapModel extends MapAdapter {
-
-	private static final String ENCRYPTED_BROWSE_NODE = EncryptedBrowseNode.class
-			.getName();
 	private URL url;
 	private MindMapLinkRegistry linkRegistry;
 
@@ -135,9 +132,6 @@ public class BrowseMapModel extends MapAdapter {
 
 
 	protected NodeAdapter createNodeAdapter(MapFeedback pMapFeedback, String nodeClass) {
-		if (nodeClass == ENCRYPTED_BROWSE_NODE) {
-			return new EncryptedBrowseNode(null, pMapFeedback);
-		}
 		return new BrowseNodeModel(null, pMapFeedback.getMap());
 	}
 
@@ -158,12 +152,6 @@ public class BrowseMapModel extends MapAdapter {
 			NodeAdapter target) {
 		// FIXME: Need an implementation here
 		return null;
-	}
-	
-	public NodeAdapter createEncryptedNode(String additionalInfo) {
-		NodeAdapter node = createNodeAdapter(mMapFeedback, ENCRYPTED_BROWSE_NODE);
-		node.setAdditionalInfo(additionalInfo);
-		return node;
 	}
 
 	/* (non-Javadoc)

@@ -28,7 +28,6 @@ import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
 import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.EncryptedMindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
 
@@ -78,8 +77,6 @@ public class NewChildAction extends MindmapAction  {
 
 		case MindMapController.NEW_CHILD:
 		case MindMapController.NEW_CHILD_WITHOUT_FOCUS: {
-			if(targetNode instanceof EncryptedMindMapNode && !((EncryptedMindMapNode) targetNode).isAccessible())
-				break;
 			final boolean parentFolded = targetNode.isFolded();
 			if (parentFolded) {
 				getModeController().setFolded(targetNode, false);

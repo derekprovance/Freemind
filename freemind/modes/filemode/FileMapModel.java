@@ -181,15 +181,6 @@ public class FileMapModel extends MapAdapter {
 		throw new RuntimeException("Unimplemented method called.");
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap#createEncryptedNode(java.lang.String)
-	 */
-	@Override
-	public NodeAdapter createEncryptedNode(String pAdditionalInfo) {
-		// FIXME: Implement me if you need me.
-		throw new RuntimeException("Unimplemented method called.");
-	}
-
 }
 
 // public class FileSystemModel extends AbstractTreeTableModel

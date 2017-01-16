@@ -210,8 +210,6 @@ public interface MindMap extends TreeModel {
 	public abstract MindMapNode createNodeTreeFromXml(Reader pReader, HashMap pIDToTarget)
 			throws XMLParseException, IOException;
 
-	NodeAdapter createEncryptedNode(String additionalInfo);
-
 	void insertNodeInto(MindMapNode pNode,
 			MindMapNode pParentNode, int pIndex);
 	

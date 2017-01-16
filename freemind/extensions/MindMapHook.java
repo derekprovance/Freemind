@@ -60,9 +60,7 @@ public interface MindMapHook {
 	 * returned here. You can use it to realize something like the state of a
 	 * plugin (eg. is the plugin switched on or off?).<br>
 	 * 
-	 * An example is the menu status of the encrypted nodes. If the node is not
-	 * encrypted, the encryption state cannot be toggled (see EncryptNode.java).<br>
-	 * 
+	 *
 	 * Another example arises from the collaboration mode. The state (connected,
 	 * wait for second party, map sharing etc.) can be stored in the plugin
 	 * base.<br>

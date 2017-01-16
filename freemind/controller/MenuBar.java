@@ -1,14 +1,11 @@
 package freemind.controller;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -326,13 +323,6 @@ public class MenuBar extends JMenuBar {
 		return mapsPopupMenu;
 	}
 
-	private void copyMenuItems(JMenu source, JMenu dest) {
-		Component[] items = source.getMenuComponents();
-		for (Component item : items) {
-			dest.add(item);
-		}
-	}
-
 	private class MapsMenuActionListener implements ActionListener {
 		public void actionPerformed(final ActionEvent e) {
 			SwingUtilities.invokeLater(() -> c.getMapModuleManager().changeToMapModule(
@@ -340,34 +330,10 @@ public class MenuBar extends JMenuBar {
 		}
 	}
 
-	private class LastOpenedActionListener implements ActionListener {
-		private String mKey;
-
-		LastOpenedActionListener(String pKey) {
-			mKey = pKey;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-
-			String restoreable = mKey;
-			try {
-				c.getLastOpenedList().open(restoreable);
-			} catch (Exception ex) {
-				c.errorMessage("An error occured on opening the file: "
-						+ restoreable + ".");
-				freemind.main.Resources.getInstance().logException(ex);
-			}
-		}
-	}
-
 	private class ModesMenuActionListener implements ActionListener {
 		public void actionPerformed(final ActionEvent e) {
 			SwingUtilities.invokeLater(() -> c.createNewMode(e.getActionCommand()));
 		}
-	}
-
-	public StructuredMenuHolder getMenuHolder() {
-		return menuHolder;
 	}
 
 	public boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed) {

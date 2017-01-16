@@ -202,8 +202,7 @@ public class MindMapHookFactory extends HookFactoryAdapter {
 		try {
 			// constructed.
 			ClassLoader loader = descriptor.getPluginClassLoader();
-			Class hookClass = Class.forName(descriptor.getClassName(), true,
-					loader);
+			Class hookClass = Class.forName(descriptor.getClassName(), true, loader);
 			MindMapHook hook = (MindMapHook) hookClass.newInstance();
 			decorateHook(hookName, descriptor, hook);
 			return hook;

@@ -1141,11 +1141,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.addChild(htmlElement);
 
 		}
-		// save additional info:
-		if (getAdditionalInfo() != null) {
-			node.setAttribute(XMLElementAdapter.XML_NODE_ENCRYPTED_CONTENT,
-					getAdditionalInfo());
-		}
 		// ((MindMapEdgeModel)getEdge()).save(doc,node);
 
 		XMLElement edge = (getEdge()).save();

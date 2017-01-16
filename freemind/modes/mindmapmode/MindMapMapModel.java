@@ -646,13 +646,5 @@ public class MindMapMapModel extends MapAdapter {
 			NodeAdapter target) {
 		return new ArrowLinkTarget(source, target, mMapFeedback);
 	}
-	
-	public NodeAdapter createEncryptedNode(String additionalInfo) {
-		NodeAdapter node = createNodeAdapter(mMapFeedback.getMap(),
-				EncryptedMindMapNode.class.getName());
-		node.setAdditionalInfo(additionalInfo);
-		return node;
-	}
-
 
 }
