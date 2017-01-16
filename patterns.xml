@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Default patterns supplied with FreeMind 
-	 Don't change this file per hand as a pattern manager 
-	 is now included in FreeMind.
--->
+
 <patterns>
 	<pattern name="Default">
 		<pattern_node_background_color/>
