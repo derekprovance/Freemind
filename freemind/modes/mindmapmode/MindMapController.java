@@ -217,7 +217,6 @@ import freemind.view.mindmapview.NodeView;
 public class MindMapController extends ControllerAdapter implements ExtendedMapFeedback, MapSourceChangedObserver {
 
 	public static final String REGEXP_FOR_NUMBERS_IN_STRINGS = "([+\\-]?[0-9]*[.,]?[0-9]+)\\b";
-	private static final String ACCESSORIES_PLUGINS_NODE_NOTE = "accessories.plugins.NodeNote";
 
 	private final class NodeInformationTimerAction implements ActionListener {
 		private boolean mIsInterrupted = false;
@@ -342,14 +341,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	}
 
 	private static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
-	// for MouseEventHandlers
 	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
-
 	private ActionRegistry actionFactory;
 	private Vector hookActions;
-	// Mode mode;
 	private MindMapPopupMenu popupmenu;
-	// private JToolBar toolbar;
 	private MindMapToolBar toolbar;
 	private boolean addAsChildMode = false;
 	private Clipboard clipboard = null;
@@ -466,10 +461,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
 	public MindMapController(Mode mode) {
 		super(mode);
-		// create action factory:
 		actionFactory = new ActionRegistry();
-		// create node information timer and actions. They don't fire, until
-		// called to do so.
 		mNodeInformationTimerAction = new NodeInformationTimerAction();
 		mNodeInformationTimer = new Timer(100, mNodeInformationTimerAction);
 		mNodeInformationTimer.setRepeats(false);
@@ -481,16 +473,11 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		logger.info("createXmlActions");
 		mActorFactory = new XmlActorFactory(this);
 		logger.info("createIconActions");
-		// create standard actions:
 		createStandardActions();
-		// icon actions:
 		createIconActions();
 		logger.info("createNodeHookActions");
-		// node hook actions:
 		createNodeHookActions();
-
 		logger.info("mindmap_menus");
-		// load menus:
 		try {
 			InputStream in;
 			in = this.getFrame().getResource("mindmap_menus.xml").openStream();
@@ -967,20 +954,15 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
 	public void createPatternSubMenu(StructuredMenuHolder holder, String formatMenuString) {
 		for (int i = 0; i < patterns.length; ++i) {
-			JMenuItem item = holder.addAction(patterns[i], formatMenuString
-					+ "patterns/patterns/" + i);
-			item.setAccelerator(KeyStroke
-					.getKeyStroke(getFrame().getAdjustableProperty(
-							"keystroke_apply_pattern_" + (i + 1))));
+			JMenuItem item = holder.addAction(patterns[i], formatMenuString + "patterns/patterns/" + i);
+			item.setAccelerator(KeyStroke.getKeyStroke(getFrame().getAdjustableProperty("keystroke_apply_pattern_" + (i + 1))));
 		}
 	}
 
 	public MenuStructure updateMenusFromXml(InputStream in) {
 		try {
-			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
-					.createUnmarshaller();
-			MenuStructure menus = (MenuStructure) unmarshaller
-					.unmarshalDocument(in, null);
+			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance().createUnmarshaller();
+			MenuStructure menus = (MenuStructure) unmarshaller.unmarshalDocument(in, null);
 			return menus;
 		} catch (JiBXException e) {
 			freemind.main.Resources.getInstance().logException(e);
@@ -998,11 +980,9 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 				holder.addCategory(newCategory);
 				if (cat instanceof MenuSubmenu) {
 					MenuSubmenu submenu = (MenuSubmenu) cat;
-					holder.addMenu(new JMenu(getText(submenu.getNameRef())),
-							newCategory + "/.");
+					holder.addMenu(new JMenu(getText(submenu.getNameRef())), newCategory + "/.");
 				}
-				processMenuCategory(holder, cat.getListChoiceList(),
-						newCategory);
+				processMenuCategory(holder, cat.getListChoiceList(), newCategory);
 			} else if (obj instanceof MenuActionBase) {
 				MenuActionBase action = (MenuActionBase) obj;
 				String field = action.getField();
@@ -1012,15 +992,12 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 				}
 				String keystroke = action.getKeyRef();
 				try {
-					Action theAction = (Action) Tools.getField(new Object[]{
-							this, getController()}, field);
+					Action theAction = (Action) Tools.getField(new Object[]{this, getController()}, field);
 					String theCategory = categoryCopy + "/" + name;
 					if (obj instanceof MenuCheckedAction) {
 						addCheckBox(holder, theCategory, theAction, keystroke);
 					} else if (obj instanceof MenuRadioAction) {
-						final JRadioButtonMenuItem item = (JRadioButtonMenuItem) addRadioItem(
-								holder, theCategory, theAction, keystroke,
-								((MenuRadioAction) obj).getSelected());
+						final JRadioButtonMenuItem item = (JRadioButtonMenuItem) addRadioItem(holder, theCategory, theAction, keystroke, ((MenuRadioAction) obj).getSelected());
 						if (buttonGroup == null)
 							buttonGroup = new ButtonGroup();
 						buttonGroup.add(item);
@@ -1077,7 +1054,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 			arrowLinkPopup.add(new GotoLinkNodeAction(this, link.getTarget()));
 
 			arrowLinkPopup.addSeparator();
-			// add all links from target and from source:
 			HashSet NodeAlreadyVisited = new HashSet();
 			NodeAlreadyVisited.add(link.getSource());
 			NodeAlreadyVisited.add(link.getTarget());
@@ -1120,7 +1096,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	protected void setAllActions(boolean enabled) {
 		logger.fine("setAllActions:" + enabled);
 		super.setAllActions(enabled);
-		// own actions
 		increaseNodeFont.setEnabled(enabled);
 		decreaseNodeFont.setEnabled(enabled);
 		exportBranch.setEnabled(enabled);
@@ -1213,8 +1188,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 			}
 			try {
 				File file = new File(getMindMapMapModel().getFile() + ".html");
-				saveHTML((MindMapNodeModel) getMindMapMapModel().getRoot(),
-						file);
+				saveHTML((MindMapNodeModel) getMindMapMapModel().getRoot(), file);
 				loadURL(file.toString());
 			} catch (IOException ex) {
 				freemind.main.Resources.getInstance().logException(ex);
@@ -1312,8 +1286,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		public void actionPerformed(ActionEvent e) {
 			MindMapNodeModel selected = (MindMapNodeModel) getSelected();
 			if (selected == null || selected.getLink() == null) {
-				JOptionPane.showMessageDialog(getView(),
-						getText("import_linked_branch_no_link"));
+				JOptionPane.showMessageDialog(getView(), getText("import_linked_branch_no_link"));
 				return;
 			}
 			URL absolute = null;
@@ -1322,21 +1295,16 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 				absolute = new URL(Tools.fileToUrl(getMap().getFile()),
 						relative);
 			} catch (MalformedURLException ex) {
-				JOptionPane.showMessageDialog(getView(),
-						"Couldn't create valid URL.");
+				JOptionPane.showMessageDialog(getView(), "Couldn't create valid URL.");
 				return;
-			}
-			try {
-				MindMapNode node = loadTree(
-						Tools.urlToFile(absolute));
+			} try {
+				MindMapNode node = loadTree(Tools.urlToFile(absolute));
 				for (ListIterator i = node.childrenUnfolded(); i.hasNext();) {
 					MindMapNodeModel importNode = (MindMapNodeModel) i.next();
 					paste(importNode, selected);
 					invokeHooksRecursively(importNode, getMindMapMapModel());
 				}
-			}
-			// getModel().setLink(parent, null); }
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				handleLoadingException(ex);
 			}
 		}
@@ -1375,7 +1343,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		mActorFactory.getCloudColorActor().setCloudColor(node, color);
 	}
 
-	// Node editing
 	public void setFontSize(MindMapNode node, String fontSizeValue) {
 		getActorFactory().getFontSizeActor().setFontSize(node, fontSizeValue);
 	}
@@ -1449,10 +1416,6 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		return mActorFactory.getRemoveIconActor().removeLastIcon(node);
 	}
 
-	/**
-     *
-     */
-
 	public void addLink(MindMapNode source, MindMapNode target) {
 		getActorFactory().getAddArrowLinkActor().addLink(source, target);
 	}
@@ -1465,8 +1428,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		getActorFactory().getColorArrowLinkActor().setArrowLinkColor(arrowLink, color);
 	}
 
-	public void changeArrowsOfArrowLink(MindMapArrowLink arrowLink,
-			boolean hasStartArrow, boolean hasEndArrow) {
+	public void changeArrowsOfArrowLink(MindMapArrowLink arrowLink, boolean hasStartArrow, boolean hasEndArrow) {
 		getActorFactory().getChangeArrowsInArrowLinkActor().changeArrowsOfArrowLink(arrowLink,
 				hasStartArrow, hasEndArrow);
 	}
@@ -1510,8 +1472,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		} catch (IOException e) {
 		}
 		Vector nodeList = Tools.getVectorWithSingleElement(getNodeID(node));
-		return new MindMapNodesSelection(stringWriter.toString(), null, null,
-				null, null, null, null, nodeList);
+		return new MindMapNodesSelection(stringWriter.toString(), null, null, null, null, null, null, nodeList);
 	}
 
 	public Transferable cut() {
@@ -1523,12 +1484,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	}
 
 	public void paste(Transferable t, MindMapNode parent) {
-		paste(t, /* target= */parent, /* asSibling= */false,
-				parent.isNewChildLeft());
+		paste(t, parent, false, parent.isNewChildLeft());
 	}
 
-	public boolean paste(Transferable t, MindMapNode target, boolean asSibling,
-			boolean isLeft) {
+	public boolean paste(Transferable t, MindMapNode target, boolean asSibling, boolean isLeft) {
 		if (!asSibling && target.isFolded() && Resources.getInstance().getBoolProperty(RESOURCE_UNFOLD_ON_PASTE)) {
 			setFolded(target, false);
 		}

@@ -1,5 +1,4 @@
 <project name="freemind_plugins" default="dist" basedir=".">
-	
 	<property name="plugin.xml" location="${src}/plugins/ScriptingEngine.xml" />
 	<property name="plugin.dir" value="plugins/script"/>
 	<property name="local.plugin.dir" location="${src}/plugins/script"/>

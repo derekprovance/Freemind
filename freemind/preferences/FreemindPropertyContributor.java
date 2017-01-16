@@ -26,14 +26,6 @@ import java.util.List;
 
 import freemind.common.TextTranslator;
 
-/**
- * Implement this interface to take part in the property dialog.
- * 
- * @author foltin
- * 
- */
 public interface FreemindPropertyContributor {
-
 	public List getControls(TextTranslator pTextTranslator);
-
 }

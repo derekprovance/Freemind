@@ -50,7 +50,6 @@
 		<plugin_menu location="mindmapmode_popup/map/RemoveNode"/>
 	</plugin_action>
 
-	
 	<!-- Context menu Add image -->
 	<plugin_action 
 		documentation="%plugins/map/MapDialog_AddMapImageToNodeAction.properties_documentation" 
@@ -62,7 +61,6 @@
 		<plugin_mode class_name="freemind.modes.mindmapmode"/>
 		<plugin_menu location="mindmapmode_popup/map/AddMapImageToNodeAction"/>
 	</plugin_action>
-
 
 	<!-- Context menu Search for text in current node -->
 	<plugin_action 
@@ -77,8 +75,6 @@
 		<plugin_menu location="menu_bar/edit/find/otherFinds/SearchInMapForNodeTextAction"/>
 	</plugin_action>
 
-
-	
 	<!--  Internal plugin to manage the relation map location <-> node. -->
 	<plugin_action 
 		documentation="plugins/map/MapNodePositionHolder.properties_documentation" 
@@ -95,6 +91,4 @@
 		isPluginBase="true">
 		<plugin_mode class_name="freemind.modes.mindmapmode"/>
 	</plugin_registration>
-
-
 </plugin>

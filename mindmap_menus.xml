@@ -69,7 +69,6 @@
 				<menu_action field="newSibling" key_ref="keystroke_add"/>
 				<menu_action name="newPreviousSibling" field="newPreviousSibling" key_ref="keystroke_add_sibling_before"/>
 			</menu_category>
-			<menu_category name="crypto"/>
 			<menu_category name="image">
 				<menu_action field="setImageByFileChooser" key_ref="keystroke_set_image_by_filechooser"/>			
 			</menu_category>
@@ -78,9 +77,6 @@
 				<menu_action field="setLinkByTextField" key_ref="keystroke_set_link_by_textfield"/>
 			</menu_category>
 			<menu_separator/>
-			<menu_category name="clouds">
-				<menu_action field="cloud" key_ref="keystroke_node_toggle_cloud"/>
-			</menu_category>
 			<menu_category name="other">
 			</menu_category>
 		</menu_category>	
@@ -175,14 +171,6 @@
 		</menu_category>
 
 		<menu_category name="view">
-<!--
-		<menu_separator/>
-		<menu_submenu name="attributes" name_ref="menu_attributes">
-			<menu_radio_action name="showAllAttributes" field="showAllAttributes" key_ref="keystroke_show_all_attributes" selected ="true"/>
-			<menu_radio_action name="showSelectedAttributes" field="showSelectedAttributes" key_ref="keystroke_show_selected_attributes"/>
-			<menu_radio_action name="hideAllAttributes" field="hideAllAttributes" key_ref="keystroke_hide_all_attributes"/>
-		</menu_submenu>
--->
 		</menu_category>
 
 		<menu_category name="extras">
@@ -201,9 +189,6 @@
 				</menu_category>
 				<menu_separator/>
 				<menu_category name="scripting">
-				</menu_category>
-				<menu_separator/>
-				<menu_category name="collaboration">
 				</menu_category>
 				<menu_separator/>
 				<menu_category name="map">
