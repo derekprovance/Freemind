@@ -310,11 +310,10 @@ public class MenuBar extends JMenuBar {
 			if (selectedTextID != null) {
 				item.setSelected(selectedTextID.equals(textID));
 			}
-			// keystroke present?
-			String keystroke = c.getFrame().getAdjustableProperty(
-					"keystroke_" + textID);
-			if (keystroke != null)
+			String keystroke = c.getFrame().getAdjustableProperty("keystroke_" + textID);
+			if (keystroke != null) {
 				item.setAccelerator(KeyStroke.getKeyStroke(keystroke));
+			}
 		}
 	}
 

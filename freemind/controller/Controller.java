@@ -712,12 +712,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	/**
-	 * Closes the actual map.
-	 * 
-	 * @param force
-	 *            true= without save.
-	 */
 	public void close(boolean force) {
 		getMapModuleManager().close(force, null);
 	}
@@ -752,8 +746,7 @@ public class Controller implements MapModuleChangeObserver {
 	}
 
 	public void obtainFocusForSelected() {
-		KeyboardFocusManager.getCurrentKeyboardFocusManager()
-				.clearGlobalFocusOwner();
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
 		if (getView() != null) {
 			logger.fine("Requesting Focus for " + getView() + " in model " + getView().getModel());
 			getView().requestFocusInWindow();
@@ -766,10 +759,8 @@ public class Controller implements MapModuleChangeObserver {
 	public void setZoom(float zoom) {
 		getView().setZoom(zoom);
 		changeZoomValueProperty(zoom);
-		// show text in status bar:
 		Object[] messageArguments = { String.valueOf(zoom * 100f) };
-		String stringResult = Resources.getInstance().format(
-				"user_defined_zoom_status_bar", messageArguments);
+		String stringResult = Resources.getInstance().format("user_defined_zoom_status_bar", messageArguments);
 		getFrame().out(stringResult);
 	}
 

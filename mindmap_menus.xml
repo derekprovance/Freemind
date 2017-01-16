@@ -248,25 +248,22 @@
 			</menu_category>
 			<menu_category name="icons">
 			</menu_category>
-			<menu_category name="clouds">
-				<menu_action field="cloudColor"/>
-			</menu_category>
 			<menu_separator/>
 			<menu_category name="edges">
 				<menu_action field="edgeColor" key_ref="keystroke_edge_color"/>
 				<menu_submenu name="styles" name_ref="format_menu_edge_styles">
-						<menu_checked_action field="EdgeStyle_linear"/>
-						<menu_checked_action field="EdgeStyle_bezier"/>
-						<menu_checked_action field="EdgeStyle_sharp_linear"/>
-						<menu_checked_action field="EdgeStyle_sharp_bezier"/>
+					<menu_checked_action field="EdgeStyle_linear"/>
+					<menu_checked_action field="EdgeStyle_bezier"/>
+					<menu_checked_action field="EdgeStyle_sharp_linear"/>
+					<menu_checked_action field="EdgeStyle_sharp_bezier"/>
 				</menu_submenu>
 				<menu_submenu name="widths" name_ref="format_menu_edge_widths">
-						<menu_checked_action field="EdgeWidth_WIDTH_PARENT"/>
-						<menu_checked_action field="EdgeWidth_WIDTH_THIN"/>
-						<menu_checked_action field="EdgeWidth_1"/>
-						<menu_checked_action field="EdgeWidth_2"/>
-						<menu_checked_action field="EdgeWidth_4"/>
-						<menu_checked_action field="EdgeWidth_8"/>
+					<menu_checked_action field="EdgeWidth_WIDTH_PARENT"/>
+					<menu_checked_action field="EdgeWidth_WIDTH_THIN"/>
+					<menu_checked_action field="EdgeWidth_1"/>
+					<menu_checked_action field="EdgeWidth_2"/>
+					<menu_checked_action field="EdgeWidth_4"/>
+					<menu_checked_action field="EdgeWidth_8"/>
 				</menu_submenu>
 			</menu_category>
 		</menu_submenu>	
@@ -298,38 +295,35 @@
 	</menu_category>
 
 	<menu_category name="mindmapmode_toolbar">
-			<menu_category name="open">
-				<menu_action field="newMap" key_ref="keystroke_newMap"/>
-				<menu_action field="open" key_ref="keystroke_open"/>
-				<menu_action field="save" key_ref="keystroke_save"/>
-				<menu_action field="saveAs" key_ref="keystroke_saveAs"/>
-				<menu_action name="printDirect" field="printDirect"/>
-			</menu_category>
-			<menu_separator/>
-			<menu_category name="undo">
-				<menu_action name="undo" field="undo" key_ref="keystroke_undo"/>
-				<menu_action name="redo" field="redo" key_ref="keystroke_redo"/>
-			</menu_category>
-			<menu_separator/>
-			<menu_category name="insert">
-				<menu_action name="newChild" field="newChild"/>
-			</menu_category>
-			<menu_category name="font">
-				<menu_action field="italic" key_ref="keystroke_node_toggle_italic"/>
-				<menu_action field="bold" key_ref="keystroke_node_toggle_boldface"/>
-				<menu_action field="strikethrough" key_ref="keystroke_node_toggle_strikethrough"/>
-			</menu_category>
-			<menu_category name="icons">
-			</menu_category>
-			<menu_category name="clouds">
-				<menu_action field="cloud" key_ref="keystroke_node_toggle_cloud"/>
-			</menu_category>
-			<menu_separator/>
-			<menu_category name="filter">
-				<menu_action name="showFilterToolbarAction" field="showFilterToolbarAction"/>
-			</menu_category>
-			<menu_separator/>
-			<menu_category name="folding">
-			</menu_category>
+		<menu_category name="open">
+			<menu_action field="newMap" key_ref="keystroke_newMap"/>
+			<menu_action field="open" key_ref="keystroke_open"/>
+			<menu_action field="save" key_ref="keystroke_save"/>
+			<menu_action field="saveAs" key_ref="keystroke_saveAs"/>
+			<menu_action name="printDirect" field="printDirect"/>
+		</menu_category>
+		<menu_separator/>
+		<menu_category name="undo">
+			<menu_action name="undo" field="undo" key_ref="keystroke_undo"/>
+			<menu_action name="redo" field="redo" key_ref="keystroke_redo"/>
+		</menu_category>
+		<menu_separator/>
+		<menu_category name="insert">
+			<menu_action name="newChild" field="newChild"/>
+		</menu_category>
+		<menu_category name="font">
+			<menu_action field="italic" key_ref="keystroke_node_toggle_italic"/>
+			<menu_action field="bold" key_ref="keystroke_node_toggle_boldface"/>
+			<menu_action field="strikethrough" key_ref="keystroke_node_toggle_strikethrough"/>
+		</menu_category>
+		<menu_category name="icons">
+		</menu_category>
+		<menu_separator/>
+		<menu_category name="filter">
+			<menu_action name="showFilterToolbarAction" field="showFilterToolbarAction"/>
+		</menu_category>
+		<menu_separator/>
+		<menu_category name="folding">
+		</menu_category>
 	</menu_category>
 </menu_structure>
