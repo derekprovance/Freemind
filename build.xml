@@ -189,7 +189,6 @@
       <classpath refid="jars.path">
       </classpath>
       <exclude name="${gen.dir}/**" />
-      <exclude name="plugins/collaboration/jabber/**" />
     </javac>
     <copy todir="${testbuild}" file="${src}/freemind.properties"/>
   </target>
@@ -591,39 +590,6 @@
     <isset property="path"/>
   </condition>
 
-  <target name="runServer" depends="dist" description="Starts a map server on the command line">
-    <fail unless="params.set">
-      Must specify the parameter 'path', e.g. using ant -Dpath=/tmp runServer
-    </fail>
-    <java classname="plugins.collaboration.socket.StandaloneMindMapMaster" fork="yes" dir="${dist}" failonerror="false">
-      <classpath>
-        <pathelement location="${FM.jar}" />
-        <pathelement location="${jibxjar}" />
-        <pathelement location="${spellLib}" />
-        <pathelement path="${jibxruntimelibs}" />
-        <pathelement path="${dist}/plugins/collaboration/socket/socket_plugin.jar" />
-      </classpath>
-      <arg path="${path}"/>
-    </java>
-  </target>
-
-  <target name="runSharingScenario" depends="dist">
-    <delete file="${freemind_socket}" quiet="true" />
-    <antcall target="_run">
-      <param name="spawn" value="true"/>
-    </antcall>
-    <!-- Wait for the socket file to appear: -->
-    <waitfor maxwait="30" maxwaitunit="second">
-      <available file="${freemind_socket}"/>
-    </waitfor>
-    <sleep milliseconds="500"/>
-    <!-- Remove it such that a second instance appears: -->
-    <delete file="${freemind_socket}" quiet="true"/>
-    <antcall target="_run">
-      <param name="spawn" value="true"/>
-    </antcall>
-  </target>
-
   <!-- =================================
         target: runWithoutPreferences
        ================================= -->
@@ -689,15 +655,11 @@
   <target name="installers_all" depends="" description="--> Creates all installers.">
 
     <property name="InnoSetup" location="D:/Programme/Inno Setup 5/ISCC.exe" />
-    <!--
-    <property name="InnoSetup" location="/home/foltin/.wine/drive_c/Programme/Inno Setup 5/ISCC.exe" />
--->
+
     <property name="inst.dir" location="../tmp/fm_installer"/>
     <property name="inst.dest.dir" location="../installers"/>
     <delete dir="${inst.dest.dir}" failonerror="false"/>
-    <!--
-    <delete dir="${inst.dir}" failonerror="false"/>
--->
+
     <mkdir dir="${inst.dest.dir}"/>
     <mkdir dir="${inst.dir}"/>
     <exec dir="." executable="git">

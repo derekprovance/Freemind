@@ -59,13 +59,10 @@ import freemind.view.mindmapview.MapView;
 public class Controller implements MapModuleChangeObserver {
 
 	private static final String PAGE_FORMAT_PROPERTY = "page_format";
-	private HashSet mMapTitleChangeListenerSet = new HashSet();
-	private HashSet mZoomListenerSet = new HashSet();
-	private HashSet mMapTitleContributorSet = new HashSet();
-	/**
-	 * Converts from a local link to the real file URL of the documentation map.
-	 * (Used to change this behaviour under MacOSX).
-	 */
+	private HashSet<MapModuleManager.MapTitleChangeListener> mMapTitleChangeListenerSet = new HashSet<>();
+	private HashSet<ZoomListener> mZoomListenerSet = new HashSet<>();
+	private HashSet<MapModuleManager.MapTitleContributor> mMapTitleContributorSet = new HashSet<>();
+
 	private static Logger logger;
 	public static LocalLinkConverter localDocumentationLinkConverter;
 	private static JColorChooser colorChooser = new JColorChooser();
@@ -89,7 +86,7 @@ public class Controller implements MapModuleChangeObserver {
 	private ModesCreator mModescreator = new ModesCreator(this);
 	private PageFormat pageFormat = null;
 	private PrinterJob printerJob = null;
-	private Map fontMap = new HashMap();
+	private Map<String, Font> fontMap = new HashMap<>();
     private JLabel status;
 
 	private FilterController mFilterController;
@@ -133,22 +130,19 @@ public class Controller implements MapModuleChangeObserver {
 	public Action showSelectionAsRectangle;
 	public PropertyAction propertyAction;
 	public OpenURLAction freemindUrl;
-	private String userDefinedZoom;
+
+	private JComboBox<String> zoom = new JComboBox<>(this.getZooms());
 
 	private static final float[] zoomValues = { 25 / 100f, 50 / 100f,
 			75 / 100f, 100 / 100f, 150 / 100f, 200 / 100f, 300 / 100f,
 			400 / 100f };
 
-	private static Vector propertyChangeListeners = new Vector();
+	private static Vector<FreemindPropertyListener> propertyChangeListeners = new Vector<>();
 
-	private Vector mTabbedPaneMapModules;
+	private Vector<MapModule> mTabbedPaneMapModules;
 	private JTabbedPane mTabbedPane;
 	private boolean mTabbedPaneSelectionUpdate = true;
-	private Map<SplitComponentType,JComponent> mSouthComponents = new HashMap<>();
 
-	//
-	// Constructors
-	//
 	public Controller(FreeMindMain frame) {
 		this.frame = frame;
 		if (logger == null) {
@@ -166,6 +160,7 @@ public class Controller implements MapModuleChangeObserver {
 
     public void init() {
 		initialization();
+		setMinimalScreenSize();
 
 		nodeMouseMotionListener = new NodeMouseMotionListener(this);
 		nodeMotionListener = new NodeMotionListener(this);
@@ -216,7 +211,11 @@ public class Controller implements MapModuleChangeObserver {
 		setAllActions(false);
 	}
 
-    private void generateNorthToolBar() {
+	private void setMinimalScreenSize() {
+		getJFrame().setMinimumSize(new Dimension(1024, 768));
+	}
+
+	private void generateNorthToolBar() {
         northToolbar = new MainToolBar(this);
         mFilterController = new FilterController(this);
         filterToolbar = mFilterController.getFilterToolbar();
@@ -233,25 +232,23 @@ public class Controller implements MapModuleChangeObserver {
         southToolbarPanel = new JPanel(new BorderLayout());
 		initializeStatus();
         southToolbar.add(status);
-
-        //TODO - look into moving this to the MindMapToolbar
+		southToolbar.add(Box.createHorizontalGlue());
         southToolbar.add(createZoomComboBox());
         southToolbarPanel.add(southToolbar);
+
         getFrame().getContentPane().add(southToolbarPanel, BorderLayout.SOUTH);
     }
 
 	private void initializeStatus() {
 		status = new JLabel("!");
-		status.setPreferredSize(status.getPreferredSize());
+		status.setPreferredSize(new Dimension(500, 20));
 		status.setText("");
 	}
 
-	private JComboBox createZoomComboBox() {
-		JComboBox zoom = new JComboBox(this.getZooms());
+	private JComboBox<String> createZoomComboBox() {
 		zoom.setSelectedItem("100%");
         zoom.setPreferredSize(new Dimension(90, 20));
         zoom.setMaximumSize(zoom.getPreferredSize());
-		zoom.addItem(userDefinedZoom);
 
 		zoom.setFocusable(false);
 		zoom.addItemListener(e -> {
@@ -263,12 +260,15 @@ public class Controller implements MapModuleChangeObserver {
 		return zoom;
 	}
 
+	public JComboBox<String> getZoom() {
+		return zoom;
+	}
+
 	private void setZoomByItem(Object item) {
 		String dirty = (String) item;
 		String cleaned = dirty.substring(0, dirty.length() - 1);
 
 		float zoomValue = Float.parseFloat(cleaned) / 100F;
-		// remove '%' sign
 		this.setZoom(zoomValue);
 	}
 
@@ -401,14 +401,12 @@ public class Controller implements MapModuleChangeObserver {
 		if (!fontMap.containsKey(getFontStringCode(font))) {
 			fontMap.put(getFontStringCode(font), font);
 		}
-		return (Font) fontMap.get(getFontStringCode(font));
+		return fontMap.get(getFontStringCode(font));
 	}
 
 	private String getFontStringCode(Font font) {
 		return font.toString() +"/"+ font.getAttributes().get(TextAttribute.STRIKETHROUGH);
 	}
-
-	//
 
 	public Font getDefaultFont() {
 		int fontSize = getDefaultFontSize();
@@ -418,28 +416,21 @@ public class Controller implements MapModuleChangeObserver {
 		return getFontThroughMap(new Font(fontFamily, fontStyle, fontSize));
 	}
 
-	/**
-     */
 	public String getDefaultFontFamilyName() {
 		String fontFamily = getProperty("defaultfont");
 		return fontFamily;
 	}
 
-	/**
-     */
 	public int getDefaultFontStyle() {
 		int fontStyle = frame.getIntProperty("defaultfontstyle", 0);
 		return fontStyle;
 	}
 
-	/**
-     */
 	public int getDefaultFontSize() {
 		int fontSize = frame.getIntProperty("defaultfontsize", 12);
 		return fontSize;
 	}
 
-	/** Static JColorChooser to have the recent colors feature. */
 	static public JColorChooser getCommonJColorChooser() {
 		return colorChooser;
 	}
@@ -469,11 +460,9 @@ public class Controller implements MapModuleChangeObserver {
 		public ColorTracker(JColorChooser c) {
 			chooser = c;
 		}
-
 		public void actionPerformed(ActionEvent e) {
 			color = chooser.getColor();
 		}
-
 		public Color getColor() {
 			return color;
 		}
@@ -486,16 +475,14 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	static class DisposeOnClose extends ComponentAdapter implements
-			Serializable {
+	static class DisposeOnClose extends ComponentAdapter implements Serializable {
 		public void componentHidden(ComponentEvent e) {
 			Window w = (Window) e.getComponent();
 			w.dispose();
 		}
 	}
 
-	public boolean isMapModuleChangeAllowed(MapModule oldMapModule,
-			Mode oldMode, MapModule newMapModule, Mode newMode) {
+	public boolean isMapModuleChangeAllowed(MapModule oldMapModule, Mode oldMode, MapModule newMapModule, Mode newMode) {
 		return true;
 	}
 
@@ -655,13 +642,6 @@ public class Controller implements MapModuleChangeObserver {
 		northToolbar.setVisible(toolbarVisible);
 	}
 
-	/**
-	 * @return Returns the main northToolbar.
-	 */
-	public JToolBar getNorthToolbar() {
-		return northToolbar;
-	}
-
 	public void setLeftToolbarVisible(boolean visible) {
 		leftToolbarVisible = visible;
 		if (getMode() == null) {
@@ -764,13 +744,9 @@ public class Controller implements MapModuleChangeObserver {
 		getFrame().out(stringResult);
 	}
 
-	/**
-	 * Set the Frame title with mode and file if exist
-	 */
 	public void setTitle() {
 		Object[] messageArguments = { getMode().toLocalizedString() };
-		MessageFormat formatter = new MessageFormat(
-				getResourceString("mode_title"));
+		MessageFormat formatter = new MessageFormat(getResourceString("mode_title"));
 		String title = formatter.format(messageArguments);
 		String rawTitle = "";
 		MindMap model = null;
@@ -782,8 +758,7 @@ public class Controller implements MapModuleChangeObserver {
 					+ (model.isSaved() ? "" : "*")
 					+ " - "
 					+ title
-					+ (model.isReadOnly() ? " ("
-							+ getResourceString("read_only") + ")" : "");
+					+ (model.isReadOnly() ? " (" + getResourceString("read_only") + ")" : "");
 			File file = model.getFile();
 			if (file != null) {
 				title += " " + file.getAbsolutePath();
@@ -805,34 +780,6 @@ public class Controller implements MapModuleChangeObserver {
 		mMapTitleChangeListenerSet.add(pMapTitleChangeListener);
 	}
 
-	public void deregisterMapTitleChangeListener(
-			MapModuleManager.MapTitleChangeListener pMapTitleChangeListener) {
-		mMapTitleChangeListenerSet.remove(pMapTitleChangeListener);
-	}
-
-	public void registerZoomListener(ZoomListener pZoomListener) {
-		mZoomListenerSet.add(pZoomListener);
-	}
-
-	public void deregisterZoomListener(ZoomListener pZoomListener) {
-		mZoomListenerSet.remove(pZoomListener);
-	}
-
-	public void registerMapTitleContributor(
-			MapModuleManager.MapTitleContributor pMapTitleContributor) {
-		mMapTitleContributorSet.add(pMapTitleContributor);
-	}
-
-	public void deregisterMapTitleContributor(
-			MapModuleManager.MapTitleContributor pMapTitleContributor) {
-		mMapTitleContributorSet.remove(pMapTitleContributor);
-	}
-
-
-	/**
-	 * Manage the availabilty of all Actions dependend of whether there is a map
-	 * or not
-	 */
 	public void setAllActions(boolean enabled) {
 		print.setEnabled(enabled && isPrintingAllowed);
 		printDirect.setEnabled(enabled && isPrintingAllowed);
@@ -841,17 +788,17 @@ public class Controller implements MapModuleChangeObserver {
 		close.setEnabled(enabled);
 		moveToRoot.setEnabled(enabled);
 		northToolbar.setAllActions(enabled);
+		southToolbar.setAllActions(enabled);
 		showSelectionAsRectangle.setEnabled(enabled);
 	}
 
 	private void quit() {
 		String currentMapRestorable = (getModel() != null) ? getModel().getRestorable() : null;
 		storeOptionSplitPanePosition();
-		Vector restorables = new Vector();
+		Vector<String> restorables = new Vector<>();
 		List mapModuleVector = getMapModuleManager().getMapModuleVector();
 		if (mapModuleVector.size() > 0) {
-			String displayName = ((MapModule) mapModuleVector.get(0))
-					.getDisplayName();
+			String displayName = ((MapModule) mapModuleVector.get(0)).getDisplayName();
 			getMapModuleManager().changeToMapModule(displayName);
 		}
 		while (mapModuleVector.size() > 0) {
@@ -868,34 +815,14 @@ public class Controller implements MapModuleChangeObserver {
 					restorables.add(restorableString);
 				}
 			} else {
-				// map module without view open.
-				// FIXME: This seems to be a bad hack. correct me!
 				getMapModuleManager().nextMapModule();
 			}
 		}
-		// store last tab session:
-		int index = 0;
-		String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-		LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
-		management.setLastFocussedTab(-1);
-		management.clearTabIndices();
-        for (Object restorable1 : restorables) {
-            String restorable = (String) restorable1;
-            MindmapLastStateStorage storage = management.getStorage(restorable);
-            if (storage != null) {
-                storage.setTabIndex(index);
-            }
-            if (Tools.safeEquals(restorable, currentMapRestorable)) {
-                management.setLastFocussedTab(index);
-            }
-            index++;
-        }
-		setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE,
-				management.getXml());
+
+		storeLastTabSession(restorables, currentMapRestorable);
 
 		String lastOpenedString = lastOpened.save();
 		setProperty("lastOpened", lastOpenedString);
-		getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED, currentMapRestorable != null ? currentMapRestorable : "");
 		setProperty("toolbarVisible", toolbarVisible ? "true" : "false");
 		setProperty("leftToolbarVisible", leftToolbarVisible ? "true" : "false");
 		if (!getFrame().isApplet()) {
@@ -910,6 +837,27 @@ public class Controller implements MapModuleChangeObserver {
 		}
 		getFrame().saveProperties(true);
 		System.exit(0);
+	}
+
+	private void storeLastTabSession(Vector<String> restorables, String currentMapRestorable) {
+		int index = 0;
+		String lastStateMapXml = getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
+		LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+		management.setLastFocussedTab(-1);
+		management.clearTabIndices();
+		for (Object restorable1 : restorables) {
+			String restorable = (String) restorable1;
+			MindmapLastStateStorage storage = management.getStorage(restorable);
+			if (storage != null) {
+				storage.setTabIndex(index);
+			}
+			if (Tools.safeEquals(restorable, currentMapRestorable)) {
+				management.setLastFocussedTab(index);
+			}
+			index++;
+		}
+		setProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE, management.getXml());
+		getFrame().setProperty(FreeMindCommon.ON_START_IF_NOT_SPECIFIED, currentMapRestorable != null ? currentMapRestorable : "");
 	}
 
 	private boolean acquirePrinterJobAndPageFormat() {
@@ -1034,9 +982,7 @@ public class Controller implements MapModuleChangeObserver {
 				return;
 			}
 
-			// Ask about custom printing settings
-			final JDialog dialog = new JDialog((JFrame) getFrame(),
-					getResourceString("printing_settings"), true);
+			final JDialog dialog = new JDialog((JFrame) getFrame(), getResourceString("printing_settings"), true);
 			final JCheckBox fitToPage = new JCheckBox(getResourceString("fit_to_page"), Resources.getInstance().getBoolProperty("fit_to_page"));
 			final JLabel userZoomL = new JLabel(getResourceString("user_zoom"));
 			final JTextField userZoom = new JTextField(getProperty("user_zoom"), 3);
@@ -1090,7 +1036,6 @@ public class Controller implements MapModuleChangeObserver {
 			} else
 				return;
 
-			// Ask user for page format (e.g., portrait/landscape)
 			pageFormat = printerJob.pageDialog(pageFormat);
 			storePageFormat();
 		}
@@ -1098,8 +1043,7 @@ public class Controller implements MapModuleChangeObserver {
 
 	public interface LocalLinkConverter {
 		/**
-		 * @throws MalformedURLException
-		 *             if the conversion didn't work
+		 * @throws MalformedURLException if the conversion didn't work
 		 */
 		URL convertLocalLink(String link) throws MalformedURLException;
 	}
@@ -1590,16 +1534,13 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void addTabbedPane(JTabbedPane pTabbedPane) {
 		mTabbedPane = pTabbedPane;
-		mTabbedPaneMapModules = new Vector();
+		mTabbedPaneMapModules = new Vector<>();
 		mTabbedPane.addChangeListener(new ChangeListener() {
-
 			public synchronized void stateChanged(ChangeEvent pE) {
 				tabSelectionChanged();
 			}
-
 		});
 		getMapModuleManager().addListener(new MapModuleChangeObserver() {
-
 			public void afterMapModuleChange(MapModule pOldMapModule,
 					Mode pOldMode, MapModule pNewMapModule, Mode pNewMode) {
 				int selectedIndex = mTabbedPane.getSelectedIndex();
@@ -1650,7 +1591,6 @@ public class Controller implements MapModuleChangeObserver {
                 }
             }
         });
-
 	}
 
 	private void tabSelectionChanged() {
@@ -1664,13 +1604,15 @@ public class Controller implements MapModuleChangeObserver {
 		if (selectedIndex < 0) {
 			return;
 		}
-		MapModule module = (MapModule) mTabbedPaneMapModules.get(selectedIndex);
+		MapModule module = mTabbedPaneMapModules.get(selectedIndex);
 		logger.fine("Selected index of tab is now: " + selectedIndex + " with title:" + module.toString());
 		if (module != getMapModule()) {
 			getMapModuleManager().changeToMapModule(module.toString());
 		}
 		frame.getScrollPane().setVisible(true);
 		mTabbedPane.setComponentAt(selectedIndex, frame.getContentComponent());
+
+		setZoomByItem(getZoom().getSelectedItem());
 
 		obtainFocusForSelected();
 	}
@@ -1700,7 +1642,6 @@ public class Controller implements MapModuleChangeObserver {
 		public int getIndex() {
 			return mIndex;
 		}
-		
 	}
 
 	private JOptionalSplitPane mOptionalSplitPane = null;
@@ -1716,8 +1657,7 @@ public class Controller implements MapModuleChangeObserver {
 	public void insertComponentIntoSplitPane(JComponent pMindMapComponent, SplitComponentType pSplitComponentType) {
 		if(mOptionalSplitPane == null) {
 			mOptionalSplitPane = new JOptionalSplitPane();
-			mOptionalSplitPane.setLastDividerPosition(getIntProperty(
-					FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, -1));
+			mOptionalSplitPane.setLastDividerPosition(getIntProperty(FreeMind.RESOURCES_OPTIONAL_SPLIT_DIVIDER_POSITION, -1));
 			mOptionalSplitPane.setComponent(pMindMapComponent, pSplitComponentType.getIndex());
 			getFrame().insertComponentIntoSplitPane(mOptionalSplitPane);
 		} else {
@@ -1725,9 +1665,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	/**
-	 * Indicates that the south panel should be made invisible.
-	 */
 	public void removeSplitPane(SplitComponentType pSplitComponentType) {
 		if(mOptionalSplitPane != null) {
 			mOptionalSplitPane.removeComponent(pSplitComponentType.getIndex());

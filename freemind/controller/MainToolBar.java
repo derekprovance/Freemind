@@ -19,7 +19,7 @@
 
 package freemind.controller;
 
-import java.awt.Insets;
+import java.awt.*;
 import java.util.logging.Logger;
 
 public class MainToolBar extends FreeMindToolBar {
@@ -42,6 +42,9 @@ public class MainToolBar extends FreeMindToolBar {
 
 
 	public void setAllActions(boolean enabled) {
+	    for(Component item : this.getComponents()) {
+	        item.setEnabled(enabled);
+        }
 	}
 
 }

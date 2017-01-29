@@ -101,7 +101,7 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 	public static final String RESOURCES_DELETE_NODES_WITHOUT_QUESTION = "delete_nodes_without_question";
 	public static final String RESOURCES_RELOAD_FILES_WITHOUT_QUESTION = "reload_files_without_question";
 	private Logger logger = null;
-	protected static final VersionInformation VERSION = new VersionInformation("2.0.0");
+	protected static final VersionInformation VERSION = new VersionInformation("2.1.0");
 	public static final String XML_VERSION = "1.1.0";
 	public static final String RESOURCES_REMIND_USE_RICH_TEXT_IN_NEW_LONG_NODES = "remind_use_rich_text_in_new_long_nodes";
 	public static final String RESOURCES_EXECUTE_SCRIPTS_WITHOUT_ASKING = "resources_execute_scripts_without_asking";
@@ -976,10 +976,8 @@ public class FreeMind extends JFrame implements FreeMindMain, ActionListener {
 
 	public void removeSplitPane() {
 		if (mSplitPane != null) {
-			setProperty(SPLIT_PANE_POSITION,
-					"" + mSplitPane.getDividerLocation());
-			setProperty(SPLIT_PANE_LAST_POSITION,
-					"" + mSplitPane.getLastDividerLocation());
+			setProperty(SPLIT_PANE_POSITION, "" + mSplitPane.getDividerLocation());
+			setProperty(SPLIT_PANE_LAST_POSITION, "" + mSplitPane.getLastDividerLocation());
 			removeContentComponent();
 			mContentComponent = mScrollPane;
 			setContentComponent();

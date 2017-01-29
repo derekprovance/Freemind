@@ -3,4 +3,5 @@
 out/*
 .DS_Store
 bin/*
+version.properties
 __artifacts_temp

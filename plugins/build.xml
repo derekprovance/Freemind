@@ -9,7 +9,6 @@
 				    <include name="build_*.xml"/>
 					<!-- The import script can't be executed. -->
 				    <exclude name="build_import.xml"/>
-				    <exclude name="build_latex.xml"  if="include_latex"/>
 					<!-- The search plugin wasn't maintenanced  -->
 				    <exclude name="build_search.xml"/>
 				</fileset>

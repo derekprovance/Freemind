@@ -102,8 +102,8 @@ public class FreeMindStarter {
 
 	private void checkJavaVersion() {
 		System.out.println("Checking Java Version...");
-		if (JAVA_VERSION.compareTo("1.6.0") < 0) {
-			String message = "Warning: FreeMind requires version Java 1.6.0 or higher (your version: "
+		if (JAVA_VERSION.compareTo("1.7.0") < 0) {
+			String message = "Warning: FreeMind requires version Java 1.7.0 or higher (your version: "
 					+ JAVA_VERSION
 					+ ", installed in "
 					+ System.getProperty("java.home") + ").";
