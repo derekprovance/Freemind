@@ -73,12 +73,8 @@ import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.*;
 
-public abstract class ControllerAdapter extends MapFeedbackAdapter implements ModeController,
-		DirectoryResultListener {
-
-
+public abstract class ControllerAdapter extends MapFeedbackAdapter implements ModeController, DirectoryResultListener {
 	private Mode mode;
-
 	private Color selectionColor = new Color(200, 220, 200);
 	private MapAdapter mModel;
 	private HashSet mNodeSelectionListeners = new HashSet();
@@ -87,47 +83,22 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public ControllerAdapter(Mode mode) {
 		this.setMode(mode);
-		// for updates of nodes:
-		// FIXME
-		// do not associate each new ControllerAdapter
-		// with the only one application viewport
-		// DropTarget dropTarget = new DropTarget(getFrame().getViewport(),
-		// new FileOpener());
 	}
 
 	public void setModel(MapAdapter model) {
 		mModel = model;
 	}
 
-	//
-	// Methods that should be overloaded
-	//
-
 	public abstract MindMapNode newNode(Object userObject, MindMap map);
 
-	/**
-	 * You _must_ implement this if you use one of the following actions:
-	 * OpenAction, NewMapAction.
-	 * 
-	 * @param modeController
-	 *            TODO
-	 */
 	public MapAdapter newModel(ModeController modeController) {
 		throw new java.lang.UnsupportedOperationException();
 	}
 
-	/**
-	 * You may want to implement this... It returns the FileFilter that is used
-	 * by the open() and save() JFileChoosers.
-	 */
 	protected FileFilter getFileFilter() {
 		return null;
 	}
 
-	/**
-	 * Currently, this method is called by the mapAdapter. This is buggy, and is
-	 * to be changed.
-	 */
 	public void nodeChanged(MindMapNode node) {
 		setSaved(false);
 		nodeRefresh(node, true);
@@ -140,24 +111,19 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 	}
 
-
 	public void nodeRefresh(MindMapNode node) {
 		nodeRefresh(node, false);
 	}
 
 	private void nodeRefresh(MindMapNode node, boolean isUpdate) {
-		logger.finest("nodeChanged called for node " + node + " parent="
-				+ node.getParentNode());
+		logger.finest("nodeChanged called for node " + node + " parent=" + node.getParentNode());
 		if (isUpdate) {
-			// update modification times:
 			if (node.getHistoryInformation() != null) {
 				node.getHistoryInformation().setLastModifiedAt(new Date());
 			}
-			// Tell any node hooks that the node is changed:
 			updateNode(node);
 		}
-		// fc, 10.10.06: Dirty hack in order to keep this method away from being
-		// used by everybody.
+
 		((MapAdapter) getMap()).nodeChangedInternal(node);
 	}
 
@@ -179,9 +145,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		getMap().nodeStructureChanged(node);
 	}
 
-	/**
-	 * Overwrite this method to perform additional operations to an node update.
-	 */
 	protected void updateNode(MindMapNode node) {
 		for (Object mNodeSelectionListener : mNodeSelectionListeners) {
 			NodeSelectionListener listener = (NodeSelectionListener) mNodeSelectionListener;
@@ -191,10 +154,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void onLostFocusNode(NodeView node) {
 		try {
-			// deselect the old node:
 			HashSet copy = new HashSet(mNodeSelectionListeners);
-			// we copied the set to be able to remove listeners during a
-			// listener method.
 			for (Object aCopy : copy) {
 				NodeSelectionListener listener = (NodeSelectionListener) aCopy;
 				listener.onLostFocusNode(node);
@@ -211,10 +171,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	public void onFocusNode(NodeView node) {
 		try {
-			// select the new node:
 			HashSet copy = new HashSet(mNodeSelectionListeners);
-			// we copied the set to be able to remove listeners during a
-			// listener method.
 			for (Object aCopy : copy) {
 				NodeSelectionListener listener = (NodeSelectionListener) aCopy;
 				listener.onFocusNode(node);
@@ -282,9 +239,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public void registerNodeLifetimeListener(NodeLifetimeListener listener, boolean pFireCreateEvent) {
 		mNodeLifetimeListeners.add(listener);
 		if (pFireCreateEvent) {
-			// call create node for all:
-			// TODO: fc, 10.2.08: this event goes to all listeners. It should be for
-			// the new listener only?
 			fireRecursiveNodeCreateEvent(getRootNode());
 		}
 	}
@@ -298,7 +252,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void fireNodePreDeleteEvent(MindMapNode node) {
-		// call lifetime listeners:
 		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
 			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onPreDeleteNode(node);
@@ -306,7 +259,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void fireNodePostDeleteEvent(MindMapNode node, MindMapNode parent) {
-		// call lifetime listeners:
 		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
 			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onPostDeleteNode(node, parent);
@@ -318,7 +270,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			NodeAdapter child = (NodeAdapter) i.next();
 			fireRecursiveNodeCreateEvent(child);
 		}
-		// call lifetime listeners:
 		for (Object mNodeLifetimeListener : mNodeLifetimeListeners) {
 			NodeLifetimeListener listener = (NodeLifetimeListener) mNodeLifetimeListener;
 			listener.onCreateNodeHook(node);
@@ -326,7 +277,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void firePreSaveEvent(MindMapNode node) {
-		// copy to prevent concurrent modification.
 		HashSet listenerCopy = new HashSet(mNodeSelectionListeners);
 		for (Object aListenerCopy : listenerCopy) {
 			NodeSelectionListener listener = (NodeSelectionListener) aListenerCopy;
@@ -352,10 +302,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		pModeController.setSaved(false);
 	}
 
-	/**
-	 * You may decide to overload this or take the default and implement the
-	 * functionality in your MapModel (implements MindMap)
-	 */
 	public MapFeedback load(URL file) throws FileNotFoundException,
 			IOException, XMLParseException, URISyntaxException {
 		String mapDisplayName = getController().getMapModuleManager()
@@ -384,10 +330,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	 */
 	abstract protected void loadInternally(URL url, MapAdapter model) throws URISyntaxException, XMLParseException, IOException;
 
-	/**
-	 * You may decide to overload this or take the default and implement the
-	 * functionality in your MapModel (implements MindMap)
-	 */
 	public MapFeedback load(File file) throws FileNotFoundException,
 			IOException {
 		try {
@@ -400,27 +342,20 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	protected void restoreMapsLastState(final ModeController newModeController,
 			final MapAdapter model) {
-		// restore zoom, etc.
-		String lastStateMapXml = getFrame().getProperty(
-				FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-		LastStateStorageManagement management = new LastStateStorageManagement(
-				lastStateMapXml);
-		MindmapLastStateStorage store = management.getStorage(model
-				.getRestorable());
+		String lastStateMapXml = getFrame().getProperty(FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
+		LastStateStorageManagement management = new LastStateStorageManagement(lastStateMapXml);
+		MindmapLastStateStorage store = management.getStorage(model.getRestorable());
 		if (store != null) {
 			ModeController modeController = newModeController;
-			// Zoom must be set on combo box, too.
 			getController().setZoom(store.getLastZoom());
-			MindMapNode sel = null;
+			MindMapNode sel;
 			try {
-				// Selected:
 				sel = modeController.getNodeFromID(store.getLastSelected());
 				modeController.centerNode(sel);
 				List selected = new Vector();
 				for (Object o : store.getListNodeListMemberList()) {
 					NodeListMember member = (NodeListMember) o;
-					NodeAdapter selNode = modeController.getNodeFromID(member
-							.getNode());
+					NodeAdapter selNode = modeController.getNodeFromID(member.getNode());
 					selected.add(selNode);
 				}
 				modeController.select(sel, selected);
@@ -446,72 +381,32 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public void loadURL(String relative) {
 		try {
 			logger.info("Trying to open " + relative);
-			URL absolute = null;
+			URL absolute;
 			if (Tools.isAbsolutePath(relative)) {
-				// Protocol can be identified by rexep pattern "[a-zA-Z]://.*".
-				// This should distinguish a protocol path from a file path on
-				// most platforms.
-				// 1) UNIX / Linux - obviously
-				// 2) Windows - relative path does not contain :, in absolute
-				// path is : followed by \.
-				// 3) Mac - cannot remember
-
-				// If relative is an absolute path, then it cannot be a
-				// protocol.
-				// At least on Unix and Windows. But this is not true for Mac!!
-
-				// Here is hidden an assumption that the existence of protocol
-				// implies !Tools.isAbsolutePath(relative).
-				// The code should probably be rewritten to convey more logical
-				// meaning, on the other hand
-				// it works on Windows and Linux.
-
-				// absolute = new URL("file://"+relative); }
 				absolute = Tools.fileToUrl(new File(relative));
 			} else if (relative.startsWith("#")) {
-				// inner map link, fc, 12.10.2004
 				logger.finest("found relative link to " + relative);
 				String target = relative.substring(1);
 				try {
 					centerNode(getNodeFromID(target));
 				} catch (Exception e) {
 					freemind.main.Resources.getInstance().logException(e);
-					// give "not found" message
-					getFrame().out(
-							Tools.expandPlaceholders(getText("link_not_found"),
-									target));
+					getFrame().out(Tools.expandPlaceholders(getText("link_not_found"), target));
 				}
 				return;
 
 			} else {
-				/*
-				 * Remark: getMap().getURL() returns URLs like file:/C:/... It
-				 * seems, that it does not cause any problems.
-				 */
 				absolute = new URL(getMap().getURL(), relative);
 			}
-			// look for reference part in URL:
 			URL originalURL = absolute;
 			String ref = absolute.getRef();
 			if (ref != null) {
-				// remove ref from absolute:
 				absolute = Tools.getURLWithoutReference(absolute);
 			}
 			String extension = Tools.getExtension(absolute.toString());
-			if ((extension != null)
-					&& extension
-							.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) { // ----
-																											// Open
-																											// Mind
-																											// Map
+			if ((extension != null) && extension .equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
 				logger.info("Trying to open mind map " + absolute);
-				MapModuleManager mapModuleManager = getController()
-						.getMapModuleManager();
-				/*
-				 * this can lead to confusion if the user handles multiple maps
-				 * with the same name. Obviously, this is wrong. Get a better
-				 * check whether or not the file is already opened.
-				 */
+				MapModuleManager mapModuleManager = getController().getMapModuleManager();
 				String mapExtensionKey = mapModuleManager
 						.checkIfFileIsAlreadyOpened(absolute);
 				if (mapExtensionKey == null) {
@@ -522,11 +417,8 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				}
 				if (ref != null) {
 					try {
-						ModeController newModeController = getController()
-								.getModeController();
-						// jump to link:
-						newModeController.centerNode(newModeController
-								.getNodeFromID(ref));
+						ModeController newModeController = getController().getModeController();
+						newModeController.centerNode(newModeController.getNodeFromID(ref));
 					} catch (Exception e) {
 						freemind.main.Resources.getInstance().logException(e);
 						getFrame().out(
@@ -535,7 +427,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 					}
 				}
 			} else {
-				// ---- Open URL in browser
 				getFrame().openDocument(originalURL);
 			}
 		} catch (MalformedURLException ex) {
@@ -548,21 +439,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.ExtendedMapFeedback#setWaitingCursor(boolean)
-	 */
 	public void setWaitingCursor(boolean pWaiting) {
 		getFrame().setWaitingCursor(pWaiting);
 	}
 
-	
-	/**
-	 * fc, 24.1.2004: having two methods getSelecteds with different return
-	 * values (linkedlists of models resp. views) is asking for trouble. @see
-	 * MapView
-	 * 
-	 * @return returns a list of MindMapNode s.
-	 */
 	public List getSelecteds() {
 		LinkedList selecteds = new LinkedList();
 		ListIterator it = getView().getSelecteds().listIterator();
@@ -579,7 +459,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public void select(MindMapNode primarySelected, List selecteds) {
-		// are they visible?
 		for (Object selected1 : selecteds) {
 			MindMapNode node = (MindMapNode) (selected1);
 			displayNode(node);
@@ -605,28 +484,20 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public List getSelectedsByDepth() {
-		// return an ArrayList of MindMapNodes.
 		List result = getSelecteds();
 		sortNodesByDepth(result);
 		return result;
 	}
 
-	/**
-	 * Return false is the action was cancelled, e.g. when it has to lead to
-	 * saving as.
-	 */
 	public boolean save(File file) {
 		boolean result = false;
 		try {
 			setWaitingCursor(true);
 			result = getModel().save(file);
-			// create thumbnail if desired.
 			if (result && "true"
 					.equals(getProperty(FreeMindCommon.CREATE_THUMBNAIL_ON_SAVE))) {
 				File baseFileName = getModel().getFile();
-				String fileName = Resources.getInstance()
-						.createThumbnailFileName(baseFileName);
-				// due to a windows bug, the file must not be hidden before writing it.
+				String fileName = Resources.getInstance().createThumbnailFileName(baseFileName);
 				Tools.makeFileHidden(new File(fileName), false);
 				IndependantMapViewCreator.printToFile(getView(), fileName,
 						true,
@@ -706,10 +577,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		menu.add(action);
 	}
 
-	//
-	// Dialogs with user
-	//
-
 	public void open() {
 		FreeMindFileDialog chooser = getFileChooser();
 		int returnVal = chooser.showOpenDialog(getView());
@@ -733,25 +600,14 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		getController().setTitle();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.FreeMindFileDialog.DirectoryResultListener#setChosenDirectory
-	 * (java.io.File)
-	 */
 	public void setChosenDirectory(File pDir) {
 		lastCurrentDir = pDir;
 	}
 
-	/**
-	 * Creates a file chooser with the last selected directory as default.
-	 */
 	public FreeMindFileDialog getFileChooser(FileFilter filter) {
 		FreeMindFileDialog chooser = Resources.getInstance().getStandardFileChooser(filter);
 		chooser.registerDirectoryResultListener(this);
 		File parentFile = getMapsParentFile();
-		// choose new lastCurrentDir only, if not previously set.
 		if (parentFile != null && lastCurrentDir == null) {
 			lastCurrentDir = parentFile;
 		}
@@ -794,9 +650,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 	}
 
-	/**
-	 * Save as; return false is the action was cancelled
-	 */
 	public boolean saveAs() {
 		File f;
 		FreeMindFileDialog chooser = getFileChooser();
@@ -813,28 +666,24 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				return false;
 			}
 
-			// |= Pressed O.K.
 			f = chooser.getSelectedFile();
 			lastCurrentDir = f.getParentFile();
-			// Force the extension to be .mm
 			String ext = Tools.getExtension(f.getName());
 			if (!ext.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
 				f = new File(f.getParent(), f.getName()
 						+ freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION);
 			}
 
-			if (f.exists()) { // If file exists, ask before overwriting.
+			if (f.exists()) {
 				int overwriteMap = JOptionPane.showConfirmDialog(getView(),
 						getText("map_already_exists"), "FreeMind",
 						JOptionPane.YES_NO_OPTION);
 				if (overwriteMap != JOptionPane.YES_OPTION) {
-					// repeat the save as dialog.
 					repeatSaveAsQuestion = true;
 				}
 			}
 		} while (repeatSaveAsQuestion);
-		try { // We have to lock the file of the map even when it does not exist
-				// yet
+		try {
 			String lockingUser = getModel().tryToLock(f);
 			if (lockingUser != null) {
 				getFrame().getController().informationMessage(
@@ -843,7 +692,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 								lockingUser));
 				return false;
 			}
-		} catch (Exception e) { // Throwed by tryToLock
+		} catch (Exception e) {
 			getFrame().getController().informationMessage(
 					Tools.expandPlaceholders(
 							getText("locking_failed_by_save_as"), f.getName()));
@@ -851,35 +700,15 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 
 		save(f);
-		// Update the name of the map
 		getController().getMapModuleManager().updateMapModuleName();
 		return true;
 	}
 
-	/**
-	 * Creates a proposal for a file name to save the map. Removes all illegal
-	 * characters.
-	 * 
-	 * Fixed: When creating file names based on the text of the root node, now
-	 * all the extra unicode characters are replaced with _. This is not very
-	 * good. For chinese content, you would only get a list of ______ as a file
-	 * name. Only characters special for building file paths shall be removed
-	 * (rather than replaced with _), like : or /. The exact list of dangeous
-	 * characters needs to be investigated. 0.8.0RC3.
-	 * 
-	 * 
-	 * Keywords: suggest file name.
-	 * 
-	 */
 	private String getFileNameProposal() {
 		return Tools.getFileNameProposal(getMap().getRootNode());
 	}
 
-	/**
-	 * Return false if user has canceled.
-	 */
 	public boolean close(boolean force, MapModuleManager mapModuleManager) {
-		// remove old messages.
 		getFrame().out("");
 		if (!force && !getModel().isSaved()) {
 			String text = getText("save_unsaved") + "\n"
@@ -935,17 +764,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#setVisible(boolean)
-	 */
 	public void setVisible(boolean visible) {
 		NodeView node = getSelectedView();
 		if (visible) {
 			onFocusNode(node);
 		} else {
-			// bug fix, fc 18.5.2004. This should not be here.
 			if (node != null) {
 				onLostFocusNode(node);
 			}
@@ -953,10 +776,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		changeSelection(node, !visible);
 	}
 
-	/**
-	 * Overwrite this to set all of your actions which are dependent on whether
-	 * there is a map or not.
-	 */
 	protected void setAllActions(boolean enabled) {
 		// controller actions:
 		getController().zoomIn.setEnabled(enabled);
@@ -964,11 +783,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		getController().showFilterToolbarAction.setEnabled(enabled);
 	}
 
-
-	/**
-	 * listener, that blocks the controler if the menu is active (PN) Take care!
-	 * This listener is also used for modelpopups (as for graphical links).
-	 */
 	private class ControllerPopupMenuListener implements PopupMenuListener {
 		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 			setBlocked(true); // block controller
@@ -984,17 +798,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	}
 
-	/**
-	 * Take care! This listener is also used for modelpopups (as for graphical
-	 * links).
-	 */
 	protected final ControllerPopupMenuListener popupListenerSingleton = new ControllerPopupMenuListener();
 
 	public void showPopupMenu(MouseEvent e) {
 		if (e.isPopupTrigger()) {
 			JPopupMenu popupmenu = getPopupMenu();
 			if (popupmenu != null) {
-				// adding listener could be optimized but without much profit...
 				popupmenu.addPopupMenuListener(this.popupListenerSingleton);
 				popupmenu.show(e.getComponent(), e.getX(), e.getY());
 				e.consume();
@@ -1002,27 +811,18 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 	}
 
-	/** Default implementation: no context menu. */
 	public JPopupMenu getPopupForModel(java.lang.Object obj) {
 		return null;
 	}
 
-	/**
-	 * Overwrite this, if you have one.
-	 */
 	public Component getLeftToolBar() {
 		return null;
 	}
 
-	/**
-	 * Overwrite this, if you have one.
-	 */
 	public JToolBar getModeToolBar() {
 		return null;
 	}
 
-	// status, currently: default, blocked (PN)
-	// (blocked to protect against particular events e.g. in edit mode)
 	private boolean isBlocked = false;
 
 	private MapView mView;
@@ -1034,10 +834,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public void setBlocked(boolean isBlocked) {
 		this.isBlocked = isBlocked;
 	}
-
-	//
-	// Convenience methods
-	//
 
 	public Mode getMode() {
 		return mode;
@@ -1058,10 +854,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public URL getResource(String name) {
 		return getFrame().getResource(name);
 	}
-	
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getResourceString(java.lang.String)
-	 */
+
 	@Override
 	public String getResourceString(String pTextId) {
 		return getFrame().getResourceString(pTextId);
@@ -1075,17 +868,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		return getController().getFrame();
 	}
 
-	/**
-	 * This was inserted by fc, 10.03.04 to enable all actions to refer to its
-	 * controller easily.
-	 */
 	public ControllerAdapter getModeController() {
 		return this;
 	}
 
-	// fc, 29.2.2004: there is no sense in having this private and the
-	// controller public,
-	// because the getController().getModel() method is available anyway.
 	public MapAdapter getModel() {
 		return mModel;
 	}
@@ -1093,18 +879,12 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public MapView getView() {
 		return mView;
 	}
-	
-	/* (non-Javadoc)
-	 * @see freemind.modes.MapFeedback#getViewAbstraction()
-	 */
+
 	@Override
 	public ViewAbstraction getViewAbstraction() {
 		return getView();
 	}
-	
-	/* (non-Javadoc)
-	 * @see freemind.modes.MapFeedback#getViewFeedback()
-	 */
+
 	@Override
 	public ViewFeedback getViewFeedback() {
 		return this;
@@ -1119,8 +899,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public MindMapNode getSelected() {
-		//TODO - look into why this controller is sending a null value
-
 		final NodeView selectedView = getSelectedView();
 		if (selectedView != null)
 			return selectedView.getModel();
@@ -1167,32 +945,27 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	public class SaveAsAction extends FreemindAction {
 
 		public SaveAsAction() {
-			super(getText("save_as"), freemind.view.ImageFactory.getInstance().createIcon(
-					getResource("images/filesaveas.png")), ControllerAdapter.this);
+			super(getText("save_as"), freemind.view.ImageFactory.getInstance().createIcon(getResource("images/filesaveas.png")), ControllerAdapter.this);
 		}
 
 		public void actionPerformed(ActionEvent e) {
 			saveAs();
-			getController().setTitle(); // Possible update of read-only
+			getController().setTitle();
 		}
 	}
 
 	protected class FileOpener implements DropTargetListener {
 		private boolean isDragAcceptable(DropTargetDragEvent event) {
-			// check if there is at least one File Type in the list
 			DataFlavor[] flavors = event.getCurrentDataFlavors();
 			for (DataFlavor flavor : flavors) {
 				if (flavor.isFlavorJavaFileListType()) {
-					// event.acceptDrag(DnDConstants.ACTION_COPY);
 					return true;
 				}
 			}
-			// event.rejectDrag();
 			return false;
 		}
 
 		private boolean isDropAcceptable(DropTargetDropEvent event) {
-			// check if there is at least one File Type in the list
 			DataFlavor[] flavors = event.getCurrentDataFlavors();
 			for (DataFlavor flavor : flavors) {
 				if (flavor.isFlavorJavaFileListType()) {
@@ -1212,9 +985,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				Object data = dtde.getTransferable().getTransferData(
 						DataFlavor.javaFileListFlavor);
 				if (data == null) {
-					// Shouldn't happen because dragEnter() rejects drags w/out
-					// at least
-					// one javaFileListFlavor. But just in case it does ...
 					dtde.dropComplete(false);
 					return;
 				}
@@ -1223,12 +993,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 					load(file);
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(
-						getView(),
-						"Couldn't open dropped file(s). Reason: "
-								+ e.getMessage()
-				// getText("file_not_found")
-						);
+				JOptionPane.showMessageDialog(getView(), "Couldn't open dropped file(s). Reason: " + e.getMessage());
 				dtde.dropComplete(false);
 				return;
 			}
@@ -1317,25 +1082,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		return forNodesFlavor;
 	}
 
-	/**
-     */
 	public Color getSelectionColor() {
 		return selectionColor;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
-	 * StructuredMenuHolder)
-	 */
 	public void updatePopupMenu(StructuredMenuHolder holder) {
 
 	}
-
-	/**
-     *
-     */
 
 	public void shutdownController() {
 		setAllActions(false);
@@ -1351,11 +1104,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		setAllActions(true);
 		if (getFrame().getView() != null) {
 			FileOpener fileOpener = new FileOpener();
-			DropTarget dropTarget = new DropTarget(getFrame().getView(),
-					fileOpener);
+			DropTarget dropTarget = new DropTarget(getFrame().getView(), fileOpener);
 		}
-		getMapMouseWheelListener().register(
-				new MindMapMouseWheelEventHandler(this));
+		getMapMouseWheelListener().register(new MindMapMouseWheelEventHandler(this));
 	}
 
 	public String getLinkShortText(MindMapNode node) {
@@ -1383,8 +1134,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		boolean branch = e.isAltGraphDown() || e.isAltDown();
 		boolean retValue = false;
 
-		if (extend || range || branch
-				|| !getView().isSelected(newlySelectedNodeView)) {
+		if (extend || range || branch || !getView().isSelected(newlySelectedNodeView)) {
 			if (!range) {
 				if (extend)
 					getView().toggleSelected(newlySelectedNodeView);
@@ -1415,17 +1165,10 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		displayNode(node, null);
 	}
 
-	/**
-	 * Display a node in the display (used by find and the goto action by arrow
-	 * link actions).
-	 */
 	public void displayNode(MindMapNode node, ArrayList nodesUnfoldedByDisplay) {
-		// Unfold the path to the node
 		Object[] path = getMap().getPathToRoot(node);
-		// Iterate the path with the exception of the last node
 		for (int i = 0; i < path.length - 1; i++) {
 			MindMapNode nodeOnPath = (MindMapNode) path[i];
-			// System.out.println(nodeOnPath);
 			if (nodeOnPath.isFolded()) {
 				if (nodesUnfoldedByDisplay != null)
 					nodesUnfoldedByDisplay.add(nodeOnPath);
@@ -1434,14 +1177,13 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		}
 	}
 
-	/** Select the node and scroll to it. **/
 	private void centerNode(NodeView node) {
 		getView().centerNode(node);
 		getView().selectAsTheOnlyOneSelected(node);
 	}
 
 	public void centerNode(MindMapNode node) {
-		NodeView view = null;
+		NodeView view;
 		if (node != null) {
 			view = getController().getView().getNodeView(node);
 		} else {
@@ -1471,8 +1213,7 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	}
 
 	public MapModule getMapModule() {
-		return getController().getMapModuleManager()
-				.getModuleGivenModeController(this);
+		return getController().getMapModuleManager().getModuleGivenModeController(this);
 	}
 
 	public void setToolTip(MindMapNode node, String key, String value) {
@@ -1480,25 +1221,16 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		nodeRefresh(node);
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getProperty(java.lang.String)
-	 */
 	@Override
 	public String getProperty(String pResourceId) {
 		return getController().getProperty(pResourceId);
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getDefaultFont()
-	 */
 	@Override
 	public Font getDefaultFont() {
 		return getController().getDefaultFont();
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMap.MapFeedback#getFontThroughMap(java.awt.Font)
-	 */
 	@Override
 	public Font getFontThroughMap(Font pFont) {
 		return getController().getFontThroughMap(pFont);
@@ -1539,14 +1271,9 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		return getController().getMapMouseWheelListener();
 	}
 
-
-	/**
-	 * @throws {@link IllegalArgumentException} when node isn't found.
-	 */
 	@Override
 	public NodeAdapter getNodeFromID(String nodeID) {
-		NodeAdapter node = (NodeAdapter) getMap().getLinkRegistry()
-				.getTargetForId(nodeID);
+		NodeAdapter node = (NodeAdapter) getMap().getLinkRegistry().getTargetForId(nodeID);
 		if (node == null) {
 			throw new IllegalArgumentException("Node belonging to the node id "
 					+ nodeID + " not found in map " + getMap().getFile());
@@ -1561,9 +1288,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	@Override
 	public void setProperty(String pProperty, String pValue) {
-		// this method fires a property change event to inform others.
 		getController().setProperty(pProperty, pValue);
 	}
-	
-	
 }

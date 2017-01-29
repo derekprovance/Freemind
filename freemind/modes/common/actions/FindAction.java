@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2006 Joerg Mueller, Daniel Polansky, Christian Foltin, Dimitri Polivaev and others.
- *
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 package freemind.modes.common.actions;
 
 import java.awt.Container;
@@ -29,7 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -52,46 +32,28 @@ import freemind.modes.MindMapNode;
 
 public class FindAction extends FreemindAction {
 	private final ControllerAdapter controller;
-
 	private ArrayList findNodesUnfoldedByLastFind;
-
 	private MindMapNode findFromNode;
-
 	private String searchTerm;
-
 	private Collection subterms;
-
-	/**
-	 * @return Returns the subterms.
-	 */
 	public Collection getSubterms() {
 		return subterms;
 	}
-
 	public String getSearchTerm() {
 		return searchTerm;
 	}
 
 	public String getFindFromText() {
-		String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString())
-				.replaceAll("\n", " ");
-		return plainNodeText.length() <= 30 ? plainNodeText : plainNodeText
-				.substring(0, 30) + "...";
+		String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString()).replaceAll("\n", " ");
+		return plainNodeText.length() <= 30 ? plainNodeText : plainNodeText.substring(0, 30) + "...";
 	}
 
 	private boolean findCaseSensitive;
-
 	private LinkedList findNodeQueue;
-
 	private JDialog mDialog;
-
 	private int mResult;
-
 	private JCheckBox mFindInNotesTooBox;
-
 	private JTextField mSearchField;
-
-	/** This isn't stored and is per map. */
 	private String mLastSearchString;
 
 	public FindAction(ControllerAdapter controller) {
@@ -110,17 +72,12 @@ public class FindAction extends FreemindAction {
 		}
 		Collection subterms = breakSearchTermIntoSubterms(what);
 		this.searchTerm = what;
-		// System.err.println(subterms);
-		/* caseSensitive=false */
 		boolean found = find(controller.getSelected(), subterms, false);
 		controller.getView().repaint();
 		if (!found) {
 			String messageText = controller.getText("no_found_from");
 			String searchTerm = getSearchTermAsEscapedString(messageText);
-			controller.getController().informationMessage(
-					messageText.replaceAll("\\$1", searchTerm).replaceAll(
-							"\\$2", getFindFromText()),
-					controller.getView().getSelected());
+			controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", getFindFromText()), controller.getView().getSelected());
 		}
 	}
 
@@ -128,7 +85,6 @@ public class FindAction extends FreemindAction {
 		mResult = pResult;
 		mDialog.setVisible(false);
 		mDialog.dispose();
-		// Store "find in notes too" value to prop.
 		if (pResult == JOptionPane.OK_OPTION) {
 			Resources
 					.getInstance()
@@ -141,8 +97,7 @@ public class FindAction extends FreemindAction {
 
 	void displayDialog() {
 		mDialog = null;
-		mDialog = new JDialog(controller.getFrame().getJFrame(),
-				controller.getText("find"));
+		mDialog = new JDialog(controller.getFrame().getJFrame(), controller.getText("find"));
 		mDialog.setModal(true);
 		mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		AbstractAction cancelAction = new AbstractAction() {
@@ -181,8 +136,7 @@ public class FindAction extends FreemindAction {
 				2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
 		mFindInNotesTooBox = new JCheckBox(
-				controller
-						.getText("ExtendedFindDialog.find_search_in_notes_too"));
+				controller.getText("ExtendedFindDialog.find_search_in_notes_too"));
 		mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(
 				FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO));
 		Tools.setLabelAndMnemonic(mFindInNotesTooBox, null);
@@ -194,10 +148,8 @@ public class FindAction extends FreemindAction {
 		Tools.setLabelAndMnemonic(okButton, null);
 		okButton.addActionListener(okAction);
 		contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0,
-				GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5,
-						5, 0, 0), 0, 0));
-		JButton cancelButton = new JButton(
-				controller.getText("ExtendedFindDialog.cancel"));
+				GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5, 5, 0, 0), 0, 0));
+		JButton cancelButton = new JButton(controller.getText("ExtendedFindDialog.cancel"));
 		Tools.setLabelAndMnemonic(cancelButton, null);
 		cancelButton.addActionListener(cancelAction);
 		contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0,
@@ -210,13 +162,7 @@ public class FindAction extends FreemindAction {
 	}
 
 	private String getSearchTermAsEscapedString(String messageText) {
-		String searchTerm = messageText.startsWith("<html>") ? HtmlTools
-				.toXMLEscapedText(getSearchTerm()) : getSearchTerm();
-		// Fix for
-		// https://sourceforge.net/tracker/?func=detail&aid=3200783&group_id=7118&atid=107118
-		// Patch
-		// https://sourceforge.net/tracker/?func=detail&aid=3276562&group_id=7118&atid=307118,
-		// thanks to the author
+		String searchTerm = messageText.startsWith("<html>") ? HtmlTools.toXMLEscapedText(getSearchTerm()) : getSearchTerm();
 		searchTerm = searchTerm.replace("$", "\\$");
 		return searchTerm;
 	}
@@ -244,18 +190,13 @@ public class FindAction extends FreemindAction {
 			controller.getView().repaint();
 			if (!found) {
 				String messageText = controller.getText("no_more_found_from");
-				String searchTerm = find
-						.getSearchTermAsEscapedString(messageText);
-				controller.getController().informationMessage(
-						messageText.replaceAll("\\$1", searchTerm).replaceAll(
-								"\\$2", find.getFindFromText()),
-						controller.getView().getSelected());
+				String searchTerm = find.getSearchTermAsEscapedString(messageText);
+				controller.getController().informationMessage(messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", find.getFindFromText()), controller.getView().getSelected());
 			}
 		}
 	}
 
-	public boolean find(MindMapNode node, Collection subterms,
-			boolean caseSensitive) {
+	public boolean find(MindMapNode node, Collection subterms, boolean caseSensitive) {
 		findNodesUnfoldedByLastFind = new ArrayList();
 		LinkedList nodes = new LinkedList();
 		nodes.addFirst(node);
@@ -272,18 +213,14 @@ public class FindAction extends FreemindAction {
 		return find(nodes, finalizedSubterms, caseSensitive);
 	}
 
-	private boolean find(LinkedList /* queue of MindMapNode */nodes,
+	private boolean find(LinkedList nodes,
 			Collection subterms, boolean caseSensitive) {
-		// Precondition: if !caseSensitive then >>what<< is in lowercase.
 		boolean searchInNotesToo = Resources.getInstance().getBoolProperty(
 				FreeMind.RESOURCES_SEARCH_IN_NOTES_TOO);
 
-		// Fold the path of previously found node
-		boolean thereWereNodesToBeFolded = !findNodesUnfoldedByLastFind
-				.isEmpty();
+		boolean thereWereNodesToBeFolded = !findNodesUnfoldedByLastFind.isEmpty();
 		if (!findNodesUnfoldedByLastFind.isEmpty()) {
 
-			// if (false) {
 			ListIterator i = findNodesUnfoldedByLastFind
 					.listIterator(findNodesUnfoldedByLastFind.size());
 			while (i.hasPrevious()) {
@@ -291,15 +228,14 @@ public class FindAction extends FreemindAction {
 				try {
 					controller.setFolded(node, true);
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 			findNodesUnfoldedByLastFind = new ArrayList();
 		}
 
-		// We implement width-first search.
 		while (!nodes.isEmpty()) {
 			MindMapNode node = (MindMapNode) nodes.removeFirst();
-			// Add children to the queue
 			for (ListIterator i = node.childrenUnfolded(); i.hasNext();) {
 				nodes.addLast(i.next());
 			}
@@ -307,11 +243,9 @@ public class FindAction extends FreemindAction {
 			if (!node.isVisible())
 				continue;
 
-			// Bug fix for
-			// http://sourceforge.net/tracker/?func=detail&aid=3035387&group_id=7118&atid=107118
 			String nodeText = node.toString();
 			nodeText = prepareTextContent(caseSensitive, nodeText);
-			// End bug fix.
+
 			String noteText = node.getNoteText();
 			noteText = prepareTextContent(caseSensitive, noteText);
 
@@ -319,31 +253,27 @@ public class FindAction extends FreemindAction {
 			boolean foundInNotes = false;
 			for (Object subterm1 : subterms) {
 				if (!nodeText.contains((String) subterm1)) {
-					// Subterm not found
 					found = false;
 					break;
 				}
 			}
 
 			if ((!found) && searchInNotesToo) {
-				/* now, search the notes. */
 				found = true;
 				for (Object subterm : subterms) {
 					if (!noteText.contains((String) subterm)) {
-						// Subterm not found
 						found = false;
 						break;
 					}
 				}
 				foundInNotes = true;
 			}
-			if (found) { // Found
-				displayNode(node, findNodesUnfoldedByLastFind);
+			if (found) {
+				controller.displayNode(node, findNodesUnfoldedByLastFind);
 				centerNode(node);
 				if (foundInNotes) {
 					// TODO: Select text in notes window.
 				}
-				// Save the state for find next
 				this.subterms = subterms;
 				findCaseSensitive = caseSensitive;
 				findNodeQueue = nodes;
@@ -386,7 +316,6 @@ public class FindAction extends FreemindAction {
 			} else if (myChar == '"' && i > 0 && i < len - 1
 					&& searchTerm.charAt(i - 1) != ' '
 					&& searchTerm.charAt(i + 1) != ' ') {
-				// Character " surrounded by non-spaces
 				subterm.append(myChar);
 			} else if (myChar == '"' && withinQuotes) {
 				withinQuotes = false;
@@ -401,41 +330,7 @@ public class FindAction extends FreemindAction {
 		return subterms;
 	}
 
-	/**
-	 * Display a node in the display (used by find and the goto action by arrow
-	 * link actions).
-	 */
-	public void displayNode(MindMapNode node, ArrayList nodesUnfoldedByDisplay) {
-		// Unfold the path to the node
-		Object[] path = controller.getMap().getPathToRoot(node);
-		// Iterate the path with the exception of the last node
-		for (int i = 0; i < path.length - 1; i++) {
-			MindMapNode nodeOnPath = (MindMapNode) path[i];
-			// System.out.println(nodeOnPath);
-			if (nodeOnPath.isFolded()) {
-				if (nodesUnfoldedByDisplay != null)
-					nodesUnfoldedByDisplay.add(nodeOnPath);
-				controller.setFolded(nodeOnPath, false);
-			}
-		}
-
-	}
-
 	public boolean findNext() {
-		// Precodition: subterms != null. We check the precodition but give no
-		// message.
-
-		// The logic of find next is vulnerable. find next relies on the queue
-		// of nodes from previous find / find next. However, between previous
-		// find / find next and this find next, nodes could have been deleted
-		// or moved. The logic expects that no changes happened, even that no
-		// node has been folded / unfolded.
-
-		// You may want to come with more correct solution, but this one
-		// works for most uses, and does not cause any big trouble except
-		// perhaps for some uncaught exceptions. As a result, it is not very
-		// nice, but far from critical and working quite fine.
-
 		if (subterms != null) {
 			return find(findNodeQueue, subterms, findCaseSensitive);
 		}
@@ -445,7 +340,6 @@ public class FindAction extends FreemindAction {
 	/**
 	 */
 	private void centerNode(MindMapNode node) {
-		// Select the node and scroll to it.
 		controller.centerNode(node);
 	}
 
