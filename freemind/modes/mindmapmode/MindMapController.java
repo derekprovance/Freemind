@@ -495,6 +495,8 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		mRegistrations = new Vector();
 
 		propertyAction = getController().propertyAction;
+
+		setAllActions(false);
 	}
 
 	private void createStandardActions() {

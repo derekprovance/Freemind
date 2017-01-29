@@ -88,6 +88,7 @@ public class Controller implements MapModuleChangeObserver {
 	private PrinterJob printerJob = null;
 	private Map<String, Font> fontMap = new HashMap<>();
     private JLabel status;
+	private JComboBox<String> zoom = new JComboBox<>(this.getZooms());
 
 	private FilterController mFilterController;
 
@@ -130,8 +131,6 @@ public class Controller implements MapModuleChangeObserver {
 	public Action showSelectionAsRectangle;
 	public PropertyAction propertyAction;
 	public OpenURLAction freemindUrl;
-
-	private JComboBox<String> zoom = new JComboBox<>(this.getZooms());
 
 	private static final float[] zoomValues = { 25 / 100f, 50 / 100f,
 			75 / 100f, 100 / 100f, 150 / 100f, 200 / 100f, 300 / 100f,
@@ -338,10 +337,6 @@ public class Controller implements MapModuleChangeObserver {
 		return frame.getResourceString(resource);
 	}
 
-	/**
-	 * @return the current modeController, or null, if FreeMind is just starting
-	 *         and there is no modeController present.
-	 */
 	public ModeController getModeController() {
 		if (getMapModule() != null) {
 			return getMapModule().getModeController();
@@ -352,7 +347,6 @@ public class Controller implements MapModuleChangeObserver {
 		return null;
 	}
 
-	/** Returns the current model */
 	public MindMap getModel() {
 		if (getMapModule() != null) {
 			return getMapModule().getModel();
@@ -450,8 +444,6 @@ public class Controller implements MapModuleChangeObserver {
 
 		return ok.getColor();
 	}
-
-
 
     private static class ColorTracker implements ActionListener, Serializable {
 		JColorChooser chooser;
@@ -894,7 +886,6 @@ public class Controller implements MapModuleChangeObserver {
 		QuitAction(Controller controller) {
 			super(controller.getResourceString("quit"));
 		}
-
 		public void actionPerformed(ActionEvent e) {
 			quit();
 		}
@@ -1119,8 +1110,7 @@ public class Controller implements MapModuleChangeObserver {
 
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(getView(),
-					controller.getResourceString("about_text")
-							+ getFrame().getFreemindVersion(),
+					controller.getResourceString("about_text") + getFrame().getFreemindVersion(),
 					controller.getResourceString("about"),
 					JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -1338,7 +1328,6 @@ public class Controller implements MapModuleChangeObserver {
 		public void actionPerformed(ActionEvent e) {
 			toggleSelectionAsRectangle();
 		}
-
 		public boolean isSelected(JMenuItem pCheckItem, Action pAction) {
 			return isSelectionAsRectangle();
 		}
@@ -1438,12 +1427,6 @@ public class Controller implements MapModuleChangeObserver {
 
 		}
 
-	}
-
-	private class BackgroundSwatch extends ColorSwatch {
-		Color getColor() {
-			return getView().getBackground();
-		}
 	}
 
 	public class OptionAntialiasAction extends AbstractAction {
@@ -1625,8 +1608,7 @@ public class Controller implements MapModuleChangeObserver {
 		} else if (pageFormat.getOrientation() == PageFormat.REVERSE_LANDSCAPE) {
 			setProperty("page_orientation", "reverse_landscape");
 		}
-		setProperty(PAGE_FORMAT_PROPERTY,
-				Tools.getPageFormatAsString(pageFormat.getPaper()));
+		setProperty(PAGE_FORMAT_PROPERTY, Tools.getPageFormatAsString(pageFormat.getPaper()));
 	}
 
 	public enum SplitComponentType {
