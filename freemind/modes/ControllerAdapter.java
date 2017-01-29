@@ -1,22 +1,3 @@
-/*FreeMind - A Program for creating and viewing Mindmaps
- *Copyright (C) 2000-2001  Joerg Mueller <joergmueller@bigfoot.com>
- *See COPYING for Details
- *
- *This program is free software; you can redistribute it and/or
- *modify it under the terms of the GNU General Public License
- *as published by the Free Software Foundation; either version 2
- *of the License, or (at your option) any later version.
- *
- *This program is distributed in the hope that it will be useful,
- *but WITHOUT ANY WARRANTY; without even the implied warranty of
- *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *GNU General Public License for more details.
- *
- *You should have received a copy of the GNU General Public License
- *along with this program; if not, write to the Free Software
- *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
 package freemind.modes;
 
 import java.awt.Color;
@@ -90,17 +71,8 @@ import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
-import freemind.view.mindmapview.IndependantMapViewCreator;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.ViewFeedback;
+import freemind.view.mindmapview.*;
 
-/**
- * Derive from this class to implement the Controller for your mode. Overload
- * the methods you need for your data model, or use the defaults. There are some
- * default Actions you may want to use for easy editing of your model. Take
- * MindMapController as a sample.
- */
 public abstract class ControllerAdapter extends MapFeedbackAdapter implements ModeController,
 		DirectoryResultListener {
 
@@ -108,18 +80,11 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 	private Mode mode;
 
 	private Color selectionColor = new Color(200, 220, 200);
-	/**
-	 * The model, this controller belongs to. It may be null, if it is the
-	 * default controller that does not show a map.
-	 */
 	private MapAdapter mModel;
 	private HashSet mNodeSelectionListeners = new HashSet();
 	private HashSet mNodeLifetimeListeners = new HashSet();
 	private File lastCurrentDir = null;
 
-	/**
-	 * Instantiation order: first me and then the model.
-	 */
 	public ControllerAdapter(Mode mode) {
 		this.setMode(mode);
 		// for updates of nodes:
@@ -210,8 +175,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 
 	}
 
-	/**
-	 */
 	public void nodeStructureChanged(MindMapNode node) {
 		getMap().nodeStructureChanged(node);
 	}
@@ -370,10 +333,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 			listener.onSaveNode(node);
 		}
 	}
-
-	//
-	// Map Management
-	//
 
 	public String getText(String textId) {
 		return getController().getResourceString(textId);
@@ -1414,6 +1373,44 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 		return adaptedText;
 	}
 
+	public boolean extendSelection(MouseEvent e) {
+		NodeView newlySelectedNodeView = ((MainView) e.getComponent()).getNodeView();
+		boolean extend = e.isControlDown();
+		if (Tools.isMacOsX()) {
+			extend |= e.isMetaDown();
+		}
+		boolean range = e.isShiftDown();
+		boolean branch = e.isAltGraphDown() || e.isAltDown();
+		boolean retValue = false;
+
+		if (extend || range || branch
+				|| !getView().isSelected(newlySelectedNodeView)) {
+			if (!range) {
+				if (extend)
+					getView().toggleSelected(newlySelectedNodeView);
+				else
+					select(newlySelectedNodeView);
+				retValue = true;
+			} else {
+				retValue = getView().selectContinuous(newlySelectedNodeView);
+			}
+			if (branch) {
+				getView().selectBranch(newlySelectedNodeView, extend);
+				retValue = true;
+			}
+		}
+
+		if (retValue) {
+			e.consume();
+
+			String link = newlySelectedNodeView.getModel().getLink();
+			link = (link != null ? link : " ");
+			getController().getFrame().out(link);
+		}
+		logger.fine("MouseEvent: extend:" + extend + ", range:" + range + ", branch:" + branch + ", event:" + e + ", retValue:" + retValue);
+		return retValue;
+	}
+
 	public void displayNode(MindMapNode node) {
 		displayNode(node, null);
 	}
@@ -1435,7 +1432,6 @@ public abstract class ControllerAdapter extends MapFeedbackAdapter implements Mo
 				setFolded(nodeOnPath, false);
 			}
 		}
-
 	}
 
 	/** Select the node and scroll to it. **/
