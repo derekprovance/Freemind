@@ -30,7 +30,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
@@ -170,7 +169,6 @@ import freemind.modes.mindmapmode.actions.RevertAction;
 import freemind.modes.mindmapmode.actions.SelectAllAction;
 import freemind.modes.mindmapmode.actions.SelectBranchAction;
 import freemind.modes.mindmapmode.actions.SetLinkByTextFieldAction;
-import freemind.modes.mindmapmode.actions.SingleNodeOperation;
 import freemind.modes.mindmapmode.actions.StrikethroughAction;
 import freemind.modes.mindmapmode.actions.ToggleChildrenFoldedAction;
 import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
@@ -599,7 +597,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 			reader = new FileReader(patternsFile);
 		} else {
 			System.out.println("User patterns file " + patternsFile + " not found.");
-			reader = new InputStreamReader(getResource("patterns.xml").openStream());
+			reader = new InputStreamReader(getResource("freemind/config/patterns.xml").openStream());
 		}
 		return reader;
 	}

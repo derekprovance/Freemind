@@ -135,7 +135,7 @@
   </target>
 
   <target name="patterns">
-    <xslt style="patterns_updater.xslt" in="patterns.xml" out="patterns_new.xml" force="true" />
+    <xslt style="patterns_updater.xslt" in="freemind/config/patterns.xml" out="patterns_new.xml" force="true" />
   </target>
 
   <!-- end generator part -->
@@ -215,7 +215,6 @@
     </junit>
   </target>
 
-
   <target name="dist" depends="jar, browser">
     <copy todir="${dist}">
       <fileset dir="${src}">
@@ -224,8 +223,8 @@
         <include name="freemind.sh"/>
         <include name="license"/>
         <include name="patterns.xml"/>
-        <include name="dictionaries.properties"/>
-        <include name="dictionary_??.ortho"/>
+        <include name="dictionaries/dictionaries.properties"/>
+        <include name="dictionaries/dictionary_??.ortho"/>
       </fileset>
     </copy>
     <chmod file="${dist}/freemind.sh" perm="u+rx"/>
@@ -355,7 +354,7 @@
     </copy>
 
     <!-- Associate Freemind with mm -->
-    <xslt style="mac_file_association.xslt"
+    <xslt style="freemind/config/mac_file_association.xslt"
           in ="${dist_macos_info}"
           out="${dist_macos_info}2"/>
     <move file="${dist_macos_info}2"

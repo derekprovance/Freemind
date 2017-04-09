@@ -5,3 +5,6 @@ out/*
 bin/*
 version.properties
 __artifacts_temp
+
+.classpath
+.project 
