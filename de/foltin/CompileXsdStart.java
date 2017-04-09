@@ -50,7 +50,7 @@ public class CompileXsdStart extends DefaultHandler {
 	public static final String FREEMIND_PACKAGE = "freemind.controller.actions.generated.instance";
 	private static final String DESTINATION_DIR = "binding/src/"
 			+ FREEMIND_PACKAGE.replace('.', File.separatorChar);
-	private static final String FREEMIND_ACTIONS_XSD = "freemind_actions.xsd";
+	private static final String FREEMIND_ACTIONS_XSD = "freemind/config/freemind_actions.xsd";
 	private static final String KEY_PACKAGE = "000_KEY_PACKAGE";
 	private static final String FILE_START = "010_start";
 	private static final String KEY_IMPORT_ARRAY_LIST = "020_import_array_list";

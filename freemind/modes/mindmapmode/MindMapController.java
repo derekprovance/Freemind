@@ -448,7 +448,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		logger.info("mindmap_menus");
 		try {
 			InputStream in;
-			in = this.getFrame().getResource("mindmap_menus.xml").openStream();
+			in = this.getFrame().getResource("freemind/config/mindmap_menus.xml").openStream();
 			mMenuStructure = updateMenusFromXml(in);
 		} catch (IOException e) {
 			freemind.main.Resources.getInstance().logException(e);
@@ -571,7 +571,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 			if (result == JOptionPane.YES_OPTION) {
 				boolean success = false;
 				try {
-					loadPatterns(Tools.getUpdateReader(Tools.getReaderFromFile(patternsFile), "patterns_updater.xslt"));
+					loadPatterns(Tools.getUpdateReader(Tools.getReaderFromFile(patternsFile), "freemind/config/patterns_updater.xslt"));
 					StylePatternFactory.savePatterns(new FileWriter(patternsFile), mPatternsList);
 					success = true;
 				} catch (Exception e) {

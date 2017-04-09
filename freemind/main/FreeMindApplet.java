@@ -233,7 +233,7 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 	public void init() {
 		JRootPane rootPane = createRootPane();
 		// load properties
-		defaultPropsURL = getResource("freemind.properties");
+		defaultPropsURL = getResource("freemind/config/freemind.properties");
 		try {
 			// load properties
 			defaultProps = new Properties();

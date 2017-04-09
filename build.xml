@@ -68,7 +68,7 @@
 
   <target name="xmlbind.checkStatusOfGeneration">
     <uptodate property="xmlbind.isUpToDate"
-              srcfile="freemind_actions.xsd"
+              srcfile="freemind/config/freemind_actions.xsd"
               targetfile="${jibxjar}"/>
   </target>
 
@@ -190,7 +190,7 @@
       </classpath>
       <exclude name="${gen.dir}/**" />
     </javac>
-    <copy todir="${testbuild}" file="${src}/freemind.properties"/>
+    <copy todir="${testbuild}" file="/freemind/config/freemind.properties"/>
   </target>
 
   <!-- =================================
@@ -330,7 +330,7 @@
       </fileset>
     </copy>
     <!-- change freemind.properties -->
-    <copy todir="${dist_macos}" file="${src}/freemind.properties"/>
+    <copy todir="${dist_macos}" file="/freemind/config/freemind.properties"/>
     <replaceregexp byline="true" file="${dist_macos}/freemind.properties" match="^keystroke(.*)=(.*)\bcontrol\b" replace="keystroke\1=\2meta" flags="gim"></replaceregexp>
     <replaceregexp byline="true" file="${dist_macos}/freemind.properties" match="^keystroke(.*)=(.*)\binsert\b" replace="keystroke\1=\2TAB" flags="gim"></replaceregexp>
     <replaceregexp byline="true" file="${dist_macos}/freemind.properties" match="^#freemind.base.dir.*$" replace="freemind.base.dir=${dist_macos_app_name}" flags="gim"></replaceregexp>

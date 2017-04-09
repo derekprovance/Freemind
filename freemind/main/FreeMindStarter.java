@@ -187,7 +187,7 @@ public class FreeMindStarter {
 	}
 
 	public Properties readDefaultPreferences() {
-		String propsLoc = "freemind.properties";
+		String propsLoc = "freemind/config/freemind.properties";
 		URL defaultPropsURL =
 				this.getClass().getClassLoader().getResource(propsLoc);
 		Properties props = new Properties();
