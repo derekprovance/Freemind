@@ -1,8 +1,7 @@
 # Use-Cases
 ## Inhalt
-[UseCases](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#usecases)
-
-[Beschreibungen](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#beschreibung)
+- [UseCases](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#usecases)
+- [Beschreibungen](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#beschreibungen)
 
 ## UseCases
 ### Dateiverwaltung
