@@ -28,12 +28,422 @@
                 ```
 - freemind
     - common
+        - BooleanProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ColorProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ComboProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - DontShowNotificationProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FrontProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindProgressMonitor <----------- STARTER
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindTask (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - IconProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - JOptionalSplitPane <----------- STARTER
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NamedObject
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NextLineProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NumberProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - OptionalDontShowMeAgainDialog
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - PasswordProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - PropertyBean (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - PropertyControl (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - RemindValueProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ScalableJButton
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ScalableJTable
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ScriptEditorProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - SeparatorProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - StringProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - TextTranslator (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ThreeCheckBoxProperty
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - UnicodeReader
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - XmlBindingTools
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
     - controller
         - color
+            - ColorPair
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - JColorCombo <----------- STARTER
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
         - filter
             - condition
+                - CompareConditionAdapter (ABSTRACT)
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - Condition (INTERFACE)
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - ConditionFactory
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - ConditionNotSatisfiedDecorator
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - ConditionRenderer
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - ConjunctConditions
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - DisjunctConditions
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - IconContainedCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - IconNotContainedCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - IgnoreCaseNodeContainsCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - JCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - NodeCompareCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - NodeCondition (ABSTRACT)
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - NodeContainsCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - NoFilteringCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - SelectedViewCondition
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
             - util
+                - ExtendedComboBoxModel
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - SortedComboBoxModel
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - SortedListModel (INTERFACE)
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - SortedMapListModel
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+                - SortedMapVEctor
+                            ```
+                            Beschreibung:
+                            Verknüpft mit:
+                            ```
+            - DefaultFilter
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - Filter (INTERFACE)
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - FilterComposerDialog
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - FilterController
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - FilterInfo
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - FilterToolbar
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
         - printpreview
+            - BrowseAction
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - Preview
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - PreviewDialog
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - ZoomAction
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+        - BlindIcon
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ColorSwatch
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - Controller
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindPopupMenu
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindToolBar
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - LastOpenedList
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - LastStateStorageManagement
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MainToolBar
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapModuleManager
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapMouseMotionListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapMouseWheelListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MenuBar
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MenuItemEnabledListener (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MenuItemSelectedListener (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapNodesSelection
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeDragListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeDropListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeKeyListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```           
+        - NodeMotionListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeMouseMotionListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - StructuredMenuHolder
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - StructuredMenuItemHolder
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ZoomListener (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
     - extensions
         - DontSaveMarker (INTERFACE)
                     ```
