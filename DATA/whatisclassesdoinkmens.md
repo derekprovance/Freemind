@@ -160,8 +160,238 @@
             - hooks
             - listeners
         - viewmodes
+        - ArrowLinkAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ArrowLinkTarget
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - CloudAdapter (ABSTACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ControllerAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - EdgeAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ExtendedMapFeedback (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ExtendedMapFeedbackAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ExtendedMapFeedbackImpl (FINAL)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreemindAction (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindAwtFileDialog <----------- STARTER
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindFileDialog (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreeMindJFIleDialog
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - HistoryInformation
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - IconInformation
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - LineAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - LinkAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapFeedback (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MapFeedbackAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindIcon
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMap (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapArrowLink (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapCloud (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapEdge (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapLine (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapLink (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapLinkRegistry
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - MindMapNode (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - Mode (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ModeController (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ModesCreator
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeAdapter (ABSTRACT)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeDownAction
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeViewEvent
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - NodeViewEventListener (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - StylePattern
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - StylePatternFactory
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - ViewAbstraction (INTERFACE)
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - XMLElementAdapter
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
     - preferences
         - layout
+            - GrabKeyDialog
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - KeyEventTranslator
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - KeyEventWorkaround
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - OptionPanel
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+            - VariableSizeCardLayout
+                        ```
+                        Beschreibung:
+                        Verknüpft mit:
+                        ```
+        - FreemindPropertyContributor
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
+        - FreemindPropertyListener
+                    ```
+                    Beschreibung:
+                    Verknüpft mit:
+                    ```
     - view
         - mindmapview
             - ArrowLinkView
