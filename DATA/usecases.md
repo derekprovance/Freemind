@@ -1,7 +1,11 @@
 # Use-Cases
 ## Inhalt
+- [Diagramm](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#diagramm)
 - [UseCases](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#usecases)
 - [Beschreibungen](https://github.com/Horstexplorer/Freemind/blob/master/DATA/usecases.md#beschreibungen)
+
+## Diagramm
+![Image](https://raw.githubusercontent.com/Horstexplorer/Freemind/master/DATA/UCs.jpg)
 
 ## UseCases
 ### Dateiverwaltung
