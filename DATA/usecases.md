@@ -117,7 +117,19 @@ Ergänzungen:
 ```
 #### bearbeiten von Nodes
 ```
-Kurzbeschreibung: 	Das Programm bietet dem Nutzer die Möglichkeit, den Namen eines ausgewählten Knotens zu ändern. Dafür stellt das Programm ein Textbearbeitungstool zur Verfügung, welches auch verschiedene Formatierungen zulässt.
+Kurzbeschreibung:   Das Programm bietet dem Nutzer die Möglichkeit, den Namen eines ausgewählten Knotens zu ändern. Dafür stellt das Programm ein Textbearbeitungstool zur Verfügung, welches auch verschiedene Formatierungen zulässt.
+Vorbedingung:       Es existiert ein Baum
+Nachbedingung:      Der gewünschte Knoten wurde bearbeitet
+Primärer Aktor: 	Nutzer des Programms.
+Erfolgsszenario:
+    1. Nutzer wählt den zu bearbeitenden Knoten aus.
+    2. Nutzer wählt die gewünschte Attribut aus (Icons, Name, etc)
+    3. Nutzer verändert entsprechendes Attribut
+    4. Nutzer verlässt den Knoten und schließt somit die Bearbeitung ab
+    5.	Das Happy Day Szenario endet erfolgreich.
+Erweiterungen:
+    4.a Der Nutzer wiederhohlt Schritt 3 und 4 beliebig oft
+        4.a.1 weiter mit Schritt 5
 ```
 #### entfernen von Nodes
 ```
