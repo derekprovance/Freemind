@@ -27,17 +27,24 @@
 ### Dateiverwaltung
 #### erstellen
 ```
-Kurzbeschreibung:	Das Programm erstellt dem Nutzer eine neue Datei, in der er eine MindMap anlegen kann. Dabei wird auch eine Root-Node automatisch generiert.
+Kurzbeschreibung:   Das Programm erstellt dem Nutzer eine neue Datei, in der er eine MindMap anlegen kann. Dabei wird auch eine Root-Node automatisch generiert.
+Vorbedingung:       Programm wurde gestartet.
+Nachbedingung:      Eine neue Mindmap wurde erstellt
+Primärer Aktor:     Nutzer
+Erfolgsszenario:		
+    1. Der Nutzer wählt die Funktion Datei "neu" des Programms.
+    2. Das System erstellt eine leere Mindmap
+    3. Das Happy Day Szenario endet erfolgreich.
 ```
 #### öffnen
 ```
 ```
 #### speichern
 ```
-Kurzbeschreibung:	Das Programm stellt dem Nutzer diese Funktion zum Speichern seines Arbeitsfortschritts zur Verfügung. 
-Vorbedingung:		Es gibt eine geöffnete Datei.
-Nachbedingung:	An der Struktur der MindMap wurde nichts verändert.
-Primärer Aktor:		Nutzer.
+Kurzbeschreibung:   Das Programm stellt dem Nutzer diese Funktion zum Speichern seines Arbeitsfortschritts zur Verfügung. 
+Vorbedingung:       Es gibt eine geöffnete Datei.
+Nachbedingung:      An der Struktur der MindMap wurde nichts verändert.
+Primärer Aktor:     Nutzer.
 Erfolgsszenario:		
     1.	Der Nutzer wählt die Funktion Datei Speichern des Programms.
     2.	Das Programm öffnet ein Fenster zur Auswahl des Speicherorts und Festlegung eines Namens.
@@ -53,10 +60,10 @@ Erweiterungen:
 ### Contentverwaltung
 #### Notizen bearbeiten
 ```
-Kurzbeschreibung: 	Der Nutzer fügt einem bestehenden Knoten eine Notiz hinzu, auf die er im Nachhinein zugreifen kann.
-Vorbedingung:	Es existiert ein Baum mit einem Root-Knoten.
-Nachbedingung:	Der Baum ist unbeeinflusst und immer noch intakt; besitzt der Knoten eine Notiz bekommt dieser zur Übersichtlichkeit ein Icon an den Titel.
-Primärer Aktor:	Benutzer
+Kurzbeschreibung:   Der Nutzer fügt einem bestehenden Knoten eine Notiz hinzu, auf die er im Nachhinein zugreifen kann.
+Vorbedingung:       Es existiert ein Baum mit einem Root-Knoten.
+Nachbedingung:      Der Baum ist unbeeinflusst und immer noch intakt; besitzt der Knoten eine Notiz bekommt dieser zur Übersichtlichkeit ein Icon an den Titel.
+Primärer Aktor:     Benutzer
 Erfolgsszenario:
     1.	Nutzer wählt den Knoten aus, an dem er die Notiz bearbeiten möchte.
     2.	Der Nutzer bearbeitet eine bereits vorhandene Notiz an dem ausgewählten Knoten.
@@ -73,10 +80,10 @@ Erweiterungen:
 ```
 #### erstellen von Nodes (child)
 ```
-Kurzbeschreibung:	Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu.
-Vorbedingung:		Es existiert ein Baum mit einem Root-Knoten.
-Nachbedingung:	Es existiert ein gültiger Baum.
-Primärer Aktor:		Nutzer. 
+Kurzbeschreibung:   Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu.
+Vorbedingung:       Es existiert ein Baum mit einem Root-Knoten.
+Nachbedingung:      Es existiert ein gültiger Baum.
+Primärer Aktor:     Nutzer. 
 Erfolgsszenario	:	
     1.	Der Nutzer wählt einen Knoten und die Funktion Kind Knoten erstellen des Programms.
     2.	Das Programm erstellt einen neuen Knoten mit dem zuvor gewählten Knoten als Elternknoten.
@@ -85,10 +92,10 @@ Erfolgsszenario	:
 ```
 #### erstellen von Nodes (parent)
 ```
-Kurzbeschreibung:	Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu.
-Vorbedingung:		Es existiert ein Baum mit einem Root-Knoten.
-Nachbedingung:	Es existiert ein gültiger Baum.
-Primärer Aktor:		Nutzer. 
+Kurzbeschreibung:   Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu.
+Vorbedingung:       Es existiert ein Baum mit einem Root-Knoten.
+Nachbedingung:      Es existiert ein gültiger Baum.
+Primärer Aktor:     Nutzer. 
 Erfolgsszenario:
     1.	Der Nutzer wählt einen Knoten und die Funktion Elternknoten erstellen des Programms.
     2.	Das Programm erstellt einen Knoten mit demselben Elternknoten wie der gewählte. Der vorher ausgewählte Knoten wird dem neuen Knoten nachgeordnet.
@@ -100,10 +107,10 @@ Erweiterungen:
 ```
 #### erstellen von Nodes (sibling)
 ```
-Kurzbeschreibung:	Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu, der gleichberechtigt mit einem anderen ist.
-Vorbedingung:		Es existiert ein Baum mit einem Root-Knoten.
-Nachbedingung:	Es existiert ein gültiger Baum.
-Primärer Aktor:		Nutzer. 
+Kurzbeschreibung:   Der Nutzer fügt dem Baum bzw. der Mindmap einen neuen Knoten hinzu, der gleichberechtigt mit einem anderen ist.
+Vorbedingung:       Es existiert ein Baum mit einem Root-Knoten.
+Nachbedingung:      Es existiert ein gültiger Baum.
+Primärer Aktor:     Nutzer. 
 Erfolgsszenario:
     1.	Der Nutzer wählt einen Knoten und die Funktion Geschwisterknoten erstellen des Programms.
     2.	Das Programm erstellt einen Knoten mit demselben Elternknoten wie der gewählte. Der neue Knoten wird dabei unterhalb des zuvor ausgewählten angezeigt.
@@ -120,7 +127,7 @@ Ergänzungen:
 Kurzbeschreibung:   Das Programm bietet dem Nutzer die Möglichkeit, den Namen eines ausgewählten Knotens zu ändern. Dafür stellt das Programm ein Textbearbeitungstool zur Verfügung, welches auch verschiedene Formatierungen zulässt.
 Vorbedingung:       Es existiert ein Baum
 Nachbedingung:      Der gewünschte Knoten wurde bearbeitet
-Primärer Aktor: 	Nutzer des Programms.
+Primärer Aktor:     Nutzer des Programms.
 Erfolgsszenario:
     1. Nutzer wählt den zu bearbeitenden Knoten aus.
     2. Nutzer wählt die gewünschte Attribut aus (Icons, Name, etc)
@@ -133,10 +140,10 @@ Erweiterungen:
 ```
 #### entfernen von Nodes
 ```
-Kurzbeschreibung:	Der Nutzer löscht einen Knoten aus dem Graphen der Mind Map. Dabei werden alle folgenden (Kind-Knoten) ebenfalls gelöscht.
-Vorbedingung: 		Es existiert ein Baum mit mindestens zwei Knoten.
-Nachbedingung: 	Der gewünschte und alle nachfolgenden Knoten sind aus dem Projekt entfernt, der folgende Zweig ist komplett entfernt und der Root-Knoten ist weiterhin existent.
-Primärer Aktor: 	Nutzer des Programms.
+Kurzbeschreibung:   Der Nutzer löscht einen Knoten aus dem Graphen der Mind Map. Dabei werden alle folgenden (Kind-Knoten) ebenfalls gelöscht.
+Vorbedingung:       Es existiert ein Baum mit mindestens zwei Knoten.
+Nachbedingung:      Der gewünschte und alle nachfolgenden Knoten sind aus dem Projekt entfernt, der folgende Zweig ist komplett entfernt und der Root-Knoten ist weiterhin existent.
+Primärer Aktor:     Nutzer des Programms.
 Erfolgsszenario:
     1.	Nutzer wählt den zu löschenden Knoten aus.
     2.	Nutzer wählt Funktion zum Löschen des Knotens aus.
@@ -153,5 +160,5 @@ Erweiterungen:
 ```
 #### Design anpassen
 ```
-Kurzbeschreibung:	Das Programm bietet dem Nutzer verschiedene Möglichkeiten, um das Design einer Node anzupassen. Dazu kann sowohl die Schrift der Node als auch dessen Form und Farbe verändert werden. Weiterhin können Tags gesetzt werden, welche durch ein Icon vor dem Namen angezeigt werden. Diese erleichtern die Übersichtlichkeit.
+Kurzbeschreibung:   Das Programm bietet dem Nutzer verschiedene Möglichkeiten, um das Design einer Node anzupassen. Dazu kann sowohl die Schrift der Node als auch dessen Form und Farbe verändert werden. Weiterhin können Tags gesetzt werden, welche durch ein Icon vor dem Namen angezeigt werden. Diese erleichtern die Übersichtlichkeit.
 ```
