@@ -40,15 +40,15 @@ Nachbedingung:	An der Struktur der MindMap wurde nichts verändert.
 Primärer Aktor:		Nutzer.
 Erfolgsszenario:		
     1.	Der Nutzer wählt die Funktion Datei Speichern des Programms.
-	2.	Das Programm öffnet ein Fenster zur Auswahl des Speicherorts und Festlegung eines Namens.
-	3.	Das Programm speichert die Datei unter den gewünschten Parametern.
-	4.	Das Happy Day Szenario endet erfolgreich.
+    2.	Das Programm öffnet ein Fenster zur Auswahl des Speicherorts und Festlegung eines Namens.
+    3.	Das Programm speichert die Datei unter den gewünschten Parametern.
+    4.	Das Happy Day Szenario endet erfolgreich.
 Erweiterungen:		
     1a.	Der Nutzer wählt die Funktion Datei exportieren und ein anderes Dateiformat als das Arbeitsformat.
-	    1a.1.	Weiter mit 2.
-	2a.	Das Programm stellt fest, dass die MindMap bereits mit gewünschten Parametern gespeichert wurde und nicht die Funktion Speichern unter verwendet.
-	    2a.1.	Das Programm speichert die Datei unter denselben Parametern wie zuvor.
-	    2a.2.	Das Happy Day Szenario endet erfolgreich.
+        1a.1.	Weiter mit 2.
+    2a.	Das Programm stellt fest, dass die MindMap bereits mit gewünschten Parametern gespeichert wurde und nicht die Funktion Speichern unter verwendet.
+        2a.1.	Das Programm speichert die Datei unter denselben Parametern wie zuvor.
+        2a.2.	Das Happy Day Szenario endet erfolgreich.
 ```
 ### Contentverwaltung
 #### Notizen bearbeiten
@@ -66,8 +66,8 @@ Erweiterungen:
     2a.	Das Programm stellt fest, dass das Notizfeld bei Auswahl des Knotens keine Information enthält.
         2a.1.	Der Nutzer gibt seine Informationen zu dem ausgewählten Knoten in das Notizfeld ein.
         2a.2.	Das Programm fügt vor den Titel des Knotens ein Icon an, welches eine dazugehörige Notiz symbolisiert.
-        2a.3.	Weiter mit 3..
-	3a.	Das Programm stellt fest, dass das Notizfeld nach der Bearbeitung keine Zeichen mehr enthält.
+        2a.3.	Weiter mit 3.
+    3a.	Das Programm stellt fest, dass das Notizfeld nach der Bearbeitung keine Zeichen mehr enthält.
         3a.1.	Das Programm entfernt das Icon zur Angabe einer Notiz.
         3a.2.	Weiter mit4.. (Das Happy Day Szenario endet erfolgreich)
 ```
@@ -79,8 +79,8 @@ Nachbedingung:	Es existiert ein gültiger Baum.
 Primärer Aktor:		Nutzer. 
 Erfolgsszenario	:	
     1.	Der Nutzer wählt einen Knoten und die Funktion Kind Knoten erstellen des Programms.
-	2.	Das Programm erstellt einen neuen Knoten mit dem zuvor gewählten Knoten als Elternknoten.
-	3.	Das Programm bietet dem Nutzer die Möglichkeit, einen Titel für den neuen Knoten festzulegen.
+    2.	Das Programm erstellt einen neuen Knoten mit dem zuvor gewählten Knoten als Elternknoten.
+    3.	Das Programm bietet dem Nutzer die Möglichkeit, einen Titel für den neuen Knoten festzulegen.
     4.	Das Happy Day Szenario endet erfolgreich.
 ```
 #### erstellen von Nodes (parent)
@@ -97,7 +97,6 @@ Erfolgsszenario:
 Erweiterungen:	
     2||a.	Das Programm stellt fest, dass der gewählte Knoten der Root-Knoten des Programms ist.
         2||a.1.	Das Programm nimmt den neu erstellten Knoten als neuen Root Knoten für die MindMap.
-
 ```
 #### erstellen von Nodes (sibling)
 ```
@@ -113,8 +112,8 @@ Erfolgsszenario:
 Ergänzungen:
     1a.	Der Nutzer wählt einen Startknoten und die Funktion vorherigen Geschwisterknoten erstellen.
         1a.1.	Das Programm erstellt einen neuen Knoten mit demselben Elternknoten wie dem gewählten. Der neue Knoten wird oberhalb des zuvor gewählten angezeigt.
-        1a.2.	Weiter mit 3..
-	2a. = 1a.1a.	Das Programm stellt fest, dass der gewählte Knoten der Root-Knoten ist. Der neue Knoten wird nun als Kind-Knoten generiert.
+        1a.2.	Weiter mit 3.
+    2a. = 1a.1a.    Das Programm stellt fest, dass der gewählte Knoten der Root-Knoten ist. Der neue Knoten wird nun als Kind-Knoten generiert.
 ```
 #### bearbeiten von Nodes
 ```
