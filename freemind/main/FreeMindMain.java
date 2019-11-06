@@ -114,7 +114,7 @@ public interface FreeMindMain {
 
 	public void setTitle(String title);
 
-	// to keep last win size (PN)
+	// to keep last win size (pn)
 	public int getWinHeight();
 
 	public int getWinWidth();
