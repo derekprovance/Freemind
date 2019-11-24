@@ -10,6 +10,8 @@ public class NewMindMapController extends MindMapController {
         super(mode);
     }
 
+    private NewNodeCreator myNewNodeCreator = null;
+
     public interface NewNodeCreator {
         NewMindMapNode createNode(Object userObject, MindMap map);
     }
@@ -18,5 +20,13 @@ public class NewMindMapController extends MindMapController {
         public NewMindMapNode createNode(Object userObject, MindMap map) {
             return new NewMindMapNodeModel(userObject, map);
         }
+    }
+
+    public NewMindMapNode newNode(Object userObject, MindMap map) {
+        if (myNewNodeCreator == null) {
+            myNewNodeCreator = new DefaultMindMapNodeCreator();
+        }
+
+        return myNewNodeCreator.createNode(userObject, map);
     }
 }
