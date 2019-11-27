@@ -1,4 +1,9 @@
 # What is classes doink
+
+// newchildactor
+// pasteactor
+
+
 ## Kopiervorlage 
 - BEISPIELKLASSE
             ```
