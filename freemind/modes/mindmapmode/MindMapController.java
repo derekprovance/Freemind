@@ -55,6 +55,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import newChanges.NodeWrapper;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 
@@ -859,7 +860,9 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 		public MindMapNode createNode(Object userObject, MindMap map) {
-			return new MindMapNodeModel(userObject, map);
+			MindMapNodeModel mmnm = new MindMapNodeModel(userObject, map);
+			NodeWrapper.register(new NodeWrapper(mmnm));
+			return mmnm;
 		}
 
 	}
