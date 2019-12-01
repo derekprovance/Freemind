@@ -7,6 +7,10 @@ import java.util.HashMap;
 
 public class NodeWrapper implements MindMapNodeExt{
 
+    /*
+        wraps around & extends MindMapNodes
+     */
+
     private static HashMap<NodeAdapter, NodeWrapper> wrapperMap = new HashMap<>();
 
     private NodeAdapter nodeAdapter;
@@ -30,6 +34,9 @@ public class NodeWrapper implements MindMapNodeExt{
             this.nodeAdapter.setUnderlined(true);
             this.nodeAdapter.setBold(true);
             this.nodeAdapter.setNoteText(">> RESOURCE");
+            ANSManager.setLastResourceNode(this);
+        }else{
+            ANSManager.setLastResourceNode(null);
         }
     }
 
@@ -40,6 +47,7 @@ public class NodeWrapper implements MindMapNodeExt{
     public static void register(NodeWrapper nodeWrapper){
         System.out.println("Wrapped new node "+nodeWrapper.hashCode());
         wrapperMap.put(nodeWrapper.getNodeAdapter(), nodeWrapper);
+        ANSManager.setLastCreated(nodeWrapper);
     }
 
     public static NodeWrapper get(NodeAdapter nodeAdapter){
@@ -47,5 +55,9 @@ public class NodeWrapper implements MindMapNodeExt{
             return wrapperMap.get(nodeAdapter);
         }
         return null;
+    }
+
+    public static HashMap<NodeAdapter,NodeWrapper> getAll(){
+        return wrapperMap;
     }
 }
