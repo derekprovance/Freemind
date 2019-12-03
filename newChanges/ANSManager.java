@@ -14,7 +14,6 @@ public class ANSManager {
      */
 
     private static NodeWrapper lastCreated;
-    private static NodeWrapper lastModified;
     private static NodeWrapper lastSelected;
     private static NodeWrapper lastResourceNode;
 
@@ -23,10 +22,6 @@ public class ANSManager {
 
     public static void setLastCreated(NodeWrapper nodeWrapper){
         lastCreated = nodeWrapper;
-    }
-
-    private static void setLastModified(NodeWrapper nodeWrapper){
-        lastModified = nodeWrapper;
     }
 
     public static void setLastSelected(NodeWrapper nodeWrapper){
@@ -39,10 +34,6 @@ public class ANSManager {
 
     public static NodeWrapper getLastNodeCreated(){
         return lastCreated;
-    }
-
-    public static NodeWrapper getLastNodeModified(){
-        return lastModified;
     }
 
     public static NodeWrapper getLastNodeSelected(){
