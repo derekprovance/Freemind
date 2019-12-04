@@ -51,6 +51,8 @@ import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import newChanges.ANSManager;
+import newChanges.NodeWrapper;
 
 /**
  * Provides the methods to edit/change a Node. Forwards all messages to
@@ -721,6 +723,12 @@ public class Controller implements MapModuleChangeObserver {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
 		if (getView() != null) {
 			logger.fine("Requesting Focus for " + getView() + " in model " + getView().getModel());
+			try{
+				ANSManager.setLastSelected(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))));
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
 			getView().requestFocusInWindow();
 		} else {
 			logger.info("No view present. No focus!");
