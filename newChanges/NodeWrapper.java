@@ -40,7 +40,6 @@ public class NodeWrapper implements MindMapNodeExt{
             this.nodeAdapter.setUnderlined(false);
             this.nodeAdapter.setBold(false);
             this.nodeAdapter.setNoteText(this.nodeAdapter.getText().replace(">> RESOURCE\n",""));
-            ANSManager.setLastResourceNode(null);
         }
     }
 
