@@ -4,10 +4,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ExtKeyListener{
 
-    private Set<Character> keysPressed = new HashSet<Character>();
+    private Set<Integer> keysPressed = new HashSet<Integer>();
+    private AtomicBoolean hotkeyBlocked = new AtomicBoolean(false);
 
     public ExtKeyListener(){
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
@@ -17,22 +20,30 @@ public class ExtKeyListener{
                     public boolean dispatchKeyEvent(KeyEvent e) {
                         switch(e.getID()){
                             case KeyEvent.KEY_PRESSED:
-                                if(!keysPressed.contains(e.getKeyChar())){
-                                    keysPressed.add(e.getKeyChar());
-                                }
+                                keysPressed.add(e.getKeyCode());
                                 break;
                             case KeyEvent.KEY_RELEASED:
-                                if(keysPressed.contains(e.getKeyChar())){
-                                    keysPressed.remove(e.getKeyChar());
-                                }
+                                keysPressed.remove(e.getKeyCode());
                                 break;
                         }
+                        onKeyEvent();
                         return false;
                     }
                 });
     }
 
-    public Set<Character> getKeysPressed() {
-        return keysPressed;
+    private void onKeyEvent(){
+        if(keysPressed.contains(17) && !hotkeyBlocked.get()){// CTRL / STRG
+
+            if(keysPressed.contains(82)){   // r
+                System.out.println("Hotkey detected!");
+                hotkeyBlocked.set(true);
+                ANSManager.getLastNodeSelected().setResourceFlag(true);
+                try{
+                    TimeUnit.SECONDS.sleep(1);
+                }catch (Exception ignore){}
+            }
+
+        }
     }
 }
