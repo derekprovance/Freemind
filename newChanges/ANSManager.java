@@ -21,17 +21,17 @@ public class ANSManager {
     // catching wrapper from basic events
 
     public static void setLastCreated(NodeWrapper nodeWrapper){
-        System.out.println("LastNodeCreated set to "+nodeWrapper);
+        System.out.println("LastNodeCreated set to "+nodeWrapper.hashCode());
         lastCreated = nodeWrapper;
     }
 
     public static void setLastSelected(NodeWrapper nodeWrapper){
-        System.out.println("Selection set to "+nodeWrapper);
+        System.out.println("Selection set to "+nodeWrapper.hashCode());
         lastSelected = nodeWrapper;
     }
 
     public static void setLastResourceNode(NodeWrapper nodeWrapper){
-        System.out.println("LastResourceNode set to "+nodeWrapper);
+        System.out.println("LastResourceNode set to "+nodeWrapper.hashCode());
         lastResourceNode = nodeWrapper;
     }
 
