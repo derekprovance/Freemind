@@ -36,7 +36,7 @@ public class ExtKeyListener{
         if(keysPressed.contains(17) && !hotkeyBlocked.get()){// CTRL / STRG
 
             if(keysPressed.contains(82)){   // r
-                System.out.println("Hotkey detected!");
+                System.out.println("Hotkey detected! Blocking for 2 seconds.");
                 hotkeyBlocked.set(true);
                 ANSManager.getLastNodeSelected().setResourceFlag(!ANSManager.getLastNodeSelected().getResourceFlag());
                 new Thread(new Runnable() {
