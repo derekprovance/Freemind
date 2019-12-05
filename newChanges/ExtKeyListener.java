@@ -35,7 +35,7 @@ public class ExtKeyListener{
     private void onKeyEvent(){
         if(keysPressed.contains(17) && !hotkeyBlocked.get()){// CTRL / STRG
 
-            if(keysPressed.contains(82)){   // r
+            if(keysPressed.contains(82) && !keysPressed.contains(16)){   // r
                 System.out.println("Hotkey detected! Blocking for 2 seconds.");
                 hotkeyBlocked.set(true);
                 if(ANSManager.getLastNodeSelected() != null){
@@ -53,7 +53,20 @@ public class ExtKeyListener{
                     }
                 }).start();
             }
-
+            if(keysPressed.contains(82) && keysPressed.contains(16)){
+                System.out.println("Hotkey detected! Blocking for 2 seconds.");
+                hotkeyBlocked.set(true);
+                // create from list
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            TimeUnit.SECONDS.sleep(2);
+                        }catch (Exception e){}
+                        hotkeyBlocked.set(false);
+                    }
+                }).start();
+            }
         }
     }
 }
