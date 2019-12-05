@@ -38,7 +38,11 @@ public class ExtKeyListener{
             if(keysPressed.contains(82)){   // r
                 System.out.println("Hotkey detected! Blocking for 2 seconds.");
                 hotkeyBlocked.set(true);
-                ANSManager.getLastNodeSelected().setResourceFlag(!ANSManager.getLastNodeSelected().getResourceFlag());
+                if(ANSManager.getLastNodeSelected() != null){
+                    ANSManager.getLastNodeSelected().setResourceFlag(!ANSManager.getLastNodeSelected().getResourceFlag());
+                }else{
+                    System.out.println("IsNull - Ignore");
+                }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
