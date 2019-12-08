@@ -47,6 +47,7 @@ import freemind.modes.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
+import freemind.modes.mindmapmode.MindMapController;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.MapModule;
@@ -724,7 +725,15 @@ public class Controller implements MapModuleChangeObserver {
 		if (getView() != null) {
 			logger.fine("Requesting Focus for " + getView() + " in model " + getView().getModel());
 			try{
-				ANSManager.setLastSelected(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))));
+				if(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))) == null){
+					// node is unknown, wrap now (this may be a root node)
+					NodeWrapper.register(new NodeWrapper(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel())), (MindMapController) getModeController())); // not sure if that cast is doink any gud
+					// try again
+					ANSManager.setLastSelected(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))));
+				}else{
+					ANSManager.setLastSelected(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))));
+				}
+
 			}catch (Exception e){
 				e.printStackTrace();
 			}
