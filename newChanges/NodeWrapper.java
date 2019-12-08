@@ -1,6 +1,7 @@
 package newChanges;
 
 import freemind.modes.NodeAdapter;
+import freemind.modes.mindmapmode.MindMapController;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -15,10 +16,20 @@ public class NodeWrapper implements MindMapNodeExt{
     private static HashMap<NodeAdapter, NodeWrapper> wrapperMap = new HashMap<>();
 
     private NodeAdapter nodeAdapter;
+    private MindMapController mindMapController;
     private boolean resource_flag;
 
-    public NodeWrapper(NodeAdapter adapter){
+    public NodeWrapper(NodeAdapter adapter, MindMapController mindMapController){
         this.nodeAdapter = adapter;
+        this.mindMapController = mindMapController;
+    }
+
+    public MindMapController getController(){
+        return this.mindMapController;
+    }
+
+    public NodeAdapter getNodeAdapter(){
+        return this.nodeAdapter;
     }
 
     @Override
@@ -44,10 +55,6 @@ public class NodeWrapper implements MindMapNodeExt{
             this.nodeAdapter.setXmlNoteText(this.nodeAdapter.getXmlNoteText().replaceAll(">>RESOURCE: \n",""));
             NodeConverter.removeFromRootData(this.nodeAdapter.getText());
         }
-    }
-
-    public NodeAdapter getNodeAdapter(){
-        return this.nodeAdapter;
     }
 
     public static void register(NodeWrapper nodeWrapper){

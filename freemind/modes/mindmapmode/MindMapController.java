@@ -855,7 +855,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 		public MindMapNode createNode(Object userObject, MindMap map) {
 			MindMapNodeModel mmnm = new MindMapNodeModel(userObject, map);
-			NodeWrapper.register(new NodeWrapper(mmnm));
+			NodeWrapper.register(new NodeWrapper(mmnm, MindMapController.this));
 			return mmnm;
 		}
 
