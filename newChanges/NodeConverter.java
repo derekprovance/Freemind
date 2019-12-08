@@ -8,7 +8,6 @@ import freemind.modes.mindmapmode.actions.NewChildAction;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 public class NodeConverter {
 
@@ -41,7 +40,7 @@ public class NodeConverter {
                     NodeWrapper nodeWrapper = NodeWrapper.getByTitle(title);
                     if(nodeWrapper == null){
                         // does not exist
-                        System.out.println("Node does not exist, will be created now");
+                        System.out.println("Node does not already exist");
                         // create new node @ root // get controller from current
 
                         //addNew
@@ -53,9 +52,10 @@ public class NodeConverter {
                         newNodeWrapper.setResourceFlag(true);
                     }else{
                         // already exists
-                        System.out.println("Node already exists");
+                        System.out.println("Node already exists, updating description");
                         // set resource flag to true, to make sure everything is fine
                         nodeWrapper.setResourceFlag(true);
+                        nodeWrapper.getNodeAdapter().setXmlNoteText(root.getAttribute(title));
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
