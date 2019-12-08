@@ -46,7 +46,6 @@ public class NodeWrapper implements MindMapNodeExt{
             this.nodeAdapter.setUnderlined(true);
             this.nodeAdapter.setBold(true);
             NodeConverter.addToRootData(this.nodeAdapter.getText());
-            ANSManager.setLastResourceNode(this);
         }else{
             this.nodeAdapter.setColor(Color.BLACK);
             this.nodeAdapter.setUnderlined(false);
