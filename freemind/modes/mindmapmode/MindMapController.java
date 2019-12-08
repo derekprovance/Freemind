@@ -28,13 +28,7 @@ import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Properties;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import javax.swing.AbstractAction;
@@ -1458,6 +1452,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	}
 
 	public void deleteNode(MindMapNode selectedNode) {
+		NodeWrapper.remove(Objects.requireNonNull(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(selectedNode)))));
 		mActorFactory.getDeleteChildActor().deleteNode(selectedNode);
 	}
 
