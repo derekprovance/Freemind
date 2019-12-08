@@ -6,6 +6,10 @@ import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NewChildAction;
 
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
 public class NodeConverter {
 
     /*
@@ -36,17 +40,18 @@ public class NodeConverter {
                     NodeWrapper nodeWrapper = NodeWrapper.getByTitle(title);
                     if(nodeWrapper == null){
                         // does not exist
-                        System.out.println("Node does not exist, will be created now with title: "+title);
+                        System.out.println("Node does not exist, will be created now");
                         // create new node @ root // get controller from current
 
                         //addNew
                         new NewChildAction(controller).actionPerformed(null);
                         NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
+                        newNodeWrapper.getNodeAdapter().setText(title); // why u no wörk what wronk wit u ?!!??!
+                        newNodeWrapper.getNodeAdapter().setXmlNoteText(root.getAttribute(title));
                         newNodeWrapper.setResourceFlag(true);
-                        newNodeWrapper.getNodeAdapter().setText(title);
                     }else{
                         // already exists
-                        System.out.println("Node already exists with title: "+title);
+                        System.out.println("Node already exists");
                         // set resource flag to true, to make sure everything is fine
                         nodeWrapper.setResourceFlag(true);
                     }
@@ -55,6 +60,15 @@ public class NodeConverter {
         }
         // disable selection override
         NCSOverride = false;
+        // simulate keypress to close edit dialog
+        try{
+            Robot robot = new Robot();
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(100);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void addToRootData(String title){

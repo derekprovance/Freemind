@@ -45,14 +45,12 @@ public class NodeWrapper implements MindMapNodeExt{
             this.nodeAdapter.setColor(Color.MAGENTA);
             this.nodeAdapter.setUnderlined(true);
             this.nodeAdapter.setBold(true);
-            this.nodeAdapter.setXmlNoteText(">>RESOURCE: \n"+this.nodeAdapter.getXmlNoteText());
             NodeConverter.addToRootData(this.nodeAdapter.getText());
             ANSManager.setLastResourceNode(this);
         }else{
             this.nodeAdapter.setColor(Color.BLACK);
             this.nodeAdapter.setUnderlined(false);
             this.nodeAdapter.setBold(false);
-            this.nodeAdapter.setXmlNoteText(this.nodeAdapter.getXmlNoteText().replaceAll(">>RESOURCE: \n",""));
             NodeConverter.removeFromRootData(this.nodeAdapter.getText());
         }
     }
