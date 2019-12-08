@@ -95,4 +95,17 @@ public class NodeConverter {
         }
     }
 
+    public static void updateRootData(NodeWrapper nodeWrapper){
+        // get current selected node
+        NodeAdapter current = nodeWrapper.getNodeAdapter();
+        // get the root node of that tree
+        MindMapNode root = current.getMap().getRootNode();
+        // edit attribute
+        String title = current.getText();
+        if(root.getAttributeKeyList().contains(title)){
+            root.removeAttribute(root.getAttributePosition(title));
+            root.addAttribute(new Attribute(title, current.getXmlNoteText()));
+        }
+    }
+
 }

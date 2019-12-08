@@ -49,6 +49,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import newChanges.ANSManager;
 import newChanges.NodeWrapper;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
@@ -1784,6 +1785,7 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 	protected void updateNode(MindMapNode node) {
 		super.updateNode(node);
 		recursiveCallUpdateHooks(node, node);
+		ANSManager.updateData(Objects.requireNonNull(NodeWrapper.get(getNodeFromID(getNodeID(node)))));
 	}
 
 	private void recursiveCallUpdateHooks(MindMapNode node, MindMapNode changedNode) {

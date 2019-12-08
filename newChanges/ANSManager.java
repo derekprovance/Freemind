@@ -29,6 +29,13 @@ public class ANSManager {
         }
     }
 
+    public static void updateData(NodeWrapper nodeWrapper){
+        if(!nodeWrapper.getNodeAdapter().isRoot()){
+            // update data to root
+            NodeConverter.updateRootData(nodeWrapper);
+        }
+    }
+
     public static NodeWrapper getLastNodeCreated(){
         return lastCreated;
     }
