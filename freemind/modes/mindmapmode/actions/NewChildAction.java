@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import newChanges.NodeConverter;
 
 public class NewChildAction extends MindmapAction  {
 	private final MindMapController c;
@@ -48,7 +49,11 @@ public class NewChildAction extends MindmapAction  {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		this.c.addNew(c.getSelected(), MindMapController.NEW_CHILD, null);
+		if(NodeConverter.NCSOverride){
+			this.c.addNew(NodeConverter.NCSOverride_Node, MindMapController.NEW_CHILD, null);
+		}else{
+			this.c.addNew(c.getSelected(), MindMapController.NEW_CHILD, null);
+		}
 	}
 
 	public MindMapNode addNew(final MindMapNode target, int newNodeMode, final KeyEvent e) {

@@ -1,11 +1,10 @@
 package newChanges;
 
-import freemind.controller.MapModuleManager;
-import freemind.main.FreeMind;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.actions.NewChildAction;
 
 public class NodeConverter {
 
@@ -13,6 +12,8 @@ public class NodeConverter {
         translates between root attributes and nodes
      */
 
+    public static boolean NCSOverride = false;
+    public static MindMapNode NCSOverride_Node;
 
     public static void updateNodesFromRootData(){
         // get current selected node
@@ -21,6 +22,11 @@ public class NodeConverter {
             // get the root node of that tree
             MindMapNode root = current.getNodeAdapter().getMap().getRootNode();
             System.out.println("Creating nodes from root "+root.hashCode());
+            // set selection override
+            NCSOverride = true;
+            NCSOverride_Node = root;
+            // get controller
+            MindMapController controller = current.getController();
             // read attributes
             for(Object s : root.getAttributeKeyList()) {
                 // we assume strings are included
@@ -32,11 +38,12 @@ public class NodeConverter {
                         // does not exist
                         System.out.println("Node does not exist, will be created now with title: "+title);
                         // create new node @ root // get controller from current
-                        MindMapNode newNode = current.getController().newNode(title, current.getNodeAdapter().getMap());
-                        // move to root
-                        newNode.setParent(root);
-                        // set resource flag to true
-                        NodeWrapper.get(current.getController().getNodeFromID(current.getController().getNodeID(newNode))).setResourceFlag(true);
+
+                        //addNew
+                        new NewChildAction(controller).actionPerformed(null);
+                        NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
+                        newNodeWrapper.setResourceFlag(true);
+                        newNodeWrapper.getNodeAdapter().setText(title);
                     }else{
                         // already exists
                         System.out.println("Node already exists with title: "+title);
@@ -46,6 +53,8 @@ public class NodeConverter {
                 } catch (Exception e) { e.printStackTrace(); }
             }
         }
+        // disable selection override
+        NCSOverride = false;
     }
 
     public static void addToRootData(String title){
