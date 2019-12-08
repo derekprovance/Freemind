@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ExtKeyListener{
 
+    /*
+        containing the hot key functionality
+     */
+
     private Set<Integer> keysPressed = new HashSet<Integer>();
     private AtomicBoolean hotkeyBlocked = new AtomicBoolean(false);
 

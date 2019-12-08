@@ -6,6 +6,10 @@ import freemind.modes.attributes.Attribute;
 
 public class NodeConverter {
 
+    /*
+        translates between root attributes and nodes
+     */
+
 
     public static void updateNodesFromRootData(){
         // get current selected node
@@ -24,6 +28,7 @@ public class NodeConverter {
                     // does not exist
                     System.out.println("Node does not exist, will be created now with title: "+title);
                     // create new node @ root
+
                     // set resource flag to true
                 }else{
                     // already exists
