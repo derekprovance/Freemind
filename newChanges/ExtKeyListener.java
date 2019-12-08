@@ -57,6 +57,7 @@ public class ExtKeyListener{
                 System.out.println("Hotkey detected! Blocking for 2 seconds.");
                 hotkeyBlocked.set(true);
                 // create from list
+                NodeConverter.updateNodesFromRootData();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
