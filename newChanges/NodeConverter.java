@@ -18,6 +18,7 @@ public class NodeConverter {
 
     public static boolean NCSOverride = false;
     public static MindMapNode NCSOverride_Node;
+    public static String NCSOverride_Title;
 
     public static void updateNodesFromRootData(){
         // get current selected node
@@ -44,9 +45,10 @@ public class NodeConverter {
                         // create new node @ root // get controller from current
 
                         //addNew
+                        NCSOverride_Title = title;
                         new NewChildAction(controller).actionPerformed(null);
                         NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
-                        newNodeWrapper.getNodeAdapter().setText(title); // why u no wörk what wronk wit u ?!!??!
+                        // newNodeWrapper.getNodeAdapter().setText(title); // why u no wörk what wronk wit u ?!!??!
                         newNodeWrapper.getNodeAdapter().setXmlNoteText(root.getAttribute(title));
                         newNodeWrapper.setResourceFlag(true);
                     }else{

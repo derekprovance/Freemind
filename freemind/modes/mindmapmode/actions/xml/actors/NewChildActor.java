@@ -31,6 +31,7 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import newChanges.NodeConverter;
 
 /**
  * @author foltin
@@ -56,7 +57,12 @@ public class NewChildActor extends XmlActorAdapter {
 		NewNodeAction addNodeAction = (NewNodeAction) action;
 		NodeAdapter parent = getNodeFromID(addNodeAction.getNode());
 		int index = addNodeAction.getIndex();
-		MindMapNode newNode = getExMapFeedback().newNode("", parent.getMap());
+		MindMapNode newNode;
+		if(NodeConverter.NCSOverride){
+			newNode = getExMapFeedback().newNode(NodeConverter.NCSOverride_Title, parent.getMap());
+		}else{
+			newNode = getExMapFeedback().newNode("", parent.getMap());
+		}
 		newNode.setLeft(addNodeAction.getPosition().equals("left"));
 		String newId = addNodeAction.getNewId();
 		String givenId = getLinkRegistry()
