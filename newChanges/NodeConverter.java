@@ -4,7 +4,6 @@ import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.actions.NewChildAction;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -17,7 +16,7 @@ public class NodeConverter {
 
     public static boolean NCSOverride = false;
     public static MindMapNode NCSOverride_Node;
-    public static String NCSOverride_Title;
+    public static String NCSOverride_Title = "";
 
     public static void updateNodesFromRootData(){
         // get current selected node
@@ -45,11 +44,13 @@ public class NodeConverter {
 
                         //addNew
                         NCSOverride_Title = title;
-                        new NewChildAction(controller).actionPerformed(null);
+                        controller.getNewChildAction().actionPerformed(null);
+                        //update properties
                         NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
                         // newNodeWrapper.getNodeAdapter().setText(title); // why u no wörk what wronk wit u ?!!??!
                         newNodeWrapper.getNodeAdapter().setXmlNoteText(root.getAttribute(title));
                         newNodeWrapper.setResourceFlag(true);
+
                     }else{
                         // already exists
                         System.out.println("Node already exists, updating description");

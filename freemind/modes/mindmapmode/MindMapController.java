@@ -1441,6 +1441,10 @@ public class MindMapController extends ControllerAdapter implements ExtendedMapF
 		mActorFactory.getPasteActor().paste(node, parent);
 	}
 
+	public NewChildAction getNewChildAction(){
+		return newChild;
+	}
+
 	public MindMapNode addNew(final MindMapNode target, final int newNodeMode,
 			final KeyEvent e) {
 		edit.stopEditing();
