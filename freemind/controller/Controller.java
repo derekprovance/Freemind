@@ -727,7 +727,7 @@ public class Controller implements MapModuleChangeObserver {
 			try{
 				if(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))) == null){
 					// node is unknown, wrap now (this may be a root node)
-					NodeWrapper.register(new NodeWrapper(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel())), (MindMapController) getModeController())); // not sure if that cast is doink any gud
+					NodeWrapper.register(new NodeWrapper(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel())), (MindMapController) getModeController())); // this cast seems to break stuff
 					// try again
 					ANSManager.setLastSelected(NodeWrapper.get(getModeController().getNodeFromID(getModeController().getNodeID(getView().getSelected().getModel()))));
 				}else{
