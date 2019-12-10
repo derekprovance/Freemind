@@ -22,7 +22,8 @@
 /*$Id: FreeMindStarter.java,v 1.1.2.11 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.main;
 
-import newChanges.ExtKeyListener;
+import newChanges.listener.ExtKeyListener;
+import newChanges.newNodes.NewNodeCreator;
 
 import java.awt.Toolkit;
 import java.io.File;
@@ -103,6 +104,10 @@ public class FreeMindStarter {
 
 		// add global key listener (cheating)
 		new ExtKeyListener();
+		// start nodecreator
+		Thread nnc = new Thread(new NewNodeCreator());
+		nnc.setDaemon(true);
+		nnc.start();
 	}
 
 	private void checkJavaVersion() {

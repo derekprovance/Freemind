@@ -1,13 +1,15 @@
-package newChanges;
+package newChanges.nodeWrapper;
 
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
+import newChanges.nodeData.ANSManager;
+import newChanges.nodeData.NodeConverter;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NodeWrapper implements MindMapNodeExt{
+public class NodeWrapper implements MindMapNodeExt {
 
     /*
         wraps around & extends MindMapNodes

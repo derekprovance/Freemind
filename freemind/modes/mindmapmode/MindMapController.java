@@ -49,8 +49,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import newChanges.ANSManager;
-import newChanges.NodeWrapper;
+import newChanges.nodeData.ANSManager;
+import newChanges.nodeWrapper.NodeWrapper;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 

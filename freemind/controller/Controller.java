@@ -52,8 +52,8 @@ import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
-import newChanges.ANSManager;
-import newChanges.NodeWrapper;
+import newChanges.nodeData.ANSManager;
+import newChanges.nodeWrapper.NodeWrapper;
 
 /**
  * Provides the methods to edit/change a Node. Forwards all messages to

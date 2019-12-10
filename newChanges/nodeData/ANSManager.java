@@ -1,4 +1,6 @@
-package newChanges;
+package newChanges.nodeData;
+
+import newChanges.nodeWrapper.NodeWrapper;
 
 public class ANSManager {
 

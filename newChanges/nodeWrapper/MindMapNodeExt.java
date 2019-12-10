@@ -1,4 +1,4 @@
-package newChanges;
+package newChanges.nodeWrapper;
 
 public interface MindMapNodeExt {
 

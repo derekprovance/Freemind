@@ -1,22 +1,18 @@
-package newChanges;
+package newChanges.nodeData;
 
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.mindmapmode.MindMapController;
-
-import java.awt.*;
-import java.awt.event.InputEvent;
+import newChanges.newNodes.NewNodeCreator;
+import newChanges.newNodes.NewNodeRequest;
+import newChanges.nodeWrapper.NodeWrapper;
 
 public class NodeConverter {
 
     /*
         translates between root attributes and nodes
      */
-
-    public static boolean NCSOverride = false;
-    public static MindMapNode NCSOverride_Node;
-    public static String NCSOverride_Title = "";
 
     public static void updateNodesFromRootData(){
         // get current selected node
@@ -25,9 +21,6 @@ public class NodeConverter {
             // get the root node of that tree
             MindMapNode root = current.getNodeAdapter().getMap().getRootNode();
             System.out.println("Creating nodes from root "+root.hashCode());
-            // set selection override
-            NCSOverride = true;
-            NCSOverride_Node = root;
             // get controller
             MindMapController controller = current.getController();
             // read attributes
@@ -41,15 +34,8 @@ public class NodeConverter {
                         // does not exist
                         System.out.println("Node does not already exist");
                         // create new node @ root // get controller from current
-
-                        //addNew
-                        NCSOverride_Title = title;
-                        controller.getNewChildAction().actionPerformed(null);
-                        //update properties
-                        NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
-                        // newNodeWrapper.getNodeAdapter().setText(title); // why u no wörk what wronk wit u ?!!??!
-                        newNodeWrapper.getNodeAdapter().setXmlNoteText(root.getAttribute(title));
-                        newNodeWrapper.setResourceFlag(true);
+                        NewNodeRequest nnr = new NewNodeRequest(controller, root, title, root.getAttribute(title));
+                        NewNodeCreator.add(nnr);
 
                     }else{
                         // already exists
@@ -60,17 +46,6 @@ public class NodeConverter {
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
-        }
-        // disable selection override
-        NCSOverride = false;
-        // simulate keypress to close edit dialog
-        try{
-            Robot robot = new Robot();
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            robot.delay(100);
-            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 

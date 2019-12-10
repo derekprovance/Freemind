@@ -20,8 +20,6 @@
 
 package freemind.modes.mindmapmode.actions.xml.actors;
 
-import java.util.Iterator;
-
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.NewNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
@@ -31,7 +29,8 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import newChanges.NodeConverter;
+import newChanges.newNodes.NewNodeCreator;
+import newChanges.nodeData.NodeConverter;
 
 /**
  * @author foltin
@@ -58,8 +57,8 @@ public class NewChildActor extends XmlActorAdapter {
 		NodeAdapter parent = getNodeFromID(addNodeAction.getNode());
 		int index = addNodeAction.getIndex();
 		MindMapNode newNode;
-		if(NodeConverter.NCSOverride){
-			newNode = getExMapFeedback().newNode(NodeConverter.NCSOverride_Title, parent.getMap());
+		if(NewNodeCreator.NNC_ActiveOverride){
+			newNode = getExMapFeedback().newNode(NewNodeCreator.NNC_NewNodeTitleOverride, parent.getMap());
 		}else{
 			newNode = getExMapFeedback().newNode("", parent.getMap());
 		}
