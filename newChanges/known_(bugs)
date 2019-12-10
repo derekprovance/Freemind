@@ -1,8 +1,4 @@
 nodeAdapter/MindMapNode setText(); -> wont update display
-creating nodes from root may kill keyboard input
-
-
-
 
                                                       ,..,
                                               .#%%%%%%%%%%%%%%%#.
