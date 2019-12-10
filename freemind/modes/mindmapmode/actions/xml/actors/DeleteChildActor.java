@@ -22,6 +22,7 @@ package freemind.modes.mindmapmode.actions.xml.actors;
 
 import java.awt.datatransfer.Transferable;
 import java.util.Iterator;
+import java.util.Objects;
 
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
@@ -99,7 +100,7 @@ public class DeleteChildActor extends XmlActorAdapter {
 		}
 		getExMapFeedback().removeNodeFromParent(selectedNode);
 		// remove from wrap
-		NodeWrapper.remove(NodeWrapper.get(getExMapFeedback().getNodeFromID(getExMapFeedback().getNodeID(selectedNode))));
+		NodeWrapper.remove(Objects.requireNonNull(NodeWrapper.get(getExMapFeedback().getNodeFromID(getExMapFeedback().getNodeID(selectedNode)))));
 		// post event
 		getExMapFeedback().fireNodePostDeleteEvent(selectedNode, parent);
 	}
