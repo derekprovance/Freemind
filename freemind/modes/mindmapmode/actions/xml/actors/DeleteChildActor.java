@@ -35,6 +35,7 @@ import freemind.modes.ViewAbstraction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.actors.PasteActor.NodeCoordinate;
 import freemind.view.mindmapview.NodeView;
+import newChanges.nodeWrapper.NodeWrapper;
 
 /**
  * @author foltin
@@ -97,6 +98,8 @@ public class DeleteChildActor extends XmlActorAdapter {
 			}
 		}
 		getExMapFeedback().removeNodeFromParent(selectedNode);
+		// remove from wrap
+		NodeWrapper.remove(NodeWrapper.get(getExMapFeedback().getNodeFromID(getExMapFeedback().getNodeID(selectedNode))));
 		// post event
 		getExMapFeedback().fireNodePostDeleteEvent(selectedNode, parent);
 	}
