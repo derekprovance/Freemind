@@ -34,7 +34,7 @@ public class NodeConverter {
                         // does not exist
                         System.out.println("Node does not already exist");
                         // create new node @ root // get controller from current
-                        NewNodeRequest nnr = new NewNodeRequest(controller, root, title, root.getAttribute(title));
+                        NewNodeRequest nnr = new NewNodeRequest(controller, root, title, root.getAttribute(title), true);
                         NewNodeCreator.add(nnr);
 
                     }else{

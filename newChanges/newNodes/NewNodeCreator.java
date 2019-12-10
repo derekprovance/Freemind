@@ -31,7 +31,7 @@ public class NewNodeCreator implements Runnable {
             try{
                 // take
                 NewNodeRequest nnr = queue.take();
-
+                System.out.println("Creating node from request "+nnr.hashCode());
                 // set override
                 NNC_ActiveOverride = true;
                 // set title
@@ -43,11 +43,11 @@ public class NewNodeCreator implements Runnable {
                 // get last node
                 NodeWrapper newNodeWrapper = ANSManager.getLastNodeCreated();
                 newNodeWrapper.getNodeAdapter().setXmlNoteText(nnr.getDescription());
-                newNodeWrapper.setResourceFlag(true);
+                newNodeWrapper.setResourceFlag(nnr.getResourceFlag());
                 // simulate keypress to close edit dialog
                 Robot robot = new Robot();
                 robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                robot.delay(100);
+                robot.delay(25);
                 robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
             }catch (Exception e){
                 e.printStackTrace();

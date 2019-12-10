@@ -9,12 +9,14 @@ public class NewNodeRequest {
     private MindMapNode parent;
     private String title;
     private String description;
+    private boolean resourceFlag;
 
-    public NewNodeRequest(MindMapController controller, MindMapNode parent, String title, String description){
+    public NewNodeRequest(MindMapController controller, MindMapNode parent, String title, String description, boolean resourceFlag){
         this.controller = controller;
         this.parent = parent;
         this.title = title;
         this.description = description;
+        this.resourceFlag = resourceFlag;
     }
 
     public MindMapController getController() {
@@ -31,5 +33,9 @@ public class NewNodeRequest {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean getResourceFlag() {
+        return resourceFlag;
     }
 }
