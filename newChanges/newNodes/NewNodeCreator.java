@@ -11,6 +11,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class NewNodeCreator implements Runnable {
 
+    /*
+        creates new nodes from requests
+     */
+
     private static BlockingQueue<NewNodeRequest> queue;
     public static MindMapNode NNC_SelectionOverride;
     public static String NNC_NewNodeTitleOverride = "";

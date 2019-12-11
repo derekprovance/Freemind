@@ -5,6 +5,10 @@ import freemind.modes.mindmapmode.MindMapController;
 
 public class NewNodeRequest {
 
+    /*
+        contains the request to create a new node
+     */
+
     private MindMapController controller;
     private MindMapNode parent;
     private String title;
